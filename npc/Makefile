@@ -34,7 +34,7 @@ CPP=1
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by yourself."
-	verilator -Wall --trace -cc $(MODULE.v) --exe --build $(CPP).cpp
+	verilator -Wall --trace -cc $(MODULE).v --exe --build $(CPP).cpp
 	@obj_dir/V$(MODULE)
 	gtkwave wave.vcd
 

@@ -28,7 +28,7 @@ clean:
 
 .PHONY: test verilog help compile bsp reformat checkformat clean
 
-VPATH=../test_1
+VPATH=../test_1:..
 MODULE=top
 CPP=1
 sim:

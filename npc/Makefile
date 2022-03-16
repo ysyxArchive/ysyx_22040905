@@ -28,12 +28,12 @@ clean:
 
 .PHONY: test verilog help compile bsp reformat checkformat clean
 
-VPATH=../test_1:..
 MODULE=top
 CPP=1
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by yourself."
+	cd ../test_1
 	verilator -Wall --trace -cc $(MODULE).v --exe --build $(CPP).cpp
 	@obj_dir/V$(MODULE)
 	gtkwave wave.vcd

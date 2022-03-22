@@ -30,8 +30,8 @@ clean:
 	
 #sim
 TOPNAME = top
-FILE=test
-FILE_PATH= ~/ysyx-workbench/npc/$(FILE)
+#FILE=test
+FILE_PATH= ~/ysyx-workbench/npc#/$(FILE)
 NXDC_FILES =$(FILE_PATH)/constr/top.nxdc
 INC_PATH ?=
 

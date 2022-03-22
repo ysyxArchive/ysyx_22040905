@@ -32,12 +32,12 @@ int main(int argc,char ** argv, char** env)
 	top->eval();
 	tfp->dump(sim_time);
 	sim_time++;
-	printf("a = %d, b = %d, f = %d\n", a, b, top->f);
+  //printf("a = %d, b = %d, f = %d\n", a, b, top->f);
 	assert(top->f == a^b);
 	}
 	tfp->close();
 	delete top;
-    nvboard_quit();
+   // nvboard_quit();
 	return 0;
 
 }

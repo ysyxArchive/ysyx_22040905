@@ -28,9 +28,9 @@ clean:
 
 .PHONY: test verilog help compile bsp reformat checkformat clean
 
-PATHH=../test_1/
-MODULE=top
-CPP=1
+PATHH=./build
+MODULE=Passthrough
+CPP=Passthrough
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by yourself."

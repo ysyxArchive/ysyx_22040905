@@ -28,7 +28,7 @@ clean:
 
 .PHONY: test verilog help compile bsp reformat checkformat clean
 
-PATHH=./build
+PATHH=./build/
 MODULE=Passthrough
 CPP=Passthrough
 sim:

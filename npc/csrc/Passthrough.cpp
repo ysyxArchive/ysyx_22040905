@@ -23,8 +23,8 @@ int main(int argc,char ** argv, char** env)
 
     top->eval();
     tfp->dump(sim_time);
-    printf("F = %d\n",top->io_f);
-    assert(top->io_f == top->io_y);
+    printf("F = %d\n",top->io_F);
+    assert(top->io_F == top->io_y);
     sim_time++;
     }
     tfp->close();

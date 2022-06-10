@@ -27,8 +27,6 @@ class VPassthrough VL_NOT_FINAL {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-    VL_IN8(&clock,0,0);
-    VL_IN8(&reset,0,0);
     VL_IN16(&io_in,9,0);
     VL_OUT16(&io_out,9,0);
 

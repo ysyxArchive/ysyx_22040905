@@ -52,8 +52,6 @@ void VPassthrough___024root___ctor_var_reset(VPassthrough___024root* vlSelf) {
     VPassthrough__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VPassthrough___024root___ctor_var_reset\n"); );
     // Body
-    vlSelf->clock = VL_RAND_RESET_I(1);
-    vlSelf->reset = VL_RAND_RESET_I(1);
     vlSelf->io_in = VL_RAND_RESET_I(10);
     vlSelf->io_out = VL_RAND_RESET_I(10);
 }

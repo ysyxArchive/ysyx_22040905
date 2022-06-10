@@ -22,14 +22,10 @@ void VPassthrough___024root__traceInitSub0(VPassthrough___024root* vlSelf, Veril
     if (false && tracep && c) {}  // Prevent unused
     // Body
     {
-        tracep->declBit(c+1,"clock", false,-1);
-        tracep->declBit(c+2,"reset", false,-1);
-        tracep->declBus(c+3,"io_in", false,-1, 9,0);
-        tracep->declBus(c+4,"io_out", false,-1, 9,0);
-        tracep->declBit(c+1,"Passthrough clock", false,-1);
-        tracep->declBit(c+2,"Passthrough reset", false,-1);
-        tracep->declBus(c+3,"Passthrough io_in", false,-1, 9,0);
-        tracep->declBus(c+4,"Passthrough io_out", false,-1, 9,0);
+        tracep->declBus(c+1,"io_in", false,-1, 9,0);
+        tracep->declBus(c+2,"io_out", false,-1, 9,0);
+        tracep->declBus(c+1,"Passthrough io_in", false,-1, 9,0);
+        tracep->declBus(c+2,"Passthrough io_out", false,-1, 9,0);
     }
 }
 
@@ -66,9 +62,7 @@ void VPassthrough___024root__traceFullSub0(VPassthrough___024root* vlSelf, Veril
     if (false && oldp) {}  // Prevent unused
     // Body
     {
-        tracep->fullBit(oldp+1,(vlSelf->clock));
-        tracep->fullBit(oldp+2,(vlSelf->reset));
-        tracep->fullSData(oldp+3,(vlSelf->io_in),10);
-        tracep->fullSData(oldp+4,(vlSelf->io_out),10);
+        tracep->fullSData(oldp+1,(vlSelf->io_in),10);
+        tracep->fullSData(oldp+2,(vlSelf->io_out),10);
     }
 }

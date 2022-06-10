@@ -23,10 +23,8 @@ void VPassthrough___024root__traceChgSub0(VPassthrough___024root* vlSelf, Verila
     if (false && oldp) {}  // Prevent unused
     // Body
     {
-        tracep->chgBit(oldp+0,(vlSelf->clock));
-        tracep->chgBit(oldp+1,(vlSelf->reset));
-        tracep->chgSData(oldp+2,(vlSelf->io_in),10);
-        tracep->chgSData(oldp+3,(vlSelf->io_out),10);
+        tracep->chgSData(oldp+0,(vlSelf->io_in),10);
+        tracep->chgSData(oldp+1,(vlSelf->io_out),10);
     }
 }
 

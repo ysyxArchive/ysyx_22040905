@@ -10,8 +10,6 @@
 
 VPassthrough::VPassthrough(VerilatedContext* _vcontextp__, const char* _vcname__)
     : vlSymsp{new VPassthrough__Syms(_vcontextp__, _vcname__, this)}
-    , clock{vlSymsp->TOP.clock}
-    , reset{vlSymsp->TOP.reset}
     , io_in{vlSymsp->TOP.io_in}
     , io_out{vlSymsp->TOP.io_out}
     , rootp{&(vlSymsp->TOP)}

@@ -49,10 +49,6 @@ void VPassthrough___024root___eval_debug_assertions(VPassthrough___024root* vlSe
     VPassthrough__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VPassthrough___024root___eval_debug_assertions\n"); );
     // Body
-    if (VL_UNLIKELY((vlSelf->clock & 0xfeU))) {
-        Verilated::overWidthError("clock");}
-    if (VL_UNLIKELY((vlSelf->reset & 0xfeU))) {
-        Verilated::overWidthError("reset");}
     if (VL_UNLIKELY((vlSelf->io_in & 0xfc00U))) {
         Verilated::overWidthError("io_in");}
 }

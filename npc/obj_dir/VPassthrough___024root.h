@@ -19,8 +19,6 @@ VL_MODULE(VPassthrough___024root) {
   public:
 
     // PORTS
-    VL_IN8(clock,0,0);
-    VL_IN8(reset,0,0);
     VL_IN16(io_in,9,0);
     VL_OUT16(io_out,9,0);
 

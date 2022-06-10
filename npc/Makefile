@@ -56,10 +56,14 @@ $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 		--top-module $(TOPNAME) $^ \
 		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+
 all: default
-sim: $(BIN)
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+run: $(BIN)
 	$^
+
+sim: 
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	verilator -Wall --trace --cc --exe --$(TOPNAME).cpp $(TOPNAME).v
 	gtkwave wave.vcd
 
 include ../Makefile

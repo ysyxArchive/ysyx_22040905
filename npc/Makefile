@@ -66,7 +66,8 @@ sim: $(VSRCS) $(CSRCSS)
 	rm -rf $(OBJ_DIR)
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
 		--top-module $(TOPNAME) $^ \ 
-	    --Mdir $(OBJ_DIR) --exe
+	    --Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+
 	gtkwave wave.vcd
 
 include ../Makefile

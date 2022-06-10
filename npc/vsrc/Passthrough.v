@@ -1,6 +1,6 @@
 module Passthrough(
-  input        clock,
-  input        reset,
+ // input        clock,
+ // input        reset,
   input  [1:0] io_x0,
   input  [1:0] io_x1,
   input  [1:0] io_x2,

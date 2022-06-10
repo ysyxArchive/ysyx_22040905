@@ -1,11 +1,11 @@
-VSRCS_DIR=./vsrcs
+VSRC_DIR=./vsrc
 test:
 	mill -i __.test
 
 verilog:
 	$(call git_commit, "generate verilog")
-	mkdir -p $(VSRCS_DIR)
-	mill -i __.test.runMain Elaborate -td $(VSRCS_DIR)
+	mkdir -p $(VSRC_DIR)
+	mill -i __.test.runMain Elaborate -td $(VSRC_DIR)
 
 help:
 	mill -i __.test.runMain Elaborate --help
@@ -23,7 +23,7 @@ checkformat:
 	mill -i __.checkFormat
 
 clean:
-	-rm -rf $(VSRCS_DIR)
+	-rm -rf $(VSRC_DIR)
 
 .PHONY: test verilog help compile bsp reformat checkformat clean
 

@@ -18,13 +18,14 @@ int main(int argc,char ** argv, char** env)
 
 
     while(sim_time<MAX_SIM_TIME){
-    int a=rand()%100;
-    top->io_in=a;
+    top->io_x0=0,top->io_x1=1,top->io_x2=2,top->io_x3=3;
+    top->io_y=rand()%4;
+
     top->eval();
     tfp->dump(sim_time);
+    printf("F = %d\n",top->io_f);
+    assert(top->io_f == io_y);
     sim_time++;
-    printf("a = %d, f = %d\n", a, top->io_out);
-    assert(top->io_out == a);
     }
     tfp->close();
     delete top;

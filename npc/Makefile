@@ -31,7 +31,7 @@ TOPNAME=Passthrough
 NXDC_FILES = constr/top.nxdc
 INC_PATH ?=
 VERILATOR = verilator
-VERILATOR_CFLAGS += -MMD --build -cc --exe \
+VERILATOR_CFLAGS += -MMD --build -cc  \
 					-O3 --x-assign fast --x-initial fast --noassert --trace -Wall 
 
 BUILD_DIR = ./build
@@ -65,9 +65,7 @@ sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(OBJ_DIR)
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
-		--top-module $(TOPNAME) $^ \
-		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
-		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+		--top-module $(TOPNAME) $^ 
 
 	gtkwave wave.vcd
 

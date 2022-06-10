@@ -30,7 +30,8 @@ int main(int argc,char ** argv, char** env)
     }
     tfp->close();
     delete top;
-
+    delete tfp;
+    delete contextp;
     return 0;
 
 }

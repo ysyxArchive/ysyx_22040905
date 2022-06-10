@@ -1,4 +1,4 @@
-/*export PRJ_PATH=$(shell pwd)/..
+# /*export PRJ_PATH=$(shell pwd)*/..
 export DESIGN=top
 
 cmp:
@@ -12,4 +12,4 @@ wave:
 	gtkwave wave.vcd &
 
 clean:
-	@rm -rf obj_dir wave.vcd*/
+	@rm -rf obj_dir wave.vcd

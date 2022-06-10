@@ -15,7 +15,7 @@ class Passthrough extends Module {
      io.F := io.x0
    }.elsewhen(io.y===1.U){
      io.F := io.x1
-   }.elsewheh(io.y===2.U){
+   }.elsewhen(io.y===2.U){
      io.F := io.x2
    }.otherwise{
      io.F := io.x3

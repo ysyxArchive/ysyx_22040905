@@ -10,17 +10,14 @@ class Passthrough extends Module {
     val y  = Input(UInt(2.W))
     val F  = Output(UInt(2.W))
   })
-  switch(y){
-   is(0.U){
+   when(y===0.U)
+   {
      F := x0
-   }
-   is(1.U){
+   }.elsewhen(y===1.U){
      F := x1
-   }
-   is(2.U){
+   }.elsewheh(y===2.U){
      F := x2
-   }
-   is(3.U){
+   }.otherwise{
      F := x3
    }
 

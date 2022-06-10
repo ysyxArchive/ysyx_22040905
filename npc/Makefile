@@ -65,8 +65,8 @@ sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(OBJ_DIR)
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
-		--top-module $(TOPNAME) $^ 
-
+		--top-module $(TOPNAME) $^ \ 
+	    --Mdir $(OBJ_DIR) --exe
 	gtkwave wave.vcd
 
 include ../Makefile

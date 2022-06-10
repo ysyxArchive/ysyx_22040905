@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<verilated.h>
-#include<VPassthrough.h>
+#include</home/agustin/ysyx-workbench/npc/build/obj_dir/VPassthrough.h>
 #include<verilated_vcd_c.h>
 #define MAX_SIM_TIME 20
 vluint64_t sim_time=0;
@@ -10,7 +10,7 @@ int main(int argc,char ** argv, char** env)
 {
     Verilated::traceEverOn(true);
     VerilatedVcdC* tfp=new VerilatedVcdC;
-
+    VerilatedContext* contextp = new VerilatedContext;
     VPassthrough* top =new VPassthrough;
 
     top->trace(tfp,5);
@@ -22,7 +22,8 @@ int main(int argc,char ** argv, char** env)
     top->io_y=rand()%4;
 
     top->eval();
-    tfp->dump(sim_time);
+    tfp->dump(contextp->time());
+    contextp->timeInc(1);
     printf("F = %d\n",top->io_F);
     assert(top->io_F == top->io_y);
     sim_time++;

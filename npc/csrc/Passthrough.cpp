@@ -8,10 +8,9 @@
 vluint64_t sim_time=0;
 int main(int argc,char ** argv, char** env)
 {
+    VPassthrough* top =new VPassthrough;
     Verilated::traceEverOn(true);
     VerilatedVcdC* tfp=new VerilatedVcdC;
-    VerilatedContext* contextp = new VerilatedContext;
-    VPassthrough* top =new VPassthrough;
 
     top->trace(tfp,5);
     tfp->open("wave.vcd");
@@ -22,16 +21,13 @@ int main(int argc,char ** argv, char** env)
     top->io_y=rand()%2;
 
     top->eval();
-    tfp->dump(contextp->time());
-    contextp->timeInc(1);
+    tfp->dump(sim_time);
     printf("F = %d\n",top->io_F);
     //assert(top->io_F == top->io_y);
     sim_time++;
     }
     tfp->close();
     delete top;
-    delete tfp;
-    delete contextp;
     return 0;
 
 }

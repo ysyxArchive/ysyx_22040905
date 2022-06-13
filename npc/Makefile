@@ -64,6 +64,7 @@ run: $(BIN)
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(BUILD_DIR)
+	$(shell mkdir -p $(BUILD_DIR))
 	$(VERILATOR) $(VERILATOR_CFLAGS) --trace\
 		--top-module $(TOPNAME) $^ \
 	   	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \

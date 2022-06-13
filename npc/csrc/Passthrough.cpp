@@ -2,32 +2,40 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<verilated.h>
-#include</home/agustin/ysyx-workbench/npc/build/obj_dir/VPassthrough.h>
+#include<home/agustin/ysyx-workbench/npc/obj_dir/VPassthrough.h>
 #include<verilated_vcd_c.h>
-#define MAX_SIM_TIME 20
-vluint64_t sim_time=0;
-int main(int argc,char ** argv, char** env)
+VerilatedContext* contextp = NULL;
+VerilatedVcdC* tfp = NULL;
+static VPassthrough* top;
+
+void step_and_dump_wave(){
+  top->eval();
+  contextp->timeInc(1);
+  tfp->dump(contextp->time());
+}
+void sim_init(){
+  contextp = new VerilatedContext;
+  tfp = new VerilatedVcdC;
+  top = new VPassthrough;
+  contextp->traceEverOn(true);
+  top->trace(tfp, 0);
+  tfp->open("dump.vcd");
+}
+void sim_exit(){
+  step_and_dump_wave();
+  tfp->close();
+}
+int main()
 {
-    VPassthrough* top =new VPassthrough;
-    Verilated::traceEverOn(true);
-    VerilatedVcdC* tfp=new VerilatedVcdC;
+    sim_init();
 
-    top->trace(tfp,5);
-    tfp->open("wave.vcd");
-
-
-    while(sim_time<MAX_SIM_TIME){
+    for(int t=0;t<20;t++){
     top->io_x0=0,top->io_x1=1,top->io_x2=2,top->io_x3=3;
     top->io_y=rand()%4;
 
-    top->eval();
-    tfp->dump(sim_time);
-    printf("F = %d\n",top->io_F);
+    step_and_dump_wave();
+    //printf("F = %d\n",top->io_F);
     //assert(top->io_F == top->io_y);
-    sim_time++;
     }
-    tfp->close();
-    delete top;
-    return 0;
-
+    sim_exit();
 }

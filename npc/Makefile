@@ -63,12 +63,11 @@ run: $(BIN)
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	rm -rf $(BUILD_DIR)
-	mkdir -p $(BUILD_DIR)
-	$(VERILATOR) $(VERILATOR_CFLAGS) --trace\
+	rm -rf $(OBJ_DIR)
+	verilator --build -Wall --cc --exe --trace\
 		--top-module $(TOPNAME) $^ \
 	   	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
-	    --Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+	    --Mdir $(OBJ_DIR) -o $(abspath $(BIN))
 
 ## gtkwave wave.vcd
 

@@ -25,7 +25,7 @@ checkformat:
 clean:
 	-rm -rf $(VSRC_DIR)
 
-.PHONY: test verilog help compile bsp reformat checkformat clean getwave
+.PHONY: test verilog help compile bsp reformat checkformat clean 
 
 TOPNAME=Passthrough
 NXDC_FILES = constr/top.nxdc
@@ -63,12 +63,11 @@ run: $(BIN)
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	rm -rf $(OBJ_DIR)
+	rm -rf $(BUILD_DIR)/*
 	verilator --build -Wall --cc --exe --trace\
 		--top-module $(TOPNAME) $^ \
 	   	$(addprefix -CFLAGS , $(CFLAGS)) \
 	    --Mdir $(OBJ_DIR) ##-o $(abspath $(BIN))
-getwave:
 	ls -l ./build/obj_dir
 	./build/obj_dir/V$(TOPNAME)
 	gtkwave ./build/wave.vcd

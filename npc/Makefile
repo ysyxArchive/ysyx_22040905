@@ -25,7 +25,7 @@ checkformat:
 clean:
 	-rm -rf $(VSRC_DIR)
 
-.PHONY: test verilog help compile bsp reformat checkformat clean
+.PHONY: test verilog help compile bsp reformat checkformat clean getwave
 
 TOPNAME=Passthrough
 NXDC_FILES = constr/top.nxdc
@@ -68,7 +68,9 @@ sim: $(VSRCS) $(CSRCSS)
 		--top-module $(TOPNAME) $^ \
 	   	$(addprefix -CFLAGS , $(CFLAGS)) \
 	    --Mdir $(OBJ_DIR) ##-o $(abspath $(BIN))
-
-## gtkwave wave.vcd
+getwave:
+	ls -l ./build/obj_dir
+	./build/obj_dir/V$(TOPNAME)
+	gtkwave ./build/wave.vcd
 
 include ../Makefile

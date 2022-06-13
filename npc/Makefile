@@ -70,6 +70,6 @@ sim: $(VSRCS) $(CSRCSS)
 	    --Mdir $(OBJ_DIR) ##-o $(abspath $(BIN))
 	ls -l ./build/obj_dir
 	./build/obj_dir/V$(TOPNAME)
-	gtkwave ./build/wave.vcd
+	gtkwave wave.vcd
 
 include ../Makefile

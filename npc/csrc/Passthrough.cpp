@@ -29,7 +29,7 @@ int main()
 {
     sim_init();
 
-    for(int t=0;t<30;t++){
+    for(int t=0;t<20;t++){
     top->io_x0=0,top->io_x1=1,top->io_x2=2,top->io_x3=3;
     top->io_y=rand()%4;
 

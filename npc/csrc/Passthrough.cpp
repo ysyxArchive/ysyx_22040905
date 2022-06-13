@@ -17,7 +17,7 @@ int main(int argc,char ** argv, char** env)
 
 
     while(sim_time<MAX_SIM_TIME){
-    top->io_x0=0,top->io_x1=1,top->io_x2=10,top->io_x3=11;
+    top->io_x0=0,top->io_x1=1,top->io_x2=2,top->io_x3=3;
     top->io_y=rand()%4;
 
     top->eval();

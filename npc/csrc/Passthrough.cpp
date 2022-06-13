@@ -19,7 +19,7 @@ void sim_init(){
   top = new VPassthrough;
   contextp->traceEverOn(true);
   top->trace(tfp, 0);
-  tfp->open("dump.vcd");
+  tfp->open("wave.vcd");
 }
 void sim_exit(){
   step_and_dump_wave();

@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<verilated.h>
-#include</home/agustin/ysyx-workbench/npc/obj_dir/VPassthrough.h>
+#include</home/agustin/ysyx-workbench/npc/build/obj_dir/VPassthrough.h>
 #include<verilated_vcd_c.h>
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;

@@ -69,6 +69,6 @@ sim: $(VSRCS) $(CSRCSS)
 	   	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 	    --Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
-       ##gtkwave wave.vcd
+## gtkwave wave.vcd
 
 include ../Makefile

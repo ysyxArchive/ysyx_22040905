@@ -66,7 +66,7 @@ sim: $(VSRCS) $(CSRCSS)
 	rm -rf $(OBJ_DIR)
 	verilator --build -Wall --cc --exe --trace\
 		--top-module $(TOPNAME) $^ \
-	   	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
+	   	$(addprefix -CFLAGS , $(CFLAGS)) \
 	    --Mdir $(OBJ_DIR) -o $(abspath $(BIN))
 
 ## gtkwave wave.vcd

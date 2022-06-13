@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<verilated.h>
-#include<home/agustin/ysyx-workbench/npc/obj_dir/VPassthrough.h>
+#include</home/agustin/ysyx-workbench/npc/obj_dir/VPassthrough.h>
 #include<verilated_vcd_c.h>
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
@@ -34,8 +34,8 @@ int main()
     top->io_y=rand()%4;
 
     step_and_dump_wave();
-    //printf("F = %d\n",top->io_F);
-    //assert(top->io_F == top->io_y);
+    printf("F = %d\n",top->io_F);
+    assert(top->io_F == top->io_y);
     }
     sim_exit();
 }

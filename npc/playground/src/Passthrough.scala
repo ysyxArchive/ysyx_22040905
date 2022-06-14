@@ -14,19 +14,19 @@ class Passthrough extends Module {
       when(io.en){
         when(io.in(7)===1.U){
             outt := 7.U
-        }.elsewhen(io.in&"01000000".U){
+        }.elsewhen(io.in(6)===1.U){
             outt := 6.U
-        }.elsewhen(io.in&"00100000".U){
+        }.elsewhen(io.in(5)===1.U){
             outt := 5.U
-        }.elsewhen(io.in&"00010000".U){
+        }.elsewhen(io.in(4)===1.U){
             outt := 4.U
-        }.elsewhen(io.in&"00001000".U){
+        }.elsewhen(io.in(3)===1.U){
             outt := 3.U
-        }.elsewhen(io.in&"00000100".U){
+        }.elsewhen(io.in(2)===1.U){
             outt := 2.U
-        }.elsewhen(io.in&"00000010".U){
+        }.elsewhen(io.in(1)===1.U){
             outt := 1.U
-        }.elsewhen(io.in&"00000001".U){
+        }.elsewhen(io.in(0)===1.U){
             outt := 0.U
         }
         io.out := outt

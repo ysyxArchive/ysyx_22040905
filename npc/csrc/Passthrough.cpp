@@ -32,7 +32,7 @@ int main()
     sim_init();
     nvboard_bind_all_pins(&top);
     nvboard_init();
-    top.reset=0;
+    //top.reset=0;
     while(1){
       top.clock = 0; 
       step_and_dump_wave();

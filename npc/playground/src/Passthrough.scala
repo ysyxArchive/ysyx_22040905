@@ -12,7 +12,7 @@ class Passthrough extends Module {
       val outt:UInt =Reg(UInt(3.W))
       io.sign := io.in>0.U 
       when(io.en){
-        for(i <- 0 to 8){
+        for(i <- 0.U to 8.U){
           when(io.in===(1.U<<i)){
             outt := i;
           }
@@ -21,23 +21,32 @@ class Passthrough extends Module {
         switch(outt){
           is(0.U){
             io.bcd7seg:= "b1000000".U
-          }is(1.U){
+          }i
+          is(1.U){
             io.bcd7seg:= "b1111001".U
-          }is(2.U){
+          }
+          is(2.U){
             io.bcd7seg:= "b0100100".U
-          }is(3.U){
+          }
+          is(3.U){
             io.bcd7seg:= "b0110000".U
-          }is(4.U){
+          }
+          is(4.U){
             io.bcd7seg:= "b0011001".U
-          }is(5.U){
+          }
+          is(5.U){
             io.bcd7seg:= "b0010010".U
-          }is(6.U){
+          }
+          is(6.U){
             io.bcd7seg:= "b0000010".U
-          }is(7.U){
+          }
+          is(7.U){
             io.bcd7seg:= "b1111000".U
-          }is(8.U){
+          }
+          is(8.U){
             io.bcd7seg:= "b0000000".U
-          }is(9.U){
+          }
+          is(9.U){
             io.bcd7seg:= "b0010000".U
           }
         }

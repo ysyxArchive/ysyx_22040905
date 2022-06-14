@@ -10,7 +10,7 @@ class Passthrough extends Module {
      val bcd7seg=Output(UInt(7.W))
   })
       val outt: UInt=Reg(UInt(3.W))
-top.rst=0;      io.sign := io.in>0 
+      io.sign := io.in>0 
       when(io.en){
         for(i <- 0 to 8){
           when(io.in===(1<<i)){
@@ -41,6 +41,6 @@ top.rst=0;      io.sign := io.in>0
             io.bcd7seg:= "b0010000".U
           }
         }
-
+      }
   }
 

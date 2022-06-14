@@ -10,6 +10,8 @@ class Passthrough extends Module {
      val bcd7seg=Output(UInt(7.W))
   })
       val outt:UInt =Reg(UInt(3.W))
+      bcd7seg := "b00000000".U
+      outt := 8.U
       io.sign := io.in>0.U 
       when(io.en){
         when(io.in(7)===1.U){

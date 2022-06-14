@@ -34,9 +34,9 @@ int main()
     nvboard_init();
     top.en=1;
     while(1){
-      top.clock = 0; 
+      top->clock = 0; 
       step_and_dump_wave();
-      top.clock=1;
+      top->clock=1;
       step_and_dump_wave();
       nvboard_update();
     }

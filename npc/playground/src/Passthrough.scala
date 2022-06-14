@@ -10,34 +10,34 @@ class Passthrough extends Module {
      val bcd7seg=Output(UInt(7.W))
   })
       val outt: UInt=Reg(UInt(3.W))
-      io.sign := io.in>0 
+      io.sign := io.in>0.U 
       when(io.en){
         for(i <- 0 to 8){
-          when(io.in===(1<<i)){
+          when(io.in===(1.U<<i)){
             outt = i;
           }
         }
         io.out := outt
         switch(outt){
-          is(0){
+          is(0.U){
             io.bcd7seg:= "b1000000".U
-          }is(1){
+          }is(1.U){
             io.bcd7seg:= "b1111001".U
-          }is(2){
+          }is(2.U){
             io.bcd7seg:= "b0100100".U
-          }is(3){
+          }is(3.U){
             io.bcd7seg:= "b0110000".U
-          }is(4){
+          }is(4.U){
             io.bcd7seg:= "b0011001".U
-          }is(5){
+          }is(5.U){
             io.bcd7seg:= "b0010010".U
-          }is(6){
+          }is(6.U){
             io.bcd7seg:= "b0000010".U
-          }is(7){
+          }is(7.U){
             io.bcd7seg:= "b1111000".U
-          }is(8){
+          }is(8.U){
             io.bcd7seg:= "b0000000".U
-          }is(9){
+          }is(9.U){
             io.bcd7seg:= "b0010000".U
           }
         }

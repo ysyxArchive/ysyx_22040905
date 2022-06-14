@@ -4,6 +4,7 @@
 #include<verilated.h>
 #include</home/agustin/ysyx-workbench/npc/build/obj_dir/VPassthrough.h>
 #include<verilated_vcd_c.h>
+#include<nvboard.h>
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 static VPassthrough* top;
@@ -25,17 +26,20 @@ void sim_exit(){
   step_and_dump_wave();
   tfp->close();
 }
+
 int main()
 {
     sim_init();
-
-    for(int t=0;t<20;t++){
-    top->io_x0=0,top->io_x1=1,top->io_x2=2,top->io_x3=3;
-    top->io_y=rand()%4;
-
-    step_and_dump_wave();
-    printf("F = %d\n",top->io_F);
-    assert(top->io_F == top->io_y);
+    nvboard_bind_all_pins(&top);
+    nvboard_init();
+    top.rst=0;
+    while(1){
+      top.clk = 0; 
+      step_and_dump_wave();
+      top.clk=1;
+      step_and_dump_wave();
+      nvboard_update();
     }
     sim_exit();
+    nvboard_quit();
 }

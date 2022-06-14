@@ -12,7 +12,7 @@ class Passthrough extends Module {
       val outt:UInt =Reg(UInt(3.W))
       io.sign := io.in>0.U 
       when(io.en){
-        for(i <- 0.U to 8.U){
+        for(i <- 0 to 8){
           when(io.in===(1.U<<i)){
             outt := UInt(i);
           }

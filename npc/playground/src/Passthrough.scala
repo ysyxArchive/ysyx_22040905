@@ -14,7 +14,7 @@ class Passthrough extends Module {
       when(io.en){
         for(i <- 0.U to 8.U){
           when(io.in===(1.U<<i)){
-            outt := i;
+            outt := UInt(i);
           }
         }
         io.out := outt

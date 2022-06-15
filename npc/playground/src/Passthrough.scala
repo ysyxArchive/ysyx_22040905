@@ -9,8 +9,9 @@ class Passthrough extends Module {
      val sign=Output(Bool())
      val bcd7seg=Output(UInt(7.W))
   })
+      
       val outt:UInt =Reg(UInt(3.W))
-      io.bcd7seg := "b00000000".U
+      io.bcd7seg := "b0000000".U
       outt := 0.U
       io.out := 0.U
       io.sign := io.in>0.U 

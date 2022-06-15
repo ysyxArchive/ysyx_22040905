@@ -25,14 +25,14 @@ checkformat:
 clean:
 	-rm -rf $(VSRC_DIR)
 
-.PHONY: test verilog help compile bsp reformat checkformat clean 
+.PHONY: test verilog help compile bsp reformat checkformat clean all sim run 
 
 TOPNAME=Passthrough
 NXDC_FILES = constr/top.nxdc
 INC_PATH ?=
 VERILATOR = verilator
 VERILATOR_CFLAGS += -MMD --build --cc  \
-					-O3 --x-assign fast --x-initial fast --noassert -Wall 
+					-O3 --x-assign fast --x-initial fast --noassert 
 
 BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir

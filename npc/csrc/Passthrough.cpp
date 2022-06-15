@@ -5,15 +5,18 @@
 #include</home/agustin/ysyx-workbench/npc/build/obj_dir/VPassthrough.h>
 #include<verilated_vcd_c.h>
 #include<nvboard.h>
-VerilatedContext* contextp = NULL;
-VerilatedVcdC* tfp = NULL;
+//VerilatedContext* contextp = NULL;
+//VerilatedVcdC* tfp = NULL;
+
+void nvboard_bind_all_pins(VPassthrough* top);
 static VPassthrough* top;
 
 void step_and_dump_wave(){
   top->eval();
-  contextp->timeInc(1);
-  tfp->dump(contextp->time());
+  //contextp->timeInc(1);
+  //tfp->dump(contextp->time());
 }
+/*
 void sim_init(){
   contextp = new VerilatedContext;
   tfp = new VerilatedVcdC;
@@ -25,14 +28,13 @@ void sim_init(){
 void sim_exit(){
   step_and_dump_wave();
   tfp->close();
-}
+}*/
 
 int main()
 {
-    sim_init();
-    nvboard_bind_all_pins(&top);
+    //sim_init();
+    nvboard_bind_all_pins(top);
     nvboard_init();
-    //top->io_en=1;
     while(1){
       top->clock = 0; 
       step_and_dump_wave();
@@ -40,6 +42,6 @@ int main()
       step_and_dump_wave();
       nvboard_update();
     }
-    sim_exit();
+    //sim_exit();
     nvboard_quit();
 }

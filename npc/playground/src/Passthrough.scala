@@ -7,11 +7,11 @@ class Passthrough extends Module {
      val en=Input(Bool())
      val out=Output(UInt(3.W))
      val sign=Output(Bool())
-     val bcd7seg=Output(UInt(7.W))
+     val bcd8seg=Output(UInt(8.W))
   })
       
       val outt:UInt =Reg(UInt(3.W))
-      io.bcd7seg := "b0000000".U
+      io.bcd7seg := "b11111111".U
       outt := 0.U
       io.out := 0.U
       io.sign := io.in>0.U 
@@ -35,25 +35,25 @@ class Passthrough extends Module {
         }
         io.out := outt
         when(outt===0.U){
-            io.bcd7seg:= "b1000000".U
+            io.bcd7seg:= "b11111101".U
         }.elsewhen(outt===1.U){
-            io.bcd7seg:= "b1111001".U
+            io.bcd7seg:= "b01100000".U
         }.elsewhen(outt===2.U){
-            io.bcd7seg:= "b0100100".U
+            io.bcd7seg:= "b11011010".U
         }.elsewhen(outt===3.U){
-            io.bcd7seg:= "b0110000".U
+            io.bcd7seg:= "b11110010".U
         }.elsewhen(outt===4.U){
-            io.bcd7seg:= "b0011001".U
+            io.bcd7seg:= "b01100110".U
         }.elsewhen(outt===5.U){
-            io.bcd7seg:= "b0010010".U
+            io.bcd7seg:= "b10110110".U
         }.elsewhen(outt===6.U){
-            io.bcd7seg:= "b0000010".U
+            io.bcd7seg:= "b10111110".U
         }.elsewhen(outt===7.U){
-            io.bcd7seg:= "b1111000".U
+            io.bcd7seg:= "b11100000".U
         }.elsewhen(outt===8.U){
-            io.bcd7seg:= "b0000000".U
+            io.bcd7seg:= "b00000000".U
         }.elsewhen(outt===9.U){
-            io.bcd7seg:= "b0010000".U
+            io.bcd7seg:= "b00000000".U
         }
         
       }

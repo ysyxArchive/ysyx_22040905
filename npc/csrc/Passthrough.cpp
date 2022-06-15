@@ -8,11 +8,11 @@
 //VerilatedContext* contextp = NULL;
 //VerilatedVcdC* tfp = NULL;
 
+static TOP_NAME dut;
 void nvboard_bind_all_pins(VPassthrough* top);
-static VPassthrough* top;
 
-void step_and_dump_wave(){
-  top->eval();
+static void step_and_dump_wave(){
+  dut.eval();
   //contextp->timeInc(1);
   //tfp->dump(contextp->time());
 }
@@ -33,12 +33,12 @@ void sim_exit(){
 int main()
 {
     //sim_init();
-    nvboard_bind_all_pins(top);
+    nvboard_bind_all_pins(&dut);
     nvboard_init();
     while(1){
-      top->clock = 0; 
+      dut.clock = 0; 
       step_and_dump_wave();
-      top->clock=1;
+      dut.clock=1;
       step_and_dump_wave();
       nvboard_update();
     }

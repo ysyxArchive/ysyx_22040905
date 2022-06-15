@@ -5,7 +5,7 @@ module Passthrough(
   input        io_en,
   output [2:0] io_out,
   output       io_sign,
-  output [6:0] io_bcd7seg
+  output [7:0] io_bcd8seg
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
@@ -15,19 +15,19 @@ module Passthrough(
   wire [1:0] _GEN_3 = io_in[3] ? 2'h3 : _GEN_2; // @[Passthrough.scala 27:35 Passthrough.scala 28:18]
   wire [2:0] _GEN_4 = io_in[4] ? 3'h4 : {{1'd0}, _GEN_3}; // @[Passthrough.scala 25:35 Passthrough.scala 26:18]
   wire [3:0] _GEN_21 = {{1'd0}, outt}; // @[Passthrough.scala 53:24]
-  wire [4:0] _GEN_8 = _GEN_21 == 4'h9 ? 5'h10 : 5'h0; // @[Passthrough.scala 55:31 Passthrough.scala 56:23 Passthrough.scala 14:18]
-  wire [4:0] _GEN_9 = _GEN_21 == 4'h8 ? 5'h0 : _GEN_8; // @[Passthrough.scala 53:31 Passthrough.scala 54:23]
-  wire [6:0] _GEN_10 = outt == 3'h7 ? 7'h78 : {{2'd0}, _GEN_9}; // @[Passthrough.scala 51:31 Passthrough.scala 52:23]
-  wire [6:0] _GEN_11 = outt == 3'h6 ? 7'h2 : _GEN_10; // @[Passthrough.scala 49:31 Passthrough.scala 50:23]
-  wire [6:0] _GEN_12 = outt == 3'h5 ? 7'h12 : _GEN_11; // @[Passthrough.scala 47:31 Passthrough.scala 48:23]
-  wire [6:0] _GEN_13 = outt == 3'h4 ? 7'h19 : _GEN_12; // @[Passthrough.scala 45:31 Passthrough.scala 46:23]
-  wire [6:0] _GEN_14 = outt == 3'h3 ? 7'h30 : _GEN_13; // @[Passthrough.scala 43:31 Passthrough.scala 44:23]
-  wire [6:0] _GEN_15 = outt == 3'h2 ? 7'h24 : _GEN_14; // @[Passthrough.scala 41:31 Passthrough.scala 42:23]
-  wire [6:0] _GEN_16 = outt == 3'h1 ? 7'h79 : _GEN_15; // @[Passthrough.scala 39:31 Passthrough.scala 40:23]
-  wire [6:0] _GEN_17 = outt == 3'h0 ? 7'h40 : _GEN_16; // @[Passthrough.scala 37:25 Passthrough.scala 38:23]
+  wire [7:0] _GEN_8 = _GEN_21 == 4'h9 ? 8'h0 : 8'hff; // @[Passthrough.scala 55:31 Passthrough.scala 56:23 Passthrough.scala 14:18]
+  wire [7:0] _GEN_9 = _GEN_21 == 4'h8 ? 8'h0 : _GEN_8; // @[Passthrough.scala 53:31 Passthrough.scala 54:23]
+  wire [7:0] _GEN_10 = outt == 3'h7 ? 8'he0 : _GEN_9; // @[Passthrough.scala 51:31 Passthrough.scala 52:23]
+  wire [7:0] _GEN_11 = outt == 3'h6 ? 8'hbe : _GEN_10; // @[Passthrough.scala 49:31 Passthrough.scala 50:23]
+  wire [7:0] _GEN_12 = outt == 3'h5 ? 8'hb6 : _GEN_11; // @[Passthrough.scala 47:31 Passthrough.scala 48:23]
+  wire [7:0] _GEN_13 = outt == 3'h4 ? 8'h66 : _GEN_12; // @[Passthrough.scala 45:31 Passthrough.scala 46:23]
+  wire [7:0] _GEN_14 = outt == 3'h3 ? 8'hf2 : _GEN_13; // @[Passthrough.scala 43:31 Passthrough.scala 44:23]
+  wire [7:0] _GEN_15 = outt == 3'h2 ? 8'hda : _GEN_14; // @[Passthrough.scala 41:31 Passthrough.scala 42:23]
+  wire [7:0] _GEN_16 = outt == 3'h1 ? 8'h60 : _GEN_15; // @[Passthrough.scala 39:31 Passthrough.scala 40:23]
+  wire [7:0] _GEN_17 = outt == 3'h0 ? 8'hfd : _GEN_16; // @[Passthrough.scala 37:25 Passthrough.scala 38:23]
   assign io_out = io_en ? outt : 3'h0; // @[Passthrough.scala 18:18 Passthrough.scala 36:16 Passthrough.scala 16:14]
   assign io_sign = io_in > 8'h0; // @[Passthrough.scala 17:23]
-  assign io_bcd7seg = io_en ? _GEN_17 : 7'h0; // @[Passthrough.scala 18:18 Passthrough.scala 14:18]
+  assign io_bcd8seg = io_en ? _GEN_17 : 8'hff; // @[Passthrough.scala 18:18 Passthrough.scala 14:18]
   always @(posedge clock) begin
     if (io_en) begin // @[Passthrough.scala 18:18]
       if (io_in[7]) begin // @[Passthrough.scala 19:29]

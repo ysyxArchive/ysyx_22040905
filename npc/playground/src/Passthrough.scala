@@ -35,21 +35,21 @@ class Passthrough extends Module {
         }
         io.out := outt
         when(outt===0.U){
-            io.bcd8seg:= "b11111101".U
+            io.bcd8seg:= "b00000010".U
         }.elsewhen(outt===1.U){
-            io.bcd8seg:= "b01100000".U
+            io.bcd8seg:= "b10011111".U
         }.elsewhen(outt===2.U){
-            io.bcd8seg:= "b11011010".U
+            io.bcd8seg:= "b00100101".U
         }.elsewhen(outt===3.U){
-            io.bcd8seg:= "b11110010".U
+            io.bcd8seg:= "b00001101".U
         }.elsewhen(outt===4.U){
-            io.bcd8seg:= "b01100110".U
+            io.bcd8seg:= "b10011001".U
         }.elsewhen(outt===5.U){
-            io.bcd8seg:= "b10110110".U
+            io.bcd8seg:= "b01001001".U
         }.elsewhen(outt===6.U){
-            io.bcd8seg:= "b10111110".U
+            io.bcd8seg:= "b01000001".U
         }.elsewhen(outt===7.U){
-            io.bcd8seg:= "b11100000".U
+            io.bcd8seg:= "b00011111".U
         }.elsewhen(outt===8.U){
             io.bcd8seg:= "b00000000".U
         }.elsewhen(outt===9.U){

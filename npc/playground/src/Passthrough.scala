@@ -3,59 +3,23 @@ import chisel3.util.Decoupled
 
 class Passthrough extends Module { 
   val io = IO(new Bundle {
-     val in=Input(UInt(8.W))
-     val en=Input(Bool())
-     val out=Output(UInt(3.W))
-     val sign=Output(Bool())
-     val bcd8seg=Output(UInt(8.W))
+    val y=Input(UInt(2.W))
+    val x0=Input(UInt(2.W))
+    val x1=Input(UInt(2.W))
+    val x2=Input(UInt(2.W))
+    val x3=Input(UInt(2.W))
+    val f=Input(UInt(2.W))
+
   })
+    when(y===0){
+        f:=x0
+    }.elsewhen(y===1){
+        f:=x1
+    }.elsewhen(y===2){
+        f:=x2
+    }.otherwise{
+        f:=x3
+    } 
       
-      val outt:UInt =Reg(UInt(3.W))
-      io.bcd8seg := "b11111111".U
-      outt := 0.U
-      io.out := 0.U
-      io.sign := io.in>0.U 
-      when(io.en){
-        when(io.in(7)===1.U){
-            outt := 7.U
-        }.elsewhen(io.in(6)===1.U){
-            outt := 6.U
-        }.elsewhen(io.in(5)===1.U){
-            outt := 5.U
-        }.elsewhen(io.in(4)===1.U){
-            outt := 4.U
-        }.elsewhen(io.in(3)===1.U){
-            outt := 3.U
-        }.elsewhen(io.in(2)===1.U){
-            outt := 2.U
-        }.elsewhen(io.in(1)===1.U){
-            outt := 1.U
-        }.elsewhen(io.in(0)===1.U){
-            outt := 0.U
-        }
-        io.out := outt
-        when(outt===0.U){
-            io.bcd8seg:= "b00000010".U
-        }.elsewhen(outt===1.U){
-            io.bcd8seg:= "b10011111".U
-        }.elsewhen(outt===2.U){
-            io.bcd8seg:= "b00100101".U
-        }.elsewhen(outt===3.U){
-            io.bcd8seg:= "b00001101".U
-        }.elsewhen(outt===4.U){
-            io.bcd8seg:= "b10011001".U
-        }.elsewhen(outt===5.U){
-            io.bcd8seg:= "b01001001".U
-        }.elsewhen(outt===6.U){
-            io.bcd8seg:= "b01000001".U
-        }.elsewhen(outt===7.U){
-            io.bcd8seg:= "b00011111".U
-        }.elsewhen(outt===8.U){
-            io.bcd8seg:= "b00000000".U
-        }.elsewhen(outt===9.U){
-            io.bcd8seg:= "b00000000".U
-        }
-        
-      }
-  }
+}
 

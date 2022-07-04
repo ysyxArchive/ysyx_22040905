@@ -8,7 +8,7 @@ class Passthrough extends Module {
     val x1=Input(UInt(2.W))
     val x2=Input(UInt(2.W))
     val x3=Input(UInt(2.W))
-    val f=Input(UInt(2.W))
+    val f=Output(UInt(2.W))
 
   })
     io.f:=0.U

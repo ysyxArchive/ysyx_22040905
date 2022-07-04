@@ -11,11 +11,11 @@ class Passthrough extends Module {
     val f=Input(UInt(2.W))
 
   })
-    when(io.y===0){
+    when(io.y===0.U){
         io.f:=io.x0
-    }.elsewhen(io.y===1){
+    }.elsewhen(io.y===1.U){
         io.f:=io.x1
-    }.elsewhen(io.y===2){
+    }.elsewhen(io.y===2.U){
         io.f:=io.x2
     }.otherwise{
         io.f:=io.x3

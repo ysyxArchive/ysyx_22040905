@@ -36,9 +36,6 @@ int main()
     nvboard_bind_all_pins(&dut);
     nvboard_init();
     while(1){
-      dut.clock = 0; 
-      step_and_dump_wave();
-      dut.clock=1;
       step_and_dump_wave();
       nvboard_update();
     }

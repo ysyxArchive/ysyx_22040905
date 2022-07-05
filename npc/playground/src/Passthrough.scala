@@ -10,7 +10,7 @@ class Passthrough extends Module {
     val Result=Output(UInt(4.W))
     val Carry=Output(bool())
     val op=Input(UInt(3.W))
-    val bcd8seg:=Output(UInt(24.W))
+    val bcd8seg=Output(UInt(24.W))
   })
    io.bcd8seg:="b000000000000000000000000".U
    io.Overflow:=0
@@ -65,7 +65,7 @@ class Passthrough extends Module {
     }.elsewhen(io.Result%10===9){
         io.bcd8seg="b000000000000000010010000"^io.bcd8seg
     }.otherwise{
-        io.bcd8seg="b000000000000000010111111"^io,bcd8seg
+        io.bcd8seg="b000000000000000010111111"^io.bcd8seg
     }
 
     when(io.Result/10%10===0){
@@ -89,7 +89,7 @@ class Passthrough extends Module {
     }.elsewhen(io.Result/10%10===9){
         io.bcd8seg="b000000001001000000000000"^io.bcd8seg
     }.otherwise{
-        io.bcd8seg="b000000001011111100000000"^io,bcd8seg
+        io.bcd8seg="b000000001011111100000000"^io.bcd8seg
     }
 
     when(io.Result/100%10===0){
@@ -113,7 +113,7 @@ class Passthrough extends Module {
     }.elsewhen(io.Result/100%10===9){
         io.bcd8seg="b100100000000000000000000"^io.bcd8seg
     }.otherwise{
-        io.bcd8seg="b101111110000000000000000"^io,bcd8seg
+        io.bcd8seg="b101111110000000000000000"^io.bcd8seg
     }
 }
 

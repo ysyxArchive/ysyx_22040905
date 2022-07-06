@@ -50,7 +50,7 @@ class Passthrough extends Module {
             io.Result:=1.U
         }
     }
-    when(io.Result%10.U(24.W)===0.U(24.W)){
+    when(io.Result%10.U(4.W)===0.U(4.W)){
         b:="b000000000000000010000010".U^a
     }.elsewhen(io.Result%10.U===1.U){
         b:="b000000000000000010011111".U^a
@@ -74,7 +74,7 @@ class Passthrough extends Module {
         b:="b000000000000000010111111".U^a
     }
 
-    when(io.Result/10.U(24.W)%10.U(24.W)===0.U(24.W)){
+    when(io.Result/10.U(4.W)%10.U(4.W)===0.U(4.W)){
         c:="b000000001000001000000000".U^b
     }.elsewhen(io.Result/10.U%10.U===1.U){
         c:="b000000001001111100000000".U^b
@@ -98,7 +98,7 @@ class Passthrough extends Module {
         c:="b000000001011111100000000".U^b
     }
 
-    when(io.Result/100.U(24.W)%10.U(24.W)===0.U(24.W)){
+    when(io.Result/100.U(4.W)%10.U(4.W)===0.U(4.W)){
         io.bcd8seg:="b100000100000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===1.U){
         io.bcd8seg:="b100111110000000000000000".U^c

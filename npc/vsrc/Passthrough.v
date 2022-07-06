@@ -74,7 +74,7 @@ module Passthrough(
   assign io_bcd8seg = ~io_Result[3] ? _io_bcd8seg_T : _io_bcd8seg_T_1; // @[Passthrough.scala 102:29 Passthrough.scala 103:19 Passthrough.scala 105:19]
   always @(posedge clock) begin
     if (_T_9 == 4'h0) begin // @[Passthrough.scala 54:31]
-      b <= 24'h80; // @[Passthrough.scala 55:10]
+      b <= 24'h81; // @[Passthrough.scala 55:10]
     end else if (_T_9 == 4'h1) begin // @[Passthrough.scala 56:37]
       b <= 24'h9f; // @[Passthrough.scala 57:10]
     end else if (_T_9 == 4'h2) begin // @[Passthrough.scala 58:37]

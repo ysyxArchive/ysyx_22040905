@@ -13,13 +13,14 @@ module Passthrough(
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
   reg [31:0] _RAND_1;
+  reg [31:0] _RAND_2;
 `endif // RANDOMIZE_REG_INIT
   reg [23:0] b; // @[Passthrough.scala 16:13]
   reg [23:0] c; // @[Passthrough.scala 17:13]
   wire [4:0] _io_Result_T = io_a + io_b; // @[Passthrough.scala 27:24]
   wire [3:0] _io_Result_T_1 = io_a + io_b; // @[Passthrough.scala 27:24]
   wire  _io_Overflow_T_5 = io_Result[3] != io_a[3]; // @[Passthrough.scala 28:56]
-  wire [4:0] _GEN_35 = {{1'd0}, io_Result}; // @[Passthrough.scala 29:32]
+  wire [4:0] _GEN_36 = {{1'd0}, io_Result}; // @[Passthrough.scala 29:32]
   wire  _io_Zero_T = io_Result == 4'h0; // @[Passthrough.scala 30:28]
   wire [4:0] _io_Result_T_2 = io_a - io_b; // @[Passthrough.scala 32:24]
   wire [3:0] _io_Result_T_3 = io_a - io_b; // @[Passthrough.scala 32:24]
@@ -37,63 +38,71 @@ module Passthrough(
   wire [3:0] _GEN_6 = io_op == 3'h2 ? _io_Result_T_4 : _GEN_5; // @[Passthrough.scala 36:33 Passthrough.scala 37:18]
   wire [3:0] _GEN_7 = io_op == 3'h1 ? _io_Result_T_3 : _GEN_6; // @[Passthrough.scala 31:33 Passthrough.scala 32:18]
   wire  _GEN_8 = io_op == 3'h1 & (io_a[3] == _io_Overflow_T_8[3] & _io_Overflow_T_5); // @[Passthrough.scala 31:33 Passthrough.scala 33:21 Passthrough.scala 22:15]
-  wire  _GEN_9 = io_op == 3'h1 & _io_Result_T_2 > _GEN_35; // @[Passthrough.scala 31:33 Passthrough.scala 34:17 Passthrough.scala 25:12]
+  wire  _GEN_9 = io_op == 3'h1 & _io_Result_T_2 > _GEN_36; // @[Passthrough.scala 31:33 Passthrough.scala 34:17 Passthrough.scala 25:12]
   wire  _GEN_10 = io_op == 3'h1 ? _io_Zero_T : 1'h1; // @[Passthrough.scala 31:33 Passthrough.scala 35:16 Passthrough.scala 23:11]
-  wire [3:0] _GEN_0 = io_Result % 4'ha; // @[Passthrough.scala 54:19]
-  wire [3:0] _T_11 = _GEN_0[3:0]; // @[Passthrough.scala 54:19]
-  wire [23:0] _GEN_15 = _T_11 == 4'h9 ? 24'h90 : 24'hff; // @[Passthrough.scala 72:37 Passthrough.scala 73:10 Passthrough.scala 75:10]
-  wire [23:0] _GEN_16 = _T_11 == 4'h8 ? 24'h80 : _GEN_15; // @[Passthrough.scala 70:37 Passthrough.scala 71:10]
-  wire [23:0] _GEN_17 = _T_11 == 4'h7 ? 24'hf8 : _GEN_16; // @[Passthrough.scala 68:37 Passthrough.scala 69:10]
-  wire [23:0] _GEN_18 = _T_11 == 4'h6 ? 24'h82 : _GEN_17; // @[Passthrough.scala 66:37 Passthrough.scala 67:10]
-  wire [23:0] _GEN_19 = _T_11 == 4'h5 ? 24'h92 : _GEN_18; // @[Passthrough.scala 64:37 Passthrough.scala 65:10]
-  wire [23:0] _GEN_20 = _T_11 == 4'h4 ? 24'h99 : _GEN_19; // @[Passthrough.scala 62:37 Passthrough.scala 63:10]
-  wire [3:0] _T_31 = io_Result / 4'ha; // @[Passthrough.scala 77:19]
-  wire [3:0] _GEN_1 = _T_31 % 4'ha; // @[Passthrough.scala 77:24]
-  wire [3:0] _T_32 = _GEN_1[3:0]; // @[Passthrough.scala 77:24]
-  wire [23:0] _c_T = 24'hf900 ^ b; // @[Passthrough.scala 78:41]
-  wire [23:0] _c_T_1 = 24'ha400 ^ b; // @[Passthrough.scala 80:41]
-  wire [23:0] _c_T_2 = 24'hb000 ^ b; // @[Passthrough.scala 82:41]
-  wire [23:0] _c_T_3 = 24'h9900 ^ b; // @[Passthrough.scala 84:41]
-  wire [23:0] _c_T_4 = 24'h9280 ^ b; // @[Passthrough.scala 86:41]
-  wire [23:0] _c_T_5 = 24'h8200 ^ b; // @[Passthrough.scala 88:41]
-  wire [23:0] _c_T_6 = 24'hf800 ^ b; // @[Passthrough.scala 90:41]
-  wire [23:0] _c_T_7 = 24'h8000 ^ b; // @[Passthrough.scala 92:41]
-  wire [23:0] _c_T_8 = 24'h9000 ^ b; // @[Passthrough.scala 94:41]
-  wire [23:0] _c_T_9 = 24'hff00 ^ b; // @[Passthrough.scala 96:41]
-  wire [23:0] _GEN_25 = _T_32 == 4'h9 ? _c_T_8 : _c_T_9; // @[Passthrough.scala 93:42 Passthrough.scala 94:10 Passthrough.scala 96:10]
-  wire [23:0] _GEN_26 = _T_32 == 4'h8 ? _c_T_7 : _GEN_25; // @[Passthrough.scala 91:42 Passthrough.scala 92:10]
-  wire [23:0] _GEN_27 = _T_32 == 4'h7 ? _c_T_6 : _GEN_26; // @[Passthrough.scala 89:42 Passthrough.scala 90:10]
-  wire [23:0] _GEN_28 = _T_32 == 4'h6 ? _c_T_5 : _GEN_27; // @[Passthrough.scala 87:42 Passthrough.scala 88:10]
-  wire [23:0] _GEN_29 = _T_32 == 4'h5 ? _c_T_4 : _GEN_28; // @[Passthrough.scala 85:42 Passthrough.scala 86:10]
-  wire [23:0] _io_bcd8seg_T = 24'hff0000 ^ c; // @[Passthrough.scala 100:50]
-  wire [23:0] _io_bcd8seg_T_1 = 24'hbf0000 ^ c; // @[Passthrough.scala 102:50]
+  reg [3:0] r; // @[Passthrough.scala 53:14]
+  wire [23:0] _io_bcd8seg_T = 24'hff0000 ^ c; // @[Passthrough.scala 56:50]
+  wire [23:0] _io_bcd8seg_T_1 = 24'hbf0000 ^ c; // @[Passthrough.scala 58:50]
+  wire [3:0] _r_T = ~io_Result; // @[Passthrough.scala 59:13]
+  wire [3:0] _r_T_2 = _r_T + 4'h1; // @[Passthrough.scala 59:24]
+  wire [3:0] _GEN_0 = r % 4'ha; // @[Passthrough.scala 62:11]
+  wire [3:0] _T_13 = _GEN_0[3:0]; // @[Passthrough.scala 62:11]
+  wire [23:0] _GEN_17 = _T_13 == 4'h9 ? 24'h90 : 24'hff; // @[Passthrough.scala 80:29 Passthrough.scala 81:10 Passthrough.scala 83:10]
+  wire [23:0] _GEN_18 = _T_13 == 4'h8 ? 24'h80 : _GEN_17; // @[Passthrough.scala 78:29 Passthrough.scala 79:10]
+  wire [23:0] _GEN_19 = _T_13 == 4'h7 ? 24'hf8 : _GEN_18; // @[Passthrough.scala 76:29 Passthrough.scala 77:10]
+  wire [23:0] _GEN_20 = _T_13 == 4'h6 ? 24'h82 : _GEN_19; // @[Passthrough.scala 74:29 Passthrough.scala 75:10]
+  wire [23:0] _GEN_21 = _T_13 == 4'h5 ? 24'h92 : _GEN_20; // @[Passthrough.scala 72:29 Passthrough.scala 73:10]
+  wire [23:0] _GEN_22 = _T_13 == 4'h4 ? 24'h99 : _GEN_21; // @[Passthrough.scala 70:29 Passthrough.scala 71:10]
+  wire [3:0] _T_33 = r / 4'ha; // @[Passthrough.scala 85:11]
+  wire [3:0] _GEN_1 = _T_33 % 4'ha; // @[Passthrough.scala 85:16]
+  wire [3:0] _T_34 = _GEN_1[3:0]; // @[Passthrough.scala 85:16]
+  wire [23:0] _c_T = 24'hf900 ^ b; // @[Passthrough.scala 86:41]
+  wire [23:0] _c_T_1 = 24'ha400 ^ b; // @[Passthrough.scala 88:41]
+  wire [23:0] _c_T_2 = 24'hb000 ^ b; // @[Passthrough.scala 90:41]
+  wire [23:0] _c_T_3 = 24'h9900 ^ b; // @[Passthrough.scala 92:41]
+  wire [23:0] _c_T_4 = 24'h9280 ^ b; // @[Passthrough.scala 94:41]
+  wire [23:0] _c_T_5 = 24'h8200 ^ b; // @[Passthrough.scala 96:41]
+  wire [23:0] _c_T_6 = 24'hf800 ^ b; // @[Passthrough.scala 98:41]
+  wire [23:0] _c_T_7 = 24'h8000 ^ b; // @[Passthrough.scala 100:41]
+  wire [23:0] _c_T_8 = 24'h9000 ^ b; // @[Passthrough.scala 102:41]
+  wire [23:0] _c_T_9 = 24'hff00 ^ b; // @[Passthrough.scala 104:41]
+  wire [23:0] _GEN_27 = _T_34 == 4'h9 ? _c_T_8 : _c_T_9; // @[Passthrough.scala 101:34 Passthrough.scala 102:10 Passthrough.scala 104:10]
+  wire [23:0] _GEN_28 = _T_34 == 4'h8 ? _c_T_7 : _GEN_27; // @[Passthrough.scala 99:34 Passthrough.scala 100:10]
+  wire [23:0] _GEN_29 = _T_34 == 4'h7 ? _c_T_6 : _GEN_28; // @[Passthrough.scala 97:34 Passthrough.scala 98:10]
+  wire [23:0] _GEN_30 = _T_34 == 4'h6 ? _c_T_5 : _GEN_29; // @[Passthrough.scala 95:34 Passthrough.scala 96:10]
+  wire [23:0] _GEN_31 = _T_34 == 4'h5 ? _c_T_4 : _GEN_30; // @[Passthrough.scala 93:34 Passthrough.scala 94:10]
   assign io_Overflow = io_op == 3'h0 ? io_a[3] == io_b[3] & io_Result[3] != io_a[3] : _GEN_8; // @[Passthrough.scala 26:27 Passthrough.scala 28:20]
   assign io_Zero = io_op == 3'h0 ? io_Result == 4'h0 : _GEN_10; // @[Passthrough.scala 26:27 Passthrough.scala 30:16]
   assign io_Result = io_op == 3'h0 ? _io_Result_T_1 : _GEN_7; // @[Passthrough.scala 26:27 Passthrough.scala 27:18]
-  assign io_Carry = io_op == 3'h0 ? _io_Result_T > _GEN_35 : _GEN_9; // @[Passthrough.scala 26:27 Passthrough.scala 29:17]
-  assign io_bcd8seg = ~io_Result[3] ? _io_bcd8seg_T : _io_bcd8seg_T_1; // @[Passthrough.scala 99:29 Passthrough.scala 100:19 Passthrough.scala 102:19]
+  assign io_Carry = io_op == 3'h0 ? _io_Result_T > _GEN_36 : _GEN_9; // @[Passthrough.scala 26:27 Passthrough.scala 29:17]
+  assign io_bcd8seg = ~io_Result[3] ? _io_bcd8seg_T : _io_bcd8seg_T_1; // @[Passthrough.scala 55:29 Passthrough.scala 56:19 Passthrough.scala 58:19]
   always @(posedge clock) begin
-    if (_T_11 == 4'h0) begin // @[Passthrough.scala 54:31]
-      b <= 24'hc0; // @[Passthrough.scala 55:10]
-    end else if (_T_11 == 4'h1) begin // @[Passthrough.scala 56:37]
-      b <= 24'hf9; // @[Passthrough.scala 57:10]
-    end else if (_T_11 == 4'h2) begin // @[Passthrough.scala 58:37]
-      b <= 24'ha4; // @[Passthrough.scala 59:10]
-    end else if (_T_11 == 4'h3) begin // @[Passthrough.scala 60:37]
-      b <= 24'hb0; // @[Passthrough.scala 61:10]
+    if (_T_13 == 4'h0) begin // @[Passthrough.scala 62:23]
+      b <= 24'hc0; // @[Passthrough.scala 63:10]
+    end else if (_T_13 == 4'h1) begin // @[Passthrough.scala 64:29]
+      b <= 24'hf9; // @[Passthrough.scala 65:10]
+    end else if (_T_13 == 4'h2) begin // @[Passthrough.scala 66:29]
+      b <= 24'ha4; // @[Passthrough.scala 67:10]
+    end else if (_T_13 == 4'h3) begin // @[Passthrough.scala 68:29]
+      b <= 24'hb0; // @[Passthrough.scala 69:10]
     end else begin
-      b <= _GEN_20;
+      b <= _GEN_22;
     end
-    if (_T_32 == 4'h1) begin // @[Passthrough.scala 77:36]
-      c <= _c_T; // @[Passthrough.scala 78:10]
-    end else if (_T_32 == 4'h2) begin // @[Passthrough.scala 79:42]
-      c <= _c_T_1; // @[Passthrough.scala 80:10]
-    end else if (_T_32 == 4'h3) begin // @[Passthrough.scala 81:42]
-      c <= _c_T_2; // @[Passthrough.scala 82:10]
-    end else if (_T_32 == 4'h4) begin // @[Passthrough.scala 83:42]
-      c <= _c_T_3; // @[Passthrough.scala 84:10]
+    if (_T_34 == 4'h1) begin // @[Passthrough.scala 85:28]
+      c <= _c_T; // @[Passthrough.scala 86:10]
+    end else if (_T_34 == 4'h2) begin // @[Passthrough.scala 87:34]
+      c <= _c_T_1; // @[Passthrough.scala 88:10]
+    end else if (_T_34 == 4'h3) begin // @[Passthrough.scala 89:34]
+      c <= _c_T_2; // @[Passthrough.scala 90:10]
+    end else if (_T_34 == 4'h4) begin // @[Passthrough.scala 91:34]
+      c <= _c_T_3; // @[Passthrough.scala 92:10]
     end else begin
-      c <= _GEN_29;
+      c <= _GEN_31;
+    end
+    if (~io_Result[3]) begin // @[Passthrough.scala 55:29]
+      r <= io_Result; // @[Passthrough.scala 54:6]
+    end else begin
+      r <= _r_T_2; // @[Passthrough.scala 59:10]
     end
   end
 // Register and memory initialization
@@ -136,6 +145,8 @@ initial begin
   b = _RAND_0[23:0];
   _RAND_1 = {1{`RANDOM}};
   c = _RAND_1[23:0];
+  _RAND_2 = {1{`RANDOM}};
+  r = _RAND_2[3:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

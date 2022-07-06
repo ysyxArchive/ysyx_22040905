@@ -99,7 +99,7 @@ class Passthrough extends Module {
         c:="b000000001111111100000000".U^b
     }
 
-    when(io.Result(3)===0.U){
+    when(io.Result(3)===0.B){
         io.bcd8seg:="b111111110000000000000000".U^c
     }.otherwise{
         io.bcd8seg:="b101111110000000000000000".U^c

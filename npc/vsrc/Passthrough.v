@@ -48,8 +48,8 @@ module Passthrough(
   wire [23:0] _GEN_19 = _T_9 == 4'h5 ? 24'hc9 : _GEN_18; // @[Passthrough.scala 64:37 Passthrough.scala 65:10]
   wire [23:0] _GEN_20 = _T_9 == 4'h4 ? 24'h99 : _GEN_19; // @[Passthrough.scala 62:37 Passthrough.scala 63:10]
   wire [3:0] _T_29 = io_Result / 4'ha; // @[Passthrough.scala 78:19]
-  wire [3:0] _GEN_1 = _T_29 % 4'ha; // @[Passthrough.scala 78:29]
-  wire [3:0] _T_30 = _GEN_1[3:0]; // @[Passthrough.scala 78:29]
+  wire [3:0] _GEN_1 = _T_29 % 4'ha; // @[Passthrough.scala 78:24]
+  wire [3:0] _T_30 = _GEN_1[3:0]; // @[Passthrough.scala 78:24]
   wire [23:0] _c_T = 24'h8200 ^ b; // @[Passthrough.scala 79:41]
   wire [23:0] _c_T_1 = 24'h9f00 ^ b; // @[Passthrough.scala 81:41]
   wire [23:0] _c_T_2 = 24'ha500 ^ b; // @[Passthrough.scala 83:41]
@@ -74,7 +74,7 @@ module Passthrough(
   assign io_Carry = io_op == 3'h0 ? _io_Result_T > _GEN_36 : _GEN_9; // @[Passthrough.scala 26:27 Passthrough.scala 29:17]
   assign io_bcd8seg = ~io_Result[3] ? _io_bcd8seg_T : _io_bcd8seg_T_1; // @[Passthrough.scala 102:29 Passthrough.scala 103:19 Passthrough.scala 105:19]
   always @(posedge clock) begin
-    if (_T_9 == 4'h0) begin // @[Passthrough.scala 54:41]
+    if (_T_9 == 4'h0) begin // @[Passthrough.scala 54:31]
       b <= 24'h82; // @[Passthrough.scala 55:10]
     end else if (_T_9 == 4'h1) begin // @[Passthrough.scala 56:37]
       b <= 24'h9f; // @[Passthrough.scala 57:10]
@@ -85,7 +85,7 @@ module Passthrough(
     end else begin
       b <= _GEN_20;
     end
-    if (_T_30 == 4'h0) begin // @[Passthrough.scala 78:51]
+    if (_T_30 == 4'h0) begin // @[Passthrough.scala 78:36]
       c <= _c_T; // @[Passthrough.scala 79:10]
     end else if (_T_30 == 4'h1) begin // @[Passthrough.scala 80:42]
       c <= _c_T_1; // @[Passthrough.scala 81:10]

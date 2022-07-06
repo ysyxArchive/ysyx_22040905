@@ -50,7 +50,7 @@ class Passthrough extends Module {
             io.Result:=1.U
         }
     }
-    when(io.Result%10(24.W)===0.U(24.W)){
+    when(io.Result%10.U(24.W)===0.U(24.W)){
         b:="b000000000000000010000010".U^a
     }.elsewhen(io.Result%10.U===1.U){
         b:="b000000000000000010011111".U^a

@@ -74,10 +74,8 @@ class Passthrough extends Module {
     }.otherwise{
         b:="b000000000000000011111111".U^a
     }
-    when(io.Result%10.U===0.U){
-        c:="b111111111111111111000000".U 
-    }.elsewhen(io.Result/10.U%10.U===0.U){
-        c:="b000000001100000000000000".U^b
+    when(io.Result/10.U%10.U===0.U){
+        c:="b111111111111111100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===1.U){
         c:="b000000001111100100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===2.U){

@@ -13,10 +13,10 @@ class Passthrough extends Module {
     val bcd8seg=Output(UInt(24.W))
   })
    io.bcd8seg:="b000000000000000000000000".U
-   io.Overflow:=0.Bool
-   io.Zero:=1.Bool
+   io.Overflow:=0.bool
+   io.Zero:=1.B
    io.Result:=0.U
-   io.Carry:=0.Bool
+   io.Carry:=0.b
     when(io.op==="b000".U){
         io.Result:=io.a+io.b
         io.Overflow:=(io.a(3)===io.b(3))&&(io.Result(3)=/=io.a(3))

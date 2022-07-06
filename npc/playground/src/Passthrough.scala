@@ -12,7 +12,13 @@ class Passthrough extends Module {
     val op=Input(UInt(3.W))
     val bcd8seg=Output(UInt(24.W))
   })
+   val a=UInt(24.W)
+   val b=UInt(24.W)
+   val c=UInt(24.W)
    io.bcd8seg:="b000000000000000000000000".U
+   a:="b000000000000000000000000".U
+   b:="b000000000000000000000000".U
+   c:="b000000000000000000000000".U
    io.Overflow:=false.B
    io.Zero:=true.B
    io.Result:=0.U
@@ -45,75 +51,75 @@ class Passthrough extends Module {
         }
     }
     when(io.Result%10.U===0.U){
-        io.bcd8seg:="b000000000000000010000010".U ##io.bcd8seg
+        b:="b000000000000000010000010".U^a
     }.elsewhen(io.Result%10.U===1.U){
-        io.bcd8seg:="b000000000000000010011111".U ##io.bcd8seg
+        b:="b000000000000000010011111".U^a
     }.elsewhen(io.Result%10.U===2.U){
-        io.bcd8seg:="b000000000000000010100101".U ##io.bcd8seg
+        b:="b000000000000000010100101".U^a
     }.elsewhen(io.Result%10.U===3.U){
-        io.bcd8seg:="b000000000000000010001101".U ##io.bcd8seg
+        b:="b000000000000000010001101".U^a
     }.elsewhen(io.Result%10.U===4.U){
-        io.bcd8seg:="b000000000000000010011001".U ##io.bcd8seg
+        b:="b000000000000000010011001".U^a
     }.elsewhen(io.Result%10.U===5.U){
-        io.bcd8seg:="b000000000000000011001001".U ##io.bcd8seg
+        b:="b000000000000000011001001".U^a
     }.elsewhen(io.Result%10.U===6.U){
-        io.bcd8seg:="b000000000000000011000001".U ##io.bcd8seg
+        b:="b000000000000000011000001".U^a
     }.elsewhen(io.Result%10.U===7.U){
-        io.bcd8seg:="b000000000000000010011111".U ##io.bcd8seg
+        b:="b000000000000000010011111".U^a
     }.elsewhen(io.Result%10.U===8.U){
-        io.bcd8seg:="b000000000000000010000000".U ##io.bcd8seg
+        b:="b000000000000000010000000".U^a
     }.elsewhen(io.Result%10.U===9.U){
-        io.bcd8seg:="b000000000000000010010000".U ##io.bcd8seg
+        b:="b000000000000000010010000".U^a
     }.otherwise{
-        io.bcd8seg:="b000000000000000010111111".U ##io.bcd8seg
+        b:="b000000000000000010111111".U^a
     }
 
     when(io.Result/10.U%10.U===0.U){
-        io.bcd8seg:="b000000001000001000000000".U ##io.bcd8seg
+        c:="b000000001000001000000000".U^b
     }.elsewhen(io.Result/10.U%10.U===1.U){
-        io.bcd8seg:="b000000001001111100000000".U ##io.bcd8seg
+        c:="b000000001001111100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===2.U){
-        io.bcd8seg:="b000000001010010100000000".U ##io.bcd8seg
+        c:="b000000001010010100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===3.U){
-        io.bcd8seg:="b000000001000110100000000".U ##io.bcd8seg
+        c:="b000000001000110100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===4.U){
-        io.bcd8seg:="b000000001001100100000000".U ##io.bcd8seg
+        c:="b000000001001100100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===5.U){
-        io.bcd8seg:="b000000001100100100000000".U ##io.bcd8seg
+        c:="b000000001100100100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===6.U){
-        io.bcd8seg:="b000000001100000100000000".U ##io.bcd8seg
+        c:="b000000001100000100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===7.U){
-        io.bcd8seg:="b000000001001111100000000".U ##io.bcd8seg
+        c:="b000000001001111100000000".U^b
     }.elsewhen(io.Result/10.U%10.U===8.U){
-        io.bcd8seg:="b000000001000000000000000".U ##io.bcd8seg
+        c:="b000000001000000000000000".U^b
     }.elsewhen(io.Result/10.U%10.U===9.U){
-        io.bcd8seg:="b000000001001000000000000".U ##io.bcd8seg
+        c:="b000000001001000000000000".U^b
     }.otherwise{
-        io.bcd8seg:="b000000001011111100000000".U ##io.bcd8seg
+        c:="b000000001011111100000000".U^b
     }
 
     when(io.Result/100.U%10.U===0.U){
-        io.bcd8seg:="b100000100000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100000100000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===1.U){
-        io.bcd8seg:="b100111110000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100111110000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===2.U){
-        io.bcd8seg:="b101001010000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b101001010000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===3.U){
-        io.bcd8seg:="b100011010000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100011010000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===4.U){
-        io.bcd8seg:="b100110010000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100110010000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===5.U){
-        io.bcd8seg:="b110010010000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b110010010000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===6.U){
-        io.bcd8seg:="b110000010000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b110000010000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===7.U){
-        io.bcd8seg:="b100111110000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100111110000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===8.U){
-        io.bcd8seg:="b100000000000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100000000000000000000000".U^c
     }.elsewhen(io.Result/100.U%10.U===9.U){
-        io.bcd8seg:="b100100000000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b100100000000000000000000".U^c
     }.otherwise{
-        io.bcd8seg:="b101111110000000000000000".U ##io.bcd8seg
+        io.bcd8seg:="b101111110000000000000000".U^c
     }
 }
 

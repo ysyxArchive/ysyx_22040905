@@ -12,19 +12,23 @@ static TOP_NAME dut;
 void nvboard_bind_all_pins(VPassthrough* top);
 
 static void step_and_dump_wave(){
+  dut.clock=0;
+  dut.eval();
+  dut.clock=1;
   dut.eval();
   //contextp->timeInc(1);
   //tfp->dump(contextp->time());
 }
 /*
 void sim_init(){
-  contextp = new VerilatedContext;
-  tfp = new VerilatedVcdC;
+  //contextp = new VerilatedContext;
+  //tfp = new VerilatedVcdC;
   top = new VPassthrough;
-  contextp->traceEverOn(true);
-  top->trace(tfp, 0);
-  tfp->open("wave.vcd");
+  //contextp->traceEverOn(true);
+  //top->trace(tfp, 0);
+  //tfp->open("wave.vcd");
 }
+
 void sim_exit(){
   step_and_dump_wave();
   tfp->close();

@@ -80,7 +80,7 @@ module Passthrough(
     end else if (_T_11 == 4'h2) begin // @[Passthrough.scala 58:37]
       b <= 24'ha4; // @[Passthrough.scala 59:10]
     end else if (_T_11 == 4'h3) begin // @[Passthrough.scala 60:37]
-      b <= 24'hcf; // @[Passthrough.scala 61:10]
+      b <= 24'hb0; // @[Passthrough.scala 61:10]
     end else begin
       b <= _GEN_20;
     end

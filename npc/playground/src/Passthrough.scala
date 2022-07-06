@@ -12,9 +12,9 @@ class Passthrough extends Module {
     val op=Input(UInt(3.W))
     val bcd8seg=Output(UInt(24.W))
   })
-   val a=UInt(24.W)
-   val b=UInt(24.W)
-   val c=UInt(24.W)
+   val a=Reg(UInt(24.W))
+   val b=Reg(UInt(24.W))
+   val c=Reg(UInt(24.W))
    io.bcd8seg:="b000000000000000000000000".U
    a:="b000000000000000000000000".U
    b:="b000000000000000000000000".U

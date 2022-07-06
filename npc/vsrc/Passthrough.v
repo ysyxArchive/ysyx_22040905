@@ -59,7 +59,7 @@ module Passthrough(
   wire [23:0] _c_T_6 = 24'hf800 ^ b; // @[Passthrough.scala 90:41]
   wire [23:0] _c_T_7 = 24'h8000 ^ b; // @[Passthrough.scala 92:41]
   wire [23:0] _c_T_8 = 24'h9000 ^ b; // @[Passthrough.scala 94:41]
-  wire [23:0] _c_T_9 = 24'hffff00 ^ b; // @[Passthrough.scala 96:41]
+  wire [23:0] _c_T_9 = 24'hff00 ^ b; // @[Passthrough.scala 96:41]
   wire [23:0] _GEN_25 = _T_32 == 4'h9 ? _c_T_8 : _c_T_9; // @[Passthrough.scala 93:42 Passthrough.scala 94:10 Passthrough.scala 96:10]
   wire [23:0] _GEN_26 = _T_32 == 4'h8 ? _c_T_7 : _GEN_25; // @[Passthrough.scala 91:42 Passthrough.scala 92:10]
   wire [23:0] _GEN_27 = _T_32 == 4'h7 ? _c_T_6 : _GEN_26; // @[Passthrough.scala 89:42 Passthrough.scala 90:10]

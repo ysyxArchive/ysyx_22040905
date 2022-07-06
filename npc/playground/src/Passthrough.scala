@@ -42,7 +42,7 @@ class Passthrough extends Module {
     }.elsewhen(io.op==="b101".U){
         io.Result:=io.a^io.b
     }.elsewhen(io.op==="b110".U){
-        when(SInt(io.a)<SInt(io.b)){
+        when(io.a.asSInt<io.b.asSInt){
             io.Result:=1.U
         }
     }.otherwise{

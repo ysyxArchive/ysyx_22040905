@@ -52,7 +52,7 @@ class Passthrough extends Module {
     }
 
     when(io.Result%10.U===0.U){
-        b:="b000000000000000010000000".U^a
+        b:="b000000000000000010000001".U^a
     }.elsewhen(io.Result%10.U===1.U){
         b:="b000000000000000010011111".U^a
     }.elsewhen(io.Result%10.U===2.U){

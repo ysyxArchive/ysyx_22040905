@@ -24,7 +24,7 @@ class Passthrough extends Module {
         io.Zero:=(io.Result===0.U)
     }.elsewhen(io.op==="b001".U){
         io.Result:=io.a-io.b
-        io.Overflow := (io.a(3) === ("b1111"^io.b)(3)) && (io.Result(3) =/= io.a(3))
+        io.Overflow := (io.a(3) === ("b1111".U^io.b)(3)) && (io.Result(3) =/= io.a(3))
         io.Carry:=((io.a-&io.b)>io.Result)
         io.Zero:=(io.Result===0.U)
     }.elsewhen(io.op==="b010".U){

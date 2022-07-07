@@ -12,7 +12,7 @@ class Passthrough extends Module {
    num:=1.U
    val m1=Module(new seg)
    val m2=Module(new seg)
-   when(io.button){
+   when(io.button===true.B){
     when(num===0.U){
         num:=1.U
     }

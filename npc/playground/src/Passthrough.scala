@@ -17,7 +17,7 @@ class Passthrough extends Module {
         num:=1.U
     }
     num:=num>>1.U;
-    num(7):=num(0)^num(1)^num(2)^num(3)
+    num:=Cat(num(0)^num(1)^num(2)^num(3),num(6,0))
     m1.io.in:=num%10.U
     m2.io.in:=num/10.U
     io.bcd8seg(0):=m1.io.out

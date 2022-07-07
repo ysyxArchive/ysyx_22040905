@@ -2,12 +2,12 @@ module seg(
   input  [3:0] io_in,
   output [7:0] io_out
 );
-  wire [7:0] _GEN_0 = io_in == 4'hf ? 8'hb8 : 8'hff; // @[Passthrough.scala 63:29 Passthrough.scala 64:15 Passthrough.scala 66:15]
-  wire [7:0] _GEN_1 = io_in == 4'he ? 8'hb0 : _GEN_0; // @[Passthrough.scala 61:29 Passthrough.scala 62:15]
-  wire [7:0] _GEN_2 = io_in == 4'hd ? 8'h86 : _GEN_1; // @[Passthrough.scala 59:29 Passthrough.scala 60:15]
-  wire [7:0] _GEN_3 = io_in == 4'hc ? 8'hb1 : _GEN_2; // @[Passthrough.scala 57:29 Passthrough.scala 58:15]
-  wire [7:0] _GEN_4 = io_in == 4'hb ? 8'he0 : _GEN_3; // @[Passthrough.scala 55:29 Passthrough.scala 56:15]
-  wire [7:0] _GEN_5 = io_in == 4'ha ? 8'h8f : _GEN_4; // @[Passthrough.scala 53:29 Passthrough.scala 54:15]
+  wire [7:0] _GEN_0 = io_in == 4'hf ? 8'h8e : 8'hff; // @[Passthrough.scala 63:29 Passthrough.scala 64:15 Passthrough.scala 66:15]
+  wire [7:0] _GEN_1 = io_in == 4'he ? 8'h86 : _GEN_0; // @[Passthrough.scala 61:29 Passthrough.scala 62:15]
+  wire [7:0] _GEN_2 = io_in == 4'hd ? 8'ha1 : _GEN_1; // @[Passthrough.scala 59:29 Passthrough.scala 60:15]
+  wire [7:0] _GEN_3 = io_in == 4'hc ? 8'hc6 : _GEN_2; // @[Passthrough.scala 57:29 Passthrough.scala 58:15]
+  wire [7:0] _GEN_4 = io_in == 4'hb ? 8'h83 : _GEN_3; // @[Passthrough.scala 55:29 Passthrough.scala 56:15]
+  wire [7:0] _GEN_5 = io_in == 4'ha ? 8'h88 : _GEN_4; // @[Passthrough.scala 53:29 Passthrough.scala 54:15]
   wire [7:0] _GEN_6 = io_in == 4'h9 ? 8'h90 : _GEN_5; // @[Passthrough.scala 51:28 Passthrough.scala 52:15]
   wire [7:0] _GEN_7 = io_in == 4'h8 ? 8'h80 : _GEN_6; // @[Passthrough.scala 49:28 Passthrough.scala 50:15]
   wire [7:0] _GEN_8 = io_in == 4'h7 ? 8'hf8 : _GEN_7; // @[Passthrough.scala 47:28 Passthrough.scala 48:15]

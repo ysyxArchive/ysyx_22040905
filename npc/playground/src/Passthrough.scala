@@ -3,7 +3,7 @@ import chisel3.util._
 import chisel3.stage._
 class Passthrough extends Module { 
   val io = IO(new Bundle {
-    val button=Input(Clock())
+    val button=Input(Bool())
     val bcd8seg=Output(Vec(2,UInt(8.W)))
     val Result=Output(UInt(8.W))
   })

@@ -11,8 +11,9 @@ class Passthrough extends Module {
     val num=RegInit(UInt(8.W),1.U)
     val m1=Module(new seg)
     val m2=Module(new seg)
-    num:=Cat(0.U(1.W),num>>1)
-    num:=Cat(num(0)^num(1)^num(2)^num(3),num(7,1))
+    val num1=RegNext(num)
+    num1:=Cat(0.U(1.W),num>>1)
+    num:=Cat(num1(0)^num1(1)^num1(2)^num1(3),num1(6,0))
     when(num===0.U){
         num:=1.U
     }

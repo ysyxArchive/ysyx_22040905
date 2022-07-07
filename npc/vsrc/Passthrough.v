@@ -36,8 +36,8 @@ module Passthrough(
   wire [7:0] m2_io_out; // @[Passthrough.scala 13:18]
   reg [7:0] num; // @[Passthrough.scala 11:20]
   wire  num_hi = num[0] ^ num[1] ^ num[2] ^ num[3]; // @[Passthrough.scala 15:34]
-  wire [6:0] num_lo = num[7:1]; // @[Passthrough.scala 15:45]
-  wire [7:0] _num_T_7 = {num_hi,num_lo}; // @[Cat.scala 30:58]
+  wire [6:0] num_lo_1 = num[7:1]; // @[Passthrough.scala 15:45]
+  wire [7:0] _num_T_7 = {num_hi,num_lo_1}; // @[Cat.scala 30:58]
   seg m1 ( // @[Passthrough.scala 12:18]
     .io_in(m1_io_in),
     .io_out(m1_io_out)

@@ -19,7 +19,7 @@ class Passthrough extends Module {
     io.bcd8seg(0):=m1.io.out
     io.bcd8seg(1):=m2.io.out
     io.Result:=num
-}}
+}
 class seg extends Module{
     val io= IO(new Bundle{
         val in=Input(UInt(4.W))

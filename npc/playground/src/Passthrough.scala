@@ -1,6 +1,6 @@
 import chisel3._
 import chisel3.util.Decoupled
-
+import chisel3.util._
 class Passthrough extends Module { 
   val io = IO(new Bundle {
     val button=Input(UInt(1.W))

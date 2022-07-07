@@ -4,7 +4,7 @@ import chisel3.util.Decoupled
 class Passthrough extends Module { 
   val io = IO(new Bundle {
     val button=Input(Bool())
-    val bcd8seg=Output(vec(2,UInt(8.W)))
+    val bcd8seg=Output(Vec(2,UInt(8.W)))
     val Result=Reg(Output(UInt(8.W)))
   })
    io.Result:=1.U
@@ -14,10 +14,10 @@ class Passthrough extends Module {
     when(io.Result===0.U){
         io.Result:=1.U
     }
-    io.Result=io.Result>>1.U;
-    io.Result(7)=io.Result(0)^io.Result(1)^io.Result(2)^io.Result(3)
-    m1.io.in=io.Result%10.U
-    m2.io.in=io.Result/10.U
+    io.Result:=io.Result>>1.U;
+    io.Result(7):=io.Result(0)^io.Result(1)^io.Result(2)^io.Result(3)
+    m1.io.in:=io.Result%10.U
+    m2.io.in:=io.Result/10.U
     io.bcd8seg(0):=m1.io.out
     io.bcd8seg(1):=m2.io.out
    }

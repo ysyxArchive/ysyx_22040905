@@ -21,18 +21,13 @@ module Passthrough(
   output [7:0] io_bcd8seg_1,
   output [7:0] io_Result
 );
-`ifdef RANDOMIZE_REG_INIT
-  reg [31:0] _RAND_0;
-`endif // RANDOMIZE_REG_INIT
   wire [3:0] m1_io_in; // @[Passthrough.scala 12:17]
   wire [7:0] m1_io_out; // @[Passthrough.scala 12:17]
   wire [3:0] m2_io_in; // @[Passthrough.scala 13:17]
   wire [7:0] m2_io_out; // @[Passthrough.scala 13:17]
-  reg [7:0] num; // @[Passthrough.scala 11:19]
-  wire [7:0] _GEN_0 = num % 8'ha; // @[Passthrough.scala 21:19]
+  wire [7:0] _GEN_0 = 8'h1 % 8'ha; // @[Passthrough.scala 21:19]
   wire [7:0] _m1_io_in_T = _GEN_0[7:0]; // @[Passthrough.scala 21:19]
-  wire [7:0] _m2_io_in_T = num / 8'ha; // @[Passthrough.scala 22:19]
-  wire [2:0] _GEN_3 = reset ? 3'h1 : 3'h5; // @[Passthrough.scala 11:19 Passthrough.scala 11:19 Passthrough.scala 23:8]
+  wire [7:0] _m2_io_in_T = 8'h1 / 8'ha; // @[Passthrough.scala 22:19]
   seg m1 ( // @[Passthrough.scala 12:17]
     .io_in(m1_io_in),
     .io_out(m1_io_out)
@@ -43,55 +38,7 @@ module Passthrough(
   );
   assign io_bcd8seg_0 = m1_io_out; // @[Passthrough.scala 24:18]
   assign io_bcd8seg_1 = m2_io_out; // @[Passthrough.scala 25:18]
-  assign io_Result = num; // @[Passthrough.scala 26:14]
+  assign io_Result = 8'h1; // @[Passthrough.scala 26:14]
   assign m1_io_in = _m1_io_in_T[3:0]; // @[Passthrough.scala 21:30]
   assign m2_io_in = _m2_io_in_T[3:0]; // @[Passthrough.scala 22:30]
-  always @(posedge clock) begin
-    num <= {{5'd0}, _GEN_3}; // @[Passthrough.scala 11:19 Passthrough.scala 11:19 Passthrough.scala 23:8]
-  end
-// Register and memory initialization
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-`ifdef FIRRTL_BEFORE_INITIAL
-`FIRRTL_BEFORE_INITIAL
-`endif
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-`ifdef RANDOMIZE_REG_INIT
-  _RAND_0 = {1{`RANDOM}};
-  num = _RAND_0[7:0];
-`endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`ifdef FIRRTL_AFTER_INITIAL
-`FIRRTL_AFTER_INITIAL
-`endif
-`endif // SYNTHESIS
 endmodule

@@ -5,21 +5,24 @@ class Passthrough extends Module {
   val io = IO(new Bundle {
     val button=Input(Bool())
     val bcd8seg=Output(Vec(2,UInt(8.W)))
-    val Result=Reg(Output(UInt(8.W)))
+    val Result=Output(UInt(8.W))
   })
    io.Result:=1.U
+   val num=Reg(UInt(8.W))
+   num:=1.U
    val m1=Module(new seg)
    val m2=Module(new seg)
    when(io.button){
-    when(io.Result===0.U){
-        io.Result:=1.U
+    when(num===0.U){
+        num:=1.U
     }
-    io.Result:=io.Result>>1.U;
-    io.Result(7):=io.Result(0)^io.Result(1)^io.Result(2)^io.Result(3)
-    m1.io.in:=io.Result%10.U
-    m2.io.in:=io.Result/10.U
+    num:=num>>1.U;
+    num(7):=num(0)^num(1)^num(2)^num(3)
+    m1.io.in:=num%10.U
+    m2.io.in:=num/10.U
     io.bcd8seg(0):=m1.io.out
     io.bcd8seg(1):=m2.io.out
+    io.Result:=num
    }
 }
 class seg extends Module{

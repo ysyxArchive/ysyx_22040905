@@ -32,8 +32,9 @@ module Passthrough(
   wire  num_hi = num[0] ^ num[1] ^ num[2] ^ num[3]; // @[Passthrough.scala 19:34]
   wire [6:0] num_lo = num[6:0]; // @[Passthrough.scala 19:45]
   wire [7:0] _num_T_7 = {num_hi,num_lo}; // @[Cat.scala 30:58]
-  wire [7:0] _m2_io_in_T = num / 4'ha; // @[Passthrough.scala 22:18]
   wire [7:0] _GEN_0 = num % 8'ha; // @[Passthrough.scala 21:18]
+  wire [7:0] _m1_io_in_T = _GEN_0[7:0]; // @[Passthrough.scala 21:18]
+  wire [7:0] _m2_io_in_T = num / 8'ha; // @[Passthrough.scala 22:18]
   seg m1 ( // @[Passthrough.scala 12:17]
     .io_in(m1_io_in),
     .io_out(m1_io_out)
@@ -45,7 +46,7 @@ module Passthrough(
   assign io_bcd8seg_0 = m1_io_out; // @[Passthrough.scala 23:18]
   assign io_bcd8seg_1 = m2_io_out; // @[Passthrough.scala 24:18]
   assign io_Result = num; // @[Passthrough.scala 25:14]
-  assign m1_io_in = _GEN_0[3:0]; // @[Passthrough.scala 21:18]
+  assign m1_io_in = _m1_io_in_T[3:0]; // @[Passthrough.scala 21:13]
   assign m2_io_in = _m2_io_in_T[3:0]; // @[Passthrough.scala 22:13]
   always @(posedge clock) begin
     if (reset) begin // @[Passthrough.scala 11:19]

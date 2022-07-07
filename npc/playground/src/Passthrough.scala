@@ -3,107 +3,53 @@ import chisel3.util.Decoupled
 
 class Passthrough extends Module { 
   val io = IO(new Bundle {
-    val a=Input(UInt(4.W))
-    val b=Input(UInt(4.W))
-    val Overflow=Output(Bool())
-    val Zero=Output(Bool())
-    val Result=Output(UInt(4.W))
-    val Carry=Output(Bool())
-    val op=Input(UInt(3.W))
-    val bcd8seg=Output(UInt(24.W))
+    val button=Input(Bool())
+    val bcd8seg=Output(vec(2,UInt(8.W)))
+    val Result=Reg(Output(UInt(8.W)))
   })
-   val a=Reg(UInt(24.W))
-   val b=Reg(UInt(24.W))
-   val c=Reg(UInt(24.W))
-   io.bcd8seg:="b000000000000000000000000".U
-   a:="b000000000000000000000000".U
-   b:="b000000000000000000000000".U
-   c:="b000000000000000000000000".U
-   io.Overflow:=false.B
-   io.Zero:=true.B
-   io.Result:=0.U
-   io.Carry:=false.B
-    when(io.op==="b000".U){
-        io.Result:=io.a+io.b
-        io.Overflow:=(io.a(3)===io.b(3))&&(io.Result(3)=/=io.a(3))
-        io.Carry:=((io.a+&io.b)>io.Result)
-        io.Zero:=(io.Result===0.U)
-    }.elsewhen(io.op==="b001".U){
-        io.Result:=io.a-io.b
-        io.Overflow := (io.a(3) === ("b1111".U^io.b)(3)) && (io.Result(3) =/= io.a(3))
-        io.Carry:=((io.a-&io.b)>io.Result)
-        io.Zero:=(io.Result===0.U)
-    }.elsewhen(io.op==="b010".U){
-        io.Result:=(~io.a)
-    }.elsewhen(io.op==="b011".U){
-        io.Result:=io.a&io.b
-    }.elsewhen(io.op==="b100".U){
-        io.Result:=io.a|io.b
-    }.elsewhen(io.op==="b101".U){
-        io.Result:=io.a^io.b
-    }.elsewhen(io.op==="b110".U){
-        when(io.a.asSInt<io.b.asSInt){
-            io.Result:=1.U
-        }
-    }.otherwise{
-        when(io.a===io.b){
-            io.Result:=1.U
-        }
+   io.Result:=1.U
+   val m1=Module(new seg)
+   val m2=Module(new seg)
+   when(io.button){
+    when(io.Result===0.U){
+        io.Result:=1.U
     }
-    val r=Reg(UInt(4.W))
-    r:=io.Result
-    when(io.Result(3)===0.B){
-        a:="b111111110000000000000000".U^c
-    }.otherwise{
-        a:="b101111110000000000000000".U^c
-        r:=(~io.Result)+1.U
-    }
-
-    when(r%10.U===0.U){
-        b:="b000000000000000011000000".U^a
-    }.elsewhen(r%10.U===1.U){
-        b:="b000000000000000011111001".U^a
-    }.elsewhen(r%10.U===2.U){
-        b:="b000000000000000010100100".U^a
-    }.elsewhen(r%10.U===3.U){
-        b:="b000000000000000010110000".U^a
-    }.elsewhen(r%10.U===4.U){
-        b:="b000000000000000010011001".U^a
-    }.elsewhen(r%10.U===5.U){
-        b:="b000000000000000010010010".U^a
-    }.elsewhen(r%10.U===6.U){
-        b:="b000000000000000010000010".U^a
-    }.elsewhen(r%10.U===7.U){
-        b:="b000000000000000011111000".U^a
-    }.elsewhen(r%10.U===8.U){
-        b:="b000000000000000010000000".U^a
-    }.elsewhen(r%10.U===9.U){
-        b:="b000000000000000010010000".U^a
-    }.otherwise{
-        b:="b000000000000000011111111".U^a
-    }
-    when(r/10.U%10.U===1.U){
-        io.bcd8seg:="b000000001111100100000000".U^b
-    }.elsewhen(r/10.U%10.U===2.U){
-        io.bcd8seg:="b000000001010010000000000".U^b
-    }.elsewhen(r/10.U%10.U===3.U){
-        io.bcd8seg:="b000000001011000000000000".U^b
-    }.elsewhen(r/10.U%10.U===4.U){
-        io.bcd8seg:="b000000001001100100000000".U^b
-    }.elsewhen(r/10.U%10.U===5.U){
-        io.bcd8seg:="b000000001001001010000000".U^b
-    }.elsewhen(r/10.U%10.U===6.U){
-        io.bcd8seg:="b000000001000001000000000".U^b
-    }.elsewhen(r/10.U%10.U===7.U){
-        io.bcd8seg:="b000000001111100000000000".U^b
-    }.elsewhen(r/10.U%10.U===8.U){
-        io.bcd8seg:="b000000001000000000000000".U^b
-    }.elsewhen(r/10.U%10.U===9.U){
-        io.bcd8seg:="b000000001001000000000000".U^b
-    }.otherwise{
-        io.bcd8seg:="b000000001111111100000000".U^b
-    }
-
-    
+    io.Result=io.Result>>1.U;
+    io.Result(7)=io.Result(0)^io.Result(1)^io.Result(2)^io.Result(3)
+    m1.io.in=io.Result%10.U
+    m2.io.in=io.Result/10.U
+    io.bcd8seg(0):=m1.io.out
+    io.bcd8seg(1):=m2.io.out
+   }
 }
+class seg extends Module{
+    val io= IO(new Bundle{
+        val in=Input(UInt(4.W))
+        val out=Output(UInt(8.W))
+    })
+    io.out:="b11111111".U
+    when(io.in===0.U){
+        io.out:="b11000000".U   
+    }.elsewhen(io.in===1.U){
+        io.out:="b11111001".U
+    }.elsewhen(io.in===2.U){
+        io.out:="b10100100".U
+    }.elsewhen(io.in===3.U){
+        io.out:="b10110000".U
+    }.elsewhen(io.in===4.U){
+        io.out:="b10011001".U
+    }.elsewhen(io.in===5.U){
+        io.out:="b10010010".U
+    }.elsewhen(io.in===6.U){
+        io.out:="b10000010".U
+    }.elsewhen(io.in===7.U){
+        io.out:="b11111000".U
+    }.elsewhen(io.in===8.U){
+        io.out:="b10000000".U
+    }.elsewhen(io.in===9.U){
+        io.out:="b10010000".U
+    }.otherwise{
+        io.out:="b11111111".U
+    }
 
+}

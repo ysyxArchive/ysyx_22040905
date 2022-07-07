@@ -8,8 +8,7 @@ class Passthrough extends Module {
     val Result=Output(UInt(8.W))
   })
    io.Result:=1.U
-   val num=Reg(UInt(8.W))
-   num:=1.U
+   val num=RegInit(UInt(8.W),1.U)
    val m1=Module(new seg)
    val m2=Module(new seg)
    when(io.button===1.U){
@@ -18,12 +17,13 @@ class Passthrough extends Module {
     }
     num:=num>>1.U;
     num:=Cat(num(0)^num(1)^num(2)^num(3),num(6,0))
+    }
     m1.io.in:=num%10.U
     m2.io.in:=num/10.U
     io.bcd8seg(0):=m1.io.out
     io.bcd8seg(1):=m2.io.out
     io.Result:=num
-   }
+
 }
 class seg extends Module{
     val io= IO(new Bundle{

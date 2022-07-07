@@ -3,7 +3,7 @@ import chisel3.util.Decoupled
 
 class Passthrough extends Module { 
   val io = IO(new Bundle {
-    val button=Input(Bool())
+    val button=Input(UInt(1.W))
     val bcd8seg=Output(Vec(2,UInt(8.W)))
     val Result=Output(UInt(8.W))
   })
@@ -12,7 +12,7 @@ class Passthrough extends Module {
    num:=1.U
    val m1=Module(new seg)
    val m2=Module(new seg)
-   when(io.button===true.B){
+   when(io.button){
     when(num===0.U){
         num:=1.U
     }

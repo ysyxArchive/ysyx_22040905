@@ -17,8 +17,8 @@ class Passthrough extends Module {
     when(num===0.U){
         num:=1.U
     }
-    m1.io.in:=(num%10.U(8.W))(3,0)
-    m2.io.in:=(num/10.U(8.W))(3,0)
+    m1.io.in:=num(3,0)
+    m2.io.in:=num(7,4)
     io.bcd8seg(0):=m1.io.out
     io.bcd8seg(1):=m2.io.out
     io.Result:=num

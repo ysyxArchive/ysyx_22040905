@@ -2,16 +2,22 @@ module seg(
   input  [3:0] io_in,
   output [7:0] io_out
 );
-  wire [7:0] _GEN_0 = io_in == 4'h9 ? 8'h90 : 8'hff; // @[Passthrough.scala 51:28 Passthrough.scala 52:15 Passthrough.scala 54:15]
-  wire [7:0] _GEN_1 = io_in == 4'h8 ? 8'h80 : _GEN_0; // @[Passthrough.scala 49:28 Passthrough.scala 50:15]
-  wire [7:0] _GEN_2 = io_in == 4'h7 ? 8'hf8 : _GEN_1; // @[Passthrough.scala 47:28 Passthrough.scala 48:15]
-  wire [7:0] _GEN_3 = io_in == 4'h6 ? 8'h82 : _GEN_2; // @[Passthrough.scala 45:28 Passthrough.scala 46:15]
-  wire [7:0] _GEN_4 = io_in == 4'h5 ? 8'h92 : _GEN_3; // @[Passthrough.scala 43:28 Passthrough.scala 44:15]
-  wire [7:0] _GEN_5 = io_in == 4'h4 ? 8'h99 : _GEN_4; // @[Passthrough.scala 41:28 Passthrough.scala 42:15]
-  wire [7:0] _GEN_6 = io_in == 4'h3 ? 8'hb0 : _GEN_5; // @[Passthrough.scala 39:28 Passthrough.scala 40:15]
-  wire [7:0] _GEN_7 = io_in == 4'h2 ? 8'ha4 : _GEN_6; // @[Passthrough.scala 37:28 Passthrough.scala 38:15]
-  wire [7:0] _GEN_8 = io_in == 4'h1 ? 8'hf9 : _GEN_7; // @[Passthrough.scala 35:28 Passthrough.scala 36:15]
-  assign io_out = io_in == 4'h0 ? 8'hc0 : _GEN_8; // @[Passthrough.scala 33:22 Passthrough.scala 34:15]
+  wire [7:0] _GEN_0 = io_in == 4'hf ? 8'hb8 : 8'hff; // @[Passthrough.scala 63:29 Passthrough.scala 64:15 Passthrough.scala 66:15]
+  wire [7:0] _GEN_1 = io_in == 4'he ? 8'hb0 : _GEN_0; // @[Passthrough.scala 61:29 Passthrough.scala 62:15]
+  wire [7:0] _GEN_2 = io_in == 4'hd ? 8'h86 : _GEN_1; // @[Passthrough.scala 59:29 Passthrough.scala 60:15]
+  wire [7:0] _GEN_3 = io_in == 4'hc ? 8'hb1 : _GEN_2; // @[Passthrough.scala 57:29 Passthrough.scala 58:15]
+  wire [7:0] _GEN_4 = io_in == 4'hb ? 8'he0 : _GEN_3; // @[Passthrough.scala 55:29 Passthrough.scala 56:15]
+  wire [7:0] _GEN_5 = io_in == 4'ha ? 8'h8f : _GEN_4; // @[Passthrough.scala 53:29 Passthrough.scala 54:15]
+  wire [7:0] _GEN_6 = io_in == 4'h9 ? 8'h90 : _GEN_5; // @[Passthrough.scala 51:28 Passthrough.scala 52:15]
+  wire [7:0] _GEN_7 = io_in == 4'h8 ? 8'h80 : _GEN_6; // @[Passthrough.scala 49:28 Passthrough.scala 50:15]
+  wire [7:0] _GEN_8 = io_in == 4'h7 ? 8'hf8 : _GEN_7; // @[Passthrough.scala 47:28 Passthrough.scala 48:15]
+  wire [7:0] _GEN_9 = io_in == 4'h6 ? 8'h82 : _GEN_8; // @[Passthrough.scala 45:28 Passthrough.scala 46:15]
+  wire [7:0] _GEN_10 = io_in == 4'h5 ? 8'h92 : _GEN_9; // @[Passthrough.scala 43:28 Passthrough.scala 44:15]
+  wire [7:0] _GEN_11 = io_in == 4'h4 ? 8'h99 : _GEN_10; // @[Passthrough.scala 41:28 Passthrough.scala 42:15]
+  wire [7:0] _GEN_12 = io_in == 4'h3 ? 8'hb0 : _GEN_11; // @[Passthrough.scala 39:28 Passthrough.scala 40:15]
+  wire [7:0] _GEN_13 = io_in == 4'h2 ? 8'ha4 : _GEN_12; // @[Passthrough.scala 37:28 Passthrough.scala 38:15]
+  wire [7:0] _GEN_14 = io_in == 4'h1 ? 8'hf9 : _GEN_13; // @[Passthrough.scala 35:28 Passthrough.scala 36:15]
+  assign io_out = io_in == 4'h0 ? 8'hc0 : _GEN_14; // @[Passthrough.scala 33:22 Passthrough.scala 34:15]
 endmodule
 module Passthrough(
   input        clock,

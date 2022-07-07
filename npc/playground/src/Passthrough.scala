@@ -11,7 +11,7 @@ class Passthrough extends Module {
    val num=RegInit(UInt(8.W),1.U)
    val m1=Module(new seg)
    val m2=Module(new seg)
-    when(io.button===1.U){`   
+    when(io.button===1.U){   
     num:=Cat(num(0)^num(1)^num(2)^num(3),num(7,1))
     }
     when(num===0.U){

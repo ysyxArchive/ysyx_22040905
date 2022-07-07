@@ -50,6 +50,18 @@ class seg extends Module{
         io.out:="b10000000".U
     }.elsewhen(io.in===9.U){
         io.out:="b10010000".U
+    }.elsewhen(io.in===10.U){
+        io.out:="b10001111".U
+    }.elsewhen(io.in===11.U){
+        io.out:="b11100000".U
+    }.elsewhen(io.in===12.U){
+        io.out:="b10110001".U
+    }.elsewhen(io.in===13.U){
+        io.out:="b10000110".U
+    }.elsewhen(io.in===14.U){
+        io.out:="b10110000".U
+    }.elsewhen(io.in===15.U){
+        io.out:="b10111000".U
     }.otherwise{
         io.out:="b11111111".U
     }

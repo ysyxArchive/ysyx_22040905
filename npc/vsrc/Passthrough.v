@@ -29,8 +29,8 @@ module Passthrough(
   wire [3:0] m2_io_in; // @[Passthrough.scala 13:17]
   wire [7:0] m2_io_out; // @[Passthrough.scala 13:17]
   reg [7:0] num; // @[Passthrough.scala 11:19]
-  wire  num_hi = num[0] ^ num[1] ^ num[2] ^ num[3]; // @[Passthrough.scala 18:34]
-  wire [6:0] num_lo = num[7:1]; // @[Passthrough.scala 18:45]
+  wire  num_hi = num[0] ^ num[1] ^ num[2] ^ num[3]; // @[Passthrough.scala 15:34]
+  wire [6:0] num_lo = num[7:1]; // @[Passthrough.scala 15:45]
   wire [7:0] _num_T_6 = {num_hi,num_lo}; // @[Cat.scala 30:58]
   wire [7:0] _GEN_0 = num % 8'ha; // @[Passthrough.scala 20:19]
   wire [7:0] _m1_io_in_T = _GEN_0[7:0]; // @[Passthrough.scala 20:19]
@@ -51,8 +51,10 @@ module Passthrough(
   always @(posedge clock) begin
     if (reset) begin // @[Passthrough.scala 11:19]
       num <= 8'h1; // @[Passthrough.scala 11:19]
+    end else if (num == 8'h0) begin // @[Passthrough.scala 17:20]
+      num <= 8'h1; // @[Passthrough.scala 18:12]
     end else if (io_button) begin // @[Passthrough.scala 14:26]
-      num <= _num_T_6; // @[Passthrough.scala 18:8]
+      num <= _num_T_6; // @[Passthrough.scala 15:8]
     end
   end
 // Register and memory initialization

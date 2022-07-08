@@ -22,7 +22,7 @@ class Passthrough extends Module {
     val sampling=Bool()
     sampling:=ps2_clk_sync(2)&(~ps2_clk_sync(1))
     when(io.clrn===0.U){
-        count:=0.U(4.W)
+        count:=0.U
         w_ptr:=0.U
         r_ptr:=0.U
         io.overflow:=false.B
@@ -44,10 +44,10 @@ class Passthrough extends Module {
                     io.ready:=1.U
                     io.overflow:=io.overflow|(r_ptr===(w_ptr+1.U))
                 }
-                count:=0.U(4.W)
+                count:=0.U
             }.elsewhen{
                 buffer(count):=io.ps2_data
-                count:=(count+1.U)
+                count := count+1.U
             }
         }
     }

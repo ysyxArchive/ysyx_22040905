@@ -27,7 +27,7 @@ class Passthrough extends Module {
         r_ptr:=0.U
         io.overflow:=false.B
         io.ready:=0.U
-    }.elsewhen{
+    }.otherwise{
         when(io.ready===1.U){
             when(io.nextdata_n===0.U){
                 r_ptr:=r_ptr+1.U
@@ -36,20 +36,20 @@ class Passthrough extends Module {
                 }
             }
         }
-        //when(sampling===1.U){
-            //when(count===10.U){
-                //when((buffer(0)===0.U)&&(io.ps2_data===1.U)&&((buffer(9)^buffer(8)^buffer(7)^buffer(6)^buffer(5)^buffer(4)^buffer(3)^buffer(2)^buffer(1))===1.U)){
+        when(sampling===1.U){
+            when(count===10.U){
+                when((buffer(0)===0.U)&&(io.ps2_data===1.U)&&((buffer(9)^buffer(8)^buffer(7)^buffer(6)^buffer(5)^buffer(4)^buffer(3)^buffer(2)^buffer(1))===1.U)){
                     fifo(w_ptr):=Cat(buffer(8),buffer(7),buffer(6),buffer(5),buffer(4),buffer(3),buffer(2),buffer(1))
                     w_ptr:=w_ptr+1.U
                     io.ready:=1.U
                     io.overflow:=io.overflow|(r_ptr===(w_ptr+1.U))
-                //}
-                //count:=0.U
-            //}//.otherwise{
-               // buffer(count):=io.ps2_data
-                //count:=count+1.U
-            //}
-        //}
+                }
+                count:=0.U
+            }.otherwise{
+                buffer(count):=io.ps2_data
+                count:=count+1.U
+            }
+        }
     }
     io.data:=fifo(r_ptr)
 }

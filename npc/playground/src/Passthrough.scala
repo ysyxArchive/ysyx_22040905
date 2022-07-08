@@ -13,7 +13,7 @@ class Passthrough extends Module {
     })
     io.data:=0.U
     io.ready:=0.U
-    io.overflow=false.B
+    io.overflow:=false.B
     val ov=Reg(Bool())
     ov:=false.B
     val buffer=Reg(Vec(10,UInt(1.W)))

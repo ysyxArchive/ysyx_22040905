@@ -11,6 +11,7 @@ class Passthrough extends Module {
         val ready=Output(UInt(1.W))
         val overflow=Output(Bool())
     })
+    val rea=Reg(UInt(1.W))
     io.data:=0.U
     io.ready:=0.U
     io.overflow:=false.B
@@ -31,14 +32,16 @@ class Passthrough extends Module {
         w_ptr:=0.U
         r_ptr:=0.U
         ov:=false.B
-        io.ready:=0.U
+        rea:=0.U
+        io.ready:=rea
         io.overflow:=ov
     }.otherwise{
-        when(io.ready===1.U){
+        when(rea===1.U){
             when(io.nextdata_n===0.U){
                 r_ptr:=r_ptr+1.U
                 when(w_ptr===(r_ptr+1.U)){
-                    io.ready:=0.U
+                    rea:=0.U
+                    io.ready:=rea
                 }
             }
         }
@@ -47,7 +50,7 @@ class Passthrough extends Module {
                 when((buffer(0)===0.U)&&(io.ps2_data===1.U)&&((buffer(9)^buffer(8)^buffer(7)^buffer(6)^buffer(5)^buffer(4)^buffer(3)^buffer(2)^buffer(1))===1.U)){
                     fifo(w_ptr):=Cat(buffer(8),buffer(7),buffer(6),buffer(5),buffer(4),buffer(3),buffer(2),buffer(1))
                     w_ptr:=w_ptr+1.U
-                    io.ready:=1.U
+                    rea:=1.U
                     ov:=ov|(r_ptr===(w_ptr+1.U))
                     io.overflow:=ov
                 }

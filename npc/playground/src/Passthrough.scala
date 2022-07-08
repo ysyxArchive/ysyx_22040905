@@ -46,8 +46,8 @@ class Passthrough extends Module {
                 }
                 count:=0.U
             }.elsewhen{
-                buffer(count):=io.ps2_data.asBool()
-                //count:=count+1.U
+                buffer(1):=io.ps2_data
+                count:=count+1.U
             }
         }
     }

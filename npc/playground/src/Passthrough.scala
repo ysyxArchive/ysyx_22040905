@@ -11,12 +11,12 @@ class Passthrough extends Module {
         val ready=Output(Reg(UInt(1.W)))
         val overflow=Output(Reg(Bool()))
     })
-    val buffer=Vec(10,Reg(UInt(1.W)))
-    val fifo=Vec(8,Reg(UInt(8.W)))
-    val w_ptr=Reg(UInt(3.W))
-    val r_ptr=Reg(UInt(3.W))
-    val count=Reg(UInt(4.W))
-    val ps2_clk_sync=Reg(UInt(3.W))
+    val buffer=Vec(10,RegInit(0.U(1.W)))
+    val fifo=Vec(8,RegInit(0.U(8.W)))
+    val w_ptr=RegInit(0.U(3.W))
+    val r_ptr=RegInit(0.U(3.W))
+    val count=RegInit(0.U(4.W))
+    val ps2_clk_sync=RegInit(0.U(3.W))
 
     ps2_clk_sync:=Cat(ps2_clk_sync(1,0),io.ps2_clk)
     val sampling=Bool()
@@ -47,7 +47,7 @@ class Passthrough extends Module {
                 count:=0.U
             }.elsewhen{
                 buffer(1):=io.ps2_data
-                count:=count+1.U
+                //count:=count+1.U
             }
         }
     }

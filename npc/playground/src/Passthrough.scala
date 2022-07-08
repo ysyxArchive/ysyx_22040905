@@ -11,6 +11,10 @@ class Passthrough extends Module {
         val ready=Output(UInt(1.W))
         val overflow=Output(Bool())
     })
+    io.clrn:=0.U
+    io.ps2_clk=0.U
+    io.ps2_data=0.U
+    io.nextdata_n=0.U
     val ov=Reg(Bool())
     ov:=false.B
     val buffer=Reg(Vec(10,UInt(1.W)))

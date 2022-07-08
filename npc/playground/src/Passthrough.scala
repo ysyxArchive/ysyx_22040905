@@ -11,8 +11,8 @@ class Passthrough extends Module {
         val ready=Output(Reg(UInt(1.W)))
         val overflow=Output(Reg(Bool()))
     })
-    val buffer=Reg(Vec(10,UInt(1.W)))
-    val fifo=Reg(Vec(8,UInt(8.W)))
+    val buffer=Vec(10,Reg(UInt(1.W)))
+    val fifo=Vec(8,Reg(UInt(8.W)))
     val w_ptr=Reg(UInt(3.W))
     val r_ptr=Reg(UInt(3.W))
     val count=Reg(UInt(4.W))
@@ -47,7 +47,7 @@ class Passthrough extends Module {
                 count:=0.U
             }.elsewhen{
                 buffer(count):=io.ps2_data
-                count := count+1.U
+                count:=count+1.U
             }
         }
     }

@@ -19,7 +19,7 @@ class Passthrough extends Module {
     val ps2_clk_sync=RegInit(0.U(3.W))
 
     ps2_clk_sync:=Cat(ps2_clk_sync(1,0),io.ps2_clk)
-    val sampling=Bool()
+    val sampling=UInt(1.W)
     sampling:=ps2_clk_sync(2)&(~ps2_clk_sync(1))
     when(io.clrn===0.U){
         count:=0.U
@@ -36,7 +36,7 @@ class Passthrough extends Module {
                 }
             }
         }
-        when(sampling){
+        when(sampling===1.U){
             when(count===10.U){
                 when((buffer(0)===0.U)&&(io.ps2_data===1.U)&&((buffer(9)^buffer(8)^buffer(7)^buffer(6)^buffer(5)^buffer(4)^buffer(3)^buffer(2)^buffer(1))===1.U)){
                     fifo(w_ptr):=Cat(buffer(8),buffer(7),buffer(6),buffer(5),buffer(4),buffer(3),buffer(2),buffer(1))

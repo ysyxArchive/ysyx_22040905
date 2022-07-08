@@ -11,6 +11,7 @@
 static TOP_NAME dut;
 void nvboard_bind_all_pins(VPassthrough* top);
 
+
 static void step_and_dump_wave(){
   //dut.clock=0;
   dut.eval();

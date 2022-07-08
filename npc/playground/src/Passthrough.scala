@@ -29,9 +29,9 @@ class Passthrough extends Module {
         io.ready:=0.U
     }.elsewhen{
         when(io.ready===1.U){
-            if(io.nextdata_n===0.U){
+            when(io.nextdata_n===0.U){
                 r_ptr:=r_ptr+1.U
-                if(w_ptr===(r_ptr+1.U)){
+                when(w_ptr===(r_ptr+1.U)){
                     io.ready:=0.U
                 }
             }

@@ -38,7 +38,7 @@ class Passthrough extends Module {
         }
         when(sampling===1.U){
             when(count===10.U){
-                when((buffer(0)===0.U)&&(io.ps2_data===1.U)&&(buffer(9)^buffer(8)^buffer(7)^buffer(6)^buffer(5)^buffer(4)^buffer(3)^buffer(2)^buffer(1)^)){
+                when((buffer(0)===0.U)&&(io.ps2_data===1.U)&&(buffer(9)^buffer(8)^buffer(7)^buffer(6)^buffer(5)^buffer(4)^buffer(3)^buffer(2)^buffer(1))){
                     fifo(w_ptr):=buffer(8,1)
                     w_ptr:=w_ptr+1.U
                     io.ready:=1.U

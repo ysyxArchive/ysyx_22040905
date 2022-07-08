@@ -7,7 +7,7 @@ class Passthrough extends Module {
         val ps2_clk=Input(UInt(1.W))
         val ps2_data=Input(UInt(1.W))
         val nextdata_n=Input(UInt(1.W))
-        val data=Input(UInt(8.W))
+        val data=Output(UInt(8.W))
         val ready=Output(UInt(1.W))
         val overflow=Output(Bool())
     })
@@ -21,7 +21,7 @@ class Passthrough extends Module {
     val ps2_clk_sync=Reg(UInt(3.W))
 
     ps2_clk_sync:=Cat(ps2_clk_sync(1,0),io.ps2_clk)
-    val sampling=UInt(1.W)
+    val sampling=Wire(UInt(1.W))
     sampling:=ps2_clk_sync(2)&(~ps2_clk_sync(1))
     when(io.clrn===0.U){
         count:=0.U

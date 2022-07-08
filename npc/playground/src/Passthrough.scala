@@ -45,10 +45,10 @@ class Passthrough extends Module {
                     io.overflow:=io.overflow|(r_ptr===(w_ptr+1.U))
                 }
                 count:=0.U
-            }.otherwise{
-                buffer(count):=io.ps2_data
-                count:=count+1.U
-            }
+            }//.otherwise{
+               // buffer(count):=io.ps2_data
+                //count:=count+1.U
+            //}
         //}
     }
     io.data:=fifo(r_ptr)

@@ -38,7 +38,7 @@ class ps2_keyboard extends Module {
         }
         when(sampling===1.U){
             when(count===10.U){
-                when((buffer(0)===0.U)&&(ps2_data)&&(^buffer(9:1))){
+                when((buffer(0)===0.U)&&(ps2_data)&&(^buffer(9,1))){
                     fifo(w_ptr):=buffer(8,1)
                     w_ptr:=w_ptr+1.U
                     ready:=1.U

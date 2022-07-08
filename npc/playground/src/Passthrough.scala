@@ -1,7 +1,7 @@
 import chisel3._
 import chisel3.util._
 import chisel3.stage._
-class ps2_keyboard extends Module { 
+class Passthrough extends Module { 
     val io= IO(new Bundle{
         val clrn=Input(UInt(1.W))
         val ps2_clk=Input(UInt(1.W))
@@ -18,40 +18,40 @@ class ps2_keyboard extends Module {
     val count=Reg(UInt(4.W))
     val ps2_clk_sync=Reg(UInt(3.W))
 
-    ps2_clk_sync:=Cat(ps2_clk_sync(1,0),ps2_clk)
+    ps2_clk_sync:=Cat(ps2_clk_sync(1,0),io.ps2_clk)
     val sampling=Bool()
     sampling:=ps2_clk_sync(2)&(~ps2_clk_sync(1))
-    when(clrn===0.U){
+    when(io.clrn===0.U){
         count:=0.U
         w_ptr:=0.U
         r_ptr:=0.U
-        overflow:=0.U
-        ready:=0.U
+        io.overflow:=0.U
+        io.ready:=0.U
     }.elsewhen{
-        when(ready===1.U){
-            if(nextdata_n===0.U){
+        when(io.ready===1.U){
+            if(io.nextdata_n===0.U){
                 r_ptr:=r_ptr+1.U
                 if(w_ptr===(r_ptr+1.U)){
-                    ready:=0.U
+                    io.ready:=0.U
                 }
             }
         }
         when(sampling===1.U){
             when(count===10.U){
-                when((buffer(0)===0.U)&&(ps2_data)&&(^buffer(9,1))){
+                when((buffer(0)===0.U)&&(io.ps2_data)&&(^buffer(9,1))){
                     fifo(w_ptr):=buffer(8,1)
                     w_ptr:=w_ptr+1.U
-                    ready:=1.U
-                    overflow:=overflow|(r_ptr===(w_ptr+1.U))
+                    io.ready:=1.U
+                    io.overflow:=io.overflow|(r_ptr===(w_ptr+1.U))
                 }
                 count:=0.U
             }.elsewhen{
-                buffer(count):=ps2_data
+                buffer(count):=io.ps2_data
                 count:=count+1.U
             }
         }
     }
-    data:=fifo(r_ptr)
+    io.data:=fifo(r_ptr)
 }
 
 class LUT extends Module{
@@ -99,7 +99,7 @@ class LUT extends Module{
     table("h3E".U):=56.U
     table("h46".U):=57.U
 
-    out:=table(in)
+    io.out:=table(io.in)
 }
 
 

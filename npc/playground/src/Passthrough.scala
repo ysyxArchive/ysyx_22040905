@@ -18,10 +18,10 @@ class Passthrough extends Module {
     val w_ptr=RegInit(0.U(3.W))
     val r_ptr=RegInit(0.U(3.W))
     val count=RegInit(0.U(4.W))
-    val ps2_clk_sync=RegInit(0.U(3.W))
+    val ps2_clk_sync=UInt(3.W)
 
     ps2_clk_sync:=Cat(ps2_clk_sync(1,0),io.ps2_clk)
-    val sampling=Wire(UInt(1.W))
+    val sampling=UInt(1.W)
     sampling:=ps2_clk_sync(2)&(~ps2_clk_sync(1))
     when(io.clrn===0.U){
         count:=0.U

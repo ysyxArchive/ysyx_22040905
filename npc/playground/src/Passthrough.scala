@@ -9,8 +9,10 @@ class Passthrough extends Module {
         val nextdata_n=Input(UInt(1.W))
         val data=Input(UInt(8.W))
         val ready=Output(UInt(1.W))
-        val overflow=Output(Reg(Bool()))
+        val overflow=Output(Bool())
     })
+    val ov=Reg(Bool())
+    ov:=false.B
     val buffer=Vec(10,RegInit(0.U(1.W)))
     val fifo=Vec(8,RegInit(0.U(8.W)))
     val w_ptr=RegInit(0.U(3.W))
@@ -25,8 +27,9 @@ class Passthrough extends Module {
         count:=0.U
         w_ptr:=0.U
         r_ptr:=0.U
-        io.overflow:=false.B
+        ov:=false.B
         io.ready:=0.U
+        io.overflow:=ov
     }.otherwise{
         when(io.ready===1.U){
             when(io.nextdata_n===0.U){
@@ -42,7 +45,8 @@ class Passthrough extends Module {
                     fifo(w_ptr):=Cat(buffer(8),buffer(7),buffer(6),buffer(5),buffer(4),buffer(3),buffer(2),buffer(1))
                     w_ptr:=w_ptr+1.U
                     io.ready:=1.U
-                    io.overflow:=io.overflow|(r_ptr===(w_ptr+1.U))
+                    ov:=ov|(r_ptr===(w_ptr+1.U))
+                    io.overflow:=ov
                 }
                 count:=0.U
             }.otherwise{

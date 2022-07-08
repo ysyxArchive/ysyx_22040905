@@ -13,8 +13,8 @@ class Passthrough extends Module {
     })
     val ov=Reg(Bool())
     ov:=false.B
-    val buffer=Vec(10,UInt(1.W))
-    val fifo=Vec(8,UInt(8.W))
+    val buffer=Reg(Vec(10,UInt(1.W)))
+    val fifo=Reg(Vec(8,UInt(8.W)))
     val w_ptr=Reg(UInt(3.W))
     val r_ptr=Reg(UInt(3.W))
     val count=Reg(UInt(4.W))

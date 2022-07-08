@@ -8,7 +8,7 @@ class Passthrough extends Module {
         val ps2_data=Input(UInt(1.W))
         val nextdata_n=Input(UInt(1.W))
         val data=Input(UInt(8.W))
-        val ready=Output(Reg(UInt(1.W)))
+        val ready=Output(UInt(1.W))
         val overflow=Output(Reg(Bool()))
     })
     val buffer=Vec(10,RegInit(0.U(1.W)))

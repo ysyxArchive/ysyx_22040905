@@ -17,8 +17,8 @@ class Passthrough extends Module {
     val fifo=Vec(8,UInt(8.W))
     val w_ptr=UInt(3.W)
     val r_ptr=UInt(3.W)
-    val count=RegInit(0.U(4.W))
-    val ps2_clk_sync=UInt(3.W)
+    val count=Reg(UInt(4.W))
+    val ps2_clk_sync=Reg(UInt(3.W))
 
     ps2_clk_sync:=Cat(ps2_clk_sync(1,0),io.ps2_clk)
     val sampling=UInt(1.W)

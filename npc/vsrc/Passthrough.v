@@ -841,12 +841,12 @@ module Passthrough(
     end
     if (reset) begin // @[Passthrough.scala 57:20]
       num <= 7'h0; // @[Passthrough.scala 57:20]
-    end else if (ps2segdata[23:16] == 8'hf0 & ps2segdata[7:0] == ps2segdata[23:16]) begin // @[Passthrough.scala 59:79]
+    end else if (ps2segdata[23:16] == 8'hf0 & ps2segdata[7:0] == ps2segdata[15:8]) begin // @[Passthrough.scala 59:78]
       num <= _num_T_1; // @[Passthrough.scala 61:12]
     end
     if (reset) begin // @[Passthrough.scala 58:22]
       segen <= 1'h0; // @[Passthrough.scala 58:22]
-    end else if (ps2segdata[23:16] == 8'hf0 & ps2segdata[7:0] == ps2segdata[23:16]) begin // @[Passthrough.scala 59:79]
+    end else if (ps2segdata[23:16] == 8'hf0 & ps2segdata[7:0] == ps2segdata[15:8]) begin // @[Passthrough.scala 59:78]
       segen <= 1'h0; // @[Passthrough.scala 60:14]
     end else begin
       segen <= 1'h1; // @[Passthrough.scala 63:14]

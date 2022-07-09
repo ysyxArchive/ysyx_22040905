@@ -180,7 +180,7 @@ class ps2ascii extends Module{
         val in=Input(UInt(8.W))
         val out=Output(UInt(8.W))
     })
-    val table=Vec(256,UInt(256.W))
+    val table=Reg(Vec(256,UInt(256.W)))
     // a-z
     table("h1C".U):=97.U
     table("h32".U):=98.U

@@ -56,8 +56,7 @@ class Passthrough extends Module{
     }
     val num=RegInit(0.U(7.W))
     val segen=RegInit(0.U(1.W))
-    num:=10.U
-    when((ps2segdata(15,8)==="hf0".U)&&ps2segdata(7,0)===ps2segdata(23,16)){
+    when((ps2segdata(15,8)==="hf0".U)&&(ps2segdata(7,0)===ps2segdata(23,16))){
         segen:=0.U
         num:=num+1.U
     }.otherwise{

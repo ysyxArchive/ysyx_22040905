@@ -64,11 +64,11 @@ class Passthrough extends Module{
     }
     val m0=Module(new seg)
     m0.io.en:=segen
-    m0.io.in:=ps2segdata(11,8)
+    m0.io.in:=ps2segdata(19,16)
     io.bcd8seg(0):=m0.io.out
     val m1=Module(new seg)
     m1.io.en:=segen
-    m1.io.in:=ps2segdata(15,12)
+    m1.io.in:=ps2segdata(23,20)
     io.bcd8seg(1):=m1.io.out
 
     val ascii=RegInit(0.U(8.W))

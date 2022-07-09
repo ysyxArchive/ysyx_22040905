@@ -26,14 +26,6 @@ module Passthrough(
   reg [31:0] _RAND_13;
   reg [31:0] _RAND_14;
   reg [31:0] _RAND_15;
-  reg [31:0] _RAND_16;
-  reg [31:0] _RAND_17;
-  reg [31:0] _RAND_18;
-  reg [31:0] _RAND_19;
-  reg [31:0] _RAND_20;
-  reg [31:0] _RAND_21;
-  reg [31:0] _RAND_22;
-  reg [31:0] _RAND_23;
 `endif // RANDOMIZE_REG_INIT
   reg  rea; // @[Passthrough.scala 14:16]
   reg  ov; // @[Passthrough.scala 18:15]
@@ -47,14 +39,6 @@ module Passthrough(
   reg  buffer_7; // @[Passthrough.scala 22:19]
   reg  buffer_8; // @[Passthrough.scala 22:19]
   reg  buffer_9; // @[Passthrough.scala 22:19]
-  reg [7:0] fifo_0; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_1; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_2; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_3; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_4; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_5; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_6; // @[Passthrough.scala 23:17]
-  reg [7:0] fifo_7; // @[Passthrough.scala 23:17]
   reg [2:0] w_ptr; // @[Passthrough.scala 24:18]
   reg [2:0] r_ptr; // @[Passthrough.scala 25:18]
   reg [3:0] count; // @[Passthrough.scala 26:18]
@@ -65,15 +49,6 @@ module Passthrough(
   wire  _GEN_0 = w_ptr == _r_ptr_T_1 ? 1'h0 : rea; // @[Passthrough.scala 42:42 Passthrough.scala 43:24 Passthrough.scala 14:16]
   wire  _GEN_3 = ~io_nextdata_n ? _GEN_0 : rea; // @[Passthrough.scala 40:38 Passthrough.scala 14:16]
   wire  _GEN_6 = rea ? _GEN_3 : rea; // @[Passthrough.scala 39:24 Passthrough.scala 14:16]
-  wire [7:0] _fifo_T = {buffer_8,buffer_7,buffer_6,buffer_5,buffer_4,buffer_3,buffer_2,buffer_1}; // @[Cat.scala 30:58]
-  wire [7:0] _GEN_8 = 3'h0 == w_ptr ? _fifo_T : fifo_0; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_9 = 3'h1 == w_ptr ? _fifo_T : fifo_1; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_10 = 3'h2 == w_ptr ? _fifo_T : fifo_2; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_11 = 3'h3 == w_ptr ? _fifo_T : fifo_3; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_12 = 3'h4 == w_ptr ? _fifo_T : fifo_4; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_13 = 3'h5 == w_ptr ? _fifo_T : fifo_5; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_14 = 3'h6 == w_ptr ? _fifo_T : fifo_6; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
-  wire [7:0] _GEN_15 = 3'h7 == w_ptr ? _fifo_T : fifo_7; // @[Passthrough.scala 51:32 Passthrough.scala 51:32 Passthrough.scala 23:17]
   wire [2:0] _w_ptr_T_1 = w_ptr + 3'h1; // @[Passthrough.scala 52:33]
   wire  _GEN_25 = ~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3
      ^ buffer_2 ^ buffer_1) | _GEN_6; // @[Passthrough.scala 50:162 Passthrough.scala 53:24]
@@ -82,13 +57,8 @@ module Passthrough(
   wire [3:0] _count_T_1 = count + 4'h1; // @[Passthrough.scala 59:29]
   wire  _GEN_47 = count == 4'ha & _GEN_26; // @[Passthrough.scala 49:31 Passthrough.scala 19:7]
   wire  _GEN_69 = sampling & _GEN_47; // @[Passthrough.scala 48:29 Passthrough.scala 19:7]
-  wire [7:0] _GEN_106 = 3'h1 == r_ptr ? fifo_1 : fifo_0; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
-  wire [7:0] _GEN_107 = 3'h2 == r_ptr ? fifo_2 : _GEN_106; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
-  wire [7:0] _GEN_108 = 3'h3 == r_ptr ? fifo_3 : _GEN_107; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
-  wire [7:0] _GEN_109 = 3'h4 == r_ptr ? fifo_4 : _GEN_108; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
-  wire [7:0] _GEN_110 = 3'h5 == r_ptr ? fifo_5 : _GEN_109; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
-  wire [7:0] _GEN_111 = 3'h6 == r_ptr ? fifo_6 : _GEN_110; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
-  assign io_data = 3'h7 == r_ptr ? fifo_7 : _GEN_111; // @[Passthrough.scala 63:12 Passthrough.scala 63:12]
+  wire  _io_data_T_1 = io_ps2_data + 1'h1; // @[Passthrough.scala 63:25]
+  assign io_data = {{7'd0}, _io_data_T_1}; // @[Passthrough.scala 63:25]
   assign io_ready = rea; // @[Passthrough.scala 32:24 Passthrough.scala 20:13]
   assign io_overflow = ov; // @[Passthrough.scala 21:16]
   always @(posedge clock) begin
@@ -198,86 +168,6 @@ module Passthrough(
         end
       end
     end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_0 <= _GEN_8;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_1 <= _GEN_9;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_2 <= _GEN_10;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_3 <= _GEN_11;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_4 <= _GEN_12;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_5 <= _GEN_13;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_6 <= _GEN_14;
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-          if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-            buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-            fifo_7 <= _GEN_15;
-          end
-        end
-      end
-    end
     if (~io_clrn) begin // @[Passthrough.scala 32:24]
       w_ptr <= 3'h0; // @[Passthrough.scala 34:14]
     end else if (sampling) begin // @[Passthrough.scala 48:29]
@@ -367,29 +257,13 @@ initial begin
   _RAND_11 = {1{`RANDOM}};
   buffer_9 = _RAND_11[0:0];
   _RAND_12 = {1{`RANDOM}};
-  fifo_0 = _RAND_12[7:0];
+  w_ptr = _RAND_12[2:0];
   _RAND_13 = {1{`RANDOM}};
-  fifo_1 = _RAND_13[7:0];
+  r_ptr = _RAND_13[2:0];
   _RAND_14 = {1{`RANDOM}};
-  fifo_2 = _RAND_14[7:0];
+  count = _RAND_14[3:0];
   _RAND_15 = {1{`RANDOM}};
-  fifo_3 = _RAND_15[7:0];
-  _RAND_16 = {1{`RANDOM}};
-  fifo_4 = _RAND_16[7:0];
-  _RAND_17 = {1{`RANDOM}};
-  fifo_5 = _RAND_17[7:0];
-  _RAND_18 = {1{`RANDOM}};
-  fifo_6 = _RAND_18[7:0];
-  _RAND_19 = {1{`RANDOM}};
-  fifo_7 = _RAND_19[7:0];
-  _RAND_20 = {1{`RANDOM}};
-  w_ptr = _RAND_20[2:0];
-  _RAND_21 = {1{`RANDOM}};
-  r_ptr = _RAND_21[2:0];
-  _RAND_22 = {1{`RANDOM}};
-  count = _RAND_22[3:0];
-  _RAND_23 = {1{`RANDOM}};
-  ps2_clk_sync = _RAND_23[2:0];
+  ps2_clk_sync = _RAND_15[2:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

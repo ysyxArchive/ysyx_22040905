@@ -40,21 +40,10 @@ int main()
     //sim_init();
     nvboard_bind_all_pins(&dut);
     nvboard_init(); 
-    for(int i=0;;i++)
+    while(1)
     {
       step_and_dump_wave();
       nvboard_update();
-      if(i%11==0)
-      {
-        dut.io_nextdata_n=0;
-        dut.eval();
-      }
-      else
-      {
-        dut.io_nextdata_n=1;
-        dut.eval(); 
-      }
-      if(i>0x3f3f3f3f)i=0;
     }
     //sim_exit();
     nvboard_quit();

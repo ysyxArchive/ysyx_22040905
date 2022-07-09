@@ -3,7 +3,6 @@ import chisel3.util._
 import chisel3.stage._
 class Passthrough extends Module{
     val io= IO(new Bundle{
-        val reset=Input(Reset())
         val ps2_clk=Input(UInt(1.W))
         val ps2_data=Input(UInt(1.W))
         val bcd8seg=Output(Vec(8,UInt(8.W)))
@@ -28,12 +27,7 @@ class Passthrough extends Module{
 
     val now=RegInit(1.U(4.W))
     val next=RegInit(1.U(4.W))
-    when(reset.asBool)
-    {
-        now:=s0
-    }.otherwise{
-        now:=next
-    }
+    now:=next
     when(now===s0){
         when(ready===1.U){
             next:=s1

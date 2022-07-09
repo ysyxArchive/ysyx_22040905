@@ -13,7 +13,7 @@ class Passthrough extends Module{
     val overflow=Reg(UInt(1.W))
     val nextdata=Reg(UInt(1.W))
     val ps2=Module(new ps2_keyboard)
-    ps2.io.clrn:=(~reset)
+    ps2.io.clrn:=(~reset.asBool)
     ps2.io.ps2_clk:=io.ps2_clk
     ps2.io.ps2_data:=io.ps2_data
     ps2.io.nextdata_n:=nextdata

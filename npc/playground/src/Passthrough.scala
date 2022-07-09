@@ -28,7 +28,7 @@ class Passthrough extends Module{
 
     val now=RegInit(1.U(4.W))
     val next=RegInit(1.U(4.W))
-    when(reset)
+    when(reset.asBool)
     {
         now:=s0
     }.otherwise{

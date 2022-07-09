@@ -64,7 +64,7 @@ class Passthrough extends Module{
     }
     ss:=Cat(ss(0),segen)
     when(ss:="b10".U){
-        num:=num+1
+        num:=num+1.U
     }
     val m0=Module(new seg)
     m0.io.en:=segen

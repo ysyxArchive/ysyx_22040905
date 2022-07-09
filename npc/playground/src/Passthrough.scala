@@ -60,7 +60,7 @@ class Passthrough extends Module {
             }
         }
     }
-    io.data:=io.ps2_data+1                 //fifo(r_ptr)
+    io.data:=io.ps2_data+1.U                 //fifo(r_ptr)
 }
 
 class LUT extends Module{

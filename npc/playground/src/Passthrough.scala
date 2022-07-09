@@ -56,7 +56,7 @@ class Passthrough extends Module{
     }
     val num=RegInit(0.U(7.W))
     val segen=RegInit(0.U(1.W))
-    when((ps2segdata(15,8)==="hf0".U)&&(ps2segdata(7,0)===ps2segdata(23,16))){
+    when((ps2segdata(23,16)==="hf0".U)&&(ps2segdata(7,0)===ps2segdata(23,16))){
         segen:=0.U
         num:=num+1.U
     }.otherwise{
@@ -64,11 +64,11 @@ class Passthrough extends Module{
     }
     val m0=Module(new seg)
     m0.io.en:=segen
-    m0.io.in:=ps2segdata(19,16)
+    m0.io.in:=ps2segdata(3,0)
     io.bcd8seg(0):=m0.io.out
     val m1=Module(new seg)
     m1.io.en:=segen
-    m1.io.in:=ps2segdata(23,20)
+    m1.io.in:=ps2segdata(7,4)
     io.bcd8seg(1):=m1.io.out
 
     val ascii=RegInit(0.U(8.W))

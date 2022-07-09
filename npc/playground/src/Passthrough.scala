@@ -95,16 +95,12 @@ class Passthrough extends Module{
 
     val m6=Module(new seg)
     m6.io.en:=1.U
-    m6.io.in:=num%10.U
+    m6.io.in:=(num%10.U(7.W))(3,0)
     io.bcd8seg(6):=m6.io.out
     val m7=Module(new seg)
     m7.io.en:=1.U
-    m7.io.in:=num/10.U
-    io.bcd8seg(7):=m7.io.out
-
-
-
- 
+    m7.io.in:=num/10.U(7.W)(3,0)
+    io.bcd8seg(7):=m7.io.out 
 }
 
 class ps2_keyboard extends Module { 

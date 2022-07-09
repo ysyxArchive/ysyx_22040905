@@ -12,7 +12,7 @@ class Passthrough extends Module {
         val overflow=Output(Bool())
     })
     val rea=Reg(UInt(1.W))
-    io.data:=0.U
+    io.data:=1.U
     io.ready:=0.U
     io.overflow:=false.B
     val ov=Reg(Bool())

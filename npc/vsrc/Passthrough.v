@@ -794,9 +794,9 @@ module Passthrough(
   assign ps2_io_ps2_data = io_ps2_data; // @[Passthrough.scala 18:20]
   assign ps2_io_nextdata_n = nextdata; // @[Passthrough.scala 19:22]
   assign m0_io_en = segen; // @[Passthrough.scala 66:13]
-  assign m0_io_in = ps2segdata[19:16]; // @[Passthrough.scala 67:25]
+  assign m0_io_in = ps2segdata[3:0]; // @[Passthrough.scala 67:25]
   assign m1_io_en = segen; // @[Passthrough.scala 70:13]
-  assign m1_io_in = ps2segdata[23:20]; // @[Passthrough.scala 71:25]
+  assign m1_io_in = ps2segdata[7:4]; // @[Passthrough.scala 71:25]
   assign mm_io_in = ps2segdata[7:0]; // @[Passthrough.scala 76:25]
   assign m2_io_en = segen; // @[Passthrough.scala 80:13]
   assign m2_io_in = ascii[3:0]; // @[Passthrough.scala 81:20]
@@ -841,12 +841,12 @@ module Passthrough(
     end
     if (reset) begin // @[Passthrough.scala 57:20]
       num <= 7'h0; // @[Passthrough.scala 57:20]
-    end else if (ps2segdata[15:8] == 8'hf0 & ps2segdata[7:0] == ps2segdata[23:16]) begin // @[Passthrough.scala 59:78]
+    end else if (ps2segdata[23:16] == 8'hf0 & ps2segdata[7:0] == ps2segdata[23:16]) begin // @[Passthrough.scala 59:79]
       num <= _num_T_1; // @[Passthrough.scala 61:12]
     end
     if (reset) begin // @[Passthrough.scala 58:22]
       segen <= 1'h0; // @[Passthrough.scala 58:22]
-    end else if (ps2segdata[15:8] == 8'hf0 & ps2segdata[7:0] == ps2segdata[23:16]) begin // @[Passthrough.scala 59:78]
+    end else if (ps2segdata[23:16] == 8'hf0 & ps2segdata[7:0] == ps2segdata[23:16]) begin // @[Passthrough.scala 59:79]
       segen <= 1'h0; // @[Passthrough.scala 60:14]
     end else begin
       segen <= 1'h1; // @[Passthrough.scala 63:14]

@@ -1,274 +1,55 @@
-module Passthrough(
-  input        clock,
-  input        reset,
-  input        io_clrn,
-  input        io_ps2_clk,
-  input        io_ps2_data,
-  input        io_nextdata_n,
-  output [7:0] io_data,
-  output       io_ready,
-  output       io_overflow
-);
-`ifdef RANDOMIZE_REG_INIT
-  reg [31:0] _RAND_0;
-  reg [31:0] _RAND_1;
-  reg [31:0] _RAND_2;
-  reg [31:0] _RAND_3;
-  reg [31:0] _RAND_4;
-  reg [31:0] _RAND_5;
-  reg [31:0] _RAND_6;
-  reg [31:0] _RAND_7;
-  reg [31:0] _RAND_8;
-  reg [31:0] _RAND_9;
-  reg [31:0] _RAND_10;
-  reg [31:0] _RAND_11;
-  reg [31:0] _RAND_12;
-  reg [31:0] _RAND_13;
-  reg [31:0] _RAND_14;
-  reg [31:0] _RAND_15;
-`endif // RANDOMIZE_REG_INIT
-  reg  rea; // @[Passthrough.scala 14:16]
-  reg  ov; // @[Passthrough.scala 18:15]
-  reg  buffer_0; // @[Passthrough.scala 22:19]
-  reg  buffer_1; // @[Passthrough.scala 22:19]
-  reg  buffer_2; // @[Passthrough.scala 22:19]
-  reg  buffer_3; // @[Passthrough.scala 22:19]
-  reg  buffer_4; // @[Passthrough.scala 22:19]
-  reg  buffer_5; // @[Passthrough.scala 22:19]
-  reg  buffer_6; // @[Passthrough.scala 22:19]
-  reg  buffer_7; // @[Passthrough.scala 22:19]
-  reg  buffer_8; // @[Passthrough.scala 22:19]
-  reg  buffer_9; // @[Passthrough.scala 22:19]
-  reg [2:0] w_ptr; // @[Passthrough.scala 24:18]
-  reg [2:0] r_ptr; // @[Passthrough.scala 25:18]
-  reg [3:0] count; // @[Passthrough.scala 26:18]
-  reg [2:0] ps2_clk_sync; // @[Passthrough.scala 27:25]
-  wire [1:0] ps2_clk_sync_hi = ps2_clk_sync[1:0]; // @[Passthrough.scala 29:35]
-  wire  sampling = ps2_clk_sync[2] & ~ps2_clk_sync[1]; // @[Passthrough.scala 31:30]
-  wire [2:0] _r_ptr_T_1 = r_ptr + 3'h1; // @[Passthrough.scala 41:29]
-  wire  _GEN_0 = w_ptr == _r_ptr_T_1 ? 1'h0 : rea; // @[Passthrough.scala 42:42 Passthrough.scala 43:24 Passthrough.scala 14:16]
-  wire  _GEN_3 = ~io_nextdata_n ? _GEN_0 : rea; // @[Passthrough.scala 40:38 Passthrough.scala 14:16]
-  wire  _GEN_6 = rea ? _GEN_3 : rea; // @[Passthrough.scala 39:24 Passthrough.scala 14:16]
-  wire [2:0] _w_ptr_T_1 = w_ptr + 3'h1; // @[Passthrough.scala 52:33]
-  wire  _GEN_25 = ~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3
-     ^ buffer_2 ^ buffer_1) | _GEN_6; // @[Passthrough.scala 50:162 Passthrough.scala 53:24]
-  wire  _GEN_26 = ~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3
-     ^ buffer_2 ^ buffer_1) & (ov | r_ptr == _w_ptr_T_1); // @[Passthrough.scala 50:162 Passthrough.scala 54:23 Passthrough.scala 19:7]
-  wire [3:0] _count_T_1 = count + 4'h1; // @[Passthrough.scala 59:29]
-  wire  _GEN_47 = count == 4'ha & _GEN_26; // @[Passthrough.scala 49:31 Passthrough.scala 19:7]
-  wire  _GEN_69 = sampling & _GEN_47; // @[Passthrough.scala 48:29 Passthrough.scala 19:7]
-  wire  _io_data_T_1 = io_ps2_data + 1'h1; // @[Passthrough.scala 63:25]
-  assign io_data = {{7'd0}, _io_data_T_1}; // @[Passthrough.scala 63:25]
-  assign io_ready = rea; // @[Passthrough.scala 32:24 Passthrough.scala 20:13]
-  assign io_overflow = ov; // @[Passthrough.scala 21:16]
-  always @(posedge clock) begin
-    if (~io_clrn) begin // @[Passthrough.scala 32:24]
-      rea <= 1'h0; // @[Passthrough.scala 37:12]
-    end else if (sampling) begin // @[Passthrough.scala 48:29]
-      if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-        rea <= _GEN_25;
-      end else begin
-        rea <= _GEN_6;
-      end
-    end else begin
-      rea <= _GEN_6;
+module Passthrough(clk,clrn,ps2_clk,ps2_data,data,
+                    ready,nextdata_n,overflow);
+    input clk,clrn,ps2_clk,ps2_data;
+    input nextdata_n;
+    output [7:0] data;
+    output reg ready;
+    output reg overflow;     // fifo overflow
+    // internal signal, for test
+    reg [9:0] buffer;        // ps2_data bits
+    reg [7:0] fifo[7:0];     // data fifo
+    reg [2:0] w_ptr,r_ptr;   // fifo write and read pointers
+    reg [3:0] count;  // count ps2_data bits
+    // detect falling edge of ps2_clk
+    reg [2:0] ps2_clk_sync;
+
+    always @(posedge clk) begin
+        ps2_clk_sync <=  {ps2_clk_sync[1:0],ps2_clk};
     end
-    if (~io_clrn) begin // @[Passthrough.scala 32:24]
-      ov <= 1'h0; // @[Passthrough.scala 36:11]
-    end else begin
-      ov <= _GEN_69;
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h0 == count) begin // @[Passthrough.scala 58:30]
-            buffer_0 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
+
+    wire sampling = ps2_clk_sync[2] & ~ps2_clk_sync[1];
+
+    always @(posedge clk) begin
+        if (clrn == 0) begin // reset
+            count <= 0; w_ptr <= 0; r_ptr <= 0; overflow <= 0; ready<= 0;
         end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h1 == count) begin // @[Passthrough.scala 58:30]
-            buffer_1 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
+        else begin
+            if ( ready ) begin // read to output next data
+                if(nextdata_n == 1'b0) //read next data
+                begin
+                    r_ptr <= r_ptr + 3'b1;
+                    if(w_ptr==(r_ptr+1'b1)) //empty
+                        ready <= 1'b0;
+                end
+            end
+            if (sampling) begin
+              if (count == 4'd10) begin
+                if ((buffer[0] == 0) &&  // start bit
+                    (ps2_data)       &&  // stop bit
+                    (^buffer[9:1])) begin      // odd  parity
+                    fifo[w_ptr] <= buffer[8:1];  // kbd scan code
+                    w_ptr <= w_ptr+3'b1;
+                    ready <= 1'b1;
+                    overflow <= overflow | (r_ptr == (w_ptr + 3'b1));
+                end
+                count <= 0;     // for next
+              end else begin
+                buffer[count] <= ps2_data;  // store ps2_data
+                count <= count + 3'b1;
+              end
+            end
         end
-      end
     end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h2 == count) begin // @[Passthrough.scala 58:30]
-            buffer_2 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h3 == count) begin // @[Passthrough.scala 58:30]
-            buffer_3 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h4 == count) begin // @[Passthrough.scala 58:30]
-            buffer_4 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h5 == count) begin // @[Passthrough.scala 58:30]
-            buffer_5 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h6 == count) begin // @[Passthrough.scala 58:30]
-            buffer_6 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h7 == count) begin // @[Passthrough.scala 58:30]
-            buffer_7 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h8 == count) begin // @[Passthrough.scala 58:30]
-            buffer_8 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (!(~io_clrn)) begin // @[Passthrough.scala 32:24]
-      if (sampling) begin // @[Passthrough.scala 48:29]
-        if (!(count == 4'ha)) begin // @[Passthrough.scala 49:31]
-          if (4'h9 == count) begin // @[Passthrough.scala 58:30]
-            buffer_9 <= io_ps2_data; // @[Passthrough.scala 58:30]
-          end
-        end
-      end
-    end
-    if (~io_clrn) begin // @[Passthrough.scala 32:24]
-      w_ptr <= 3'h0; // @[Passthrough.scala 34:14]
-    end else if (sampling) begin // @[Passthrough.scala 48:29]
-      if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-        if (~buffer_0 & io_ps2_data & (buffer_9 ^ buffer_8 ^ buffer_7 ^ buffer_6 ^ buffer_5 ^ buffer_4 ^ buffer_3 ^
-          buffer_2 ^ buffer_1)) begin // @[Passthrough.scala 50:162]
-          w_ptr <= _w_ptr_T_1; // @[Passthrough.scala 52:26]
-        end
-      end
-    end
-    if (~io_clrn) begin // @[Passthrough.scala 32:24]
-      r_ptr <= 3'h0; // @[Passthrough.scala 35:14]
-    end else if (rea) begin // @[Passthrough.scala 39:24]
-      if (~io_nextdata_n) begin // @[Passthrough.scala 40:38]
-        r_ptr <= _r_ptr_T_1; // @[Passthrough.scala 41:22]
-      end
-    end
-    if (~io_clrn) begin // @[Passthrough.scala 32:24]
-      count <= 4'h0; // @[Passthrough.scala 33:14]
-    end else if (sampling) begin // @[Passthrough.scala 48:29]
-      if (count == 4'ha) begin // @[Passthrough.scala 49:31]
-        count <= 4'h0; // @[Passthrough.scala 56:22]
-      end else begin
-        count <= _count_T_1; // @[Passthrough.scala 59:22]
-      end
-    end
-    ps2_clk_sync <= {ps2_clk_sync_hi,io_ps2_clk}; // @[Cat.scala 30:58]
-  end
-// Register and memory initialization
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-`ifdef FIRRTL_BEFORE_INITIAL
-`FIRRTL_BEFORE_INITIAL
-`endif
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-`ifdef RANDOMIZE_REG_INIT
-  _RAND_0 = {1{`RANDOM}};
-  rea = _RAND_0[0:0];
-  _RAND_1 = {1{`RANDOM}};
-  ov = _RAND_1[0:0];
-  _RAND_2 = {1{`RANDOM}};
-  buffer_0 = _RAND_2[0:0];
-  _RAND_3 = {1{`RANDOM}};
-  buffer_1 = _RAND_3[0:0];
-  _RAND_4 = {1{`RANDOM}};
-  buffer_2 = _RAND_4[0:0];
-  _RAND_5 = {1{`RANDOM}};
-  buffer_3 = _RAND_5[0:0];
-  _RAND_6 = {1{`RANDOM}};
-  buffer_4 = _RAND_6[0:0];
-  _RAND_7 = {1{`RANDOM}};
-  buffer_5 = _RAND_7[0:0];
-  _RAND_8 = {1{`RANDOM}};
-  buffer_6 = _RAND_8[0:0];
-  _RAND_9 = {1{`RANDOM}};
-  buffer_7 = _RAND_9[0:0];
-  _RAND_10 = {1{`RANDOM}};
-  buffer_8 = _RAND_10[0:0];
-  _RAND_11 = {1{`RANDOM}};
-  buffer_9 = _RAND_11[0:0];
-  _RAND_12 = {1{`RANDOM}};
-  w_ptr = _RAND_12[2:0];
-  _RAND_13 = {1{`RANDOM}};
-  r_ptr = _RAND_13[2:0];
-  _RAND_14 = {1{`RANDOM}};
-  count = _RAND_14[3:0];
-  _RAND_15 = {1{`RANDOM}};
-  ps2_clk_sync = _RAND_15[2:0];
-`endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`ifdef FIRRTL_AFTER_INITIAL
-`FIRRTL_AFTER_INITIAL
-`endif
-`endif // SYNTHESIS
+    assign data = fifo[r_ptr]; //always set output data
+
 endmodule

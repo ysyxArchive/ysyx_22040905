@@ -13,9 +13,9 @@ void nvboard_bind_all_pins(VPassthrough* top);
 
 
 static void step_and_dump_wave(){
-  dut.clock=0;
+  dut.clk=0;
   dut.eval();
-  dut.clock=1;
+  dut.clk=1;
   dut.eval();
   //contextp->timeInc(1);
   //tfp->dump(contextp->time());

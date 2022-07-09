@@ -17,6 +17,8 @@ class Passthrough extends Module {
     io.overflow:=false.B
     val ov=Reg(Bool())
     ov:=false.B
+    io.ready:=rea
+    io.overflow:=ov
     val buffer=Reg(Vec(10,UInt(1.W)))
     val fifo=Reg(Vec(8,UInt(8.W)))
     val w_ptr=Reg(UInt(3.W))
@@ -33,8 +35,6 @@ class Passthrough extends Module {
         r_ptr:=0.U
         ov:=false.B
         rea:=0.U
-        io.ready:=rea
-        io.overflow:=ov
     }.otherwise{
         when(rea===1.U){
             when(io.nextdata_n===0.U){
@@ -52,7 +52,6 @@ class Passthrough extends Module {
                     w_ptr:=w_ptr+1.U
                     rea:=1.U
                     ov:=ov|(r_ptr===(w_ptr+1.U))
-                    io.overflow:=ov
                 }
                 count:=0.U
             }.otherwise{

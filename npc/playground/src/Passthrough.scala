@@ -28,7 +28,7 @@ class Passthrough extends Module{
 
     val now=RegInit(1.U(4.W))
     val next=RegInit(1.U(4.W))
-    when(reset===1.U)
+    when(reset)
     {
         now:=s0
     }.otherwise{
@@ -76,7 +76,7 @@ class Passthrough extends Module{
     m1.io.in:=ps2segdata(7,4)
     io.bcd8seg(1):=m1.io.out
 
-    ascii=RegInit(0.U(8.W))
+    val ascii=RegInit(0.U(8.W))
     val mm=Module(new ps2ascii)
     mm.io.in:=ps2segdata(7,0)
     ascii:=mm.io.out
@@ -233,7 +233,7 @@ class seg extends Module{
         val out=Output(UInt(8.W))
     })
     io.out:="b11111111".U
-    when(en===1.U){
+    when(io.en===1.U){
         when(io.in===0.U){
             io.out:="b11000000".U   
         }.elsewhen(io.in===1.U){

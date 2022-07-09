@@ -725,7 +725,7 @@ module Passthrough(
   reg [7:0] ascii; // @[Passthrough.scala 73:22]
   wire [6:0] _GEN_1 = num % 7'ha; // @[Passthrough.scala 98:19]
   wire [6:0] _m6_io_in_T = _GEN_1[6:0]; // @[Passthrough.scala 98:19]
-  wire [6:0] _m7_io_in_T = num / 4'ha; // @[Passthrough.scala 102:18]
+  wire [6:0] _m7_io_in_T = num / 7'ha; // @[Passthrough.scala 102:19]
   ps2_keyboard ps2 ( // @[Passthrough.scala 14:19]
     .clock(ps2_clock),
     .io_clrn(ps2_io_clrn),
@@ -808,7 +808,7 @@ module Passthrough(
   assign m6_io_en = 1'h1; // @[Passthrough.scala 97:13]
   assign m6_io_in = _m6_io_in_T[3:0]; // @[Passthrough.scala 98:30]
   assign m7_io_en = 1'h1; // @[Passthrough.scala 101:13]
-  assign m7_io_in = _m7_io_in_T[3:0]; // @[Passthrough.scala 102:13]
+  assign m7_io_in = _m7_io_in_T[3:0]; // @[Passthrough.scala 102:30]
   always @(posedge clock) begin
     data <= ps2_io_data; // @[Passthrough.scala 19:9]
     ready <= ps2_io_ready; // @[Passthrough.scala 20:10]

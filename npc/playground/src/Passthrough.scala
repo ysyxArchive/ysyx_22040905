@@ -41,7 +41,7 @@ class vmem extends Module{
     if (memoryFile.trim().nonEmpty) {
         loadMemoryFromFileInline(vga_mem,"resource/picture.hex")
     }
-    val rdwrPort = mem(Cat(io.h_addr,io.v_addr))
+    val rdwrPort = vga_mem(Cat(io.h_addr,io.v_addr))
     io.vga_data:= rdwrPort
 }
 class vga_ctrl extends Module{

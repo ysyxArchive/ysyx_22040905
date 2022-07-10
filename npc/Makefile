@@ -27,7 +27,7 @@ clean:
 
 .PHONY: test verilog help compile bsp reformat checkformat clean all sim run 
 
-TOPNAME=Passthrough
+TOPNAME=top
 NXDC_FILES = constr/top.nxdc
 INC_PATH ?=
 VERILATOR = verilator

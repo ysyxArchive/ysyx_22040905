@@ -2,14 +2,14 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<verilated.h>
-#include</home/agustin/ysyx-workbench/npc/build/obj_dir/VPassthrough.h>
+#include<obj_dir/Vtop.h>
 #include<verilated_vcd_c.h>
 #include<nvboard.h>
 //VerilatedContext* contextp = NULL;
 //VerilatedVcdC* tfp = NULL;
 
 static TOP_NAME dut;
-void nvboard_bind_all_pins(VPassthrough* top);
+void nvboard_bind_all_pins(Vtop* top);
 
 
 static void step_and_dump_wave(){
@@ -24,7 +24,7 @@ static void step_and_dump_wave(){
 void sim_init(){
   //contextp = new VerilatedContext;
   //tfp = new VerilatedVcdC;
-  top = new VPassthrough;
+  top = new Vtop;
   //contextp->traceEverOn(true);
   //top->trace(tfp, 0);
   //tfp->open("wave.vcd");

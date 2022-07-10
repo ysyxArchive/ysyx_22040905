@@ -84,7 +84,7 @@ class vga_ctrl extends Module{
     io.valid:=(h_valid&v_valid).asUInt
     io.h_addr:=Mux(h_valid,x_cnt-145.U(10.W),"b0000000000".U)
     io.v_addr:=Mux(v_valid,y_cnt-36.U(10.W),"b0000000000".U)
-    io.vga_r:=vga_data(23,16)
-    io.vga_g:=vga_data(15,8)
-    io.vga_b:=vga_data(7,0)
+    io.vga_r:=io.vga_data(23,16)
+    io.vga_g:=io.vga_data(15,8)
+    io.vga_b:=io.vga_data(7,0)
 }

@@ -29,7 +29,7 @@ class top extends Module{
     val vm=Module(new vmem)
     vm.io.h_addr:=h_addr
     vm.io.v_addr:=v_addr(8,0)
-    vm.io.vga_data:=vga_data
+    vga_data:=vm.io.vga_data
 }
 class vmem extends Module{
     val io=IO(new Bundle{

@@ -14,7 +14,7 @@ class top extends Module{
     val v_addr=Wire(UInt(10.W))
     val vga_data=Wire(UInt(24.W))
     
-    val v1=Module(vga_ctrl)
+    val v1=Module(new vga_ctrl)
     v1.io.vga_data:=vga_data
     h_addr:=v1.io.h_addr
     v_addr:=v1.io.v_addr
@@ -25,7 +25,7 @@ class top extends Module{
     io.VGA_G:=v1.io.vga_g
     io.VGA_B:=v1.io.vga_b
     
-    val vm=Module(vmem)
+    val vm=Module(new vmem)
     vm.io.h_addr:=h_addr
     vm.io.v_addr:=v_addr(8,0)
     vm.io.vga_data:=vga_data
@@ -36,7 +36,7 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
-    val vga_mem=Reg(Vec(524287,24.W))
+    val vga_mem=Reg(Vec(524287,UInt(24.W)))
 
     $readmemh("resource/picture.hex",vga_mem)
     vga_data:=vga_mem(Cat(h_addr,v_addr))
@@ -82,8 +82,8 @@ class vga_ctrl extends Module{
     val h_valid:Bool=((x_cnt>h_active)&(x_cnt<=h_backporch))
     val v_valid:Bool=((y_cnt>v_active)&(y_cnt<=v_backporch))
     io.valid:=(h_valid&v_valid).asUInt
-    io.h_addr:=Mux(h_valid,x_cnt-145.U(10.W),"b0000000000")
-    io.v_addr:=Mux(v_valid,y_cnt-36.U(10.W),"b0000000000")
+    io.h_addr:=Mux(h_valid,x_cnt-145.U(10.W),"b0000000000".U)
+    io.v_addr:=Mux(v_valid,y_cnt-36.U(10.W),"b0000000000".U)
     io.vga_r:=vga_data(23,16)
     io.vga_g:=vga_data(15,8)
     io.vga_b:=vga_data(7,0)

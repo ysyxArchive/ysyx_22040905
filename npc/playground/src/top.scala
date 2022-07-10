@@ -11,9 +11,9 @@ class top extends Module{
         val VGA_G=Output(UInt(8.W))
         val VGA_B=Output(UInt(8.W))
     })
-    val h_addr=Wire((UInt(10.W)))
-    val v_addr=Wire((UInt(10.W)))
-    val vga_data=Wire((UInt(24.W)))
+    val h_addr=Reg((UInt(10.W)))
+    val v_addr=Reg((UInt(10.W)))
+    val vga_data=Reg((UInt(24.W)))
     
     val v1=Module(new vga_ctrl)
     v1.io.vga_data:=vga_data

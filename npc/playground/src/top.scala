@@ -40,7 +40,7 @@ class vmem extends Module{
     val memoryFile: String = "resource/picture.hex"
     val vga_mem = SyncReadMem(524287, UInt(24.W))
     if (memoryFile.trim().nonEmpty) {
-        loadMemoryFromFileInline(vga_mem,"memoryFile")
+        loadMemoryFromFileInline(vga_mem,memoryFile)
     }
     val rdwrPort = vga_mem(Cat(io.h_addr,io.v_addr))
     io.vga_data:= rdwrPort

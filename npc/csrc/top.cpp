@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<verilated.h>
-#include<obj_dir/Vtop.h>
+#include</home/agustin/ysyx-workbench/npc/build/obj_dir/Vtop.h>
 #include<verilated_vcd_c.h>
 #include<nvboard.h>
 //VerilatedContext* contextp = NULL;

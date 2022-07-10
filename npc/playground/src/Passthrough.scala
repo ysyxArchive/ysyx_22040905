@@ -39,7 +39,7 @@ class vmem extends Module{
     val vga_mem=Reg(Vec(524287,UInt(24.W)))
 
     $readmemh("resource/picture.hex",vga_mem)
-    vga_data:=vga_mem(Cat(h_addr,v_addr))
+    io.vga_data:=vga_mem(Cat(io.h_addr,io.v_addr))
 
 }
 class vga_ctrl extends Module{

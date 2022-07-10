@@ -1,6 +1,7 @@
 import chisel3._
 import chisel3.util._
 import chisel3.stage._
+import chisel3.util.experimental.loadMemoryFromFileInline
 class top extends Module{
     val io=IO(new Bundle{
         val VGA_HSYNC=Output(UInt(1.W))
@@ -36,11 +37,12 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
-    val vga_mem=Reg(Vec(524287,UInt(24.W)))
-
-    $readmemh("resource/picture.hex",vga_mem)
-    io.vga_data:=vga_mem(Cat(io.h_addr,io.v_addr))
-
+    val vga_mem = SyncReadMem(524287, UInt(24.W))
+    if (memoryFile.trim().nonEmpty) {
+        loadMemoryFromFileInline(vga_mem,"resource/picture.hex")
+    }
+    val rdwrPort = mem(Cat(io.h_addr,io.v_addr))
+    io.vga_data:= rdwrPort
 }
 class vga_ctrl extends Module{
     val io=IO(new Bundle{

@@ -105,7 +105,7 @@ class ps2 extends Module{
     io.bcd8seg(6):=m6.io.out
     val m7=Module(new seg)
     m7.io.en:=1.U
-    m7.io.in:=(num%10.U(7.W))(7,4)
+    m7.io.in:=(num/10.U(7.W))(3,0)
     io.bcd8seg(7):=m7.io.out
 }
 

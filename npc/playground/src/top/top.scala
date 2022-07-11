@@ -16,6 +16,8 @@ class top extends Module{
         val VGA_B=Output(UInt(8.W))
         val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
+    val VGA=Module(new vga)
+
     //lack time comtrol
     //get ascii
     val s0:UInt="b0001".U
@@ -57,7 +59,6 @@ class top extends Module{
     PS2.io.ps2_data:=io.ps2_data
     io.bcd8seg:=PS2.io.bcd8seg
     //vga
-    val VGA=Module(new vga)
     io.VGA_HSYNC:=VGA.io.VGA_HSYNC
     io.VGA_VSYNC:=VGA.io.VGA_VSYNC
     io.VGA_BLANK_N:=VGA.io.VGA_BLANK_N

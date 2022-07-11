@@ -1289,22 +1289,22 @@ module vmem(
   reg [31:0] _RAND_285;
   reg [31:0] _RAND_286;
   reg [31:0] _RAND_287;
-  reg [95:0] _RAND_288;
-  reg [95:0] _RAND_289;
-  reg [95:0] _RAND_290;
-  reg [95:0] _RAND_291;
-  reg [95:0] _RAND_292;
-  reg [95:0] _RAND_293;
-  reg [95:0] _RAND_294;
-  reg [95:0] _RAND_295;
-  reg [95:0] _RAND_296;
-  reg [95:0] _RAND_297;
-  reg [95:0] _RAND_298;
-  reg [95:0] _RAND_299;
-  reg [95:0] _RAND_300;
-  reg [95:0] _RAND_301;
-  reg [95:0] _RAND_302;
-  reg [95:0] _RAND_303;
+  reg [287:0] _RAND_288;
+  reg [287:0] _RAND_289;
+  reg [287:0] _RAND_290;
+  reg [287:0] _RAND_291;
+  reg [287:0] _RAND_292;
+  reg [287:0] _RAND_293;
+  reg [287:0] _RAND_294;
+  reg [287:0] _RAND_295;
+  reg [287:0] _RAND_296;
+  reg [287:0] _RAND_297;
+  reg [287:0] _RAND_298;
+  reg [287:0] _RAND_299;
+  reg [287:0] _RAND_300;
+  reg [287:0] _RAND_301;
+  reg [287:0] _RAND_302;
+  reg [287:0] _RAND_303;
   reg [31:0] _RAND_304;
   reg [31:0] _RAND_305;
 `endif // RANDOMIZE_REG_INIT
@@ -1885,22 +1885,22 @@ module vmem(
   reg [11:0] vga_mem_ram_MPORT_142_addr_pipe_0;
   reg  vga_mem_ram_MPORT_143_en_pipe_0;
   reg [11:0] vga_mem_ram_MPORT_143_addr_pipe_0;
-  reg [89:0] ram_0; // @[vga.scala 46:20]
-  reg [89:0] ram_1; // @[vga.scala 46:20]
-  reg [89:0] ram_2; // @[vga.scala 46:20]
-  reg [89:0] ram_3; // @[vga.scala 46:20]
-  reg [89:0] ram_4; // @[vga.scala 46:20]
-  reg [89:0] ram_5; // @[vga.scala 46:20]
-  reg [89:0] ram_6; // @[vga.scala 46:20]
-  reg [89:0] ram_7; // @[vga.scala 46:20]
-  reg [89:0] ram_8; // @[vga.scala 46:20]
-  reg [89:0] ram_9; // @[vga.scala 46:20]
-  reg [89:0] ram_10; // @[vga.scala 46:20]
-  reg [89:0] ram_11; // @[vga.scala 46:20]
-  reg [89:0] ram_12; // @[vga.scala 46:20]
-  reg [89:0] ram_13; // @[vga.scala 46:20]
-  reg [89:0] ram_14; // @[vga.scala 46:20]
-  reg [89:0] ram_15; // @[vga.scala 46:20]
+  reg [269:0] ram_0; // @[vga.scala 46:20]
+  reg [269:0] ram_1; // @[vga.scala 46:20]
+  reg [269:0] ram_2; // @[vga.scala 46:20]
+  reg [269:0] ram_3; // @[vga.scala 46:20]
+  reg [269:0] ram_4; // @[vga.scala 46:20]
+  reg [269:0] ram_5; // @[vga.scala 46:20]
+  reg [269:0] ram_6; // @[vga.scala 46:20]
+  reg [269:0] ram_7; // @[vga.scala 46:20]
+  reg [269:0] ram_8; // @[vga.scala 46:20]
+  reg [269:0] ram_9; // @[vga.scala 46:20]
+  reg [269:0] ram_10; // @[vga.scala 46:20]
+  reg [269:0] ram_11; // @[vga.scala 46:20]
+  reg [269:0] ram_12; // @[vga.scala 46:20]
+  reg [269:0] ram_13; // @[vga.scala 46:20]
+  reg [269:0] ram_14; // @[vga.scala 46:20]
+  reg [269:0] ram_15; // @[vga.scala 46:20]
   reg [8:0] v; // @[vga.scala 49:18]
   wire [12:0] _ram_T_3 = 5'h10 * io_ascii; // @[vga.scala 60:72]
   wire  ram_hi_hi_hi_lo = vga_mem_ram_MPORT_data[0]; // @[vga.scala 60:82]
@@ -1916,10 +1916,10 @@ module vmem(
     ram_lo_hi_lo,ram_lo_lo_hi,ram_lo_lo_lo}; // @[Cat.scala 30:58]
   wire [12:0] _ram_T_22 = v * 4'h9; // @[vga.scala 60:303]
   wire [12:0] _ram_T_24 = 13'h51 - _ram_T_22; // @[vga.scala 60:301]
-  wire [8280:0] _GEN_693 = {{8191'd0}, _ram_T_21}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_25 = _GEN_693 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_694 = {{8191'd0}, ram_0}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_26 = _GEN_694 ^ _ram_T_25; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5589 = {{8191'd0}, _ram_T_21}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_25 = _GEN_5589 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5590 = {{8011'd0}, ram_0}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_26 = _GEN_5590 ^ _ram_T_25; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_1 = vga_mem_ram_MPORT_9_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_1 = vga_mem_ram_MPORT_10_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_1 = vga_mem_ram_MPORT_11_data[2]; // @[vga.scala 60:134]
@@ -1931,10 +1931,10 @@ module vmem(
   wire  ram_lo_lo_lo_1 = vga_mem_ram_MPORT_17_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_48 = {81'h0,ram_hi_hi_hi_lo_1,ram_hi_hi_lo_1,ram_hi_lo_hi_1,ram_hi_lo_lo_1,ram_lo_hi_hi_hi_1,
     ram_lo_hi_hi_lo_1,ram_lo_hi_lo_1,ram_lo_lo_hi_1,ram_lo_lo_lo_1}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_695 = {{8191'd0}, _ram_T_48}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_52 = _GEN_695 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_696 = {{8191'd0}, ram_1}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_53 = _GEN_696 ^ _ram_T_52; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5591 = {{8191'd0}, _ram_T_48}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_52 = _GEN_5591 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5592 = {{8011'd0}, ram_1}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_53 = _GEN_5592 ^ _ram_T_52; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_2 = vga_mem_ram_MPORT_18_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_2 = vga_mem_ram_MPORT_19_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_2 = vga_mem_ram_MPORT_20_data[2]; // @[vga.scala 60:134]
@@ -1946,10 +1946,10 @@ module vmem(
   wire  ram_lo_lo_lo_2 = vga_mem_ram_MPORT_26_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_75 = {81'h0,ram_hi_hi_hi_lo_2,ram_hi_hi_lo_2,ram_hi_lo_hi_2,ram_hi_lo_lo_2,ram_lo_hi_hi_hi_2,
     ram_lo_hi_hi_lo_2,ram_lo_hi_lo_2,ram_lo_lo_hi_2,ram_lo_lo_lo_2}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_697 = {{8191'd0}, _ram_T_75}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_79 = _GEN_697 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_698 = {{8191'd0}, ram_2}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_80 = _GEN_698 ^ _ram_T_79; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5593 = {{8191'd0}, _ram_T_75}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_79 = _GEN_5593 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5594 = {{8011'd0}, ram_2}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_80 = _GEN_5594 ^ _ram_T_79; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_3 = vga_mem_ram_MPORT_27_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_3 = vga_mem_ram_MPORT_28_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_3 = vga_mem_ram_MPORT_29_data[2]; // @[vga.scala 60:134]
@@ -1961,10 +1961,10 @@ module vmem(
   wire  ram_lo_lo_lo_3 = vga_mem_ram_MPORT_35_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_102 = {81'h0,ram_hi_hi_hi_lo_3,ram_hi_hi_lo_3,ram_hi_lo_hi_3,ram_hi_lo_lo_3,ram_lo_hi_hi_hi_3,
     ram_lo_hi_hi_lo_3,ram_lo_hi_lo_3,ram_lo_lo_hi_3,ram_lo_lo_lo_3}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_699 = {{8191'd0}, _ram_T_102}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_106 = _GEN_699 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_700 = {{8191'd0}, ram_3}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_107 = _GEN_700 ^ _ram_T_106; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5595 = {{8191'd0}, _ram_T_102}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_106 = _GEN_5595 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5596 = {{8011'd0}, ram_3}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_107 = _GEN_5596 ^ _ram_T_106; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_4 = vga_mem_ram_MPORT_36_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_4 = vga_mem_ram_MPORT_37_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_4 = vga_mem_ram_MPORT_38_data[2]; // @[vga.scala 60:134]
@@ -1976,10 +1976,10 @@ module vmem(
   wire  ram_lo_lo_lo_4 = vga_mem_ram_MPORT_44_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_129 = {81'h0,ram_hi_hi_hi_lo_4,ram_hi_hi_lo_4,ram_hi_lo_hi_4,ram_hi_lo_lo_4,ram_lo_hi_hi_hi_4,
     ram_lo_hi_hi_lo_4,ram_lo_hi_lo_4,ram_lo_lo_hi_4,ram_lo_lo_lo_4}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_701 = {{8191'd0}, _ram_T_129}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_133 = _GEN_701 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_702 = {{8191'd0}, ram_4}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_134 = _GEN_702 ^ _ram_T_133; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5597 = {{8191'd0}, _ram_T_129}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_133 = _GEN_5597 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5598 = {{8011'd0}, ram_4}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_134 = _GEN_5598 ^ _ram_T_133; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_5 = vga_mem_ram_MPORT_45_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_5 = vga_mem_ram_MPORT_46_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_5 = vga_mem_ram_MPORT_47_data[2]; // @[vga.scala 60:134]
@@ -1991,10 +1991,10 @@ module vmem(
   wire  ram_lo_lo_lo_5 = vga_mem_ram_MPORT_53_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_156 = {81'h0,ram_hi_hi_hi_lo_5,ram_hi_hi_lo_5,ram_hi_lo_hi_5,ram_hi_lo_lo_5,ram_lo_hi_hi_hi_5,
     ram_lo_hi_hi_lo_5,ram_lo_hi_lo_5,ram_lo_lo_hi_5,ram_lo_lo_lo_5}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_703 = {{8191'd0}, _ram_T_156}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_160 = _GEN_703 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_704 = {{8191'd0}, ram_5}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_161 = _GEN_704 ^ _ram_T_160; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5599 = {{8191'd0}, _ram_T_156}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_160 = _GEN_5599 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5600 = {{8011'd0}, ram_5}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_161 = _GEN_5600 ^ _ram_T_160; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_6 = vga_mem_ram_MPORT_54_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_6 = vga_mem_ram_MPORT_55_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_6 = vga_mem_ram_MPORT_56_data[2]; // @[vga.scala 60:134]
@@ -2006,10 +2006,10 @@ module vmem(
   wire  ram_lo_lo_lo_6 = vga_mem_ram_MPORT_62_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_183 = {81'h0,ram_hi_hi_hi_lo_6,ram_hi_hi_lo_6,ram_hi_lo_hi_6,ram_hi_lo_lo_6,ram_lo_hi_hi_hi_6,
     ram_lo_hi_hi_lo_6,ram_lo_hi_lo_6,ram_lo_lo_hi_6,ram_lo_lo_lo_6}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_705 = {{8191'd0}, _ram_T_183}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_187 = _GEN_705 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_706 = {{8191'd0}, ram_6}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_188 = _GEN_706 ^ _ram_T_187; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5601 = {{8191'd0}, _ram_T_183}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_187 = _GEN_5601 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5602 = {{8011'd0}, ram_6}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_188 = _GEN_5602 ^ _ram_T_187; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_7 = vga_mem_ram_MPORT_63_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_7 = vga_mem_ram_MPORT_64_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_7 = vga_mem_ram_MPORT_65_data[2]; // @[vga.scala 60:134]
@@ -2021,10 +2021,10 @@ module vmem(
   wire  ram_lo_lo_lo_7 = vga_mem_ram_MPORT_71_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_210 = {81'h0,ram_hi_hi_hi_lo_7,ram_hi_hi_lo_7,ram_hi_lo_hi_7,ram_hi_lo_lo_7,ram_lo_hi_hi_hi_7,
     ram_lo_hi_hi_lo_7,ram_lo_hi_lo_7,ram_lo_lo_hi_7,ram_lo_lo_lo_7}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_707 = {{8191'd0}, _ram_T_210}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_214 = _GEN_707 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_708 = {{8191'd0}, ram_7}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_215 = _GEN_708 ^ _ram_T_214; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5603 = {{8191'd0}, _ram_T_210}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_214 = _GEN_5603 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5604 = {{8011'd0}, ram_7}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_215 = _GEN_5604 ^ _ram_T_214; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_8 = vga_mem_ram_MPORT_72_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_8 = vga_mem_ram_MPORT_73_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_8 = vga_mem_ram_MPORT_74_data[2]; // @[vga.scala 60:134]
@@ -2036,10 +2036,10 @@ module vmem(
   wire  ram_lo_lo_lo_8 = vga_mem_ram_MPORT_80_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_237 = {81'h0,ram_hi_hi_hi_lo_8,ram_hi_hi_lo_8,ram_hi_lo_hi_8,ram_hi_lo_lo_8,ram_lo_hi_hi_hi_8,
     ram_lo_hi_hi_lo_8,ram_lo_hi_lo_8,ram_lo_lo_hi_8,ram_lo_lo_lo_8}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_709 = {{8191'd0}, _ram_T_237}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_241 = _GEN_709 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_710 = {{8191'd0}, ram_8}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_242 = _GEN_710 ^ _ram_T_241; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5605 = {{8191'd0}, _ram_T_237}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_241 = _GEN_5605 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5606 = {{8011'd0}, ram_8}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_242 = _GEN_5606 ^ _ram_T_241; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_9 = vga_mem_ram_MPORT_81_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_9 = vga_mem_ram_MPORT_82_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_9 = vga_mem_ram_MPORT_83_data[2]; // @[vga.scala 60:134]
@@ -2051,10 +2051,10 @@ module vmem(
   wire  ram_lo_lo_lo_9 = vga_mem_ram_MPORT_89_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_264 = {81'h0,ram_hi_hi_hi_lo_9,ram_hi_hi_lo_9,ram_hi_lo_hi_9,ram_hi_lo_lo_9,ram_lo_hi_hi_hi_9,
     ram_lo_hi_hi_lo_9,ram_lo_hi_lo_9,ram_lo_lo_hi_9,ram_lo_lo_lo_9}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_711 = {{8191'd0}, _ram_T_264}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_268 = _GEN_711 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_712 = {{8191'd0}, ram_9}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_269 = _GEN_712 ^ _ram_T_268; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5607 = {{8191'd0}, _ram_T_264}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_268 = _GEN_5607 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5608 = {{8011'd0}, ram_9}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_269 = _GEN_5608 ^ _ram_T_268; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_10 = vga_mem_ram_MPORT_90_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_10 = vga_mem_ram_MPORT_91_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_10 = vga_mem_ram_MPORT_92_data[2]; // @[vga.scala 60:134]
@@ -2066,10 +2066,10 @@ module vmem(
   wire  ram_lo_lo_lo_10 = vga_mem_ram_MPORT_98_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_291 = {81'h0,ram_hi_hi_hi_lo_10,ram_hi_hi_lo_10,ram_hi_lo_hi_10,ram_hi_lo_lo_10,ram_lo_hi_hi_hi_10,
     ram_lo_hi_hi_lo_10,ram_lo_hi_lo_10,ram_lo_lo_hi_10,ram_lo_lo_lo_10}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_713 = {{8191'd0}, _ram_T_291}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_295 = _GEN_713 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_714 = {{8191'd0}, ram_10}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_296 = _GEN_714 ^ _ram_T_295; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5609 = {{8191'd0}, _ram_T_291}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_295 = _GEN_5609 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5610 = {{8011'd0}, ram_10}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_296 = _GEN_5610 ^ _ram_T_295; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_11 = vga_mem_ram_MPORT_99_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_11 = vga_mem_ram_MPORT_100_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_11 = vga_mem_ram_MPORT_101_data[2]; // @[vga.scala 60:134]
@@ -2081,10 +2081,10 @@ module vmem(
   wire  ram_lo_lo_lo_11 = vga_mem_ram_MPORT_107_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_318 = {81'h0,ram_hi_hi_hi_lo_11,ram_hi_hi_lo_11,ram_hi_lo_hi_11,ram_hi_lo_lo_11,ram_lo_hi_hi_hi_11,
     ram_lo_hi_hi_lo_11,ram_lo_hi_lo_11,ram_lo_lo_hi_11,ram_lo_lo_lo_11}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_715 = {{8191'd0}, _ram_T_318}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_322 = _GEN_715 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_716 = {{8191'd0}, ram_11}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_323 = _GEN_716 ^ _ram_T_322; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5611 = {{8191'd0}, _ram_T_318}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_322 = _GEN_5611 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5612 = {{8011'd0}, ram_11}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_323 = _GEN_5612 ^ _ram_T_322; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_12 = vga_mem_ram_MPORT_108_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_12 = vga_mem_ram_MPORT_109_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_12 = vga_mem_ram_MPORT_110_data[2]; // @[vga.scala 60:134]
@@ -2096,10 +2096,10 @@ module vmem(
   wire  ram_lo_lo_lo_12 = vga_mem_ram_MPORT_116_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_345 = {81'h0,ram_hi_hi_hi_lo_12,ram_hi_hi_lo_12,ram_hi_lo_hi_12,ram_hi_lo_lo_12,ram_lo_hi_hi_hi_12,
     ram_lo_hi_hi_lo_12,ram_lo_hi_lo_12,ram_lo_lo_hi_12,ram_lo_lo_lo_12}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_717 = {{8191'd0}, _ram_T_345}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_349 = _GEN_717 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_718 = {{8191'd0}, ram_12}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_350 = _GEN_718 ^ _ram_T_349; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5613 = {{8191'd0}, _ram_T_345}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_349 = _GEN_5613 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5614 = {{8011'd0}, ram_12}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_350 = _GEN_5614 ^ _ram_T_349; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_13 = vga_mem_ram_MPORT_117_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_13 = vga_mem_ram_MPORT_118_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_13 = vga_mem_ram_MPORT_119_data[2]; // @[vga.scala 60:134]
@@ -2111,10 +2111,10 @@ module vmem(
   wire  ram_lo_lo_lo_13 = vga_mem_ram_MPORT_125_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_372 = {81'h0,ram_hi_hi_hi_lo_13,ram_hi_hi_lo_13,ram_hi_lo_hi_13,ram_hi_lo_lo_13,ram_lo_hi_hi_hi_13,
     ram_lo_hi_hi_lo_13,ram_lo_hi_lo_13,ram_lo_lo_hi_13,ram_lo_lo_lo_13}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_719 = {{8191'd0}, _ram_T_372}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_376 = _GEN_719 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_720 = {{8191'd0}, ram_13}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_377 = _GEN_720 ^ _ram_T_376; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5615 = {{8191'd0}, _ram_T_372}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_376 = _GEN_5615 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5616 = {{8011'd0}, ram_13}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_377 = _GEN_5616 ^ _ram_T_376; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_14 = vga_mem_ram_MPORT_126_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_14 = vga_mem_ram_MPORT_127_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_14 = vga_mem_ram_MPORT_128_data[2]; // @[vga.scala 60:134]
@@ -2126,10 +2126,10 @@ module vmem(
   wire  ram_lo_lo_lo_14 = vga_mem_ram_MPORT_134_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_399 = {81'h0,ram_hi_hi_hi_lo_14,ram_hi_hi_lo_14,ram_hi_lo_hi_14,ram_hi_lo_lo_14,ram_lo_hi_hi_hi_14,
     ram_lo_hi_hi_lo_14,ram_lo_hi_lo_14,ram_lo_lo_hi_14,ram_lo_lo_lo_14}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_721 = {{8191'd0}, _ram_T_399}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_403 = _GEN_721 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_722 = {{8191'd0}, ram_14}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_404 = _GEN_722 ^ _ram_T_403; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5617 = {{8191'd0}, _ram_T_399}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_403 = _GEN_5617 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5618 = {{8011'd0}, ram_14}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_404 = _GEN_5618 ^ _ram_T_403; // @[vga.scala 60:41]
   wire  ram_hi_hi_hi_lo_15 = vga_mem_ram_MPORT_135_data[0]; // @[vga.scala 60:82]
   wire  ram_hi_hi_lo_15 = vga_mem_ram_MPORT_136_data[1]; // @[vga.scala 60:108]
   wire  ram_hi_lo_hi_15 = vga_mem_ram_MPORT_137_data[2]; // @[vga.scala 60:134]
@@ -2141,28 +2141,172 @@ module vmem(
   wire  ram_lo_lo_lo_15 = vga_mem_ram_MPORT_143_data[8]; // @[vga.scala 60:290]
   wire [89:0] _ram_T_426 = {81'h0,ram_hi_hi_hi_lo_15,ram_hi_hi_lo_15,ram_hi_lo_hi_15,ram_hi_lo_lo_15,ram_lo_hi_hi_hi_15,
     ram_lo_hi_hi_lo_15,ram_lo_hi_lo_15,ram_lo_lo_hi_15,ram_lo_lo_lo_15}; // @[Cat.scala 30:58]
-  wire [8280:0] _GEN_723 = {{8191'd0}, _ram_T_426}; // @[vga.scala 60:294]
-  wire [8280:0] _ram_T_430 = _GEN_723 << _ram_T_24; // @[vga.scala 60:294]
-  wire [8280:0] _GEN_724 = {{8191'd0}, ram_15}; // @[vga.scala 60:41]
-  wire [8280:0] _ram_T_431 = _GEN_724 ^ _ram_T_430; // @[vga.scala 60:41]
+  wire [8280:0] _GEN_5619 = {{8191'd0}, _ram_T_426}; // @[vga.scala 60:294]
+  wire [8280:0] _ram_T_430 = _GEN_5619 << _ram_T_24; // @[vga.scala 60:294]
+  wire [8280:0] _GEN_5620 = {{8011'd0}, ram_15}; // @[vga.scala 60:41]
+  wire [8280:0] _ram_T_431 = _GEN_5620 ^ _ram_T_430; // @[vga.scala 60:41]
   wire [8:0] _v_T_1 = v + 9'h9; // @[vga.scala 62:13]
   reg [23:0] rdwrPort; // @[vga.scala 64:23]
-  wire [89:0] _GEN_677 = 4'h1 == io_h_addr[3:0] ? ram_1 : ram_0; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_678 = 4'h2 == io_h_addr[3:0] ? ram_2 : _GEN_677; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_679 = 4'h3 == io_h_addr[3:0] ? ram_3 : _GEN_678; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_680 = 4'h4 == io_h_addr[3:0] ? ram_4 : _GEN_679; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_681 = 4'h5 == io_h_addr[3:0] ? ram_5 : _GEN_680; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_682 = 4'h6 == io_h_addr[3:0] ? ram_6 : _GEN_681; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_683 = 4'h7 == io_h_addr[3:0] ? ram_7 : _GEN_682; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_684 = 4'h8 == io_h_addr[3:0] ? ram_8 : _GEN_683; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_685 = 4'h9 == io_h_addr[3:0] ? ram_9 : _GEN_684; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_686 = 4'ha == io_h_addr[3:0] ? ram_10 : _GEN_685; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_687 = 4'hb == io_h_addr[3:0] ? ram_11 : _GEN_686; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_688 = 4'hc == io_h_addr[3:0] ? ram_12 : _GEN_687; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_689 = 4'hd == io_h_addr[3:0] ? ram_13 : _GEN_688; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_690 = 4'he == io_h_addr[3:0] ? ram_14 : _GEN_689; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _GEN_691 = 4'hf == io_h_addr[3:0] ? ram_15 : _GEN_690; // @[vga.scala 65:24 vga.scala 65:24]
-  wire [89:0] _T_51 = _GEN_691 >> io_v_addr; // @[vga.scala 65:24]
+  wire [269:0] _GEN_5429 = 8'h1 == io_h_addr[7:0] ? ram_1 : ram_0; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5430 = 8'h2 == io_h_addr[7:0] ? ram_2 : _GEN_5429; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5431 = 8'h3 == io_h_addr[7:0] ? ram_3 : _GEN_5430; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5432 = 8'h4 == io_h_addr[7:0] ? ram_4 : _GEN_5431; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5433 = 8'h5 == io_h_addr[7:0] ? ram_5 : _GEN_5432; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5434 = 8'h6 == io_h_addr[7:0] ? ram_6 : _GEN_5433; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5435 = 8'h7 == io_h_addr[7:0] ? ram_7 : _GEN_5434; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5436 = 8'h8 == io_h_addr[7:0] ? ram_8 : _GEN_5435; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5437 = 8'h9 == io_h_addr[7:0] ? ram_9 : _GEN_5436; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5438 = 8'ha == io_h_addr[7:0] ? ram_10 : _GEN_5437; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5439 = 8'hb == io_h_addr[7:0] ? ram_11 : _GEN_5438; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5440 = 8'hc == io_h_addr[7:0] ? ram_12 : _GEN_5439; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5441 = 8'hd == io_h_addr[7:0] ? ram_13 : _GEN_5440; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5442 = 8'he == io_h_addr[7:0] ? ram_14 : _GEN_5441; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5443 = 8'hf == io_h_addr[7:0] ? ram_15 : _GEN_5442; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5444 = 8'h10 == io_h_addr[7:0] ? 270'h0 : _GEN_5443; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5445 = 8'h11 == io_h_addr[7:0] ? 270'h0 : _GEN_5444; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5446 = 8'h12 == io_h_addr[7:0] ? 270'h0 : _GEN_5445; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5447 = 8'h13 == io_h_addr[7:0] ? 270'h0 : _GEN_5446; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5448 = 8'h14 == io_h_addr[7:0] ? 270'h0 : _GEN_5447; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5449 = 8'h15 == io_h_addr[7:0] ? 270'h0 : _GEN_5448; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5450 = 8'h16 == io_h_addr[7:0] ? 270'h0 : _GEN_5449; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5451 = 8'h17 == io_h_addr[7:0] ? 270'h0 : _GEN_5450; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5452 = 8'h18 == io_h_addr[7:0] ? 270'h0 : _GEN_5451; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5453 = 8'h19 == io_h_addr[7:0] ? 270'h0 : _GEN_5452; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5454 = 8'h1a == io_h_addr[7:0] ? 270'h0 : _GEN_5453; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5455 = 8'h1b == io_h_addr[7:0] ? 270'h0 : _GEN_5454; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5456 = 8'h1c == io_h_addr[7:0] ? 270'h0 : _GEN_5455; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5457 = 8'h1d == io_h_addr[7:0] ? 270'h0 : _GEN_5456; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5458 = 8'h1e == io_h_addr[7:0] ? 270'h0 : _GEN_5457; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5459 = 8'h1f == io_h_addr[7:0] ? 270'h0 : _GEN_5458; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5460 = 8'h20 == io_h_addr[7:0] ? 270'h0 : _GEN_5459; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5461 = 8'h21 == io_h_addr[7:0] ? 270'h0 : _GEN_5460; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5462 = 8'h22 == io_h_addr[7:0] ? 270'h0 : _GEN_5461; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5463 = 8'h23 == io_h_addr[7:0] ? 270'h0 : _GEN_5462; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5464 = 8'h24 == io_h_addr[7:0] ? 270'h0 : _GEN_5463; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5465 = 8'h25 == io_h_addr[7:0] ? 270'h0 : _GEN_5464; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5466 = 8'h26 == io_h_addr[7:0] ? 270'h0 : _GEN_5465; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5467 = 8'h27 == io_h_addr[7:0] ? 270'h0 : _GEN_5466; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5468 = 8'h28 == io_h_addr[7:0] ? 270'h0 : _GEN_5467; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5469 = 8'h29 == io_h_addr[7:0] ? 270'h0 : _GEN_5468; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5470 = 8'h2a == io_h_addr[7:0] ? 270'h0 : _GEN_5469; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5471 = 8'h2b == io_h_addr[7:0] ? 270'h0 : _GEN_5470; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5472 = 8'h2c == io_h_addr[7:0] ? 270'h0 : _GEN_5471; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5473 = 8'h2d == io_h_addr[7:0] ? 270'h0 : _GEN_5472; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5474 = 8'h2e == io_h_addr[7:0] ? 270'h0 : _GEN_5473; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5475 = 8'h2f == io_h_addr[7:0] ? 270'h0 : _GEN_5474; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5476 = 8'h30 == io_h_addr[7:0] ? 270'h0 : _GEN_5475; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5477 = 8'h31 == io_h_addr[7:0] ? 270'h0 : _GEN_5476; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5478 = 8'h32 == io_h_addr[7:0] ? 270'h0 : _GEN_5477; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5479 = 8'h33 == io_h_addr[7:0] ? 270'h0 : _GEN_5478; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5480 = 8'h34 == io_h_addr[7:0] ? 270'h0 : _GEN_5479; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5481 = 8'h35 == io_h_addr[7:0] ? 270'h0 : _GEN_5480; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5482 = 8'h36 == io_h_addr[7:0] ? 270'h0 : _GEN_5481; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5483 = 8'h37 == io_h_addr[7:0] ? 270'h0 : _GEN_5482; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5484 = 8'h38 == io_h_addr[7:0] ? 270'h0 : _GEN_5483; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5485 = 8'h39 == io_h_addr[7:0] ? 270'h0 : _GEN_5484; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5486 = 8'h3a == io_h_addr[7:0] ? 270'h0 : _GEN_5485; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5487 = 8'h3b == io_h_addr[7:0] ? 270'h0 : _GEN_5486; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5488 = 8'h3c == io_h_addr[7:0] ? 270'h0 : _GEN_5487; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5489 = 8'h3d == io_h_addr[7:0] ? 270'h0 : _GEN_5488; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5490 = 8'h3e == io_h_addr[7:0] ? 270'h0 : _GEN_5489; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5491 = 8'h3f == io_h_addr[7:0] ? 270'h0 : _GEN_5490; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5492 = 8'h40 == io_h_addr[7:0] ? 270'h0 : _GEN_5491; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5493 = 8'h41 == io_h_addr[7:0] ? 270'h0 : _GEN_5492; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5494 = 8'h42 == io_h_addr[7:0] ? 270'h0 : _GEN_5493; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5495 = 8'h43 == io_h_addr[7:0] ? 270'h0 : _GEN_5494; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5496 = 8'h44 == io_h_addr[7:0] ? 270'h0 : _GEN_5495; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5497 = 8'h45 == io_h_addr[7:0] ? 270'h0 : _GEN_5496; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5498 = 8'h46 == io_h_addr[7:0] ? 270'h0 : _GEN_5497; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5499 = 8'h47 == io_h_addr[7:0] ? 270'h0 : _GEN_5498; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5500 = 8'h48 == io_h_addr[7:0] ? 270'h0 : _GEN_5499; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5501 = 8'h49 == io_h_addr[7:0] ? 270'h0 : _GEN_5500; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5502 = 8'h4a == io_h_addr[7:0] ? 270'h0 : _GEN_5501; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5503 = 8'h4b == io_h_addr[7:0] ? 270'h0 : _GEN_5502; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5504 = 8'h4c == io_h_addr[7:0] ? 270'h0 : _GEN_5503; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5505 = 8'h4d == io_h_addr[7:0] ? 270'h0 : _GEN_5504; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5506 = 8'h4e == io_h_addr[7:0] ? 270'h0 : _GEN_5505; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5507 = 8'h4f == io_h_addr[7:0] ? 270'h0 : _GEN_5506; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5508 = 8'h50 == io_h_addr[7:0] ? 270'h0 : _GEN_5507; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5509 = 8'h51 == io_h_addr[7:0] ? 270'h0 : _GEN_5508; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5510 = 8'h52 == io_h_addr[7:0] ? 270'h0 : _GEN_5509; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5511 = 8'h53 == io_h_addr[7:0] ? 270'h0 : _GEN_5510; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5512 = 8'h54 == io_h_addr[7:0] ? 270'h0 : _GEN_5511; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5513 = 8'h55 == io_h_addr[7:0] ? 270'h0 : _GEN_5512; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5514 = 8'h56 == io_h_addr[7:0] ? 270'h0 : _GEN_5513; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5515 = 8'h57 == io_h_addr[7:0] ? 270'h0 : _GEN_5514; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5516 = 8'h58 == io_h_addr[7:0] ? 270'h0 : _GEN_5515; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5517 = 8'h59 == io_h_addr[7:0] ? 270'h0 : _GEN_5516; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5518 = 8'h5a == io_h_addr[7:0] ? 270'h0 : _GEN_5517; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5519 = 8'h5b == io_h_addr[7:0] ? 270'h0 : _GEN_5518; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5520 = 8'h5c == io_h_addr[7:0] ? 270'h0 : _GEN_5519; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5521 = 8'h5d == io_h_addr[7:0] ? 270'h0 : _GEN_5520; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5522 = 8'h5e == io_h_addr[7:0] ? 270'h0 : _GEN_5521; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5523 = 8'h5f == io_h_addr[7:0] ? 270'h0 : _GEN_5522; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5524 = 8'h60 == io_h_addr[7:0] ? 270'h0 : _GEN_5523; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5525 = 8'h61 == io_h_addr[7:0] ? 270'h0 : _GEN_5524; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5526 = 8'h62 == io_h_addr[7:0] ? 270'h0 : _GEN_5525; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5527 = 8'h63 == io_h_addr[7:0] ? 270'h0 : _GEN_5526; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5528 = 8'h64 == io_h_addr[7:0] ? 270'h0 : _GEN_5527; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5529 = 8'h65 == io_h_addr[7:0] ? 270'h0 : _GEN_5528; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5530 = 8'h66 == io_h_addr[7:0] ? 270'h0 : _GEN_5529; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5531 = 8'h67 == io_h_addr[7:0] ? 270'h0 : _GEN_5530; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5532 = 8'h68 == io_h_addr[7:0] ? 270'h0 : _GEN_5531; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5533 = 8'h69 == io_h_addr[7:0] ? 270'h0 : _GEN_5532; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5534 = 8'h6a == io_h_addr[7:0] ? 270'h0 : _GEN_5533; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5535 = 8'h6b == io_h_addr[7:0] ? 270'h0 : _GEN_5534; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5536 = 8'h6c == io_h_addr[7:0] ? 270'h0 : _GEN_5535; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5537 = 8'h6d == io_h_addr[7:0] ? 270'h0 : _GEN_5536; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5538 = 8'h6e == io_h_addr[7:0] ? 270'h0 : _GEN_5537; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5539 = 8'h6f == io_h_addr[7:0] ? 270'h0 : _GEN_5538; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5540 = 8'h70 == io_h_addr[7:0] ? 270'h0 : _GEN_5539; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5541 = 8'h71 == io_h_addr[7:0] ? 270'h0 : _GEN_5540; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5542 = 8'h72 == io_h_addr[7:0] ? 270'h0 : _GEN_5541; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5543 = 8'h73 == io_h_addr[7:0] ? 270'h0 : _GEN_5542; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5544 = 8'h74 == io_h_addr[7:0] ? 270'h0 : _GEN_5543; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5545 = 8'h75 == io_h_addr[7:0] ? 270'h0 : _GEN_5544; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5546 = 8'h76 == io_h_addr[7:0] ? 270'h0 : _GEN_5545; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5547 = 8'h77 == io_h_addr[7:0] ? 270'h0 : _GEN_5546; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5548 = 8'h78 == io_h_addr[7:0] ? 270'h0 : _GEN_5547; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5549 = 8'h79 == io_h_addr[7:0] ? 270'h0 : _GEN_5548; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5550 = 8'h7a == io_h_addr[7:0] ? 270'h0 : _GEN_5549; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5551 = 8'h7b == io_h_addr[7:0] ? 270'h0 : _GEN_5550; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5552 = 8'h7c == io_h_addr[7:0] ? 270'h0 : _GEN_5551; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5553 = 8'h7d == io_h_addr[7:0] ? 270'h0 : _GEN_5552; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5554 = 8'h7e == io_h_addr[7:0] ? 270'h0 : _GEN_5553; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5555 = 8'h7f == io_h_addr[7:0] ? 270'h0 : _GEN_5554; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5556 = 8'h80 == io_h_addr[7:0] ? 270'h0 : _GEN_5555; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5557 = 8'h81 == io_h_addr[7:0] ? 270'h0 : _GEN_5556; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5558 = 8'h82 == io_h_addr[7:0] ? 270'h0 : _GEN_5557; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5559 = 8'h83 == io_h_addr[7:0] ? 270'h0 : _GEN_5558; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5560 = 8'h84 == io_h_addr[7:0] ? 270'h0 : _GEN_5559; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5561 = 8'h85 == io_h_addr[7:0] ? 270'h0 : _GEN_5560; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5562 = 8'h86 == io_h_addr[7:0] ? 270'h0 : _GEN_5561; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5563 = 8'h87 == io_h_addr[7:0] ? 270'h0 : _GEN_5562; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5564 = 8'h88 == io_h_addr[7:0] ? 270'h0 : _GEN_5563; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5565 = 8'h89 == io_h_addr[7:0] ? 270'h0 : _GEN_5564; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5566 = 8'h8a == io_h_addr[7:0] ? 270'h0 : _GEN_5565; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5567 = 8'h8b == io_h_addr[7:0] ? 270'h0 : _GEN_5566; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5568 = 8'h8c == io_h_addr[7:0] ? 270'h0 : _GEN_5567; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5569 = 8'h8d == io_h_addr[7:0] ? 270'h0 : _GEN_5568; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5570 = 8'h8e == io_h_addr[7:0] ? 270'h0 : _GEN_5569; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5571 = 8'h8f == io_h_addr[7:0] ? 270'h0 : _GEN_5570; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5572 = 8'h90 == io_h_addr[7:0] ? 270'h0 : _GEN_5571; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5573 = 8'h91 == io_h_addr[7:0] ? 270'h0 : _GEN_5572; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5574 = 8'h92 == io_h_addr[7:0] ? 270'h0 : _GEN_5573; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5575 = 8'h93 == io_h_addr[7:0] ? 270'h0 : _GEN_5574; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5576 = 8'h94 == io_h_addr[7:0] ? 270'h0 : _GEN_5575; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5577 = 8'h95 == io_h_addr[7:0] ? 270'h0 : _GEN_5576; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5578 = 8'h96 == io_h_addr[7:0] ? 270'h0 : _GEN_5577; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5579 = 8'h97 == io_h_addr[7:0] ? 270'h0 : _GEN_5578; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5580 = 8'h98 == io_h_addr[7:0] ? 270'h0 : _GEN_5579; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5581 = 8'h99 == io_h_addr[7:0] ? 270'h0 : _GEN_5580; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5582 = 8'h9a == io_h_addr[7:0] ? 270'h0 : _GEN_5581; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5583 = 8'h9b == io_h_addr[7:0] ? 270'h0 : _GEN_5582; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5584 = 8'h9c == io_h_addr[7:0] ? 270'h0 : _GEN_5583; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5585 = 8'h9d == io_h_addr[7:0] ? 270'h0 : _GEN_5584; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5586 = 8'h9e == io_h_addr[7:0] ? 270'h0 : _GEN_5585; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _GEN_5587 = 8'h9f == io_h_addr[7:0] ? 270'h0 : _GEN_5586; // @[vga.scala 65:24 vga.scala 65:24]
+  wire [269:0] _T_51 = _GEN_5587 >> io_v_addr; // @[vga.scala 65:24]
   assign vga_mem_ram_MPORT_addr = vga_mem_ram_MPORT_addr_pipe_0;
   assign vga_mem_ram_MPORT_data = vga_mem[vga_mem_ram_MPORT_addr]; // @[vga.scala 51:30]
   assign vga_mem_ram_MPORT_1_addr = vga_mem_ram_MPORT_1_addr_pipe_0;
@@ -3030,84 +3174,84 @@ module vmem(
       vga_mem_ram_MPORT_143_addr_pipe_0 <= _ram_T_3[11:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_0 <= 90'h1; // @[vga.scala 46:20]
+      ram_0 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_0 <= _ram_T_26[89:0];
+      ram_0 <= _ram_T_26[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_1 <= 90'h1; // @[vga.scala 46:20]
+      ram_1 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_1 <= _ram_T_53[89:0];
+      ram_1 <= _ram_T_53[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_2 <= 90'h1; // @[vga.scala 46:20]
+      ram_2 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_2 <= _ram_T_80[89:0];
+      ram_2 <= _ram_T_80[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_3 <= 90'h1; // @[vga.scala 46:20]
+      ram_3 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_3 <= _ram_T_107[89:0];
+      ram_3 <= _ram_T_107[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_4 <= 90'h1; // @[vga.scala 46:20]
+      ram_4 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_4 <= _ram_T_134[89:0];
+      ram_4 <= _ram_T_134[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_5 <= 90'h1; // @[vga.scala 46:20]
+      ram_5 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_5 <= _ram_T_161[89:0];
+      ram_5 <= _ram_T_161[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_6 <= 90'h1; // @[vga.scala 46:20]
+      ram_6 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_6 <= _ram_T_188[89:0];
+      ram_6 <= _ram_T_188[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_7 <= 90'h1; // @[vga.scala 46:20]
+      ram_7 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_7 <= _ram_T_215[89:0];
+      ram_7 <= _ram_T_215[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_8 <= 90'h1; // @[vga.scala 46:20]
+      ram_8 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_8 <= _ram_T_242[89:0];
+      ram_8 <= _ram_T_242[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_9 <= 90'h1; // @[vga.scala 46:20]
+      ram_9 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_9 <= _ram_T_269[89:0];
+      ram_9 <= _ram_T_269[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_10 <= 90'h1; // @[vga.scala 46:20]
+      ram_10 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_10 <= _ram_T_296[89:0];
+      ram_10 <= _ram_T_296[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_11 <= 90'h1; // @[vga.scala 46:20]
+      ram_11 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_11 <= _ram_T_323[89:0];
+      ram_11 <= _ram_T_323[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_12 <= 90'h1; // @[vga.scala 46:20]
+      ram_12 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_12 <= _ram_T_350[89:0];
+      ram_12 <= _ram_T_350[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_13 <= 90'h1; // @[vga.scala 46:20]
+      ram_13 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_13 <= _ram_T_377[89:0];
+      ram_13 <= _ram_T_377[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_14 <= 90'h1; // @[vga.scala 46:20]
+      ram_14 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_14 <= _ram_T_404[89:0];
+      ram_14 <= _ram_T_404[269:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_15 <= 90'h1; // @[vga.scala 46:20]
+      ram_15 <= 270'h0; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
-      ram_15 <= _ram_T_431[89:0];
+      ram_15 <= _ram_T_431[269:0];
     end
     if (reset) begin // @[vga.scala 49:18]
       v <= 9'h0; // @[vga.scala 49:18]
@@ -3732,38 +3876,38 @@ initial begin
   vga_mem_ram_MPORT_143_en_pipe_0 = _RAND_286[0:0];
   _RAND_287 = {1{`RANDOM}};
   vga_mem_ram_MPORT_143_addr_pipe_0 = _RAND_287[11:0];
-  _RAND_288 = {3{`RANDOM}};
-  ram_0 = _RAND_288[89:0];
-  _RAND_289 = {3{`RANDOM}};
-  ram_1 = _RAND_289[89:0];
-  _RAND_290 = {3{`RANDOM}};
-  ram_2 = _RAND_290[89:0];
-  _RAND_291 = {3{`RANDOM}};
-  ram_3 = _RAND_291[89:0];
-  _RAND_292 = {3{`RANDOM}};
-  ram_4 = _RAND_292[89:0];
-  _RAND_293 = {3{`RANDOM}};
-  ram_5 = _RAND_293[89:0];
-  _RAND_294 = {3{`RANDOM}};
-  ram_6 = _RAND_294[89:0];
-  _RAND_295 = {3{`RANDOM}};
-  ram_7 = _RAND_295[89:0];
-  _RAND_296 = {3{`RANDOM}};
-  ram_8 = _RAND_296[89:0];
-  _RAND_297 = {3{`RANDOM}};
-  ram_9 = _RAND_297[89:0];
-  _RAND_298 = {3{`RANDOM}};
-  ram_10 = _RAND_298[89:0];
-  _RAND_299 = {3{`RANDOM}};
-  ram_11 = _RAND_299[89:0];
-  _RAND_300 = {3{`RANDOM}};
-  ram_12 = _RAND_300[89:0];
-  _RAND_301 = {3{`RANDOM}};
-  ram_13 = _RAND_301[89:0];
-  _RAND_302 = {3{`RANDOM}};
-  ram_14 = _RAND_302[89:0];
-  _RAND_303 = {3{`RANDOM}};
-  ram_15 = _RAND_303[89:0];
+  _RAND_288 = {9{`RANDOM}};
+  ram_0 = _RAND_288[269:0];
+  _RAND_289 = {9{`RANDOM}};
+  ram_1 = _RAND_289[269:0];
+  _RAND_290 = {9{`RANDOM}};
+  ram_2 = _RAND_290[269:0];
+  _RAND_291 = {9{`RANDOM}};
+  ram_3 = _RAND_291[269:0];
+  _RAND_292 = {9{`RANDOM}};
+  ram_4 = _RAND_292[269:0];
+  _RAND_293 = {9{`RANDOM}};
+  ram_5 = _RAND_293[269:0];
+  _RAND_294 = {9{`RANDOM}};
+  ram_6 = _RAND_294[269:0];
+  _RAND_295 = {9{`RANDOM}};
+  ram_7 = _RAND_295[269:0];
+  _RAND_296 = {9{`RANDOM}};
+  ram_8 = _RAND_296[269:0];
+  _RAND_297 = {9{`RANDOM}};
+  ram_9 = _RAND_297[269:0];
+  _RAND_298 = {9{`RANDOM}};
+  ram_10 = _RAND_298[269:0];
+  _RAND_299 = {9{`RANDOM}};
+  ram_11 = _RAND_299[269:0];
+  _RAND_300 = {9{`RANDOM}};
+  ram_12 = _RAND_300[269:0];
+  _RAND_301 = {9{`RANDOM}};
+  ram_13 = _RAND_301[269:0];
+  _RAND_302 = {9{`RANDOM}};
+  ram_14 = _RAND_302[269:0];
+  _RAND_303 = {9{`RANDOM}};
+  ram_15 = _RAND_303[269:0];
   _RAND_304 = {1{`RANDOM}};
   v = _RAND_304[8:0];
   _RAND_305 = {1{`RANDOM}};

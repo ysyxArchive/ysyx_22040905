@@ -53,7 +53,7 @@ class vmem extends Module{
         loadMemoryFromFileInline(vga_mem,memoryFile)
     }
     when(v>=90.U){
-        io.now:=0.U
+        v:=0.U
     }
     when(io.now=/=0.U){         
         for (i <- 0 to 15){

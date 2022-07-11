@@ -43,7 +43,7 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
-    val ram=RegInit(0.U,Vec(524287))
+    val ram=RegInit(0.U,524287.W)
     val h=RegInit(0.U(10.W))
     val v=RegInit(0.U(9.W))
     val memoryFile: String = "resource/vga_font.txt"
@@ -226,7 +226,7 @@ class vmem extends Module{
         ram(Cat(h+15,v+7.U)):=vga_mem(16*ascii+15)(7)
         ram(Cat(h+15,v+8.U)):=vga_mem(16*ascii+15)(8)
 
-        v:=v+9        
+        v:=v+9.U        
     }
     val rdwrPort = UInt(24.W)
     when(ram(Cat(io.h_addr,io.v_addr))==1.U){

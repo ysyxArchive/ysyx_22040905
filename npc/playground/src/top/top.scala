@@ -26,6 +26,7 @@ class top extends Module{
     val now=RegInit(1.U(4.W))
     val next=RegInit(1.U(4.W))
     now:=next
+    PS2.io.ready:=0.U
     when(now===s0){
         when(PS2.io.ready===1.U){
             next:=s1

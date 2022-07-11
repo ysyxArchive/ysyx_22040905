@@ -43,6 +43,7 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
+    val rdwrPort = RegInit(0.U(24.W))
     val ram=RegInit(VecInit(Seq.fill(16)(0.U(288.W)))) 
     val h=RegInit(0.U(10.W))
     val v=RegInit(0.U(9.W))
@@ -72,7 +73,7 @@ class vmem extends Module{
     io.vga_data:= rdwrPort
 
     }
-    val rdwrPort = RegInit(0.U(24.W))
+    
     }
 class vga_ctrl extends Module{
     val io=IO(new Bundle{

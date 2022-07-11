@@ -229,7 +229,7 @@ class vmem extends Module{
         v:=v+9.U        
     }
     val rdwrPort = Reg(UInt(24.W))
-    when(ram(io.h_addr*io.v_addr))===1.U){
+    when(ram(io.h_addr*io.v_addr)===1.U){
         rdwrPort:=Fill(24,1.U)
     }.otherwise{
         rdwrPort:=Fill(24,0.U)

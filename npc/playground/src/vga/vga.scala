@@ -43,7 +43,7 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
-    val ram=RegInit(VecInit(Seq.fill(525)(0.U(288.W)))) 
+    val ram=RegInit(VecInit(Seq.fill(16)(0.U(288.W)))) 
     val h=RegInit(0.U(10.W))
     val v=RegInit(0.U(9.W))
     val memoryFile: String = "resource/vga_font.txt"
@@ -51,7 +51,7 @@ class vmem extends Module{
     if (memoryFile.trim().nonEmpty) {
         loadMemoryFromFileInline(vga_mem,memoryFile)
     }
-    when((h===512.U)&&(v===288.U)){
+    when((h>=16.U)&&(v===288.U)){
         h:=1.U
     }.elsewhen(v===288.U){
         h:=h+16.U
@@ -59,12 +59,12 @@ class vmem extends Module{
     when(v===288.U){
         v:=0.U
     }
-    when(io.now=/=0.U){         
+    //when(io.now=/=0.U){         
         for (i <- 0 to 16){
         ram(h+i.asUInt):=ram(h+i.asUInt)^(Cat(Fill(278,0.U),vga_mem(16.U*io.ascii)(0),vga_mem(16.U*io.ascii)(1),vga_mem(16.U*io.ascii)(2),vga_mem(16.U*io.ascii)(3),vga_mem(16.U*io.ascii)(4),vga_mem(16.U*io.ascii)(5),vga_mem(16.U*io.ascii)(6),vga_mem(16.U*io.ascii)(7),vga_mem(16.U*io.ascii)(8))<<(278.U-v*9.U))
         }
         v:=v+9.U
-    }
+    //}
     val rdwrPort = Reg(UInt(24.W))
     when(ram(io.h_addr)(io.v_addr)===1.U){
         rdwrPort:=Fill(24,1.U)

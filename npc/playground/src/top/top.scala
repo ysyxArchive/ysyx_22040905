@@ -17,8 +17,6 @@ class top extends Module{
         val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
     val VGA=Module(new vga)
-
-    //lack time comtrol
     //get ascii
     val s0:UInt="b0001".U
     val s1:UInt="b0010".U

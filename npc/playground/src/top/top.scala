@@ -17,6 +17,7 @@ class top extends Module{
         val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
     val VGA=Module(new vga)
+    VGA.io.ascii:=92.U
     val PS2=Module(new ps2)
     //get ascii
     val s0:UInt="b0001".U

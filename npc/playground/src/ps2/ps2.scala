@@ -8,6 +8,7 @@ class ps2 extends Module{
         val ps2_data=Input(UInt(1.W))
         val ascii=Output(UInt(8.W))
         val now=Output(UInt(2.W))
+        val ready=Output(UInt(1.W))
         val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
     val data=Reg(UInt(8.W))
@@ -31,6 +32,7 @@ class ps2 extends Module{
     val now=RegInit(1.U(4.W))
     val next=RegInit(1.U(4.W))
     io.now:=now
+    io.ready:=ready
     now:=next
     when(now===s0){
         when(ready===1.U){

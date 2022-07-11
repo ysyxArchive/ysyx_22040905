@@ -4,7 +4,7 @@ import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
 class vga extends Module{
     val io=IO(new Bundle{
-        val now=Input(UInt(2.W))
+        val ready=Input(UInt(2.W))
         val ascii=Input(UInt(8.W))
         val VGA_HSYNC=Output(UInt(1.W))
         val VGA_VSYNC=Output(UInt(1.W))
@@ -29,7 +29,7 @@ class vga extends Module{
     io.VGA_B:=v1.io.vga_b
     
     val vm=Module(new vmem)
-    vm.io.now:=io.now
+    vm.io.ready:=io.ready
     vm.io.ascii:=io.ascii
     vm.io.h_addr:=h_addr
     vm.io.v_addr:=v_addr(8,0)
@@ -37,7 +37,7 @@ class vga extends Module{
 }
 class vmem extends Module{
     val io=IO(new Bundle{
-        val now=Input(UInt(2.W))
+        val ready=Input(UInt(2.W))
         val ascii=Input(UInt(8.W))
         val h_addr=Input(UInt(10.W))
         val v_addr=Input(UInt(9.W))
@@ -59,20 +59,21 @@ class vmem extends Module{
     when(v===288.U){
         v:=0.U
     }
-    //when(io.now=/=0.U){         
+    when(io.ready===1.U){         
         for (i <- 0 to 16){
         ram(h+i.asUInt):=ram(h+i.asUInt)^(Cat(Fill(278,0.U),vga_mem(16.U*io.ascii)(0),vga_mem(16.U*io.ascii)(1),vga_mem(16.U*io.ascii)(2),vga_mem(16.U*io.ascii)(3),vga_mem(16.U*io.ascii)(4),vga_mem(16.U*io.ascii)(5),vga_mem(16.U*io.ascii)(6),vga_mem(16.U*io.ascii)(7),vga_mem(16.U*io.ascii)(8))<<(278.U-v*9.U))
         }
         v:=v+9.U
-    //}
-    val rdwrPort = Reg(UInt(24.W))
-    when(ram(io.h_addr)(io.v_addr)===1.U){
+        when(ram(io.h_addr)(io.v_addr)===1.U){
         rdwrPort:=Fill(24,1.U)
-    }.otherwise{
+        }.otherwise{
         rdwrPort:=Fill(24,0.U)
     }
     io.vga_data:= rdwrPort
-}
+
+    }
+    val rdwrPort = Reg(UInt(24.W))
+    }
 class vga_ctrl extends Module{
     val io=IO(new Bundle{
         val vga_data=Input(UInt(24.W))

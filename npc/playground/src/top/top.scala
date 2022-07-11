@@ -18,6 +18,39 @@ class top extends Module{
     })
     //lack time comtrol
     //get ascii
+    val s0:UInt="b0001".U
+    val s1:UInt="b0010".U
+    val s2:UInt="b0100".U
+    val s3:UInt="b1000".U
+
+    val now=RegInit(1.U(4.W))
+    val next=RegInit(1.U(4.W))
+    now:=next
+    when(now===s0){
+        when(PS2.io.ready===1.U){
+            next:=s1
+        }.otherwise{
+            next:=s0
+        }
+    }.elsewhen(now===s1){
+        next:=s2
+    }.elsewhen(now===s2){
+        next:=s3
+    }.elsewhen(now===s3){
+        next:=s0
+    }.otherwise{
+        next:=s0
+    }
+    when(now===s0){
+        nextdata:=1.U
+    }.elsewhen(now===s2||now===s3){
+        nextdata:=0.U
+    }.elsewhen(now===s1){
+        VGA.io.ascii:=PS2.io.ascii
+        VGA.io.ready:=1.U
+    }.otherwise{
+        nextdata:=1.U
+    }
     val PS2=Module(new ps2)
     PS2.io.rst:=0.U
     PS2.io.ps2_clk:=io.ps2_clk
@@ -25,8 +58,6 @@ class top extends Module{
     io.bcd8seg:=PS2.io.bcd8seg
     //vga
     val VGA=Module(new vga)
-    VGA.io.ascii:=PS2.io.ascii
-    VGA.io.now:=PS2.io.now
     io.VGA_HSYNC:=VGA.io.VGA_HSYNC
     io.VGA_VSYNC:=VGA.io.VGA_VSYNC
     io.VGA_BLANK_N:=VGA.io.VGA_BLANK_N

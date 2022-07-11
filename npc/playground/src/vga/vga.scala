@@ -60,6 +60,7 @@ class vmem extends Module{
     when(v===288.U){
         v:=0.U
     }
+    io.vga_data:=0.U
     when(io.ready===1.U){         
         for (i <- 0 to 16){
         ram(h+i.asUInt):=ram(h+i.asUInt)^(Cat(Fill(278,0.U),vga_mem(16.U*io.ascii)(0),vga_mem(16.U*io.ascii)(1),vga_mem(16.U*io.ascii)(2),vga_mem(16.U*io.ascii)(3),vga_mem(16.U*io.ascii)(4),vga_mem(16.U*io.ascii)(5),vga_mem(16.U*io.ascii)(6),vga_mem(16.U*io.ascii)(7),vga_mem(16.U*io.ascii)(8))<<(278.U-v*9.U))
@@ -70,7 +71,7 @@ class vmem extends Module{
         }.otherwise{
         rdwrPort:=Fill(24,0.U)
     }
-    io.vga_data:=0.U
+    
     io.vga_data:= rdwrPort
 
     }

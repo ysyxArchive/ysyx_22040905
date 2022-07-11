@@ -70,6 +70,7 @@ class vmem extends Module{
         }.otherwise{
         rdwrPort:=Fill(24,0.U)
     }
+    io.vga_data:=0.U
     io.vga_data:= rdwrPort
 
     }

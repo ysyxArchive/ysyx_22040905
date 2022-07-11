@@ -163,7 +163,7 @@ initial begin
   vga_mem_rdwrPort_addr_pipe_0 = _RAND_1[18:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
-  $readmemh("memoryFile", vga_mem);
+  $readmemh("resource/picture.hex", vga_mem);
 end // initial
 `ifdef FIRRTL_AFTER_INITIAL
 `FIRRTL_AFTER_INITIAL

@@ -51,7 +51,7 @@ class vmem extends Module{
     if (memoryFile.trim().nonEmpty) {
         loadMemoryFromFileInline(vga_mem,memoryFile)
     }
-    when((h===512)&&(v===288.U)){
+    when((h===512.U)&&(v===288.U)){
         h:=1.U
     }.elsewhen(v===288.U){
         h:=h+16.U

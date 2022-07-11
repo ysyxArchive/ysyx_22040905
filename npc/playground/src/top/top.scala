@@ -48,7 +48,7 @@ class top extends Module{
     }.elsewhen(now===s2){
         VGA.io.ascii:=PS2.io.ascii
     }.otherwise{
-        nextdata:=0.U
+        VGA.io.ready:=0.U
     }
     val PS2=Module(new ps2)
     PS2.io.rst:=0.U

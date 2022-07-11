@@ -43,7 +43,7 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
-    val ram=RegInit(VecInit(Seq.fill(524*287)(0.U(1.W)))) 
+    val ram=RegInit(VecInit(Seq.fill(16*200)(0.U(1.W)))) 
     val h=RegInit(0.U(10.W))
     val v=RegInit(0.U(9.W))
     val memoryFile: String = "resource/vga_font.txt"

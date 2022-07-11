@@ -56,7 +56,7 @@ class vmem extends Module{
     }.elsewhen(v===288.U){
         h:=h+16.U
     }
-    when(v==288.U){
+    when(v===288.U){
         v:=0.U
     }
     when(io.now=/=0.U){         

@@ -73,7 +73,7 @@ class vmem extends Module{
     }    
     io.vga_data:= rdwrPort
     }
-    io.vga_data:=0.U
+    io.vga_data:=Fill(24,1.U)
     }
 class vga_ctrl extends Module{
     val io=IO(new Bundle{

@@ -2,8 +2,8 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
-import ps2._
-import vga._
+//import ps2._
+//import vga._
 class top extends Module{
     val io=IO(new Bundle{
         val ps2_clk=Input(UInt(1.W))
@@ -17,12 +17,12 @@ class top extends Module{
     })
     //lack time comtrol
     //get ascii
-    val PS2=Module(ps2)
+    val PS2=Module(new ps2)
     PS2.io.rst:=0.U
     PS2.io.ps2_clk:=io.ps2_clk
     PS2.io.ps2_data:=io.ps2_data
     //vga
-    val VGA=Module(vga)
+    val VGA=Module(new vga)
     VGA.io.ascii:=PS2.io.ascii
     VGA.io.now:=PS2.io.now
     io.VGA_HSYNC:=VGA.io.VGA_HSYNC

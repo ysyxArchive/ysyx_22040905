@@ -693,6 +693,7 @@ module ps2(
   reg [7:0] ascii; // @[ps2.scala 72:22]
   wire [6:0] _GEN_1 = num % 7'ha; // @[ps2.scala 104:19]
   wire [6:0] _m6_io_in_T = _GEN_1[6:0]; // @[ps2.scala 104:19]
+  wire [6:0] _m7_io_in_T = num / 7'ha; // @[ps2.scala 108:19]
   ps2_keyboard ps2 ( // @[ps2.scala 17:19]
     .clock(ps2_clock),
     .io_ps2_clk(ps2_io_ps2_clk),
@@ -775,7 +776,7 @@ module ps2(
   assign m6_io_en = 1'h1; // @[ps2.scala 103:13]
   assign m6_io_in = _m6_io_in_T[3:0]; // @[ps2.scala 104:30]
   assign m7_io_en = 1'h1; // @[ps2.scala 107:13]
-  assign m7_io_in = _m6_io_in_T[3:0]; // @[ps2.scala 108:30]
+  assign m7_io_in = _m7_io_in_T[3:0]; // @[ps2.scala 108:30]
   always @(posedge clock) begin
     data <= ps2_io_data; // @[ps2.scala 22:9]
     ready <= ps2_io_ready; // @[ps2.scala 23:10]

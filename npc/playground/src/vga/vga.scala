@@ -57,7 +57,7 @@ class vmem extends Module{
     }
     when(io.now=/=0.U){         
         for (i <- 0 to 15){
-        ram(h+i.asUInt):=ram(h+i.asUInt)^(((vga_mem(16.U*io.ascii)(0,8))(90.W))<<(81.U-v*9.U))
+        ram(h+i.asUInt):=ram(h+i.asUInt)^(Cat(Fill(81,0.U),vga_mem(16.U*io.ascii)(0),vga_mem(16.U*io.ascii)(1),vga_mem(16.U*io.ascii)(2),vga_mem(16.U*io.ascii)(3),vga_mem(16.U*io.ascii)(4),vga_mem(16.U*io.ascii)(5),vga_mem(16.U*io.ascii)(6),vga_mem(16.U*io.ascii)(7),vga_mem(16.U*io.ascii)(8))<<(81.U-v*9.U))
         }
         v:=v+9.U
     }

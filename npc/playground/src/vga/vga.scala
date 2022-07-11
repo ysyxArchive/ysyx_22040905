@@ -43,7 +43,7 @@ class vmem extends Module{
         val v_addr=Input(UInt(9.W))
         val vga_data=Output(UInt(24.W))
     })
-    val ram=RegInit(VecInit(Seq.fill(16)(1.U(90.W)))) 
+    val ram=RegInit(VecInit(Seq.fill(160)(0.U(270.W)))) 
     val h=RegInit(0.U(10.W))
     h:=0.U
     val v=RegInit(0.U(9.W))

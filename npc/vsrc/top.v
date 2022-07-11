@@ -3030,82 +3030,82 @@ module vmem(
       vga_mem_ram_MPORT_143_addr_pipe_0 <= _ram_T_3[11:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_0 <= 90'h0; // @[vga.scala 46:20]
+      ram_0 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_0 <= _ram_T_26[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_1 <= 90'h0; // @[vga.scala 46:20]
+      ram_1 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_1 <= _ram_T_53[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_2 <= 90'h0; // @[vga.scala 46:20]
+      ram_2 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_2 <= _ram_T_80[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_3 <= 90'h0; // @[vga.scala 46:20]
+      ram_3 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_3 <= _ram_T_107[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_4 <= 90'h0; // @[vga.scala 46:20]
+      ram_4 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_4 <= _ram_T_134[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_5 <= 90'h0; // @[vga.scala 46:20]
+      ram_5 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_5 <= _ram_T_161[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_6 <= 90'h0; // @[vga.scala 46:20]
+      ram_6 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_6 <= _ram_T_188[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_7 <= 90'h0; // @[vga.scala 46:20]
+      ram_7 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_7 <= _ram_T_215[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_8 <= 90'h0; // @[vga.scala 46:20]
+      ram_8 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_8 <= _ram_T_242[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_9 <= 90'h0; // @[vga.scala 46:20]
+      ram_9 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_9 <= _ram_T_269[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_10 <= 90'h0; // @[vga.scala 46:20]
+      ram_10 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_10 <= _ram_T_296[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_11 <= 90'h0; // @[vga.scala 46:20]
+      ram_11 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_11 <= _ram_T_323[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_12 <= 90'h0; // @[vga.scala 46:20]
+      ram_12 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_12 <= _ram_T_350[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_13 <= 90'h0; // @[vga.scala 46:20]
+      ram_13 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_13 <= _ram_T_377[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_14 <= 90'h0; // @[vga.scala 46:20]
+      ram_14 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_14 <= _ram_T_404[89:0];
     end
     if (reset) begin // @[vga.scala 46:20]
-      ram_15 <= 90'h0; // @[vga.scala 46:20]
+      ram_15 <= 90'h1; // @[vga.scala 46:20]
     end else if (io_now != 2'h0) begin // @[vga.scala 58:23]
       ram_15 <= _ram_T_431[89:0];
     end

@@ -14,6 +14,7 @@ class top extends Module{
         val VGA_R=Output(UInt(8.W))
         val VGA_G=Output(UInt(8.W))
         val VGA_B=Output(UInt(8.W))
+        val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
     //lack time comtrol
     //get ascii
@@ -21,6 +22,7 @@ class top extends Module{
     PS2.io.rst:=0.U
     PS2.io.ps2_clk:=io.ps2_clk
     PS2.io.ps2_data:=io.ps2_data
+    io.bcd8seg:=PS2.io.bcd8seg
     //vga
     val VGA=Module(new vga)
     VGA.io.ascii:=PS2.io.ascii

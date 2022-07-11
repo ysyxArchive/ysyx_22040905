@@ -8,6 +8,7 @@ class ps2 extends Module{
         val ps2_data=Input(UInt(1.W))
         val ascii=Output(UInt(8.W))
         val now=Output(UInt(2.W))
+        val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
     val data=Reg(UInt(8.W))
     val ready=Reg(UInt(1.W))
@@ -59,7 +60,7 @@ class ps2 extends Module{
     val num=RegInit(0.U(7.W))
     val segen=RegInit(0.U(1.W))
     val ss=RegInit(0.U(2.W))
-    /*when((ps2segdata(23,16)==="hf0".U)&&(ps2segdata(7,0)===ps2segdata(15,8))){
+    when((ps2segdata(23,16)==="hf0".U)&&(ps2segdata(7,0)===ps2segdata(15,8))){
         segen:=0.U
     }.otherwise{
         segen:=1.U
@@ -67,12 +68,45 @@ class ps2 extends Module{
     ss:=Cat(ss(0),segen)
     when(ss==="b10".U){
         num:=num+1.U
-    }*/
+    }
     val ascii=RegInit(0.U(8.W))
     val mm=Module(new ps2ascii)
     mm.io.in:=ps2segdata(7,0)
     ascii:=mm.io.out
     io.ascii:=ascii
+    
+    val m0=Module(new seg)
+    m0.io.en:segen
+    m0.io.in:=ps2segdata(3,0)
+    io.bcd8seg(0):=m0.io.out
+    val m1=Module(new seg)
+    m1.io.en:segen
+    m1.io.in:=ps2segdata(7,4)
+    io.bcd8seg(1):=m1.io.out
+    val m2=Module(new seg)
+    m2.io.en:segen
+    m2.io.in:=ascii(3,0)
+    io.bcd8seg(2):=m2.io.out
+    val m3=Module(new seg)
+    m3.io.en:segen
+    m3.io.in:=ascii(7,4)
+    io.bcd8seg(3):=m3.io.out
+    val m4=Module(new seg)
+    m4.io.en:0.U
+    m4.io.in:=ps2segdata(3,0)
+    io.bcd8seg(4):=m0.io.out
+    val m5=Module(new seg)
+    m5.io.en:0.U
+    m5.io.in:=ps2segdata(7,4)
+    io.bcd8seg(5):=m0.io.out
+    val m6=Module(new seg)
+    m6.io.en:1.U
+    m6.io.in:=(num%10.U(7.W))(3,0)
+    io.bcd8seg(6):=m6.io.out
+    val m7=Module(new seg)
+    m7.io.en:1.U
+    m7.io.in:=(num%10.U(7.W)(3,0)
+    io.bcd8seg(7):=m7.io.out
 }
 
 class ps2_keyboard extends Module { 

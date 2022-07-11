@@ -41,15 +41,14 @@ class top extends Module{
     }.otherwise{
         next:=s0
     }
-    when(now===s0){
-        nextdata:=1.U
-    }.elsewhen(now===s2||now===s3){
-        nextdata:=0.U
-    }.elsewhen(now===s1){
-        VGA.io.ascii:=PS2.io.ascii
+    when(now===s0||now===s1){
+        VGA.io.ready:=0.U
+    }.elsewhen(now===s3){
         VGA.io.ready:=1.U
+    }.elsewhen(now===s2){
+        VGA.io.ascii:=PS2.io.ascii
     }.otherwise{
-        nextdata:=1.U
+        nextdata:=0.U
     }
     val PS2=Module(new ps2)
     PS2.io.rst:=0.U

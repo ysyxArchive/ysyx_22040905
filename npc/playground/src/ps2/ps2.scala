@@ -3,6 +3,7 @@ import chisel3.util._
 import chisel3.stage._
 class ps2 extends Module{
     val io=IO(new Bundle{
+        val en=Input(UInt(1.W))
         val rst=Input(UInt(1.W))
         val ps2_clk=Input(UInt(1.W))
         val ps2_data=Input(UInt(1.W))
@@ -11,6 +12,7 @@ class ps2 extends Module{
         val ready=Output(UInt(1.W))
         val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
+    when(en===1.U){
     val data=Reg(UInt(8.W))
     val ready=Reg(UInt(1.W))
     val overflow=Reg(UInt(1.W))
@@ -109,6 +111,7 @@ class ps2 extends Module{
     m7.io.en:=1.U
     m7.io.in:=(num/10.U(7.W))(3,0)
     io.bcd8seg(7):=m7.io.out
+    }
 }
 
 class ps2_keyboard extends Module { 

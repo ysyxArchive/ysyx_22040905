@@ -20,13 +20,17 @@ class top extends Module{
     VGA.io.ascii:=92.U
     val PS2=Module(new ps2)
     //get ascii
-    val s0:UInt="b0001".U
-    val s1:UInt="b0010".U
-    val s2:UInt="b0100".U
-    val s3:UInt="b1000".U
+    val s0:UInt="b00000001".U
+    val s1:UInt="b00000010".U
+    val s2:UInt="b00000100".U
+    val s3:UInt="b00001000".U
+    val s4:UInt="b00010000".U
+    val s5:UInt="b00100000".U
+    val s6:UInt="b01000000".U
+    val s7:UInt="b10000000".U
 
-    val now=RegInit(1.U(4.W))
-    val next=RegInit(1.U(4.W))
+    val now=RegInit(1.U(8.W))
+    val next=RegInit(1.U(8.W))
     now:=next
     VGA.io.ready:=0.U
     when(now===s0){
@@ -40,17 +44,33 @@ class top extends Module{
     }.elsewhen(now===s2){
         next:=s3
     }.elsewhen(now===s3){
+        next:=s4
+    }.elsewhen(now===s4){
+        when(VGA.io.ready===1.U){
+        next:=s5
+        }.otherwise{
+            next:=s4
+        }
+    }.elsewhen(now===s5){
+        next:=s6
+    }.elsewhen(now===s6){
+        next:=s7
+    }.elsewhen(now===s7){
         next:=s0
     }.otherwise{
         next:=s0
     }
-    when(now===s0||now===s1){
-        VGA.io.ready:=0.U
-    }.elsewhen(now===s2||now===s3){
-        VGA.io.ascii:=PS2.io.ascii
-        VGA.io.ready:=1.U
+    val asc=RegNext(PS2.io.ascii)
+    when(now===s0||now===s1||now===s2||now===s3){
+        VGA.io.en:=0.U
+        PS2.io.en:=1.U
+    }.elsewhen(now===s4||now===s5||now===s6||now===s7){
+        Ps2.io.en:=0.U
+        VGA.io.en:=asc
+        VGA.io.en:=1.U
     }.otherwise{
-        VGA.io.ready:=0.U
+        PS2.io.en:=0.U
+        VGA.io.en:=0.U
     }
     
     PS2.io.rst:=0.U

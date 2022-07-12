@@ -79,7 +79,7 @@ class vmem extends Module{
 
     }
     
-    }
+    
 class vga_ctrl extends Module{
     val io=IO(new Bundle{
         val vga_data=Input(UInt(24.W))

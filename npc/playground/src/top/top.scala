@@ -61,15 +61,14 @@ class top extends Module{
     }
     val asc=RegNext(PS2.io.ascii)
     when(now===s0||now===s1||now===s2||now===s3){
-        VGA.io.en:=0.U
+        VGA.io.ascii:=92.U
         PS2.io.en:=1.U
     }.elsewhen(now===s4||now===s5||now===s6||now===s7){
         PS2.io.en:=0.U
-        VGA.io.en:=asc
-        VGA.io.en:=1.U
+        VGA.io.ascii:=asc
     }.otherwise{
         PS2.io.en:=0.U
-        VGA.io.en:=0.U
+        VGA.io.ascii:=92.U
     }
     
     PS2.io.rst:=0.U

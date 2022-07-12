@@ -12,7 +12,7 @@ class ps2 extends Module{
         val ready=Output(UInt(1.W))
         val bcd8seg=Output(Vec(8,UInt(8.W)))
     })
-    when(en===1.U){
+    when(io.en===1.U){
     val data=Reg(UInt(8.W))
     val ready=Reg(UInt(1.W))
     val overflow=Reg(UInt(1.W))

@@ -65,7 +65,7 @@ class top extends Module{
         VGA.io.en:=0.U
         PS2.io.en:=1.U
     }.elsewhen(now===s4||now===s5||now===s6||now===s7){
-        Ps2.io.en:=0.U
+        PS2.io.en:=0.U
         VGA.io.en:=asc
         VGA.io.en:=1.U
     }.otherwise{

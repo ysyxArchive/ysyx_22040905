@@ -93,18 +93,18 @@ endmodule
 module vmem(
   input         clock,
   input         reset,
-  input  [1:0]  io_ready,
+  input         io_ready,
   output [23:0] io_vga_data
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
 `endif // RANDOMIZE_REG_INIT
   reg [23:0] rdwrPort; // @[vga.scala 46:27]
-  assign io_vga_data = io_ready == 2'h1 ? rdwrPort : 24'h1; // @[vga.scala 64:25 vga.scala 75:16 vga.scala 63:16]
+  assign io_vga_data = io_ready ? rdwrPort : 24'h1; // @[vga.scala 64:25 vga.scala 75:16 vga.scala 63:16]
   always @(posedge clock) begin
     if (reset) begin // @[vga.scala 46:27]
       rdwrPort <= 24'h0; // @[vga.scala 46:27]
-    end else if (io_ready == 2'h1) begin // @[vga.scala 64:25]
+    end else if (io_ready) begin // @[vga.scala 64:25]
       rdwrPort <= 24'hffffff;
     end
   end
@@ -157,7 +157,7 @@ endmodule
 module vga(
   input        clock,
   input        reset,
-  input  [1:0] io_ready,
+  input        io_ready,
   output       io_VGA_HSYNC,
   output       io_VGA_VSYNC,
   output       io_VGA_BLANK_N,
@@ -179,7 +179,7 @@ module vga(
   wire [7:0] v1_io_vga_b; // @[vga.scala 20:18]
   wire  vm_clock; // @[vga.scala 31:18]
   wire  vm_reset; // @[vga.scala 31:18]
-  wire [1:0] vm_io_ready; // @[vga.scala 31:18]
+  wire  vm_io_ready; // @[vga.scala 31:18]
   wire [23:0] vm_io_vga_data; // @[vga.scala 31:18]
   reg [23:0] vga_data; // @[vga.scala 18:21]
   vga_ctrl v1 ( // @[vga.scala 20:18]
@@ -1179,7 +1179,7 @@ module top(
 `endif // RANDOMIZE_REG_INIT
   wire  VGA_clock; // @[top.scala 19:19]
   wire  VGA_reset; // @[top.scala 19:19]
-  wire [1:0] VGA_io_ready; // @[top.scala 19:19]
+  wire  VGA_io_ready; // @[top.scala 19:19]
   wire  VGA_io_VGA_HSYNC; // @[top.scala 19:19]
   wire  VGA_io_VGA_VSYNC; // @[top.scala 19:19]
   wire  VGA_io_VGA_BLANK_N; // @[top.scala 19:19]
@@ -1204,8 +1204,9 @@ module top(
   wire  _T = now == 4'h1; // @[top.scala 32:13]
   wire [1:0] _GEN_0 = PS2_io_ready ? 2'h2 : 2'h1; // @[top.scala 33:33 top.scala 34:17 top.scala 36:17]
   wire  _T_2 = now == 4'h2; // @[top.scala 38:19]
+  wire  _T_3 = now == 4'h4; // @[top.scala 40:19]
   wire  _T_4 = now == 4'h8; // @[top.scala 42:19]
-  wire  _GEN_9 = _T | _T_2 ? 1'h0 : _T_4; // @[top.scala 47:29 top.scala 48:21]
+  wire  _GEN_7 = _T_4 | _T_3; // @[top.scala 49:25 top.scala 50:21]
   vga VGA ( // @[top.scala 19:19]
     .clock(VGA_clock),
     .reset(VGA_reset),
@@ -1232,27 +1233,27 @@ module top(
     .io_bcd8seg_6(PS2_io_bcd8seg_6),
     .io_bcd8seg_7(PS2_io_bcd8seg_7)
   );
-  assign io_VGA_HSYNC = VGA_io_VGA_HSYNC; // @[top.scala 62:17]
-  assign io_VGA_VSYNC = VGA_io_VGA_VSYNC; // @[top.scala 63:17]
-  assign io_VGA_BLANK_N = VGA_io_VGA_BLANK_N; // @[top.scala 64:19]
-  assign io_VGA_R = VGA_io_VGA_R; // @[top.scala 65:13]
-  assign io_VGA_G = VGA_io_VGA_G; // @[top.scala 66:13]
-  assign io_VGA_B = VGA_io_VGA_B; // @[top.scala 67:13]
-  assign io_bcd8seg_0 = PS2_io_bcd8seg_0; // @[top.scala 60:15]
-  assign io_bcd8seg_1 = PS2_io_bcd8seg_1; // @[top.scala 60:15]
-  assign io_bcd8seg_2 = PS2_io_bcd8seg_2; // @[top.scala 60:15]
-  assign io_bcd8seg_3 = PS2_io_bcd8seg_3; // @[top.scala 60:15]
-  assign io_bcd8seg_4 = PS2_io_bcd8seg_4; // @[top.scala 60:15]
-  assign io_bcd8seg_5 = PS2_io_bcd8seg_5; // @[top.scala 60:15]
-  assign io_bcd8seg_6 = PS2_io_bcd8seg_6; // @[top.scala 60:15]
-  assign io_bcd8seg_7 = PS2_io_bcd8seg_7; // @[top.scala 60:15]
+  assign io_VGA_HSYNC = VGA_io_VGA_HSYNC; // @[top.scala 63:17]
+  assign io_VGA_VSYNC = VGA_io_VGA_VSYNC; // @[top.scala 64:17]
+  assign io_VGA_BLANK_N = VGA_io_VGA_BLANK_N; // @[top.scala 65:19]
+  assign io_VGA_R = VGA_io_VGA_R; // @[top.scala 66:13]
+  assign io_VGA_G = VGA_io_VGA_G; // @[top.scala 67:13]
+  assign io_VGA_B = VGA_io_VGA_B; // @[top.scala 68:13]
+  assign io_bcd8seg_0 = PS2_io_bcd8seg_0; // @[top.scala 61:15]
+  assign io_bcd8seg_1 = PS2_io_bcd8seg_1; // @[top.scala 61:15]
+  assign io_bcd8seg_2 = PS2_io_bcd8seg_2; // @[top.scala 61:15]
+  assign io_bcd8seg_3 = PS2_io_bcd8seg_3; // @[top.scala 61:15]
+  assign io_bcd8seg_4 = PS2_io_bcd8seg_4; // @[top.scala 61:15]
+  assign io_bcd8seg_5 = PS2_io_bcd8seg_5; // @[top.scala 61:15]
+  assign io_bcd8seg_6 = PS2_io_bcd8seg_6; // @[top.scala 61:15]
+  assign io_bcd8seg_7 = PS2_io_bcd8seg_7; // @[top.scala 61:15]
   assign VGA_clock = clock;
   assign VGA_reset = reset;
-  assign VGA_io_ready = {{1'd0}, _GEN_9}; // @[top.scala 47:29 top.scala 48:21]
+  assign VGA_io_ready = _T | _T_2 ? 1'h0 : _GEN_7; // @[top.scala 47:29 top.scala 48:21]
   assign PS2_clock = clock;
   assign PS2_reset = reset;
-  assign PS2_io_ps2_clk = io_ps2_clk; // @[top.scala 58:19]
-  assign PS2_io_ps2_data = io_ps2_data; // @[top.scala 59:20]
+  assign PS2_io_ps2_clk = io_ps2_clk; // @[top.scala 59:19]
+  assign PS2_io_ps2_data = io_ps2_data; // @[top.scala 60:20]
   always @(posedge clock) begin
     if (reset) begin // @[top.scala 28:20]
       now <= 4'h1; // @[top.scala 28:20]

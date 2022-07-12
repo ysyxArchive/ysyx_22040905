@@ -69,7 +69,7 @@ class vmem extends Module{
         when(ram(io.h_addr)(io.v_addr)===1.U){
         rdwrPort:=Fill(24,1.U)
         }.otherwise{
-        rdwrPort:=Fill(24,1.U)
+        rdwrPort:=Fill(24,0.U)
     }
     
     io.vga_data:= rdwrPort

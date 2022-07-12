@@ -29,7 +29,7 @@ static char* rl_gets() {
 
 static int cmd_c(char *args) {
   cpu_exec(-1);
-  return -1;
+  return 0;
 }
 
 

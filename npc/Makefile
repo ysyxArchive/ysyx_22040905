@@ -72,4 +72,4 @@ sim: $(VSRCS) $(CSRCSS)
 	./build/obj_dir/V$(TOPNAME)
 	gtkwave wave.vcd
 
-include ../Makefile
+#include ../Makefile:

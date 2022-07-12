@@ -50,6 +50,7 @@ class top extends Module{
         VGA.io.ready:=1.U
     }.elsewhen(now===s2){
         VGA.io.ascii:=PS2.io.ascii
+        VGA.io.ready:=1.U
     }.otherwise{
         VGA.io.ready:=0.U
     }

@@ -4,7 +4,7 @@ import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
 class vga extends Module{
     val io=IO(new Bundle{
-        val ready=Input(UInt(2.W))
+        val ready=Input(UInt(1.W))
         val ascii=Input(UInt(8.W))
         val VGA_HSYNC=Output(UInt(1.W))
         val VGA_VSYNC=Output(UInt(1.W))
@@ -37,7 +37,7 @@ class vga extends Module{
 }
 class vmem extends Module{
     val io=IO(new Bundle{
-        val ready=Input(UInt(2.W))
+        val ready=Input(UInt(1.W))
         val ascii=Input(UInt(8.W))
         val h_addr=Input(UInt(10.W))
         val v_addr=Input(UInt(9.W))

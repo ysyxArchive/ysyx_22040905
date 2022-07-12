@@ -115,7 +115,7 @@ class ps2 extends Module{
     m7.io.en:=1.U
     m7.io.in:=(num/10.U(7.W))(3,0)
     io.bcd8seg(7):=m7.io.out
-    }
+    
 }
 
 class ps2_keyboard extends Module { 

@@ -14,7 +14,7 @@ class vga extends Module{
         val VGA_G=Output(UInt(8.W))
         val VGA_B=Output(UInt(8.W))
     })
-    when(en===1.U){
+    when(io.en===1.U){
     io.ready:=0.U
     val h_addr=Reg((UInt(10.W)))
     val v_addr=Reg((UInt(10.W)))

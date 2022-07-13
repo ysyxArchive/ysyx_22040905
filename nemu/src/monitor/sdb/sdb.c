@@ -10,27 +10,6 @@ static int is_batch_mode = false;
 void init_regex();
 void init_wp_pool();
 
-static uint64_t string_to_uint64_t(char *str){
-  int len=strlen(str);
-  uint64_t ans=0;
-  for(int i=0;i<len;i++)
-    ans+= pow(10,len-i-1)*(str[i]-'0');
-  return ans;
-}
-static long long string_h_to_d(char *str){
-  int len=strlen(str);
-  long long ans=0;
-  if(str[0]=='0'&&str[1]=='x'){
-    for(int i=2;i<len;i++){
-      if(str[i]>='0'&&str[i]<='9')
-        ans+=pow(16,len-i-1)*(str[i]-'0');
-      else if(str[i]>='A'&&str[i]<='F')
-        ans+=pow(16,len-i-1)*(str[i]-'A'+10);
-      printf("%lld\n",ans);
-    }
-  }
-  return 0;
-}
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -64,7 +43,7 @@ static int cmd_help(char *args);
 static int cmd_si(char *args){
 	uint64_t num=1;
 	if(args!=NULL){
-	   	num=string_to_uint64_t(args);
+    sscanf(args,"%ld",&num);
 	}
   cpu_exec(num);
 	return 0;
@@ -76,9 +55,10 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-  char *len=strtok(args," ");
-  char *addr=len+strlen(len)+1;
-  printf("%lx",vaddr_read(string_h_to_d(addr),string_to_uint64_t(len)));
+  int len;
+  uint64_t addr;
+  sscanf(args,"%d %lx",&len,&addr);
+  printf("%lx",vaddr_read(addr,len));
   return 0;
 }
 static struct {

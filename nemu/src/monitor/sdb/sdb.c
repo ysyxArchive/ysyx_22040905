@@ -19,13 +19,14 @@ static uint64_t string_to_uint64_t(char *str){
 }
 static uint64_t string_h_to_d(char *str){
   int len=strlen(str);
+  printf("\n%s\n",str);
   uint64_t ans=0;
   if(str[0]=='0'&&str[1]=='x'){
     for(int i=2;i<len;i++){
       if(str[i]>='0'&&str[i]<='9')
-        ans+=pow(16,len-i-1)*(str[i]-'0');
+        ans+=pow(16,len-i-3)*(str[i]-'0');
       else if(str[i]>='A'&&str[i]<='F')
-        ans+=pow(16,len-i-1)*(str[i]-'A'+10);
+        ans+=pow(16,len-i-3)*(str[i]-'A'+10);
     }
   }
   return 0;
@@ -77,7 +78,6 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   int len=string_to_uint64_t(strtok(args," "));
   vaddr_t addr=string_h_to_d(strtok(NULL,args));
-  addr=0x80000000;
   printf("%lx",vaddr_read(addr,len));
   return 0;
 }

@@ -58,7 +58,9 @@ static int cmd_x(char *args){
   int len;
   uint64_t addr;
   sscanf(args,"%d %lx",&len,&addr);
-  printf("%lx",vaddr_read(addr,len));
+  for(int i=0;i<len;i++){
+  printf("%lx",vaddr_read(addr+i,64));
+  }
   return 0;
 }
 static struct {

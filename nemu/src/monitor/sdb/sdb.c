@@ -75,12 +75,9 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-  char *token=NULL;
-  token=strtok(args," ");
-  int len=string_to_uint64_t(token);
-  token=strtok(NULL," ");
-  vaddr_t addr=string_h_to_d(token);
-  printf("%lx",vaddr_read(addr,len));
+  char *len=strtok(args," ");
+  char *addr=len+strlen(len)+1;
+  printf("%lx",vaddr_read(string_h_to_d(addr),string_to_uint64_t(len)));
   return 0;
 }
 static struct {

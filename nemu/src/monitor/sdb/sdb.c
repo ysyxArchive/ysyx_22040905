@@ -59,7 +59,7 @@ static int cmd_x(char *args){
   uint64_t addr;
   sscanf(args,"%d %lx",&len,&addr);
   for(int i=0;i<4*len;i+=4){
-  printf("%lx:\t\t%lx\n",addr+i,paddr_read(addr+i,8));
+  printf("%lx:\t\t%lx\n",addr+i,paddr_read(addr+i,4));
   }
   return 0;
 }

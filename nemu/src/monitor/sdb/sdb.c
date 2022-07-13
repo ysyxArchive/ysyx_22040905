@@ -17,18 +17,16 @@ static uint64_t string_to_uint64_t(char *str){
     ans+= pow(10,len-i-1)*(str[i]-'0');
   return ans;
 }
-static uint64_t string_h_to_d(char *str){
+static long long string_h_to_d(char *str){
   int len=strlen(str);
-  printf("%d\n",len);
-  uint64_t ans=0;
+  long long ans=0;
   if(str[0]=='0'&&str[1]=='x'){
-    printf("1\n");
     for(int i=2;i<len;i++){
       if(str[i]>='0'&&str[i]<='9')
         ans+=pow(16,len-i-1)*(str[i]-'0');
       else if(str[i]>='A'&&str[i]<='F')
         ans+=pow(16,len-i-1)*(str[i]-'A'+10);
-      printf("%ld\n",ans);
+      printf("%lld\n",ans);
     }
   }
   return 0;

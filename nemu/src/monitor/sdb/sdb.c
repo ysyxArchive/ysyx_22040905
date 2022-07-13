@@ -17,7 +17,6 @@ static uint64_t string_to_uint64_t(char *str){
     ans+= pow(10,len-i-1)*(str[i]-'0');
   return ans;
 }
-/*
 static uint64_t string_h_to_d(char *str){
   int len=strlen(str);
   uint64_t ans=0;
@@ -30,7 +29,7 @@ static uint64_t string_h_to_d(char *str){
     }
   }
   return 0;
-}*/
+}
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -77,7 +76,7 @@ static int cmd_info(char *args){
 
 static int cmd_x(char *args){
   int len=string_to_uint64_t(strtok(args," "));
-  vaddr_t addr=string_to_uint64_t(strtok(NULL,args));
+  vaddr_t addr=string_h_to_d(strtok(NULL,args));
   printf("%ld",vaddr_read(addr,len));
   return 0;
 }

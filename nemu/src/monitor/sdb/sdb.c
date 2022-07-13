@@ -3,8 +3,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-#include <string.h>
 #include <math.h>
+#include <memory/vaddr.h>
 static int is_batch_mode = false;
 
 void init_regex();
@@ -14,23 +14,23 @@ static uint64_t string_to_uint64_t(char *str){
   int len=strlen(str);
   uint64_t ans=0;
   for(int i=0;i<len;i++)
-    ans+= pow(10,i)*(str[i]-'0');
+    ans+= pow(10,len-i-1)*(str[i]-'0');
   return ans;
 }
-
+/*
 static uint64_t string_h_to_d(char *str){
   int len=strlen(str);
   uint64_t ans=0;
   if(str[0]=='0'&&str[1]=='x'){
     for(int i=2;i<len;i++){
       if(str[i]>='0'&&str[i]<='9')
-        ans+=pow(16,i)*(str[i]-'0');
+        ans+=pow(16,len-i-1)*(str[i]-'0');
       else if(str[i]>='A'&&str[i]<='F')
-        ans+=pow(16,i)*(str[i]-'A'+10);
+        ans+=pow(16,len-i-1)*(str[i]-'A'+10);
     }
   }
   return 0;
-}
+}*/
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -76,8 +76,10 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-    printf("%s\n%ld",args,string_h_to_d("0x00220022"));
-    return 0;
+  int len=string_to_uint64_t(strtok(args," "));
+  vaddr_t addr=string_to_uint64_t(strtok(NULL,args));
+  printf("%ld",vaddr_read(addr,len));
+  return 0;
 }
 static struct {
   const char *name;

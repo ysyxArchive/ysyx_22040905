@@ -57,6 +57,11 @@ static int cmd_si(char *args){
   cpu_exec(num);
 	return 0;
 }
+
+static int cmd_info(char *args){
+  if(strcmp(args,"r")==0) isa_reg_display();
+  return 0;
+}
 static struct {
   const char *name;
   const char *description;
@@ -66,7 +71,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si","Step through",cmd_si},
-  //{ "info","Print program status",cmd_info},
+  { "info","Print program status",cmd_info},
   //{ "x","Scan memory",cmd_x},
   /* TODO: Add more commands */
 

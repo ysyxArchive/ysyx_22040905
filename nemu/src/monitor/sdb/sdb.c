@@ -3,12 +3,22 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-
+#include <string.h>
+#include <math.h>
 static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
 
+static uint64_t to_uint64_t(char *str){
+  int len=strlen(str);
+  uint64_t ans=0;
+  for(int i=0;i<len;i++)
+  {
+    ans+= pow(10,i)*(str[i]-'0');
+  }
+  return ans;
+}
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -39,6 +49,14 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+	uint64_t num=1;
+	if(args!=NULL){
+	   	num=to_uint64_t(args);
+	}
+  cpu_exec(num);
+	return 0;
+}
 static struct {
   const char *name;
   const char *description;
@@ -47,7 +65,9 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si","Step through",cmd_si},
+  //{ "info","Print program status",cmd_info},
+  //{ "x","Scan memory",cmd_x},
   /* TODO: Add more commands */
 
 };

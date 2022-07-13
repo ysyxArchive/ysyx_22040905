@@ -77,6 +77,7 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   int len=string_to_uint64_t(strtok(args," "));
   vaddr_t addr=string_h_to_d(strtok(NULL,args));
+  addr=0x80000000;
   printf("%ld",vaddr_read(addr,len));
   return 0;
 }

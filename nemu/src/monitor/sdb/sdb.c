@@ -134,6 +134,7 @@ void sdb_mainloop() {
       else{
         printf("%d\n",i);
       }
+      free(success);
   fclose(fp);
   }
   //*/

@@ -51,6 +51,7 @@ static struct rule {
   {"\\(",'('},          // left parenthesis
   {"\\)",')'},          // right parenthesis
   {"==", TK_EQ},        // equal 
+
 };
 static uint32_t pr[500];//precedence of operator
 #define NR_REGEX ARRLEN(rules)
@@ -172,7 +173,7 @@ uint32_t eval (int p,int q){
     assert(0);
   }
   else if(p==q){
-    assert(tokens[p].type!=TK_NUM);
+    assert(tokens[p].type==TK_NUM);
     return atoi(tokens[p].str);
   }
   else if(check_parentheses(p,q)){

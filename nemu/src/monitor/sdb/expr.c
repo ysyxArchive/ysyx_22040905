@@ -162,9 +162,6 @@ uint32_t find_main_operator(int p,int q){
     else if(pr[tokens[p].type]>=pr[tokens[i].type]){
       p=i;
     }
-    else{
-      assert(0);
-    }
   }
   return op;
 }

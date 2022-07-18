@@ -112,7 +112,7 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-        if(substr_len>=32)assert(0);
+        if(substr_len>=32000)assert(0);
 
         switch (rules[i].token_type) {
           case TK_NOTYPE:break;
@@ -124,7 +124,7 @@ static bool make_token(char *e) {
           case ')':
           case TK_EQ: tokens[nr_token++].type=rules[i].token_type;break;
           case TK_NUM: tokens[nr_token].type=rules[i].token_type;
-                         strncpy(tokens[nr_token++].str,e,substr_len);break;
+                         strncpy(tokens[nr_token++].str,e+position-substr_len,substr_len);break;
           default: assert(0);//TODO();
         }
 

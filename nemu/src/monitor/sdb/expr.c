@@ -197,7 +197,9 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+  for(int i=0;i<nr_token;i++){
+    printf("%s\n",tokens->str);
+  }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   return eval(0,nr_token-1);

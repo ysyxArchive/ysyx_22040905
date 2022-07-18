@@ -132,6 +132,7 @@ void sdb_mainloop() {
         printf("Wrong at %d %s\n",*a,b);
       }
   }
+  pclose(fp);
 
   //*/
   for (char *str; (str = rl_gets()) != NULL; ) {

@@ -126,7 +126,7 @@ void sdb_mainloop() {
   assert(fp!=NULL);
   int a=0;
   int i=0;
-  if(fscanf(fp,"%d %s",&a,b)){
+  while(fscanf(fp,"%d %s",&a,b)!=EOF){
       bool success=true; 
       if(!(a==expr(b,&success)&&(success))){
         printf("Wrong at %d %s line %d\n",a,b,i);

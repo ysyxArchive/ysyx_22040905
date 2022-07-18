@@ -125,11 +125,14 @@ void sdb_mainloop() {
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
   assert(fp!=NULL);
   int a=0;
-  
+  int i=0;
   while(fscanf(fp,"%d %s",&a,b)!=EOF){
       bool *success=(bool *)true; 
       if(!(a==expr(b,success)&&(*success))){
-        printf("Wrong at %d %s\n",a,b);
+        printf("Wrong at %d %s line %d\n",a,b,i);
+      }
+      else{
+        printf("%d\n",i);
       }
   }
   fclose(fp);

@@ -86,7 +86,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32000] __attribute__((used)) = {};
+static Token tokens[3200000] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -157,7 +157,7 @@ uint32_t find_main_operator(int p,int q){
         i++;
         if(tokens[i].type=='(')num++;
         if(tokens[i].type==')')num--;
-        printf("%d %d\n",i,q);
+        //printf("%d %d\n",i,q);
       }
     }
     else if(op==-1){

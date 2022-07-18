@@ -68,7 +68,7 @@ static int cmd_p(char *args){
   int val=expr(args,success);
   if(success)
     printf("%d\n",val);
-  else printf("Wrong\n");
+  else assert(0);
   return 0;
 }
 static struct {
@@ -121,7 +121,19 @@ void sdb_mainloop() {
     cmd_c(NULL);
     return;
   }
+  ///*test
+  FILE* fp=popen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
+  assert(fp!=NULL);
+  int *a=(int *)0;
+  char b[10000];
+  while(fscanf(fp,"%d%s",a,b)!=EOF){
+      bool *success=(bool *)true; 
+      if(!(*a==expr(b,success)&&(*success))){
+        printf("Wrong at %d %s\n",*a,b);
+      }
+  }
 
+  //*/
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 

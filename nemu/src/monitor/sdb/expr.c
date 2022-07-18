@@ -159,8 +159,8 @@ uint32_t find_main_operator(int p,int q){
     else if(op==-1){
       op=i;
     }
-    else if(pr[tokens[p].type]<=pr[tokens[i].type]){
-      p=i;
+    else if(pr[tokens[op].type]>=pr[tokens[i].type]){
+      op=i;
     }
   }
   return op;

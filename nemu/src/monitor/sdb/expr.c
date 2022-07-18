@@ -178,6 +178,7 @@ uint32_t eval (int p,int q){
   }
   else{
     int op=find_main_operator(p,q);
+    printf("%d\n",op);
     uint32_t val1=eval(p,op-1);
     uint32_t val2=eval(op+1,q);
     switch (tokens[op].type){
@@ -198,7 +199,6 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  printf("%d\n",nr_token);
   return eval(0,nr_token-1);
 }
 

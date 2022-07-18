@@ -153,7 +153,7 @@ uint32_t find_main_operator(int p,int q){
       while(tokens[i].type!=')')
       {
         i++;
-        if(i>q){
+        if(i>=q){
           printf("%d %d\n",i,q);
         }
       }

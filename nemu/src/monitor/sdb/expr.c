@@ -118,8 +118,19 @@ static bool make_token(char *e) {
   return true;
 }
 bool check_parentheses(int p,int q){
-  if((tokens[p].type=='(')&&(tokens[q].type==')'))
+  if((tokens[p].type=='(')&&(tokens[q].type==')')){
+    int num=0;
+    for(int i=p+1;i<=q-1;i++){
+      if(num<0)return false;
+      if(tokens[p].type=='(')num++;
+      if(tokens[p].type==')')num--;
+    }
+    if(num!=0){
+      printf("Check parentheses\n");
+      assert(0);
+    }
     return true;
+  }
   return false;
 }
 uint32_t find_main_operator(int p,int q){

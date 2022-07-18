@@ -125,7 +125,7 @@ void sdb_mainloop() {
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
   assert(fp!=NULL);
   int *a=(int *)0;
-  char b[10000];
+  char b[1000000];
   while(fscanf(fp,"%d%s",a,b)!=EOF){
       bool *success=(bool *)true; 
       if(!(*a==expr(b,success)&&(*success))){

@@ -63,6 +63,14 @@ static int cmd_x(char *args){
   }
   return 0;
 }
+static int cmd_p(char *args){
+  bool *success=(bool*)true;
+  int val=expr(args,success);
+  if(success)
+    printf("%d\n",val);
+  else printf("Wrong\n");
+  return 0;
+}
 static struct {
   const char *name;
   const char *description;
@@ -74,6 +82,7 @@ static struct {
   { "si","Step execute once",cmd_si},
   { "info","Print program status",cmd_info},
   { "x","Scan memory",cmd_x},
+  { "p","expression evaluation",cmd_p},
   /* TODO: Add more commands */
 
 };

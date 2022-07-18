@@ -115,7 +115,7 @@ static int cmd_help(char *args) {//lazy to update
 void sdb_set_batch_mode() {
   is_batch_mode = true;
 }
-
+char b[1000000];
 void sdb_mainloop() {
   if (is_batch_mode) {
     cmd_c(NULL);
@@ -124,12 +124,12 @@ void sdb_mainloop() {
   ///*test
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
   assert(fp!=NULL);
-  int *a=(int *)0;
-  char b[1000000];
-  while(fscanf(fp,"%d%s",a,b)!=EOF){
+  int a=0;
+  
+  while(fscanf(fp,"%d %s",&a,b)!=EOF){
       bool *success=(bool *)true; 
-      if(!(*a==expr(b,success)&&(*success))){
-        printf("Wrong at %d %s\n",*a,b);
+      if(!(a==expr(b,success)&&(*success))){
+        printf("Wrong at %d %s\n",a,b);
       }
   }
   fclose(fp);

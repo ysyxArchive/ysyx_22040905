@@ -132,10 +132,11 @@ void sdb_mainloop() {
         printf("Wrong at %d %s line %d\n",a,b,i);
       }
       else{
-        printf("%d\n",i);
+        printf("%d\n",++i);
       }
-  fclose(fp);
   }
+  fclose(fp);
+  
   //*/
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);

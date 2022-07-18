@@ -119,7 +119,7 @@ static bool make_token(char *e) {
           case '+':
           case '-':
           case '*':
-          case '\\':
+          case '/':
           case '(':
           case ')':
           case TK_EQ: tokens[nr_token++].type=rules[i].token_type;break;

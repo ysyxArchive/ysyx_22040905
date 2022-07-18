@@ -122,7 +122,7 @@ void sdb_mainloop() {
     return;
   }
   ///*test
-  FILE* fp=popen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
+  FILE* fp=popen("input","r");
   assert(fp!=NULL);
   int *a=(int *)0;
   char b[10000];

@@ -4,6 +4,7 @@
 #include <time.h>
 #include <assert.h>
 #include <string.h>
+#include <math.h>
 
 // this should be enough
 static char buf[65536] = {};
@@ -20,13 +21,11 @@ static void gen(char c){
   buf[len++]=c;
 }
 static void gen_rand_op(){
-  switch(rand()%6){
-    case 0: 
-    case 1: 
-    case 2:
-    case 3: gen('+');break;//gen('-');break;
-    case 4: gen('*');break;
-    case 5: gen('/');break;
+  switch(rand()%4){
+    case 0: gen('+');break;
+    case 1: gen('-');break;
+    case 2: gen('*');break;
+    case 3: gen('/');break;
   }
 }
 static void gen_num(){
@@ -37,7 +36,7 @@ static void gen_num(){
 }
 static void gen_rand_expr() {
   switch (rand()%3) {
-    case 0: gen_num();break;
+    case 0: gen_num();gen('u');break;
     case 1: gen_rand_expr();gen_rand_op();gen_rand_expr(); break;
     default: gen('('); gen_rand_expr(); gen(')'); break;
   } 
@@ -54,6 +53,18 @@ int main(int argc, char *argv[]) {
     len=0;
     gen_rand_expr();
     buf[len]='\0';
+    char buff[59999];
+    strcpy(buff,buf);
+    int len=strlen(buff);
+    for(int i=0;i<len;i++){
+      if(buff[i]=='u'){
+        for(int j=i;j<len-1;j++){
+          buff[j]=buff[j+1];
+        }
+        len--;
+        buff[len]='\0';
+      }
+    }
     sprintf(code_buf, code_format, buf);
     FILE *fp = fopen("/tmp/.code.c", "w");
     assert(fp != NULL);
@@ -69,8 +80,8 @@ int main(int argc, char *argv[]) {
     int result;
     fscanf(fp, "%d", &result);
     pclose(fp);
-
-    printf("%u %s\n", result, buf);
+    
+    printf("%u %s\n", result, buff);
   }
   return 0;
 }

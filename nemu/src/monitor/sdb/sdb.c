@@ -122,7 +122,7 @@ void sdb_mainloop() {
     return;
   }
   ///*test
-  FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
+  FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);
   int a=0;
   int i=0;

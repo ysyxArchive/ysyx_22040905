@@ -3,20 +3,18 @@ import chisel3.util._
 import chisel3.stage._
 class ps2 extends Module{
     val io=IO(new Bundle{
-        val rst=Input(UInt(1.W))
         val ps2_clk=Input(UInt(1.W))
         val ps2_data=Input(UInt(1.W))
         val ascii=Output(UInt(8.W))
-        val now=Output(UInt(2.W))
         val ready=Output(UInt(1.W))
-        val bcd8seg=Output(Vec(8,UInt(8.W)))
+        val bcd8seg=Output(Vec(6,UInt(8.W)))
     })
-    val data=Reg(UInt(8.W))
+    val data=RegInit(0.U(8.W))
     val ready=Reg(UInt(1.W))
     val overflow=Reg(UInt(1.W))
     val nextdata=Reg(UInt(1.W)) 
     val ps2=Module(new ps2_keyboard)
-    ps2.io.clrn:=(~io.rst)
+    ps2.io.clrn:=1.U
     ps2.io.ps2_clk:=io.ps2_clk
     ps2.io.ps2_data:=io.ps2_data
     ps2.io.nextdata_n:=nextdata
@@ -31,8 +29,6 @@ class ps2 extends Module{
 
     val now=RegInit(1.U(4.W))
     val next=RegInit(1.U(4.W))
-    io.now:=now
-    io.ready:=ready
     now:=next
     when(now===s0){
         when(ready===1.U){
@@ -59,48 +55,69 @@ class ps2 extends Module{
     }.otherwise{
         nextdata:=1.U
     }
-    val num=RegInit(0.U(7.W))
+	
+    io.ready:=0.U
+    val num=Reg(UInt(100.W))
+    num:=0.U
     val segen=RegInit(0.U(1.W))
     val ss=RegInit(0.U(2.W))
-    when((ps2segdata(23,16)==="hf0".U)&&(ps2segdata(7,0)===ps2segdata(15,8))){
-        segen:=0.U
-    }.otherwise{
-        segen:=1.U
+    when(data=/=0.U){
+        num:=num+1.U
+        when(num<10000.U){
+            when((ps2segdata(23,16)==="hF0".U)&&(ps2segdata(15,8)===ps2segdata(7,0))){
+                segen:=0.U
+            }.otherwise{
+                segen:=1.U
+            }
+            when(ss==="b10".U){
+                io.ready:=1.U
+            }
+        }.otherwise{
+            when(num%50000.U===0.U){
+            io.ready:=1.U
+            }
+            when(ps2segdata(23,16)==="hF0".U){
+                num:=0.U
+                io.ready:=0.U
+            }
+        }
+        //last_data:=data;
     }
     ss:=Cat(ss(0),segen)
-    when(ss==="b10".U){
-        num:=num+1.U
-    }
+    
+
+
     val ascii=RegInit(0.U(8.W))
     val mm=Module(new ps2ascii)
     mm.io.in:=ps2segdata(7,0)
     ascii:=mm.io.out
     io.ascii:=ascii
-    
+ 
     val m0=Module(new seg)
-    m0.io.en:=segen
+    m0.io.en:=1.U
     m0.io.in:=ps2segdata(3,0)
     io.bcd8seg(0):=m0.io.out
     val m1=Module(new seg)
-    m1.io.en:=segen
+    m1.io.en:=1.U
     m1.io.in:=ps2segdata(7,4)
     io.bcd8seg(1):=m1.io.out
     val m2=Module(new seg)
-    m2.io.en:=segen
-    m2.io.in:=ascii(3,0)
+    m2.io.en:=1.U
+    m2.io.in:=ps2segdata(11,8)
     io.bcd8seg(2):=m2.io.out
     val m3=Module(new seg)
-    m3.io.en:=segen
-    m3.io.in:=ascii(7,4)
+    m3.io.en:=1.U
+    m3.io.in:=ps2segdata(15,12)
     io.bcd8seg(3):=m3.io.out
     val m4=Module(new seg)
-    m4.io.en:=0.U
-    m4.io.in:=ps2segdata(3,0)
-    io.bcd8seg(4):=m0.io.out
+    m4.io.en:=1.U
+    m4.io.in:=ps2segdata(19,16)
+    io.bcd8seg(4):=m4.io.out
     val m5=Module(new seg)
-    m5.io.en:=0.U
-    m5.io.in:=ps2segdata(7,4)
-    io.bcd8seg(5):=m0.io.out
+    m5.io.en:=1.U
+    m5.io.in:=ps2segdata(23,20)
+    io.bcd8seg(5):=m5.io.out
+/*
     val m6=Module(new seg)
     m6.io.en:=1.U
     m6.io.in:=(num%10.U(7.W))(3,0)
@@ -109,6 +126,7 @@ class ps2 extends Module{
     m7.io.en:=1.U
     m7.io.in:=(num/10.U(7.W))(3,0)
     io.bcd8seg(7):=m7.io.out
+*/
 }
 
 class ps2_keyboard extends Module { 
@@ -178,7 +196,8 @@ class ps2ascii extends Module{
         val in=Input(UInt(8.W))
         val out=Output(UInt(8.W))
     })
-    val table=Reg(Vec(256,UInt(256.W)))
+    val table=RegInit(VecInit(Seq.fill(256)(0.U(256.W))))
+    table("h5A".U):=10.U
     // a-z
     table("h1C".U):=97.U
     table("h32".U):=98.U
@@ -217,7 +236,7 @@ class ps2ascii extends Module{
     table("h3D".U):=55.U
     table("h3E".U):=56.U
     table("h46".U):=57.U
-
+    
     io.out:=table(io.in)
 }
 

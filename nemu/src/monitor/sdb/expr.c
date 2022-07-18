@@ -5,9 +5,31 @@
  */
 #include <regex.h>
 
+/*void insert_string(char *a,char *b,int k,char *ans)
+{
+    int i=0,lena=strlen(a),lenb=strlen(b),j=0;
+    for(i=0; i<k; i++)
+    {
+        *ans=*a;
+        a++;
+        ans++;
+    }
+    while(*b!='\0')
+    {
+        *ans=*b;
+        b++;
+        ans++;
+    }
+    while(*a!='\0')
+    {
+        *ans=*a;
+        a++;
+        ans++;
+    }
+    *ans='\0';
+}*/
 enum {
-  TK_NOTYPE = 256, TK_EQ,
-
+  TK_NOTYPE = 256, TK_EQ, TK_NUM
   /* TODO: Add more token types */
 
 };
@@ -20,12 +42,17 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"==", TK_EQ},        // equal
+  {"\\-", '-'},         // subtract
+  {"\\*", '*'},         // multiply
+  {"\\/", '/'},         // divide
+  {"[0-9]+",TK_NUM},    // num
+  {"\\(",'('},          // left parenthesis
+  {"\\)",')'},          // right parenthesis
+  {"==", TK_EQ},        // equal 
 };
-
+static uint32_t pr[500];//precedence of operator
 #define NR_REGEX ARRLEN(rules)
 
 static regex_t re[NR_REGEX] = {};
@@ -45,6 +72,12 @@ void init_regex() {
       panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
     }
   }
+  //init precedence of operator
+  pr['+']=1;
+  pr['-']=1;
+  pr['*']=2;
+  pr['/']=2;
+
 }
 
 typedef struct token {
@@ -52,7 +85,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[32000] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -78,9 +111,20 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        if(substr_len>=32)assert(0);
 
         switch (rules[i].token_type) {
-          default: TODO();
+          case TK_NOTYPE:break;
+          case '+':
+          case '-':
+          case '*':
+          case '\\':
+          case '(':
+          case ')':
+          case TK_EQ: tokens[nr_token++].type=rules[i].token_type;break;
+          case TK_NUM: tokens[nr_token].type=rules[i].token_type;
+                         strncpy(tokens[nr_token++].str,e,substr_len);break;
+          default: assert(0);//TODO();
         }
 
         break;
@@ -95,8 +139,59 @@ static bool make_token(char *e) {
 
   return true;
 }
-
-
+bool check_parentheses(int p,int q){
+  if(tokens[p].type=='('&&tokens[q].type==')')
+    return true;
+  return false;
+}
+uint32_t find_main_operator(int p,int q){
+  int op=-1;
+  for(int i=p;i<=q;i++){
+    if(tokens[i].type==TK_NUM)continue;
+    if(tokens[i].type=='('){
+      while(tokens[i].type!=')')
+      {
+        i++;
+        if(i>=q)assert(0);
+      }
+    }
+    else if(op==-1){
+      op=i;
+    }
+    else if(pr[tokens[p].type]>=pr[tokens[i].type]){
+      p=i;
+    }
+    else{
+      assert(0);
+    }
+  }
+  return op;
+}
+uint32_t eval (int p,int q){
+  if(p>q){
+    assert(0);
+  }
+  else if(p==q){
+    assert(tokens[p].type!=TK_NUM);
+    return atoi(tokens[p].str);
+  }
+  else if(check_parentheses(p,q)){
+    return eval(p+1,q-1);
+  }
+  else{
+    int op=find_main_operator(p,q);
+    uint32_t val1=eval(p,op-1);
+    uint32_t val2=eval(op+1,q);
+    switch (tokens[op].type){
+      case '+': return val1+val2;
+      case '-': return val1-val2;
+      case '*': return val1*val2;
+      case '/': return val1/val2;
+      default: assert(0);
+    }
+  }
+  return 0;
+}
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -104,7 +199,8 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
+  //TODO();
+  eval(0,nr_token-1);
   return 0;
 }
+

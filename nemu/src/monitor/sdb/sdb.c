@@ -80,7 +80,7 @@ static struct {
 
 #define NR_CMD ARRLEN(cmd_table)
 
-static int cmd_help(char *args) {
+static int cmd_help(char *args) {//lazy to update
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
   int i;

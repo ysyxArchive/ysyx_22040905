@@ -121,7 +121,7 @@ void sdb_mainloop() {
     cmd_c(NULL);
     return;
   }
-  ///*test
+  /*test
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
   assert(fp!=NULL);
   int a=0;
@@ -136,8 +136,7 @@ void sdb_mainloop() {
       }
   }
   fclose(fp);
-
-  //*/
+  */
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 

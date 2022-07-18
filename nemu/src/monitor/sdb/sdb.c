@@ -122,7 +122,7 @@ void sdb_mainloop() {
     return;
   }
   ///*test
-  FILE* fp=popen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
+  FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/src/monitor/sdb/input","r");
   assert(fp!=NULL);
   int *a=(int *)0;
   char b[10000];
@@ -132,7 +132,7 @@ void sdb_mainloop() {
         printf("Wrong at %d %s\n",*a,b);
       }
   }
-  pclose(fp);
+  fclose(fp);
 
   //*/
   for (char *str; (str = rl_gets()) != NULL; ) {

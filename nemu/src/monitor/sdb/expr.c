@@ -141,7 +141,7 @@ static bool make_token(char *e) {
   return true;
 }
 bool check_parentheses(int p,int q){
-  if(tokens[p].type=='('&&tokens[q].type==')')
+  if((tokens[p].type=='(')&&(tokens[q].type==')'))
     return true;
   return false;
 }
@@ -153,9 +153,7 @@ uint32_t find_main_operator(int p,int q){
       while(tokens[i].type!=')')
       {
         i++;
-        if(i>=q){
-          printf("%d %d\n",i,q);
-        }
+        printf("%d %d\n",i,q);
       }
     }
     else if(op==-1){
@@ -183,7 +181,7 @@ uint32_t eval (int p,int q){
     //printf("%d\n",op);
     uint32_t val1=eval(p,op-1);
     uint32_t val2=eval(op+1,q);
-    printf("%d %d %d\n",op,val1,val2);
+    //printf("%d %d %d\n",op,val1,val2);
     //printf("%s %d\n",tokens[2].str,atoi(tokens[2].str));
     switch (tokens[op].type){
       case '+': return val1+val2;

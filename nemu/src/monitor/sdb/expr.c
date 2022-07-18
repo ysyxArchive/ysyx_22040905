@@ -179,7 +179,7 @@ uint32_t eval (int p,int q){
       case '+': return val1+val2;
       case '-': return val1-val2;
       case '*': return val1*val2;
-      case '/': return val1/val2;
+      case '/': if(val2==0) printf("val1/0\n");return val1/val2;
       default: assert(0);
     }
   }

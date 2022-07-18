@@ -5,29 +5,6 @@
  */
 #include <regex.h>
 
-/*void insert_string(char *a,char *b,int k,char *ans)
-{
-    int i=0,lena=strlen(a),lenb=strlen(b),j=0;
-    for(i=0; i<k; i++)
-    {
-        *ans=*a;
-        a++;
-        ans++;
-    }
-    while(*b!='\0')
-    {
-        *ans=*b;
-        b++;
-        ans++;
-    }
-    while(*a!='\0')
-    {
-        *ans=*a;
-        a++;
-        ans++;
-    }
-    *ans='\0';
-}*/
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM
   /* TODO: Add more token types */

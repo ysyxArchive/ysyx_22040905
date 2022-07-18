@@ -126,7 +126,7 @@ void sdb_mainloop() {
   assert(fp!=NULL);
   int a=0;
   int i=0;
-  while(fscanf(fp,"%d %s",&a,b)!=EOF){
+  if(fscanf(fp,"%d %s",&a,b)){
       bool *success=(bool *)true; 
       if(!(a==expr(b,success)&&(*success))){
         printf("Wrong at %d %s line %d\n",a,b,i);
@@ -134,9 +134,8 @@ void sdb_mainloop() {
       else{
         printf("%d\n",i);
       }
-      break;
-  }
   fclose(fp);
+  }
   //*/
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);

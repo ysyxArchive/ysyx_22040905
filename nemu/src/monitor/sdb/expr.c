@@ -147,12 +147,16 @@ bool check_parentheses(int p,int q){
 }
 uint32_t find_main_operator(int p,int q){
   int op=-1;
+  int num=0;
   for(int i=p;i<=q;i++){
     if(tokens[i].type==TK_NUM)continue;
     if(tokens[i].type=='('){
-      while(tokens[i].type!=')')
+      num=1;
+      while(num)
       {
         i++;
+        if(tokens[i].type=='(')num++;
+        if(tokens[i].type==')')num--;
         printf("%d %d\n",i,q);
       }
     }

@@ -67,7 +67,7 @@ static int cmd_p(char *args){
   bool *success=(bool*)true;
   int val=expr(args,success);
   if(success)
-    printf("%d\n",val);
+    printf("%u\n",val);
   else assert(0);
   return 0;
 }

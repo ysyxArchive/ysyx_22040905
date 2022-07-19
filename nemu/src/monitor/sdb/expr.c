@@ -171,7 +171,7 @@ uint32_t eval (int p,int q){
   if(p>q){
     assert(0);
   }
-  else if(p==q){
+  else if(p==q||(p+1==q&&tokens[p].type==DEREF)){
 
     if(tokens[p].type==TK_D) return atoi(tokens[p].str);
     else if(tokens[p].type==TK_H){

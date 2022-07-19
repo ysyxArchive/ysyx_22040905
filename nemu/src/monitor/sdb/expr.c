@@ -147,7 +147,7 @@ uint32_t find_main_operator(int p,int q){
   int op=-1;
   int num=0;
   for(int i=p;i<=q;i++){
-    if(tokens[i].type==TK_D||tokens[i].type==TK_H||tokens[i].type==TK_REG)continue;
+    if(tokens[i].type==TK_D||tokens[i].type==TK_H||tokens[i].type==TK_REG||tokens[i].type==DEREF)continue;
     if(tokens[i].type=='('){
       num=1;
       while(num)
@@ -190,7 +190,6 @@ uint32_t eval (int p,int q){
       sscanf(tokens[p].str,"%lx",&addr);
       return vaddr_read(addr,4); 
     }
-
   }
   else if(check_parentheses(p,q)){
     return eval(p+1,q-1);

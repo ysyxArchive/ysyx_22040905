@@ -6,11 +6,11 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DECIMAL,TK_HEXADECIMAL
+  TK_NOTYPE = 256, TK_EQ, TK_UEQ,TK_AND,TK_D,TK_H,TK_REG,DEREF
+  /* blank          ==     !=      &&    %d   %x  $(reg) *(address)*/
   /* TODO: Add more token types */
 
 };
-
 static struct rule {
   const char *regex;
   int token_type;
@@ -19,17 +19,19 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-  {" +", TK_NOTYPE},    // spaces
-  {"0x[0-9]+",TK_HEXADECIMAL},// hexadecimal-number
-  //{"$"},//reg_name
-  {"\\+", '+'},         // plus
-  {"\\-", '-'},         // subtract
-  {"\\*", '*'},         // multiply
-  {"\\/", '/'},         // divide
-  {"[0-9]+",TK_DECIMAL},    // decimal-number
-  {"\\(",'('},          // left parenthesis
-  {"\\)",')'},          // right parenthesis
-  {"==", TK_EQ},        // equal 
+  {" +", TK_NOTYPE},             // spaces
+  {"0x[0-9]+",TK_H},   // hexadecimal-number
+  {"\\$[a-z]*[0-9]*",TK_REG},           //reg_name
+  {"\\+", '+'},                  // plus
+  {"\\-", '-'},                  // subtract
+  {"\\*", '*'},                  // multiply
+  {"\\/", '/'},                  // divide
+  {"[0-9]+",TK_D},         // decimal-number
+  {"\\(",'('},                   // left parenthesis
+  {"\\)",')'},                   // right parenthesis
+  {"==", TK_EQ},                 // equal 
+  {"!=", TK_UEQ},                 // unequal 
+  {"&&", TK_AND},                 // and
 
 };
 static uint32_t pr[500];//precedence of operator
@@ -53,11 +55,13 @@ void init_regex() {
     }
   }
   //init precedence of operator
-  pr['+']=1;
-  pr['-']=1;
-  pr['*']=2;
-  pr['/']=2;
-
+  pr['*']=4;
+  pr['/']=4;
+  pr['+']=3;
+  pr['-']=3;
+  pr[TK_EQ]=2;
+  pr[TK_UEQ]=2;
+  pr[TK_AND]=1;
 }
 
 typedef struct token {
@@ -101,12 +105,15 @@ static bool make_token(char *e) {
           case '/':
           case '(':
           case ')':
-          case TK_EQ: tokens[nr_token++].type=rules[i].token_type;break;
-          case TK_DECIMAL: tokens[nr_token].type=rules[i].token_type;
-                         strncpy(tokens[nr_token++].str,e+position-substr_len,substr_len);break;
+          case TK_EQ:
+          case TK_AND:
+          case TK_UEQ: tokens[nr_token++].type=rules[i].token_type;break;
+          case TK_REG:
+          case TK_H:
+          case TK_D: tokens[nr_token].type=rules[i].token_type;
+                     strncpy(tokens[nr_token++].str,e+position-substr_len,substr_len);break;
           default: assert(0);//TODO();
         }
-
         break;
       }
     }
@@ -139,7 +146,7 @@ uint32_t find_main_operator(int p,int q){
   int op=-1;
   int num=0;
   for(int i=p;i<=q;i++){
-    if(tokens[i].type==TK_DECIMAL)continue;
+    if(tokens[i].type==TK_D||tokens[i].type==TK_H||tokens[i].type==TK_REG)continue;
     if(tokens[i].type=='('){
       num=1;
       while(num)
@@ -164,8 +171,23 @@ uint32_t eval (int p,int q){
     assert(0);
   }
   else if(p==q){
-    assert(tokens[p].type==TK_DECIMAL);
-    return atoi(tokens[p].str);
+
+    if(tokens[p].type==TK_D) return atoi(tokens[p].str);
+    else if(tokens[p].type==TK_H){
+      uint32_t str=0;
+      sscanf(tokens[p].str,"%X",&str);
+      return str;
+    }
+    else if(tokens[p].type==TK_REG){
+      bool success=true;
+      uint32_t ans=isa_reg_str2val(tokens[p].str,&success);
+      if(success)return ans;
+      else assert(0); 
+    }
+    else if(tokens[p].type==DEREF){
+
+    }
+
   }
   else if(check_parentheses(p,q)){
     return eval(p+1,q-1);
@@ -182,6 +204,9 @@ uint32_t eval (int p,int q){
       case '-': return val1-val2;
       case '*': return val1*val2;
       case '/': if(val2==0) printf("warining: division by zero\n");return val1/val2;
+      case TK_AND: return val1&&val2;
+      case TK_EQ:  return val1==val2;
+      case TK_UEQ: return val1!=val2; 
       default: assert(0);
     }
   }
@@ -198,6 +223,11 @@ word_t expr(char *e, bool *success) {
   }*/
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
+  for (int i = 0; i < nr_token; i ++) {
+  if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_D&&tokens[i-1].type!=TK_H&&tokens[i-1].type!=TK_REG)) ) {
+    tokens[i].type = DEREF;
+  }
+}
   return eval(0,nr_token-1);
 }
 

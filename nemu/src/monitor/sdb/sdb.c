@@ -57,7 +57,11 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   int len;
   uint64_t addr;
-  sscanf(args,"%d %lx",&len,&addr);
+  char str[10000];
+  sscanf(args,"%d %s",&len,str);
+  bool success=true;
+  addr=expr(str,&success);
+  if(!success)assert(0);
   for(int i=0;i<4*len;i+=4){
   printf("0x%lx:\t\t0x%08lx\n",addr+i,vaddr_read(addr+i,4));
   }

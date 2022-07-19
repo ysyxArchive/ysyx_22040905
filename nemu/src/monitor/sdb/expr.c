@@ -6,7 +6,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM
+  TK_NOTYPE = 256, TK_EQ, TK_DECIMAL,TK_HEXADECIMAL
   /* TODO: Add more token types */
 
 };
@@ -20,11 +20,13 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
   {" +", TK_NOTYPE},    // spaces
+  {"0x[0-9]+",TK_HEXADECIMAL},// hexadecimal-number
+  //{"$"},//reg_name
   {"\\+", '+'},         // plus
   {"\\-", '-'},         // subtract
   {"\\*", '*'},         // multiply
   {"\\/", '/'},         // divide
-  {"[0-9]+",TK_NUM},    // num
+  {"[0-9]+",TK_DECIMAL},    // decimal-number
   {"\\(",'('},          // left parenthesis
   {"\\)",')'},          // right parenthesis
   {"==", TK_EQ},        // equal 
@@ -100,7 +102,7 @@ static bool make_token(char *e) {
           case '(':
           case ')':
           case TK_EQ: tokens[nr_token++].type=rules[i].token_type;break;
-          case TK_NUM: tokens[nr_token].type=rules[i].token_type;
+          case TK_DECIMAL: tokens[nr_token].type=rules[i].token_type;
                          strncpy(tokens[nr_token++].str,e+position-substr_len,substr_len);break;
           default: assert(0);//TODO();
         }
@@ -137,7 +139,7 @@ uint32_t find_main_operator(int p,int q){
   int op=-1;
   int num=0;
   for(int i=p;i<=q;i++){
-    if(tokens[i].type==TK_NUM)continue;
+    if(tokens[i].type==TK_DECIMAL)continue;
     if(tokens[i].type=='('){
       num=1;
       while(num)
@@ -162,7 +164,7 @@ uint32_t eval (int p,int q){
     assert(0);
   }
   else if(p==q){
-    assert(tokens[p].type==TK_NUM);
+    assert(tokens[p].type==TK_DECIMAL);
     return atoi(tokens[p].str);
   }
   else if(check_parentheses(p,q)){

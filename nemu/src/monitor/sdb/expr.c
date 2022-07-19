@@ -4,6 +4,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <memory/vaddr.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_UEQ,TK_AND,TK_D,TK_H,TK_REG,DEREF
@@ -175,7 +176,7 @@ uint32_t eval (int p,int q){
     if(tokens[p].type==TK_D) return atoi(tokens[p].str);
     else if(tokens[p].type==TK_H){
       uint32_t str=0;
-      sscanf(tokens[p].str,"%X",&str);
+      sscanf(tokens[p].str,"%x",&str);
       return str;
     }
     else if(tokens[p].type==TK_REG){
@@ -185,7 +186,9 @@ uint32_t eval (int p,int q){
       else assert(0); 
     }
     else if(tokens[p].type==DEREF){
-
+      uint64_t addr=0;
+      sscanf(tokens[p].str,"%lx",&addr);
+      return vaddr_read(addr,4); 
     }
 
   }

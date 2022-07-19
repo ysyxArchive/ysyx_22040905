@@ -56,6 +56,7 @@ void init_regex() {
     }
   }
   //init precedence of operator
+  pr[DEREF]=5;
   pr['*']=4;
   pr['/']=4;
   pr['+']=3;
@@ -147,7 +148,7 @@ uint32_t find_main_operator(int p,int q){
   int op=-1;
   int num=0;
   for(int i=p;i<=q;i++){
-    if(tokens[i].type==TK_D||tokens[i].type==TK_H||tokens[i].type==TK_REG||tokens[i].type==DEREF)continue;
+    if(tokens[i].type==TK_D||tokens[i].type==TK_H||tokens[i].type==TK_REG)continue;
     if(tokens[i].type=='('){
       num=1;
       while(num)
@@ -169,10 +170,10 @@ uint32_t find_main_operator(int p,int q){
 }
 uint32_t eval (int p,int q){
   if(p>q){
-    assert(0);
+    return 0;
+    //assert(0);
   }
-  else if(p==q||(p+1==q&&tokens[p].type==DEREF)){
-
+  else if(p==q){
     if(tokens[p].type==TK_D) return atoi(tokens[p].str);
     else if(tokens[p].type==TK_H){
       uint32_t str=0;
@@ -184,11 +185,6 @@ uint32_t eval (int p,int q){
       uint32_t ans=isa_reg_str2val(tokens[p].str,&success);
       if(success)return ans;
       else assert(0); 
-    }
-    else if(tokens[p].type==DEREF){
-      uint64_t addr=0;
-      sscanf(tokens[p].str,"%lx",&addr);
-      return vaddr_read(addr,4); 
     }
   }
   else if(check_parentheses(p,q)){
@@ -209,6 +205,7 @@ uint32_t eval (int p,int q){
       case TK_AND: return val1&&val2;
       case TK_EQ:  return val1==val2;
       case TK_UEQ: return val1!=val2; 
+      case DEREF: return vaddr_read((vaddr_t)(val2),4);
       default: assert(0);
     }
   }

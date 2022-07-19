@@ -20,7 +20,7 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
   {" +", TK_NOTYPE},             // spaces
-  {"0x[0-9]+",TK_H},   // hexadecimal-number
+  {"0x[0-9a-zA-Z]+",TK_H},   // hexadecimal-number
   {"\\$[a-z]*[0-9]*",TK_REG},           //reg_name
   {"\\+", '+'},                  // plus
   {"\\-", '-'},                  // subtract

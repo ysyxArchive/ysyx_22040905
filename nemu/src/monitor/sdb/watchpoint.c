@@ -78,7 +78,7 @@ void info_wp(){
     printf("No watchpoints\n");
   }
   else{
-    printf("NUM\tType\tWhat\n");
+    printf("NUM\tType      \tWhat\n");
     while(tmp!=NULL){
       printf("%d\twatchpoint\t%s\n",tmp->NO,tmp->str);
       tmp=tmp->next;

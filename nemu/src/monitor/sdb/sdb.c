@@ -98,9 +98,9 @@ static struct {
   { "si","Step execute once",cmd_si},
   { "info","Print program status",cmd_info},
   { "x","Scan memory",cmd_x},
-  { "p","expression evaluation",cmd_p},
-  { "w","set watchpoint",cmd_w},
-  { "d","delete watchpoint",cmd_d},
+  { "p","Expression evaluation",cmd_p},
+  { "w","Set watchpoint",cmd_w},
+  { "d","Delete watchpoint",cmd_d},
   /* TODO: Add more commands */
 
 };

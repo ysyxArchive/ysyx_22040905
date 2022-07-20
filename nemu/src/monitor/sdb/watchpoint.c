@@ -22,7 +22,7 @@ void init_wp_pool() {
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
   }
 
-  head = NULL;
+  head->next = NULL;
   free_ = wp_pool;
 }
 WP* new_wp(){

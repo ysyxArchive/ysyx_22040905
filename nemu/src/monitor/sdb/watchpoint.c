@@ -22,46 +22,42 @@ void init_wp_pool() {
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
   }
 
-  head= NULL;
-  free_ = wp_pool;
+  head=(WP *)malloc(sizeof(WP));
+  head->next=NULL;
+  free_=(WP *)malloc(sizeof(WP));
+  free_->next=wp_pool;
 }
 WP* new_wp(){
-  if(free_==NULL)assert(0);
-  WP* u=free_;
+  if(free_->next==NULL)assert(0);
+  WP* u=free_->next;
   u->val=0;
   memset(u->str,0,sizeof(u->str));
   WP *tmp=head;
-  while(tmp!=NULL){
+  while(tmp->next!=NULL){
     tmp=tmp->next;
   }
-  tmp=u;
-  tmp->next=NULL;
-  free_=free_->next;
+  tmp->next=u;
+  u->next=NULL;
+  free_->next=free_->next->next;
   return u;
 }
 void free_wp(WP *wp){
-  if(wp==NULL)assert(0);
-  WP *tmp=free_;
-  while(tmp!=NULL){
+  WP *tmp=head;
+  while(tmp->next!=wp){
+    if(tmp->next==NULL)assert(0);
     tmp=tmp->next;
   }
-  tmp=wp;
-  //tmp->next=NULL:
-  tmp=head;
-  if(tmp==wp){
-    head=head->next;
+  tmp->next=tmp->next->next; 
+  tmp=free_;
+  while(tmp->next!=NULL){
+    tmp=tmp->next;
   }
-  else{
-    while(tmp->next!=wp){
-      if(tmp->next==NULL)assert(0);
-      tmp=tmp->next;
-    }
-    tmp->next=tmp->next->next;
-  }
+  tmp->next=wp;
+  wp->next=NULL;
 }
 
 bool change(){
-  WP *tmp=head;
+  WP *tmp=head->next;
   while(tmp!=NULL){
     bool success=true;
     int val2=expr(tmp->str,&success);
@@ -77,7 +73,7 @@ bool change(){
   return false;
 }
 void info_wp(){
-  WP *tmp=head;
+  WP *tmp=head->next;
   if(tmp==NULL){
     printf("No watchpoints\n");
   }
@@ -95,18 +91,12 @@ void set_wp(char * exp){
   printf("Watchpoint %d: %s\n",u->NO,u->str);
 }
 void del_wp(int id){
-  WP *tmp=head;
+  WP *tmp=head->next;
   if(tmp==NULL){
     printf("No watchpoint number %d\n",id);
   }
   else{
-    while(tmp->next!=NULL){
-      if(tmp->NO==id){
-        free_wp(tmp);
-        return;
-      }
-    }
-    assert(0);
+    free_wp(wp_pool+id);
   }
 }
 /* TODO: Implement the functionality of watchpoint */

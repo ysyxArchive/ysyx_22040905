@@ -32,13 +32,13 @@ WP* new_wp(){
   WP* u=free_->next;
   u->val=0;
   memset(u->str,0,sizeof(u->str));
+  free_->next=free_->next->next;
   WP *tmp=head;
   while(tmp->next!=NULL){
     tmp=tmp->next;
   }
   tmp->next=u;
   u->next=NULL;
-  free_->next=free_->next->next;
   return u;
 }
 void free_wp(WP *wp){

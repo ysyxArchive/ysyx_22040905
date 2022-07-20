@@ -57,6 +57,7 @@ void free_wp(WP *wp){
 }
 
 bool change(){
+  int flag=0;
   WP *tmp=head->next;
   while(tmp!=NULL){
     bool success=true;
@@ -66,10 +67,11 @@ bool change(){
       printf("Watchpoint %d: %s\n",tmp->NO,tmp->str);
       printf("Old value = %d\nNew value = %d",tmp->val,val2);
       tmp->val=val2;
-      return true;
+      flag=1;
     }
     tmp=tmp->next;
   }
+  if(flag)return true;
   return false;
 }
 void info_wp(){

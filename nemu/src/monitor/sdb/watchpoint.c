@@ -91,6 +91,7 @@ void info_wp(){
 }
 void set_wp(char * exp){
   WP *u=new_wp();
+  strcpy(u->str,exp);
   printf("Watchpoint %d: %s\n",u->NO,u->str);
 }
 void del_wp(int id){

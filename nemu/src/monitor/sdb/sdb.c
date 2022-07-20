@@ -139,12 +139,6 @@ void sdb_mainloop() {
     cmd_c(NULL);
     return;
   }
-  int a=0,b=0,c=0;
-  for(int i=0;i<1000;i++){
-    a++;b++;
-  }
-  c++;
-  printf("%d %d %d\n",a,b,c);
   /*test code
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);

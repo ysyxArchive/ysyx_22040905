@@ -61,6 +61,8 @@ bool change(){
     int val2=expr(tmp->str,&success);
     if(!success)assert(0);
     if(tmp->val!=val2){
+      printf("Watchpoint %d: %s\n",tmp->NO,tmp->str);
+      printf("Old value = %d\nNew value = %d",tmp->val,val2);
       tmp->val=val2;
       return true;
     }
@@ -68,13 +70,35 @@ bool change(){
   return false;
 }
 void info_wp(){
-  return;
+  WP *tmp=head;
+  if(tmp==NULL){
+    printf("No watchpoints\n");
+  }
+  else{
+    printf("NUM\tType\tWhat\n");
+    while(tmp->next!=NULL){
+      printf("%d\twatchpoint\t%s\n",tmp->NO,tmp->str);
+    }
+  }
 }
 void set_wp(char * exp){
-  return;
+  WP *u=new_wp();
+  printf("Watchpoint %d: %s\n",u->NO,u->str);
 }
 void del_wp(int id){
-  return;
+  WP *tmp=head;
+  if(tmp==NULL){
+    printf("No watchpoint number %d\n",id);
+  }
+  else{
+    while(tmp->next!=NULL){
+      if(tmp->NO==id){
+        free_wp(tmp);
+        return;
+      }
+    }
+    assert(0);
+  }
 }
 /* TODO: Implement the functionality of watchpoint */
 

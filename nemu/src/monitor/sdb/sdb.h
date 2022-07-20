@@ -5,7 +5,6 @@
 
 word_t expr(char *e, bool *success);
 
-void init_wp_pool();
 
 bool change();
 #endif

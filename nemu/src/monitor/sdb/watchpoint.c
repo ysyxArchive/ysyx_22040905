@@ -13,7 +13,7 @@ typedef struct watchpoint {
 } WP;
 
 static WP wp_pool[NR_WP] = {};
-static WP *head = NULL,*free_ = NULL;
+static WP *head = NULL,*free_ = NULL; 
 
 void init_wp_pool() {
   int i;
@@ -22,7 +22,7 @@ void init_wp_pool() {
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
   }
 
-  head->next = NULL;
+  head= NULL;
   free_ = wp_pool;
 }
 WP* new_wp(){
@@ -31,32 +31,38 @@ WP* new_wp(){
   u->val=0;
   memset(u->str,0,sizeof(u->str));
   WP *tmp=head;
-  while(tmp->next!=NULL){
+  while(tmp!=NULL){
     tmp=tmp->next;
   }
-  tmp->next=u;
+  tmp=u;
+  tmp->next=NULL;
   free_=free_->next;
   return u;
 }
 void free_wp(WP *wp){
   if(wp==NULL)assert(0);
   WP *tmp=free_;
-  while(tmp->next!=NULL){
+  while(tmp!=NULL){
     tmp=tmp->next;
   }
-  tmp->next=wp;
+  tmp=wp;
+  //tmp->next=NULL:
   tmp=head;
-  while(tmp->next!=wp){
-    if(tmp->next==NULL)assert(0);
-    tmp=tmp->next;
+  if(tmp==wp){
+    head=head->next;
   }
-  tmp->next=tmp->next->next;
+  else{
+    while(tmp->next!=wp){
+      if(tmp->next==NULL)assert(0);
+      tmp=tmp->next;
+    }
+    tmp->next=tmp->next->next;
+  }
 }
 
 bool change(){
   WP *tmp=head;
-  while(tmp->next!=NULL){
-    tmp=tmp->next;
+  while(tmp!=NULL){
     bool success=true;
     int val2=expr(tmp->str,&success);
     if(!success)assert(0);
@@ -66,6 +72,7 @@ bool change(){
       tmp->val=val2;
       return true;
     }
+    tmp=tmp->next;
   }
   return false;
 }
@@ -76,8 +83,9 @@ void info_wp(){
   }
   else{
     printf("NUM\tType\tWhat\n");
-    while(tmp->next!=NULL){
+    while(tmp!=NULL){
       printf("%d\twatchpoint\t%s\n",tmp->NO,tmp->str);
+      tmp=tmp->next;
     }
   }
 }

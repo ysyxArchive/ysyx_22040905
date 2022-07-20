@@ -144,6 +144,7 @@ void sdb_mainloop() {
     a++;b++;
   }
   c++;
+  printf("%d %d %d\n",a,b,c);
   /*test code
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);

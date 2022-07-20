@@ -25,7 +25,7 @@ void init_wp_pool() {
   head=(WP *)malloc(sizeof(WP));
   head->next=NULL;
   free_=(WP *)malloc(sizeof(WP));
-  free_->next=wp_pool;
+  free_->next=&wp_pool[0];
 }
 WP* new_wp(){
   if(free_->next==NULL)assert(0);

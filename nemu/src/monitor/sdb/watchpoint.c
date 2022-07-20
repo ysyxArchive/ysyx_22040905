@@ -67,5 +67,14 @@ bool change(){
   }
   return false;
 }
+void info_wp(){
+  return;
+}
+void set_wp(char * exp){
+  return;
+}
+void del_wp(int id){
+  return;
+}
 /* TODO: Implement the functionality of watchpoint */
 

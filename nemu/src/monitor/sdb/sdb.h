@@ -7,6 +7,6 @@ word_t expr(char *e, bool *success);
 
 bool change();
 void info_wp();
-void set_wp(char *);
+void set_wp(char * exp);
 void del_wp(int id);
 #endif

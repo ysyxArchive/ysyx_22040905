@@ -59,7 +59,7 @@ bool change(){
     tmp=tmp->next;
     bool success=true;
     int val2=expr(tmp->str,&success);
-
+    if(!success)assert(0);
     if(tmp->val!=val2){
       tmp->val=val2;
       return true;

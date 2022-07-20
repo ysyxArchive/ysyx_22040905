@@ -51,6 +51,18 @@ static int cmd_si(char *args){
 
 static int cmd_info(char *args){
   if(strcmp(args,"r")==0) isa_reg_display();
+  else if(strcmp(args,"w")==0){
+    info_wp();
+  }
+  return 0;
+}
+
+static int cmd_w(char *args){
+  set_wp(args);
+  return 0;
+}
+static int cmd_d(char *args){
+  del_wp(atoi(args)); 
   return 0;
 }
 
@@ -87,13 +99,15 @@ static struct {
   { "info","Print program status",cmd_info},
   { "x","Scan memory",cmd_x},
   { "p","expression evaluation",cmd_p},
+  { "w","set watchpoint",cmd_w},
+  { "d","delete watchpoint",cmd_d},
   /* TODO: Add more commands */
 
 };
 
 #define NR_CMD ARRLEN(cmd_table)
 
-static int cmd_help(char *args) {//lazy to update
+static int cmd_help(char *args) {
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
   int i;
@@ -125,7 +139,12 @@ void sdb_mainloop() {
     cmd_c(NULL);
     return;
   }
-  /*test
+  int a=0,b=0,c=0;
+  for(int i=0;i<1000;i++){
+    a++;b++;
+  }
+  c++;
+  /*test code
   FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);
   int a=0;

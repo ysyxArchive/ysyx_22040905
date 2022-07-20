@@ -9,6 +9,7 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+  printf("%s\t\t%ld\n","pc",cpu.pc);
   for(int i=0;i<32;i++){
     printf("%s\t\t%ld\n",reg_name(i,8),gpr(i));
   }

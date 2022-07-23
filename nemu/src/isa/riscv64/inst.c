@@ -35,7 +35,7 @@ static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, 
     case TYPE_I: src1R(rs1);     src2I(immI(i)); break;
     case TYPE_U: src1I(immU(i)); break;
     case TYPE_S: destI(immS(i)); src1R(rs1); src2R(rs2); break;
-    case TYPE_J: src1I(immJ(i)); printf("%d\n%ld\n\n",i,immJ(i));break;
+    case TYPE_J: src1I(immJ(i)); printf("%d\n%ld\n%ld\n%ld\n%ld\n%ld\n",i,immJ(i),(SEXT(BITS(i, 31, 31), 1) << 20),(SEXT(BITS(i, 30, 21), 10) << 1),(SEXT(BITS(i, 20, 20), 1) << 11),(SEXT(BITS(i, 19, 12), 8) << 12));break;
   }
 }
 

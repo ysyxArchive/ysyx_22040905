@@ -23,7 +23,7 @@ static word_t immI(uint32_t i) { return SEXT(BITS(i, 31, 20), 12); }
 static word_t immU(uint32_t i) { return SEXT(BITS(i, 31, 12), 20) << 12; }
 static word_t immS(uint32_t i) { return (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); }
 static word_t immJ(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 20)| (SEXT(BITS(i, 30, 21), 10) << 1)|(SEXT(BITS(i, 20, 20), 1) << 11)|(SEXT(BITS(i, 19, 12), 8) << 12);}
-static word_t immB(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 12)| (SEXT(BITS(i, 30, 25), 6) << 5)|(SEXT(BITS(i, 11, 8), 4) << 1)|(SEXT(BITS(i, 7, 7), 1) << 11);}
+static word_t immB(uint32_t i) {printf("%lx %lx %lx %lx\n",(SEXT(BITS(i, 31, 31), 1) << 12),(SEXT(BITS(i, 31, 31), 1) << 12)| (SEXT(BITS(i, 30, 25), 6) << 5),(SEXT(BITS(i, 31, 31), 1) << 12)| (SEXT(BITS(i, 30, 25), 6) << 5)|(SEXT(BITS(i, 11, 8), 4) << 1),(SEXT(BITS(i, 31, 31), 1) << 12)| (SEXT(BITS(i, 30, 25), 6) << 5)|(SEXT(BITS(i, 11, 8), 4) << 1)|(SEXT(BITS(i, 7, 7), 1) << 11)); return (SEXT(BITS(i, 31, 31), 1) << 12)| (SEXT(BITS(i, 30, 25), 6) << 5)|(SEXT(BITS(i, 11, 8), 4) << 1)|(SEXT(BITS(i, 7, 7), 1) << 11);}
 
 static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, int type) {
   uint32_t i = s->isa.inst.val;
@@ -66,7 +66,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 010 ????? 00000 11", lw     , I, R(dest) =SEXT(Mr(src1 +src2, 4),32));
   INSTPAT("0000000 ????? ????? 000 ????? 01110 11", addw   , R, R(dest) =SEXT(BITS(src1+src2,31,0),32));
   INSTPAT("0100000 ????? ????? 000 ????? 01100 11", sub    , R, R(dest) =src1-src2);
-  INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, if(src1!=src2) s->dnpc=s->pc+dest;printf("%lx %lx %lx\n",dest,s->pc,s->dnpc)); 
+  INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, if(src1!=src2) s->dnpc=s->pc+dest;);//printf("%lx %lx %lx\n",dest,s->pc,s->dnpc)); 
   INSTPAT("??????? ????? ????? 000 ????? 00110 11", addiw  , I, R(dest) = SEXT(BITS(src1+src2,31,0),32));
   INSTPAT("??????? ????? ????? 011 ????? 00100 11", sltiu  , I, R(dest) = (src1<src2));
 

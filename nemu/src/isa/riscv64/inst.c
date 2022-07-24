@@ -8,9 +8,8 @@
 #define Mw vaddr_write
 
 enum {
-  TYPE_I, TYPE_U, TYPE_S,
+  TYPE_I, TYPE_U, TYPE_S, TYPE_J, TYPE_B, TYPE_R,
   TYPE_N,// none
-  TYPE_J
 };
 
 #define src1R(n) do { *src1 = R(n); } while (0)
@@ -24,6 +23,7 @@ static word_t immI(uint32_t i) { return SEXT(BITS(i, 31, 20), 12); }
 static word_t immU(uint32_t i) { return SEXT(BITS(i, 31, 12), 20) << 12; }
 static word_t immS(uint32_t i) { return (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); }
 static word_t immJ(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 20)| (SEXT(BITS(i, 30, 21), 10) << 1)|(SEXT(BITS(i, 20, 20), 1) << 11)|(SEXT(BITS(i, 19, 12), 8) << 12);}
+static word_t immB(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 12)| (SEXT(BITS(i, 30, 25), 6) << 5)|(SEXT(BITS(i, 11, 8), 4) << 1)|(SEXT(BITS(i, 7, 7), 1) << 11);}
 
 static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, int type) {
   uint32_t i = s->isa.inst.val;
@@ -36,6 +36,8 @@ static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, 
     case TYPE_U: src1I(immU(i)); break;
     case TYPE_S: destI(immS(i)); src1R(rs1); src2R(rs2); break;
     case TYPE_J: src1I(immJ(i));break;
+    case TYPE_B: destI(immB(i)); src1R(rs1); src2R(rs2); break;
+    case TYPE_R: src1R(rs1); src2R(rs2); break;
   }
 }
 
@@ -59,6 +61,13 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(dest) = src1);
   INSTPAT("0000000 ????? ????? 001 ????? 00100 11", slli   , I, R(dest) = src1<<src2);
   INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, R(dest) = s->pc+4;s->dnpc=((src1+src2)&(-1)));
+
+  INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, if(src1==src2) s->dnpc=s->pc+dest); 
+  INSTPAT("??????? ????? ????? 010 ????? 00000 11", lw     , I, R(dest) =SEXT(Mr(src1 +src2, 4),32));
+  INSTPAT("0000000 ????? ????? 000 ????? 01110 11", addw   , R, R(dest) =SEXT(BITS(src1+src2,31,0),32));
+  INSTPAT("0100000 ????? ????? 000 ????? 01100 11", sub    , R, R(dest) =src1-src2);
+  INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, if(src1!=src2) s->dnpc=s->pc+dest); 
+  INSTPAT("??????? ????? ????? 000 ????? 00110 11", addiw  , I, R(dest) = SEXT(BITS(src1+src2,31,0),32));
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));

@@ -8,7 +8,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   for(int i=0;i<32;i++)
   {
     if(ref_r->gpr[i]!=gpr(i)){
-    printf("pc:%lx\n%s:\nref_: %ld\t dut_: %ld\n",pc,reg_name(i,8),ref_r->gpr[i],gpr(i));
+    printf("pc:%lx\n%s:\nref: %ld\t dut: %ld\n",pc,reg_name(i,8),ref_r->gpr[i],gpr(i));
     flag=0;
     } 
   }

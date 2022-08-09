@@ -24,7 +24,7 @@ int main(int argc,char ** argv, char** env)
 	tfp->dump(sim_time);
 	sim_time++;
 	printf("a = %d, b = %d, f = %d\n", a, b, top->f);
-	assert(top->f == a^b);
+	assert(top->f == (a^b));
 	}
 	tfp->close();
 	delete top;

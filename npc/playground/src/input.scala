@@ -2,7 +2,7 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
-class top extends Module{
+class input extends Module{
     val io=IO(new Bundle{
         val ps2_clk=Input(UInt(1.W))
         val ps2_data=Input(UInt(1.W))

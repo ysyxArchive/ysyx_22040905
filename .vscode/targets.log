@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 31 14:12:07 2022
+# Make data base, printed on Tue Aug  9 22:34:36 2022
 
 # Variables
 
@@ -72,7 +70,7 @@ VSCODE_CODE_CACHE_PATH = /home/agustin/.config/Code/CachedData/3b889b090b5ad5793
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.TGCBQ1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.MY2MQ1
 # default
 .LOADED := 
 # default
@@ -82,7 +80,7 @@ MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/agustin/ysyx-workbench
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -112,7 +110,7 @@ SNAP_REEXEC =
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 3937
+VSCODE_PID = 2870
 # environment
 SDKMAN_DIR = /home/agustin/.sdkman
 # environment
@@ -122,7 +120,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1178,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1178
+SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1257,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1257
 # automatic
 *F = $(notdir $*)
 # environment
@@ -162,7 +160,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # environment
-PATH = /usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/agustin/bin:/usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/home/agustin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -180,7 +178,7 @@ SNAP = /snap/code/102
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = 7fffc2df3a8842e6b1a4624207e2e8df
+INVOCATION_ID = a010add716134094a48b297738015169
 # environment
 SNAP_REVISION = 102
 # makefile (from 'Makefile', line 10)
@@ -224,7 +222,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 1202
+SYSTEMD_EXEC_PID = 1284
 # environment
 DISPLAY = :0
 # environment
@@ -242,11 +240,11 @@ SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1049
+MANAGERPID = 1109
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3891
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2822
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -258,7 +256,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/agustin/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:37841
+JOURNAL_STREAM = 8:33635
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -281,9 +279,11 @@ IM_CONFIG_PHASE = 1
 PAPERSIZE = letter
 # default
 .RECIPEPREFIX := 
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 # automatic
 <F = $(notdir $<)
- 
 # environment
 SNAP_VERSION = 3b889b09
 # environment
@@ -317,9 +317,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66311, inode 1704005): 20 files, no impossibilities.
+# . (device 66311, inode 1704005): 19 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 19 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -392,12 +392,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 29 / storage = 255 B / avg = 8 B
-# current buf: size = 8162 B / used = 255 B / count = 29 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 28 / storage = 245 B / avg = 8 B
+# current buf: size = 8162 B / used = 245 B / count = 28 / avg = 8 B
 
-# strcache performance: lookups = 40 / hit rate = 27%
+# strcache performance: lookups = 39 / hit rate = 28%
 # hash-table stats:
-# Load=29/8192=0%, Rehash=0, Collisions=0/40=0%
-# Finished Make data base on Sun Jul 31 14:12:07 2022
+# Load=28/8192=0%, Rehash=0, Collisions=0/39=0%
+# Finished Make data base on Tue Aug  9 22:34:36 2022
 
  

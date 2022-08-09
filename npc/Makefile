@@ -32,24 +32,24 @@ NXDC_FILES = constr/top.nxdc
 INC_PATH ?=
 VERILATOR = verilator
 VERILATOR_CFLAGS += -MMD --build --cc  \
-					-O3 --x-assign fast --x-initial fast --noassert 
-
+-O3 --x-assign fast --x-initial fast --noassert 
 BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 BIN = $(BUILD_DIR)/$(TOPNAME)
-default: $(BIN)
-$(shell mkdir -p $(BUILD_DIR))
-
-SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
-$(SRC_AUTO_BIND): $(NXDC_FILES)
-	python3 ~/ysyx-workbench/nvboard/scripts/auto_pin_bind.py $^ $@
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
 CSRCSS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
-CSRCS =$(CSRCSS) $(SRC_AUTO_BIND)
-include ~/ysyx-workbench/nvboard/scripts/nvboard.mk
-INCFLAGS = $(addprefix -I, $(INC_PATH))
-CFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
-LDFLAGS += -lSDL2 -lSDL2_image
+	
+default: $(BIN)
+	$(shell mkdir -p $(BUILD_DIR))
+	SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
+	$(SRC_AUTO_BIND): $(NXDC_FILES)
+	python3 ~/ysyx-workbench/nvboard/scripts/auto_pin_bind.py $^ $@
+	CSRCS =$(CSRCSS) $(SRC_AUTO_BIND)
+	include ~/ysyx-workbench/nvboard/scripts/nvboard.mk
+	INCFLAGS = $(addprefix -I, $(INC_PATH))
+	CFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
+	LDFLAGS += -lSDL2 -lSDL2_image
+
 $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 	rm -rf $(OBJ_DIR)
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
@@ -62,12 +62,11 @@ run: $(BIN)
 	$^
 
 sim: $(VSRCS) $(CSRCSS)
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	rm -rf $(BUILD_DIR)/*
-	verilator --build -Wall --cc --exe --trace\
-		--top-module $(TOPNAME) $^ \
-	   	$(addprefix -CFLAGS , $(CFLAGS)) \
-	    --Mdir $(OBJ_DIR) ##-o $(abspath $(BIN))
+	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
+	rm -rf $(OBJ_DIR)
+	verilator -Wall --cc --exe --build --trace\
+ 	 --top-module $(TOPNAME) $^\
+	 --Mdir $(OBJ_DIR)  
 	ls -l ./build/obj_dir
 	./build/obj_dir/V$(TOPNAME)
 	gtkwave wave.vcd

@@ -76,5 +76,4 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
-
 #endif

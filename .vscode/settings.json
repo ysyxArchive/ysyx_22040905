@@ -3,5 +3,9 @@
     "files.watcherExclude": {
         "**/target": true
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "bitset": "c",
+        "chrono": "c"
+    }
 }

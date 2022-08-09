@@ -28,7 +28,7 @@ int printf(const char *fmt, ...) {
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
-  char *s;
+  char *s="";
   char *str;
   int num,len;
   for(str=out;*fmt;++fmt){
@@ -36,7 +36,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       *str++=*fmt;
       continue;
     }
-
+    fmt++;
     switch(*fmt){
       case 's':
         s = va_arg(ap,char*);

@@ -20,6 +20,8 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
+	rm -rf $(BUILD_DIR)/nemu-mtrace.txt
+	touch $(BUILD_DIR)/nemu-mtrace.txt
 	$(NEMU_EXEC)
 
 gdb: run-env

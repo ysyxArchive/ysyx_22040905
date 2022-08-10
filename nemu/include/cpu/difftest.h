@@ -34,7 +34,9 @@ static inline bool difftest_check_reg(const char *name, vaddr_t pc, word_t ref, 
   }
   return true;
 }
+#ifndef ir_max
 #define ir_max 10
+#endif
 char *iringbuf[ir_max];
 int ir_head;
 int ir_tail;

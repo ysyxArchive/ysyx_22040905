@@ -34,5 +34,38 @@ static inline bool difftest_check_reg(const char *name, vaddr_t pc, word_t ref, 
   }
   return true;
 }
+#define ir_max 10
+char *iringbuf[ir_max];
+int ir_head;
+int ir_tail;
+int ir_full;
+void init_iringbuf(){
+  for(int i=0;i<ir_max;i++){
+    *iringbuf="";
+  }
+  ir_head=0;
+  ir_tail=0;
+  ir_full=0;
+}
+void iringbuf_add(char* s){
+  if(ir_full)ir_head=(ir_head+1)%ir_max;
+  strcpy(iringbuf[ir_tail],s);
+  ir_tail=(ir_tail+1)%ir_max;
+  if(ir_tail==0)ir_full=1;
+}
+void iringbuf_print(){
+  if(ir_tail>ir_head){
+    for(int i=ir_head;i<ir_tail;i++){
+      printf("%s\n",iringbuf[i]);
+      }
+    }
+  else if(ir_full){
+    for(int i=ir_head;i<ir_max;i++)
+      printf("%s\n",iringbuf[i]);
+    for(int i=0;i<ir_tail;i++)
+      printf("%s\n",iringbuf[i]);
+  }
+  printf("\n");
+}
 
 #endif

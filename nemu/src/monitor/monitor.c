@@ -1,5 +1,6 @@
 #include <isa.h>
 #include <memory/paddr.h>
+#include <cpu/difftest.h>
 
 void init_rand();
 void init_log(const char *log_file);
@@ -8,6 +9,7 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
+void init_iringbuf();
 
 static void welcome() {
   Log("Trace: %s", MUXDEF(CONFIG_TRACE, ASNI_FMT("ON", ASNI_FG_GREEN), ASNI_FMT("OFF", ASNI_FG_RED)));
@@ -112,6 +114,9 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Initialize the simple debugger. */
   init_sdb();
+
+  /* Initialize the iringbuf. */
+  init_iringbuf();
 
   IFDEF(CONFIG_ITRACE, init_disasm(
     MUXDEF(CONFIG_ISA_x86,     "i686",

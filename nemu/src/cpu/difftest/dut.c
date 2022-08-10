@@ -115,3 +115,41 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 #else
 void init_difftest(char *ref_so_file, long img_size, int port) { }
 #endif
+
+#ifndef ir_max
+#define ir_max 10
+#endif
+
+static char iringbuf[ir_max][2048];
+static int ir_head;
+static int ir_tail;
+static int ir_full;
+
+void init_iringbuf(){
+  for(int i=0;i<ir_max;i++){
+    strcpy(iringbuf[i],"");
+  }
+  ir_head=0;
+  ir_tail=0;
+  ir_full=0;
+}
+void iringbuf_add(char* s){
+  if(ir_full)ir_head=(ir_head+1)%ir_max;
+  strcpy(iringbuf[ir_tail],s);
+  ir_tail=(ir_tail+1)%ir_max;
+  if(ir_tail==0)ir_full=1;
+}
+void iringbuf_print(){
+  if(ir_tail>ir_head){
+    for(int i=ir_head;i<ir_tail;i++){
+      printf("%s\n",iringbuf[i]);
+      }
+    }
+  else if(ir_full){
+    for(int i=ir_head;i<ir_max;i++)
+      printf("%s\n",iringbuf[i]);
+    for(int i=0;i<ir_tail;i++)
+      printf("%s\n",iringbuf[i]);
+  }
+  printf("\n");
+}

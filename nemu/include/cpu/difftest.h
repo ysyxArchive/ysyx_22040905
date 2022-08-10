@@ -34,16 +34,19 @@ static inline bool difftest_check_reg(const char *name, vaddr_t pc, word_t ref, 
   }
   return true;
 }
-#ifndef ir_max
+
+#ifndef iringbuff
+#define iringbuff
+
 #define ir_max 10
-#endif
-char *iringbuf[ir_max];
+
+static char iringbuf[ir_max][2048];
 int ir_head;
 int ir_tail;
 int ir_full;
 void init_iringbuf(){
   for(int i=0;i<ir_max;i++){
-    *iringbuf="";
+    strcpy(iringbuf[i],"");
   }
   ir_head=0;
   ir_tail=0;
@@ -69,5 +72,5 @@ void iringbuf_print(){
   }
   printf("\n");
 }
-
+#endif
 #endif

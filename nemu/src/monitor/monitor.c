@@ -75,7 +75,7 @@ static void load_elf(){
   fseek(fp, ehdr->e_shoff, SEEK_SET);
   ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
   assert(ret!=0);
-  int flag=0;
+  int flag=0,num=0;
   for(int i = 0; i < count; ++i) {
     if(shdr[i].sh_type==SHT_STRTAB&&!flag){
       fseek(fp,shdr[i].sh_offset,SEEK_SET);
@@ -90,14 +90,14 @@ static void load_elf(){
     }
     else if(shdr[i].sh_type==SHT_SYMTAB){
       fseek(fp,shdr[i].sh_offset,SEEK_SET);
-      int num=shdr[i].sh_size/shdr[i].sh_entsize;
+      num=shdr[i].sh_size/shdr[i].sh_entsize;
       ret=fread(symtab,shdr[i].sh_entsize,num, fp);
-      assert(ret!=0);
-      for(int j=0;j<num;j++){
+      assert(ret!=0); 
+    }
+    for(int j=0;j<num;j++){
           if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-            printf("%08lx\n",symtab[j].st_value);
+            printf("%08lx %s\n",symtab[j].st_value,strtab+symtab[j].st_name);
           }
-      }
     }
   }
 

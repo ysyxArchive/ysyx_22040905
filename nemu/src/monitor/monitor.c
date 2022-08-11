@@ -97,7 +97,7 @@ static void load_elf(){
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;
-  fp=fopen("../../build/nemu-ftrace.txt", "a");
+  fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   if(addr>=0x80000000&&addr<(0x80000000+32768)){
     if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]",addr,func[addr-0x80000000],dnpc);
     else fprintf(fp,"0x%08lx:\tret [%s]",addr,func[addr-0x80000000]);

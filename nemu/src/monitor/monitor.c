@@ -94,8 +94,8 @@ static void load_elf(){
       ret=fread(symtab,shdr[i].sh_entsize,num, fp);
       assert(ret!=0);
       for(int j=0;j<num;j++){
-          if(ELF64_ST_TYPE(symtab[i].st_info)==STT_FUNC){
-            printf("%08lx\n",symtab[i].st_value);
+          if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
+            printf("%08lx\n",symtab[j].st_value);
           }
       }
     }

@@ -26,6 +26,7 @@ static word_t immS(uint32_t i) { return (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i
 static word_t immJ(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 20)| (BITS(i, 30, 21)<< 1)|(BITS(i, 20, 20)<< 11)|(BITS(i, 19, 12)<< 12);}
 static word_t immB(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 12)| (BITS(i, 30, 25)<< 5)|(BITS(i, 11, 8)<< 1)|(BITS(i, 7, 7)<< 11);}
 
+int srs1=0;
 static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, int type) {
   uint32_t i = s->isa.inst.val;
   int rd  = BITS(i, 11, 7);
@@ -33,7 +34,7 @@ static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, 
   int rs2 = BITS(i, 24, 20);
   destR(rd);
   switch (type) {
-    case TYPE_I: src1R(rs1);     src2I(immI(i)); break;
+    case TYPE_I: srs1=rs1;src1R(rs1);     src2I(immI(i)); break;
     case TYPE_U: src1I(immU(i)); break;
     case TYPE_S: destI(immS(i)); src1R(rs1); src2R(rs2); break;
     case TYPE_J: src1I(immJ(i));break;
@@ -59,7 +60,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 000 ????? 00100 11", addi   , I, R(dest) = src1 + src2);
   INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(dest) = s->pc+4;s->dnpc=s->pc+src1;ftrace_add(s->pc,s->dnpc,1));
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(dest) = src1);
-  INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, R(dest) = s->pc+4;s->dnpc=((src1+src2)&(-1));if(dest==0&&src2==0)ftrace_add(s->pc,s->dnpc,0);else ftrace_add(s->pc,s->dnpc,1));
+  INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, R(dest) = s->pc+4;s->dnpc=((src1+src2)&(-1));if(dest==0&&srs1==1&&src2==0)ftrace_add(s->pc,s->dnpc,0);else ftrace_add(s->pc,s->dnpc,1));
   INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, if((int64_t)src1==(int64_t)src2) s->dnpc=s->pc+dest); 
   INSTPAT("??????? ????? ????? 010 ????? 00000 11", lw     , I, R(dest) =SEXT(Mr(src1 +src2, 4),32)); 
   INSTPAT("0000000 ????? ????? 000 ????? 01110 11", addw   , R, R(dest) =SEXT(BITS(src1+src2,31,0),32));

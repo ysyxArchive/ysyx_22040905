@@ -24,13 +24,14 @@ static void welcome() {
 
 #ifndef CONFIG_TARGET_AM
 #include <getopt.h>
-
+#include <elf.h>
 void sdb_set_batch_mode();
 
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static int difftest_port = 1234;
+static char *elf = NULL;
 
 static long load_img() {
   if (img_file == NULL) {
@@ -53,7 +54,50 @@ static long load_img() {
   fclose(fp);
   return size;
 }
+char strtab[32768],symtab[32768];
+void load_elf(){
+  if(elf==NULL){
+    Log("No elf is given.");
+    //return "";
+  }
+  FILE *fp = fopen(elf, "rb");
+  Assert(fp, "Can not open '%s'",elf);
 
+  //freopen("../../build/nemu-ftrace.txt", "w", stdout);
+  //printf("");
+
+  Elf64_Ehdr* ehdr=(Elf64_Ehdr *)fp;
+  Elf64_Shdr shdr[2048];
+  int count = ehdr->e_shnum;    //节头表数量
+  fseek(fp, ehdr->e_shoff, SEEK_SET);
+  int ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
+  assert(ret!=0);
+  int flag=0;
+  for(int i = 0; i < count; ++i) {
+    if(shdr[i].sh_type==SHT_STRTAB&&!flag){
+      fseek(fp,shdr[i].sh_offset,SEEK_SET);
+      ret=fread(strtab, 1, shdr[i].sh_size, fp);
+      assert(ret!=0);
+      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+      for(int j=0;j<shdr[i].sh_size;j++){
+        printf("%c",strtab[j]);
+      }
+      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+      flag=1;
+    }
+    else if(shdr[i].sh_type==SHT_SYMTAB){
+      fseek(fp,shdr[i].sh_offset,SEEK_SET);
+      ret=fread(strtab, 1, shdr[i].sh_size, fp);
+      assert(ret!=0);
+      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+      for(int j=0;j<shdr[i].sh_size;j++){
+        printf("%c",symtab[j]);
+      }
+      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    }
+  }
+
+}
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
@@ -61,6 +105,7 @@ static int parse_args(int argc, char *argv[]) {
     {"diff"     , required_argument, NULL, 'd'},
     {"port"     , required_argument, NULL, 'p'},
     {"help"     , no_argument      , NULL, 'h'},
+    {"elf"      , required_argument, NULL, 'e'},
     {0          , 0                , NULL,  0 },
   };
   int o;
@@ -70,6 +115,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'p': sscanf(optarg, "%d", &difftest_port); break;
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
+      case 'e': elf = optarg; break;  
       case 1: img_file = optarg; return optind - 1;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -116,6 +162,8 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Initialize the iringbuf. */
   init_iringbuf();
+
+  load_elf();
 
   IFDEF(CONFIG_ITRACE, init_disasm(
     MUXDEF(CONFIG_ISA_x86,     "i686",

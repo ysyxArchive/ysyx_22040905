@@ -85,7 +85,7 @@ static void load_elf(){
       for(int j=0;j<shdr[i].sh_size;j++){
         printf("%c",strtab[j]);
       }
-      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+      printf("\n!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
       flag=1;
     }
     else if(shdr[i].sh_type==SHT_SYMTAB){

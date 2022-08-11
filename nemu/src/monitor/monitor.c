@@ -97,12 +97,12 @@ static void load_elf(){
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;
-  fp=freopen("../../build/nemu-ftrace.txt", "w", stdout);
+  fp=fopen("../../build/nemu-ftrace.txt", "a");
   if(addr>=0x80000000&&addr<(0x80000000+32768)){
-    if(d) printf("0x%08lx:\tcall [%s@0x%08lx]",addr,func[addr-0x80000000],dnpc);
-    else printf("0x%08lx:\tret [%s]",addr,func[addr-0x80000000]);
+    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]",addr,func[addr-0x80000000],dnpc);
+    else fprintf(fp,"0x%08lx:\tret [%s]",addr,func[addr-0x80000000]);
   }else{
-    printf("invild address\n");
+    fprintf(fp,"invild address\n");
   }
   fclose(fp);
 }

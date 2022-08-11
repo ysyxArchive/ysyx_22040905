@@ -55,6 +55,7 @@ static long load_img() {
   return size;
 }
 char strtab[32768],symtab[32768];
+Elf64_Ehdr ehdr[1];
 static void load_elf(){
   if(elf==NULL){
     Log("No elf is given.");
@@ -66,7 +67,6 @@ static void load_elf(){
   //freopen("../../build/nemu-ftrace.txt", "w", stdout);
   //printf("");
   fseek(fp,0,SEEK_SET);
-  Elf64_Ehdr* ehdr=NULL;
   int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
   assert(ret!=0);
   Elf64_Shdr shdr[2048];

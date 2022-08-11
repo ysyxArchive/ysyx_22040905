@@ -91,7 +91,7 @@ static void load_elf(){
     for(int j=0;j<num;j++){
           if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
             func[symtab[j].st_value-0x80000000]=strtab+symtab[j].st_name;
-            printf("%s",strtab+symtab[j].st_name);
+            printf("%s\n",strtab+symtab[j].st_name);
           }
     }
   }

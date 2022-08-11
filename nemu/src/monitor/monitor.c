@@ -65,7 +65,7 @@ static void load_elf(){
 
   //freopen("../../build/nemu-ftrace.txt", "w", stdout);
   //printf("");
-
+  fseek(fp,0,SEEK_SET);
   Elf64_Ehdr* ehdr=(Elf64_Ehdr *)fp;
   Elf64_Shdr shdr[2048];
   int count = ehdr->e_shnum;    //节头表数量

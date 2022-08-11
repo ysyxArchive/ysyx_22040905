@@ -55,10 +55,10 @@ static long load_img() {
   return size;
 }
 char strtab[32768],symtab[32768];
-void load_elf(){
+static void load_elf(){
   if(elf==NULL){
     Log("No elf is given.");
-    //return "";
+    return;
   }
   FILE *fp = fopen(elf, "rb");
   Assert(fp, "Can not open '%s'",elf);

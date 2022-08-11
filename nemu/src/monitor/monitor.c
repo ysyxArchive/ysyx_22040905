@@ -55,9 +55,11 @@ static long load_img() {
   return size;
 }
 char strtab[32768];
-Elf64_Sym symtab[400];
-Elf64_Ehdr ehdr[1];
+char* func[32768];
 static void load_elf(){
+  Elf64_Ehdr ehdr[1];
+  Elf64_Shdr shdr[2048];
+  Elf64_Sym symtab[400];
   if(elf==NULL){
     Log("No elf is given.");
     return;
@@ -65,12 +67,9 @@ static void load_elf(){
   FILE *fp = fopen(elf, "rb");
   Assert(fp, "Can not open '%s'",elf);
 
-  //freopen("../../build/nemu-ftrace.txt", "w", stdout);
-  //printf("");
   fseek(fp,0,SEEK_SET);
   int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
   assert(ret!=0);
-  Elf64_Shdr shdr[2048];
   int count = ehdr->e_shnum;    //节头表数量
   fseek(fp, ehdr->e_shoff, SEEK_SET);
   ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
@@ -81,11 +80,6 @@ static void load_elf(){
       fseek(fp,shdr[i].sh_offset,SEEK_SET);
       ret=fread(strtab, 1, shdr[i].sh_size, fp);
       assert(ret!=0);
-      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-      for(int j=0;j<shdr[i].sh_size;j++){
-        printf("%c",strtab[j]);
-      }
-      printf("\n!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
       flag=1;
     }
     else if(shdr[i].sh_type==SHT_SYMTAB){
@@ -96,11 +90,21 @@ static void load_elf(){
     }
     for(int j=0;j<num;j++){
           if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-            printf("%08lx %s\n",symtab[j].st_value,strtab+symtab[j].st_name);
+            func[symtab[j].st_value-0x80000000]=strtab+symtab[j].st_name;
           }
     }
   }
-
+}
+void ftrace_add(int64_t addr,int d){
+  FILE *fp;
+  fp=freopen("../../build/nemu-ftrace.txt", "a", stdout);
+  if(addr>=0x80000000&&addr<(0x80000000+32768)){
+    if(d) printf("call [%s]",func[addr-0x80000000]);
+    else printf("ret [%s]",func[addr-0x80000000]);
+  }else{
+    printf("invild address\n");
+  }
+  fclose(fp);
 }
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
@@ -167,6 +171,7 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize the iringbuf. */
   init_iringbuf();
 
+  /* Initialize the ftrace. */ 
   load_elf();
 
   IFDEF(CONFIG_ITRACE, init_disasm(

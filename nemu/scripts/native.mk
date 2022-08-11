@@ -22,6 +22,8 @@ run: run-env
 	$(call git_commit, "run NEMU")
 	rm -rf $(BUILD_DIR)/nemu-mtrace.txt
 	touch $(BUILD_DIR)/nemu-mtrace.txt
+	rm -rf $(BUILD_DIR)/nemu-ftrace.txt
+	touch $(BUILD_DIR)/nemu-ftrace.txt
 	$(NEMU_EXEC)
 
 gdb: run-env

@@ -54,7 +54,8 @@ static long load_img() {
   fclose(fp);
   return size;
 }
-char strtab[32768],symtab[32768];
+char strtab[32768];
+Elf64_Sym symtab[400];
 Elf64_Ehdr ehdr[1];
 static void load_elf(){
   if(elf==NULL){
@@ -89,13 +90,14 @@ static void load_elf(){
     }
     else if(shdr[i].sh_type==SHT_SYMTAB){
       fseek(fp,shdr[i].sh_offset,SEEK_SET);
-      ret=fread(strtab, 1, shdr[i].sh_size, fp);
+      int num=shdr[i].sh_size/shdr[i].sh_entsize;
+      ret=fread(symtab,shdr[i].sh_entsize,num, fp);
       assert(ret!=0);
-      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-      for(int j=0;j<shdr[i].sh_size;j++){
-        printf("%c",symtab[j]);
+      for(int j=0;j<num;j++){
+          if(symtab[i].st_info==STT_FUNC){
+            printf("%08lx\n",symtab[i].st_value);
+          }
       }
-      printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
     }
   }
 

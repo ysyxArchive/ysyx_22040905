@@ -6,31 +6,29 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-char *int_to_str(char *str,int num){
-  char *ret=str;
-  char s[10]={0};
+char *number(char *str,int num){
+  char ss[10]={0};
   int len=0;
   do{
-    s[len++]=num%10+'0';
+    ss[len++]=num%10+'0';
     num/=10;
     assert(len<=10);
   }while(num>0);
   for(int i=0;i<len;i++){
-    *str++=s[len-i-1];
+    *str++=ss[len-i-1];
   }
-  *str='\0';
-  return ret;
+  return str;
 }
-
 int printf(const char *fmt, ...) {
   panic("Not implemented");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
-  char *s="";
+  const char *s;
   char *str;
-  int num,len;
+  int len;
+  unsigned long long num;
   for(str=out;*fmt;++fmt){
     if(*fmt!='%'){
       *str++=*fmt;
@@ -38,6 +36,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     fmt++;
     switch(*fmt){
+	  case 'c':
+        *str++ = (unsigned char) va_arg(ap, int); 
+        break;
       case 's':
         s = va_arg(ap,char*);
         if(!s) s = NULL;
@@ -46,14 +47,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;
       case 'd':
         num = va_arg(ap,int);
-        int_to_str(s,num);
-        len = strlen(s);
-        for(int i=0;i<len;++i) *str++=*s++;
-        break;
-      case 'c':
-        *str++ = (unsigned char) va_arg(ap, int); 
-        break;
-    }
+	    	str=number(str,num);
+        break;          
+	}
   }
   *str = '\0';
   return str-out;

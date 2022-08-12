@@ -55,7 +55,13 @@ static long load_img() {
   return size;
 }
 char strtab[32768];
-char* func[32768];
+struct func{
+  uint64_t begin;
+  uint64_t end;
+  char * str;
+}func[32768];
+int func_num=0;
+
 static void load_elf(){
   Elf64_Ehdr ehdr[1];
   Elf64_Shdr shdr[2048];
@@ -90,8 +96,9 @@ static void load_elf(){
     }
     for(int j=0;j<num;j++){
           if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-            func[symtab[j].st_value-0x80000000]=strtab+symtab[j].st_name;
-            //printf("%s\n",strtab+symtab[j].st_name);
+            func[func_num].begin=symtab[j].st_value;
+            func[func_num].end=symtab[j].st_value+symtab[j].st_size;
+            func[func_num++].str=strtab+symtab[j].st_name;
           }
     }
   }
@@ -99,11 +106,15 @@ static void load_elf(){
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
-  if(addr>=0x80000000&&addr<(0x80000000+32768)){
-    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[dnpc-0x80000000],dnpc);
-    else fprintf(fp,"0x%08lx:\tret [%s]\t%08lx\n",addr,func[dnpc-0x80000000],dnpc);
-  }else{
-    fprintf(fp,"invild address\n");
+  int flag=1;
+  for(int i=0;i<func_num;i++){
+    if(dnpc<func[i].begin||dnpc>=func[i].end)continue;
+    flag=0;
+    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);
+    else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i].str);
+  }
+  if(flag){
+    fprintf(fp,"???\n");
   }
   fclose(fp);
 }

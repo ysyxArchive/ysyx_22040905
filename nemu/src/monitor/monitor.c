@@ -101,7 +101,7 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   if(addr>=0x80000000&&addr<(0x80000000+32768)){
     if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[dnpc-0x80000000],dnpc);
-    else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[dnpc-0x80000000]);
+    else fprintf(fp,"0x%08lx:\tret [%s]\t%08lx\n",addr,func[dnpc-0x80000000],dnpc);
   }else{
     fprintf(fp,"invild address\n");
   }

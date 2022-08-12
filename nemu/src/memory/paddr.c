@@ -46,7 +46,6 @@ void init_mem() {
 word_t paddr_read(paddr_t addr, int len) {
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
-  printf("!!!!");
 #ifdef CONFIG_MTRACE
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");

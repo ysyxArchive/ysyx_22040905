@@ -12,11 +12,12 @@ class top extends Module{
     val idu=Module(new IDU)
     val exu=Module(new EXU)
     idu.io.inst:=io.inst
-    exu.io.src1:=idu.io.src1
-    exu.io.dest:=idu.io.dest
+    exu.io.rs1:=idu.io.rs1
+    exu.io.rs2:=idu.io.rs2
+    exu.io.rd:=idu.io.rd
     exu.io.imm:=idu.io.imm
     exu.io.op:=idu.io.op
-    exu.io.funct:=idu.io.funct
+    exu.io.typ:=idu.io.typ
     exu.io.pc:=pc
     pc:=exu.io.pc_dnpc
     io.result:=exu.io.result

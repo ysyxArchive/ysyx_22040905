@@ -64,7 +64,7 @@ run: $(BIN)
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(OBJ_DIR)
-	verilator -Wall --cc --exe --build --trace\
+	verilator  --cc --exe --build --trace\
  	 --top-module $(TOPNAME) $^\
 	 --Mdir $(OBJ_DIR)  
 	ls -l ./build/obj_dir

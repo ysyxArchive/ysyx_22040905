@@ -72,6 +72,7 @@ int main()
     top->reset=0;
     while(n--)
     {
+      printf("%ld %ld\n",top->io_pc,top->io_result);
       top->io_inst = pmem_read(top->io_pc);
       step_and_dump_wave();
       //nvboard_update();

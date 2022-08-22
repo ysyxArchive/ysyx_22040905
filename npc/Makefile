@@ -67,10 +67,12 @@ sim: $(VSRCS) $(CSRCSS)
 	verilator  --cc --exe --build --trace \
  	 --top-module $(TOPNAME) $^ \
 	 --Mdir $(OBJ_DIR)  
-	#./build/obj_dir/V$(TOPNAME)
-	#gtkwave wave.vcd
 
-runb :
+runb: sim
 	./build/obj_dir/V$(TOPNAME) $(IMG)
 	gtkwave wave.vcd	
-	#include ../Makefile:
+
+gdb: sim
+	./build/obj_dir/V$(TOPNAME) $(IMG) -g
+
+

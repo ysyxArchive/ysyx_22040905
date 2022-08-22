@@ -23,4 +23,6 @@ image: $(IMAGE).elf
 
 run: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) runb IMG=$(IMAGE).bin
-	
+
+gdb: image
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) gdb IMG=$(IMAGE).bin

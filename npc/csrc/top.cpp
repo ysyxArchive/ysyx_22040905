@@ -14,9 +14,10 @@ typedef unsigned long long ull;
 Vtop* top = NULL;
 //void nvboard_bind_all_pins(Vtop* top);
 u_int32_t n=-1;
+int flag=0;
 void cpp_break()
 {
-  printf("run_break\n");
+  flag=1;
   n=0;
 }
 void sim_init(){
@@ -88,6 +89,8 @@ int main(int argc, char *argv[])
       step_and_dump_wave();
       //nvboard_update();
     }
+    if(flag)printf("HIT GOOD TRAP\n");
+    else printf("HIT BAD TRAP\n");
     sim_exit();
     //nvboard_quit();
 }

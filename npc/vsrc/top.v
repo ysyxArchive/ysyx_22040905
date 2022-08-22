@@ -685,9 +685,10 @@ module ALU(
   wire [94:0] _io_result_T_17 = _GEN_0 << io_src2[4:0]; // @[ALU.scala 17:37]
   wire [63:0] _io_result_T_21 = io_src1 >> io_src2[4:0]; // @[ALU.scala 18:36]
   wire [63:0] _io_result_T_23 = io_src1; // @[ALU.scala 19:44]
-  wire [63:0] _io_result_T_26 = $signed(io_src1) >>> io_src2[4:0]; // @[ALU.scala 19:62]
+  wire [63:0] _io_result_T_26 = $signed(io_src1) >>> io_src2[4:0]; // @[ALU.scala 19:64]
   wire [63:0] _io_result_T_29 = io_src2; // @[ALU.scala 20:61]
-  wire [63:0] _io_result_T_38 = io_op[10] ? _io_result_T_2 : 64'h0; // @[ALU.scala 22:19]
+  wire [63:0] _io_result_T_37 = _io_result_T_2 & 64'hfffffffffffffffe; // @[ALU.scala 22:47]
+  wire [63:0] _io_result_T_38 = io_op[10] ? _io_result_T_37 : 64'hffffffffffffffff; // @[ALU.scala 22:19]
   wire [63:0] _io_result_T_39 = io_op[9] ? {{63'd0}, io_src1 < io_src2} : _io_result_T_38; // @[ALU.scala 21:19]
   wire [63:0] _io_result_T_40 = io_op[8] ? {{63'd0}, $signed(_io_result_T_23) < $signed(_io_result_T_29)} :
     _io_result_T_39; // @[ALU.scala 20:19]
@@ -742,12 +743,11 @@ module EXU(
   wire [63:0] _src2_T_6 = io_typ[0] ? io_imm : 64'h0; // @[EXU.scala 41:14]
   wire [63:0] src2 = _gpr_io_en_r2_T_4 ? gpr_io_val_r2 : _src2_T_6; // @[EXU.scala 40:14]
   wire [63:0] dest = _gpr_io_en_r2_T_2 ? io_imm : {{59'd0}, io_rd}; // @[EXU.scala 44:14]
-  wire  _alu_dest_io_src1_T_4 = io_op[0] | io_op[3] | io_op[4]; // @[EXU.scala 48:45]
   wire [63:0] _alu_dest_io_src1_T_8 = io_op[1] | io_op[5] ? src1 : 64'h0; // @[EXU.scala 49:26]
   wire [63:0] _alu_dest_io_src2_T_5 = io_op[5] ? src2 : 64'h0; // @[EXU.scala 53:26]
   wire [63:0] _alu_dest_io_src2_T_6 = io_op[3] | io_op[4] ? 64'h4 : _alu_dest_io_src2_T_5; // @[EXU.scala 52:26]
-  wire [63:0] _alu_pc_io_src2_T_2 = io_op[4] ? src2 : 64'h4; // @[EXU.scala 63:24]
-  wire [3:0] _alu_pc_io_op_T_1 = io_op[4] ? 4'ha : 4'h1; // @[EXU.scala 65:24]
+  wire [63:0] _alu_pc_io_src2_T_2 = io_op[4] ? src2 : 64'h4; // @[EXU.scala 62:24]
+  wire [63:0] _alu_pc_io_op_T_1 = io_op[4] ? 64'h400 : 64'h1; // @[EXU.scala 64:24]
   ebreak ebreak1 ( // @[EXU.scala 18:23]
     .en_break(ebreak1_en_break),
     .clk(ebreak1_clk)
@@ -778,7 +778,7 @@ module EXU(
     .io_result(alu_pc_io_result)
   );
   assign io_pc_dnpc = alu_pc_io_result; // @[EXU.scala 66:15]
-  assign io_result = io_op; // @[EXU.scala 59:14]
+  assign io_result = io_op; // @[EXU.scala 58:14]
   assign ebreak1_en_break = io_op[63]; // @[EXU.scala 19:31]
   assign ebreak1_clk = clock; // @[EXU.scala 20:19]
   assign gpr_clock = clock;
@@ -789,13 +789,13 @@ module EXU(
   assign gpr_io_en_w = io_typ[0] | io_typ[1] | io_typ[3] | io_typ[5]; // @[EXU.scala 31:52]
   assign gpr_io_en_r1 = io_typ[0] | io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 29:53]
   assign gpr_io_en_r2 = io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 30:43]
-  assign gpr_io_val_w = _alu_dest_io_src1_T_4 | io_op[5] ? alu_dest_io_result : 64'h0; // @[EXU.scala 57:22]
+  assign gpr_io_val_w = alu_dest_io_result; // @[EXU.scala 57:17]
   assign alu_dest_io_src1 = io_op[0] | io_op[3] | io_op[4] ? io_pc : _alu_dest_io_src1_T_8; // @[EXU.scala 48:26]
   assign alu_dest_io_src2 = io_op[0] ? src1 : _alu_dest_io_src2_T_6; // @[EXU.scala 51:26]
   assign alu_dest_io_op = 12'h1; // @[EXU.scala 55:21]
-  assign alu_pc_io_src1 = io_op[4] ? src1 : io_pc; // @[EXU.scala 61:24]
-  assign alu_pc_io_src2 = io_op[3] ? src1 : _alu_pc_io_src2_T_2; // @[EXU.scala 62:24]
-  assign alu_pc_io_op = {{8'd0}, _alu_pc_io_op_T_1}; // @[EXU.scala 65:24]
+  assign alu_pc_io_src1 = io_op[4] ? src1 : io_pc; // @[EXU.scala 60:24]
+  assign alu_pc_io_src2 = io_op[3] ? src1 : _alu_pc_io_src2_T_2; // @[EXU.scala 61:24]
+  assign alu_pc_io_op = _alu_pc_io_op_T_1[11:0]; // @[EXU.scala 64:17]
 endmodule
 module top(
   input         clock,

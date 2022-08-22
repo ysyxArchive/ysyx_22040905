@@ -63,12 +63,14 @@ run: $(BIN)
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
-	rm -rf $(OBJ_DIR)
-	verilator  --cc --exe --build --trace\
- 	 --top-module $(TOPNAME) $^\
+	rm -rf $(OBJ_DIR) 
+	verilator  --cc --exe --build --trace \
+ 	 --top-module $(TOPNAME) $^ \
 	 --Mdir $(OBJ_DIR)  
-	ls -l ./build/obj_dir
-	./build/obj_dir/V$(TOPNAME)
-	gtkwave wave.vcd
+	#./build/obj_dir/V$(TOPNAME)
+	#gtkwave wave.vcd
 
-#include ../Makefile:
+runb :
+	./build/obj_dir/V$(TOPNAME) $(IMG)
+	gtkwave wave.vcd	
+	#include ../Makefile:

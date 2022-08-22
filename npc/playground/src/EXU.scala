@@ -54,14 +54,14 @@ class EXU extends Module{
                       0.U)))
     alu_dest.io.op  :=1.U
 
-    gpr.io.val_w:=Mux((io.op(0)|io.op(3)|io.op(4)|io.op(5)),alu_dest.io.result,
-                  0.U)
+    gpr.io.val_w:=alu_dest.io.result
     io.result:=io.op;
     
     alu_pc.io.src1:=Mux(io.op(4),src1,io.pc)
     alu_pc.io.src2:=Mux(io.op(3),src1,
                     Mux(io.op(4),src2,
                     4.U))
-    alu_pc.io.op:=  Mux(io.op(4),10.U,1.U)      
+    alu_pc.io.op:=  Mux(io.op(4),"x400".U,1.U(64.W))
+
     io.pc_dnpc:=  alu_pc.io.result
 }

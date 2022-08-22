@@ -13,10 +13,10 @@ VerilatedVcdC* tfp = NULL;
 typedef unsigned long long ull;
 Vtop* top = NULL;
 //void nvboard_bind_all_pins(Vtop* top);
-int n=8;
+u_int32_t n=-1;
 void cpp_break()
 {
-  printf("run!!!\n");
+  printf("run_break\n");
   n=0;
 }
 void sim_init(){
@@ -45,34 +45,45 @@ void sim_exit(){
   tfp->close();
 }
 
-ull pmem[32768];
-ull pmem_read(ull pc){
-  return pmem[pc-0x80000000];
+u_int32_t pmem[32768];
+u_int32_t pmem_read(ull pc){
+  return pmem[(pc-0x80000000)/4];
 }
-void pmem_init(){
-  pmem[0] =0b00000000000100000000000010010011;
-  pmem[4] =0b00000000001000001000000100010011;
-  pmem[8] =0b00000000001100010000000110010011;
-  pmem[12]=0b00000000010000011000001000010011;
-  pmem[16]=0b00000000010100100000001010010011;
-  pmem[20]=0b00000000000100000000000001110011;//ebreak
-  pmem[24]=0b00000000011000101000001100010011;
-  pmem[28]=0b00000000011100110000001110010011;
-  pmem[32]=0b00000000100000111000010000010011;
+void pmem_init(char *s){ 
+  FILE *fp;
+  fp=fopen(s,"r");
+  assert(fp!=NULL);
+  fseek(fp, 0, SEEK_END);
+  int size = ftell(fp);
+  size=size/4;
+  fseek(fp,0,SEEK_SET);
+  int ret=fread(pmem,4,size,fp);
+  assert(ret!=0);
+  fclose(fp);
+  for(int i=0;i<size;i++){
+    printf("%08x\n",pmem[i]);
+  }
 }
-int main()
+int main(int argc, char *argv[])
 {
+
     sim_init();
     //nvboard_bind_all_pins(&dut);
     //nvboard_init();
-    pmem_init();
+    pmem_init(argv[1]);
 
     top->reset=1;
     step_and_dump_wave();
     top->reset=0;
     while(n--)
     {
-      printf("%ld %ld\n",top->io_pc,top->io_result);
+      ull p=top->io_result;
+      int op=0;
+      while(p%2==0&&p!=0){
+        p>>=1;
+        op++;
+      }
+      printf("%08lx: %08x\n",top->io_pc,pmem_read(top->io_pc));
       top->io_inst = pmem_read(top->io_pc);
       step_and_dump_wave();
       //nvboard_update();

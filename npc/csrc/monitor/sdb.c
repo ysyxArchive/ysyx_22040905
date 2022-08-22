@@ -5,6 +5,7 @@
 static int is_batch_mode = false;
 
 void init_regex();
+void init_wp_pool();
 
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -33,14 +34,13 @@ static int cmd_q(char *args) {
   return -1;
 }
 
-static int cmd_help(char *args);
 
 static int cmd_si(char *args){
 	uint64_t num=1;
 	if(args!=NULL){
     sscanf(args,"%ld",&num);
 	}
-  cpu_exec(num);
+    cpu_exec(num);
 	return 0;
 }
 
@@ -134,23 +134,6 @@ void sdb_mainloop() {
     cmd_c(NULL);
     return;
   }
-  /*test code
-  FILE* fp=fopen("/home/agustin/ysyx-workbench/nemu/tools/gen-expr/input","r");
-  assert(fp!=NULL);
-  int a=0;
-  int i=0;
-  while(fscanf(fp,"%d %s",&a,b)!=EOF){
-      bool success=true; 
-      if(!(a==expr(b,&success)&&(success))){
-        printf("Wrong at %d %s line %d\n",a,b,i);
-      }
-      else{
-        printf("%d\n",++i);
-      }
-  }
-  fclose(fp);
-  
-  */
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 

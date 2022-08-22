@@ -1,5 +1,5 @@
 #include"../include/macro.h"
-static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
+static uint8_t pmem[CONFIG_MSIZE];
 
 static inline word_t host_read(void *addr, int len) {
   switch (len) {

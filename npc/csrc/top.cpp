@@ -6,8 +6,8 @@
 #include<verilated_vcd_c.h>
 #include<svdpi.h>
 #include"../build/obj_dir/Vtop__Dpi.h"
-#include"../monitor/monitor.h"
-#include"../memory/memory.h"
+#include"include/monitor.h"
+#include"include/memory.h"
 //#include<nvboard.h>
 
 VerilatedContext* contextp = NULL;
@@ -94,7 +94,7 @@ void init(char *argv[]){
   reset();
 }
 void sdb_mainloop(){
-
+  
 }
 int main(int argc, char *argv[])
 {

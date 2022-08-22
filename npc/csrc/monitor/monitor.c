@@ -1,7 +1,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <math.h>
-
+#include <
 static char* rl_gets() {
   static char *line_read = NULL;
 
@@ -28,8 +28,6 @@ static int cmd_q(char *args) {
   return -1;
 }
 
-static int cmd_help(char *args);
-
 static int cmd_si(char *args){
 	uint64_t num=1;
 	if(args!=NULL){
@@ -40,7 +38,7 @@ static int cmd_si(char *args){
 }
 
 static int cmd_info(char *args){
-  if(strcmp(args,"r")==0) isa_reg_display();
+  if(strcmp(args,"r")==0) dump_gpr();
   else if(strcmp(args,"w")==0){
     info_wp();
   }
@@ -118,4 +116,38 @@ static int cmd_help(char *args) {
     printf("Unknown command '%s'\n", arg);
   }
   return 0;
+}
+void sdb_mainloop() {
+  for (char *str; (str = rl_gets()) != NULL; ) {
+    char *str_end = str + strlen(str);
+
+    /* extract the first token as the command */
+    char *cmd = strtok(str, " ");
+    if (cmd == NULL) { continue; }
+
+    /* treat the remaining string as the arguments,
+     * which may need further parsing
+     */
+    char *args = cmd + strlen(cmd) + 1;
+    if (args >= str_end) {
+      args = NULL;
+    }
+
+    int i;
+    for (i = 0; i < NR_CMD; i ++) {
+      if (strcmp(cmd, cmd_table[i].name) == 0) {
+        if (cmd_table[i].handler(args) < 0) { return; }
+        break;
+      }
+    }
+
+    if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
+  }
+}
+
+void init_sdb() {
+  /* Compile the regular expressions. */
+  init_regex();
+
+  init_wp_pool();
 }

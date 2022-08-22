@@ -74,8 +74,8 @@ static int cmd_x(char *args){
   bool success=true;
   addr=expr(str,&success);
   if(!success)assert(0);
-  for(int i=0;i<4*len;i+=4){
-  printf("0x%lx:\t\t0x%08lx\n",addr+i,vaddr_read(addr+i,4));
+  for(int i=0;i<8*len;i+=8){
+  printf("0x%lx:\t\t0x%08lx\n",addr+i,vaddr_read(addr+i,8));
   }
   return 0;
 }

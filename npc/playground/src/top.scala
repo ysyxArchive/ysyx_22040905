@@ -11,6 +11,9 @@ class top extends Module{
     val pc=RegInit("x80000000".U(64.W))
     val idu=Module(new IDU)
     val exu=Module(new EXU)
+    val it=Module(new itrace)
+    it.io.pc:=io.pc
+    it.io.inst:=io.inst
     idu.io.inst:=io.inst
     exu.io.rs1:=idu.io.rs1
     exu.io.rs2:=idu.io.rs2

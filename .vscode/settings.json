@@ -6,6 +6,8 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
         "bitset": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "cstdint": "cpp",
+        "history.h": "c"
     }
 }

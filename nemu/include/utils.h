@@ -6,7 +6,6 @@
 // ----------- state -----------
 
 enum { NEMU_RUNNING, NEMU_STOP, NEMU_END, NEMU_ABORT, NEMU_QUIT };
-
 typedef struct {
   int state;
   vaddr_t halt_pc;

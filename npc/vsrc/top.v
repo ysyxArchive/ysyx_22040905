@@ -96,6 +96,38 @@ module GPR(
   reg [63:0] _RAND_29;
   reg [63:0] _RAND_30;
 `endif // RANDOMIZE_REG_INIT
+  wire [63:0] p_rf_0; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_1; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_2; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_3; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_4; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_5; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_6; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_7; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_8; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_9; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_10; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_11; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_12; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_13; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_14; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_15; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_16; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_17; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_18; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_19; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_20; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_21; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_22; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_23; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_24; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_25; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_26; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_27; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_28; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_29; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_30; // @[GPR.scala 23:17]
+  wire [63:0] p_rf_31; // @[GPR.scala 23:17]
   reg [63:0] gpr_1; // @[GPR.scala 17:20]
   reg [63:0] gpr_2; // @[GPR.scala 17:20]
   reg [63:0] gpr_3; // @[GPR.scala 17:20]
@@ -219,8 +251,74 @@ module GPR(
   wire [63:0] _GEN_92 = 5'h1c == io_idx_w ? gpr_28 : _GEN_91; // @[GPR.scala 20:23 GPR.scala 20:23]
   wire [63:0] _GEN_93 = 5'h1d == io_idx_w ? gpr_29 : _GEN_92; // @[GPR.scala 20:23 GPR.scala 20:23]
   wire [63:0] _GEN_94 = 5'h1e == io_idx_w ? gpr_30 : _GEN_93; // @[GPR.scala 20:23 GPR.scala 20:23]
+  print_gpr p ( // @[GPR.scala 23:17]
+    .rf_0(p_rf_0),
+    .rf_1(p_rf_1),
+    .rf_2(p_rf_2),
+    .rf_3(p_rf_3),
+    .rf_4(p_rf_4),
+    .rf_5(p_rf_5),
+    .rf_6(p_rf_6),
+    .rf_7(p_rf_7),
+    .rf_8(p_rf_8),
+    .rf_9(p_rf_9),
+    .rf_10(p_rf_10),
+    .rf_11(p_rf_11),
+    .rf_12(p_rf_12),
+    .rf_13(p_rf_13),
+    .rf_14(p_rf_14),
+    .rf_15(p_rf_15),
+    .rf_16(p_rf_16),
+    .rf_17(p_rf_17),
+    .rf_18(p_rf_18),
+    .rf_19(p_rf_19),
+    .rf_20(p_rf_20),
+    .rf_21(p_rf_21),
+    .rf_22(p_rf_22),
+    .rf_23(p_rf_23),
+    .rf_24(p_rf_24),
+    .rf_25(p_rf_25),
+    .rf_26(p_rf_26),
+    .rf_27(p_rf_27),
+    .rf_28(p_rf_28),
+    .rf_29(p_rf_29),
+    .rf_30(p_rf_30),
+    .rf_31(p_rf_31)
+  );
   assign io_val_r1 = io_en_r1 ? _GEN_31 : 64'h0; // @[GPR.scala 18:19]
   assign io_val_r2 = io_en_r2 ? _GEN_63 : 64'h0; // @[GPR.scala 19:19]
+  assign p_rf_0 = 64'h0; // @[GPR.scala 24:12]
+  assign p_rf_1 = gpr_1; // @[GPR.scala 24:12]
+  assign p_rf_2 = gpr_2; // @[GPR.scala 24:12]
+  assign p_rf_3 = gpr_3; // @[GPR.scala 24:12]
+  assign p_rf_4 = gpr_4; // @[GPR.scala 24:12]
+  assign p_rf_5 = gpr_5; // @[GPR.scala 24:12]
+  assign p_rf_6 = gpr_6; // @[GPR.scala 24:12]
+  assign p_rf_7 = gpr_7; // @[GPR.scala 24:12]
+  assign p_rf_8 = gpr_8; // @[GPR.scala 24:12]
+  assign p_rf_9 = gpr_9; // @[GPR.scala 24:12]
+  assign p_rf_10 = gpr_10; // @[GPR.scala 24:12]
+  assign p_rf_11 = gpr_11; // @[GPR.scala 24:12]
+  assign p_rf_12 = gpr_12; // @[GPR.scala 24:12]
+  assign p_rf_13 = gpr_13; // @[GPR.scala 24:12]
+  assign p_rf_14 = gpr_14; // @[GPR.scala 24:12]
+  assign p_rf_15 = gpr_15; // @[GPR.scala 24:12]
+  assign p_rf_16 = gpr_16; // @[GPR.scala 24:12]
+  assign p_rf_17 = gpr_17; // @[GPR.scala 24:12]
+  assign p_rf_18 = gpr_18; // @[GPR.scala 24:12]
+  assign p_rf_19 = gpr_19; // @[GPR.scala 24:12]
+  assign p_rf_20 = gpr_20; // @[GPR.scala 24:12]
+  assign p_rf_21 = gpr_21; // @[GPR.scala 24:12]
+  assign p_rf_22 = gpr_22; // @[GPR.scala 24:12]
+  assign p_rf_23 = gpr_23; // @[GPR.scala 24:12]
+  assign p_rf_24 = gpr_24; // @[GPR.scala 24:12]
+  assign p_rf_25 = gpr_25; // @[GPR.scala 24:12]
+  assign p_rf_26 = gpr_26; // @[GPR.scala 24:12]
+  assign p_rf_27 = gpr_27; // @[GPR.scala 24:12]
+  assign p_rf_28 = gpr_28; // @[GPR.scala 24:12]
+  assign p_rf_29 = gpr_29; // @[GPR.scala 24:12]
+  assign p_rf_30 = gpr_30; // @[GPR.scala 24:12]
+  assign p_rf_31 = gpr_31; // @[GPR.scala 24:12]
   always @(posedge clock) begin
     if (reset) begin // @[GPR.scala 17:20]
       gpr_1 <= 64'h0; // @[GPR.scala 17:20]
@@ -825,6 +923,8 @@ module top(
   wire [63:0] exu_io_pc; // @[top.scala 13:19]
   wire [63:0] exu_io_pc_dnpc; // @[top.scala 13:19]
   wire [63:0] exu_io_result; // @[top.scala 13:19]
+  wire [63:0] it_pc; // @[top.scala 14:18]
+  wire [31:0] it_inst; // @[top.scala 14:18]
   reg [63:0] pc; // @[top.scala 11:19]
   IDU idu ( // @[top.scala 12:19]
     .io_inst(idu_io_inst),
@@ -848,23 +948,29 @@ module top(
     .io_pc_dnpc(exu_io_pc_dnpc),
     .io_result(exu_io_result)
   );
-  assign io_pc = pc; // @[top.scala 24:10]
-  assign io_result = exu_io_result; // @[top.scala 23:14]
-  assign idu_io_inst = io_inst; // @[top.scala 14:16]
+  itrace it ( // @[top.scala 14:18]
+    .pc(it_pc),
+    .inst(it_inst)
+  );
+  assign io_pc = pc; // @[top.scala 27:10]
+  assign io_result = exu_io_result; // @[top.scala 26:14]
+  assign idu_io_inst = io_inst; // @[top.scala 17:16]
   assign exu_clock = clock;
   assign exu_reset = reset;
-  assign exu_io_rs1 = idu_io_rs1; // @[top.scala 15:15]
-  assign exu_io_rs2 = idu_io_rs2; // @[top.scala 16:15]
-  assign exu_io_rd = idu_io_rd; // @[top.scala 17:14]
-  assign exu_io_imm = idu_io_imm; // @[top.scala 18:15]
-  assign exu_io_op = idu_io_op; // @[top.scala 19:14]
-  assign exu_io_typ = idu_io_typ; // @[top.scala 20:15]
-  assign exu_io_pc = pc; // @[top.scala 21:14]
+  assign exu_io_rs1 = idu_io_rs1; // @[top.scala 18:15]
+  assign exu_io_rs2 = idu_io_rs2; // @[top.scala 19:15]
+  assign exu_io_rd = idu_io_rd; // @[top.scala 20:14]
+  assign exu_io_imm = idu_io_imm; // @[top.scala 21:15]
+  assign exu_io_op = idu_io_op; // @[top.scala 22:14]
+  assign exu_io_typ = idu_io_typ; // @[top.scala 23:15]
+  assign exu_io_pc = pc; // @[top.scala 24:14]
+  assign it_pc = io_pc; // @[top.scala 15:13]
+  assign it_inst = io_inst; // @[top.scala 16:15]
   always @(posedge clock) begin
     if (reset) begin // @[top.scala 11:19]
       pc <= 64'h80000000; // @[top.scala 11:19]
     end else begin
-      pc <= exu_io_pc_dnpc; // @[top.scala 22:7]
+      pc <= exu_io_pc_dnpc; // @[top.scala 25:7]
     end
   end
 // Register and memory initialization

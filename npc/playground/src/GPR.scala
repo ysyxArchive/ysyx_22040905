@@ -18,5 +18,8 @@ class GPR extends Module{
     io.val_r1:=Mux(io.en_r1(0),gpr(io.idx_r1),0.U)
     io.val_r2:=Mux(io.en_r2(0),gpr(io.idx_r2),0.U)
     gpr(io.idx_w):=Mux(io.en_w(0),io.val_w,gpr(io.idx_w))
-    gpr(0):=0.U   
+    gpr(0):=0.U  
+
+    val p=Module(new print_gpr);
+    p.io.rf:=gpr 
 }

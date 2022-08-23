@@ -61,11 +61,17 @@ all: default
 run: $(BIN)
 	$^
 
+#itrace
+CXXSRC = src/utils/disasm.cc
+CXXFLAGS += $(shell llvm-config-13 --cxxflags) -fPIE
+LIBS += $(shell llvm-config-13 --libs)
+
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(OBJ_DIR) 
 	verilator  --cc --exe --build --trace \
  	 --top-module $(TOPNAME) $^ \
+	 -LDFLAGS -lreadline\
 	 --Mdir $(OBJ_DIR)  
 
 runb: sim

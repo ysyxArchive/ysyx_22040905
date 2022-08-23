@@ -78,7 +78,7 @@ void init(char *argv[]){
   //nvboard_init();
   pmem_init(argv[1]);
   init_sdb();
-  init_disasm("riscv64" "-pc-linux-gnu");
+  init_disasm("riscv64-pc-linux-gnu");
   reset();
 }
 uint64_t *cpu_gpr = NULL;

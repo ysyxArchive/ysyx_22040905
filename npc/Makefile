@@ -62,8 +62,7 @@ run: $(BIN)
 	$^
 
 #itrace
-CXXSRC = src/utils/disasm.cc
-CXXFLAGS += $(shell llvm-config-13 --cxxflags) -fPIE
+CXXFLAGS += -I/usr/lib/llvm-13/include -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS 
 LIBS += $(shell llvm-config-13 --libs)
 
 sim: $(VSRCS) $(CSRCSS)
@@ -71,7 +70,9 @@ sim: $(VSRCS) $(CSRCSS)
 	rm -rf $(OBJ_DIR) 
 	verilator  --cc --exe --build --trace \
  	 --top-module $(TOPNAME) $^ \
-	 -LDFLAGS -lreadline\
+	 -LDFLAGS -lreadline \
+	 -CFLAGS $(CXXFLAGS) \
+	 --protect-lib $(LIBS) \ 
 	 --Mdir $(OBJ_DIR)  
 
 runb: sim

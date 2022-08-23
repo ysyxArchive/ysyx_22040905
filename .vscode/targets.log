@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 21:36:28 2022
+# Make data base, printed on Tue Aug 23 22:43:16 2022
 
 # Variables
 
@@ -281,6 +281,7 @@ IM_CONFIG_PHASE = 1
 PAPERSIZE = letter
 # default
 .RECIPEPREFIX := 
+ 
 # automatic
 <F = $(notdir $<)
 # environment
@@ -288,7 +289,6 @@ SNAP_VERSION = e4503b30
 # environment
 AM_HOME = /home/agustin/ysyx-workbench/abstract-machine
 # default
- 
 SUFFIXES := 
 # environment
 VSCODE_CLI = 1
@@ -398,6 +398,6 @@ all:
 # strcache performance: lookups = 39 / hit rate = 28%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Tue Aug 23 21:36:28 2022
+# Finished Make data base on Tue Aug 23 22:43:16 2022
 
  

@@ -62,24 +62,24 @@ run: $(BIN)
 	$^
 
 #itrace
-CXXFLAGS += -I/usr/lib/llvm-13/include -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS 
-LIBS += $(shell llvm-config-13 --libs)
+CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14   -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE
+LDFLAGS += $(shell llvm-config-13 --libs)
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
-	rm -rf $(OBJ_DIR) 
+	rm -rf $(BUILD_DIR)/*
+	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt
 	verilator  --cc --exe --build --trace \
- 	 --top-module $(TOPNAME) $^ \
-	 -LDFLAGS -lreadline \
-	 -CFLAGS $(CXXFLAGS) \
-	 --protect-lib $(LIBS) \ 
-	 --Mdir $(OBJ_DIR)  
+ 	--top-module $(TOPNAME) $^ \
+	-LDFLAGS -lreadline \
+	--Mdir $(OBJ_DIR) \
+	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 runb: sim
-	./build/obj_dir/V$(TOPNAME) $(IMG)
+	./build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf
 	gtkwave wave.vcd	
 
 gdb: sim
-	./build/obj_dir/V$(TOPNAME) $(IMG) -g
+	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf
 
 

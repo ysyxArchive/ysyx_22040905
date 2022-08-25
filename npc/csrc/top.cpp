@@ -17,6 +17,8 @@ typedef unsigned long long ull;
 Vtop* top = NULL;
 //void nvboard_bind_all_pins(Vtop* top);
 int state=0;
+uint64_t pc=0;
+void dump_ftrace();
 void cpp_break()
 {
   state=1;//break;
@@ -53,11 +55,12 @@ void reset()
   step_and_dump_wave();
   top->reset=0;
 }
-void dump_itace();
 void exec_once(){
   top->io_inst = pmem_inst_read(top->io_pc);
+  pc=top->io_pc;
   step_and_dump_wave();
-  dump_itace();
+  dump_itrace();
+  dump_ftrace();
 //nvboard_update();
 }
 void execute(u_int64_t n){
@@ -79,11 +82,12 @@ void init(char *argv[]){
   pmem_init(argv[1]);
   init_sdb();
   init_disasm("riscv64-pc-linux-gnu");
+  load_elf(argv[4]);
   reset();
 }
 uint64_t *cpu_gpr = NULL;
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
-  cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
+  cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dnpc,inst
 }
 void dump_gpr() {
   int i;
@@ -95,15 +99,31 @@ uint64_t *cpu_itrace = NULL;
 extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
   cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
-void dump_itace() {
-    printf("0x%08lx:\t%08lx\t\n",cpu_itrace[0],cpu_itrace[1]);
+char p[30];
+void dump_itrace() {
+  disassemble(p,30,cpu_itrace[0], (uint8_t *)&(cpu_itrace[1]), 4);
+  FILE *fp;
+  fp=fopen("build/itrace.txt","a");
+  fprintf(fp,"0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);
+  fclose(fp);
+}
+void print_itrace(){
+  printf("0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);
+}
+void dump_ftrace(){
+  if(BITS(cpu_itrace[1],6,0)==0b1101111){
+    ftrace_add(pc,cpu_itrace[0],1);
+  }
+  if(BITS(cpu_itrace[1],6,0)==0b1100111&&BITS(cpu_itrace[1],14,12)==0){
+    if(BITS(cpu_itrace[1],11,7)==0&&BITS(cpu_itrace[1],19,15)==1&&BITS(cpu_itrace[1], 31, 20)==0)ftrace_add(pc,cpu_itrace[0],0);
+    else ftrace_add(pc,cpu_itrace[0],1);
+  }
 }
 int main(int argc, char *argv[])
 {
-  return 0;
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
   init(argv); 
-  if(argc>2&&strcmp(argv[2],"-g")==0) sdb_mainloop();
+  if(strcmp(argv[2],"-g")==0) sdb_mainloop();
   else exec();
 
   if(state==1)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",top->io_pc);

@@ -52,7 +52,10 @@ static int cmd_si(char *args)
     sscanf(args, "%ld", &num);
   }
   if(state==1)return -1;
-  execute(num);
+  for(int i=0;i<num;i++){
+    execute(1);
+    print_itrace();
+  }
   return 0;
 }
 

@@ -126,8 +126,8 @@ int main(int argc, char *argv[])
   if(strcmp(argv[2],"-g")==0) sdb_mainloop();
   else exec();
 
-  if(state==1)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",top->io_pc);
-  else printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",top->io_pc);
+  if(state==1)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);
+  else printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
   sim_exit();
   //nvboard_quit();
 }

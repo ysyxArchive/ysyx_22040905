@@ -10,6 +10,9 @@ typedef unsigned long  uint64_t;
 #define BITMASK(bits) ((1ull << (bits)) - 1)
 #define BITS(x, hi, lo) (((x) >> (lo)) & BITMASK((hi) - (lo) + 1)) // similar to x[hi:lo] in verilog
 
+
+#define DIFFTEST_TO_DUT 0
+#define DIFFTEST_TO_REF 1
 extern int state;
 
 void execute(uint64_t n);

@@ -13,7 +13,11 @@ void difftest_regcpy(void *dut, bool direction) {
       *(uint64_t  *)(dut+8*i) = gpr(i);
     }
   }
-  else assert(0);
+  else{
+    for(int i=0;i<32;i++){
+      gpr(i)= *(uint64_t  *)(dut+8*i);
+    }
+  }
 }
 
 void difftest_exec(uint64_t n) {

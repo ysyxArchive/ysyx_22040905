@@ -10,10 +10,13 @@ typedef unsigned long  uint64_t;
 #define BITMASK(bits) ((1ull << (bits)) - 1)
 #define BITS(x, hi, lo) (((x) >> (lo)) & BITMASK((hi) - (lo) + 1)) // similar to x[hi:lo] in verilog
 
-
 #define DIFFTEST_TO_DUT 0
 #define DIFFTEST_TO_REF 1
+void difftest_step(uint64_t pc);
+void init_difftest(char *ref_so_file, long img_size, int port);
+
 extern int state;
+extern uint64_t *cpu_gpr;
 
 void execute(uint64_t n);
 

@@ -8,7 +8,6 @@
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
-
 //#include<nvboard.h>
 
 VerilatedContext* contextp = NULL;
@@ -61,6 +60,7 @@ void exec_once(){
   step_and_dump_wave();
   dump_itrace();
   dump_ftrace();
+  difftest_step(pc);
 //nvboard_update();
 }
 void execute(u_int64_t n){
@@ -75,7 +75,7 @@ void exec(){
   //printf("\n\n\n\n");
   execute(-1);
 }
-void init(char *argv[]){
+void init(int argc,char *argv[]){
   sim_init();
   //nvboard_bind_all_pins(&dut);
   //nvboard_init();
@@ -84,6 +84,7 @@ void init(char *argv[]){
   init_disasm("riscv64-pc-linux-gnu");
   load_elf(argv[4]);
   reset();
+  init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
 }
 uint64_t *cpu_gpr = NULL;
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
@@ -122,7 +123,7 @@ void dump_ftrace(){
 int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
-  init(argv); 
+  init(argc,argv); 
   if(strcmp(argv[2],"-g")==0) sdb_mainloop();
   else exec();
 

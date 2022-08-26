@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 23:29:04 2022
+# Make data base, printed on Sat Aug 27 02:47:43 2022
 
 # Variables
 
@@ -72,7 +72,7 @@ VSCODE_CODE_CACHE_PATH = /home/agustin/.config/Code/CachedData/e4503b30fc78200f8
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.XXAIR1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.68MGR1
 # default
 .LOADED := 
 # default
@@ -112,7 +112,7 @@ SNAP_REEXEC =
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 3295
+VSCODE_PID = 2303
 # environment
 SDKMAN_DIR = /home/agustin/.sdkman
 # environment
@@ -122,7 +122,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1259,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1259
+SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1202,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1202
 # automatic
 *F = $(notdir $*)
 # environment
@@ -180,7 +180,7 @@ SNAP = /snap/code/105
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = 2e44071df53f407a90396461a20fddcb
+INVOCATION_ID = 22d77ef3b72e466eb985d87b6cfb9537
 # environment
 SNAP_REVISION = 105
 # makefile (from 'Makefile', line 10)
@@ -224,7 +224,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 1291
+SYSTEMD_EXEC_PID = 1234
 # environment
 DISPLAY = :0
 # environment
@@ -242,11 +242,11 @@ SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1126
+MANAGERPID = 1067
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3247
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2211
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -258,7 +258,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/agustin/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:19420
+JOURNAL_STREAM = 8:17857
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -281,8 +281,8 @@ IM_CONFIG_PHASE = 1
 PAPERSIZE = letter
 # default
 .RECIPEPREFIX := 
-# automatic
  
+# automatic
 <F = $(notdir $<)
 # environment
 SNAP_VERSION = e4503b30
@@ -398,6 +398,6 @@ all:
 # strcache performance: lookups = 39 / hit rate = 28%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Tue Aug 23 23:29:04 2022
+# Finished Make data base on Sat Aug 27 02:47:43 2022
 
  

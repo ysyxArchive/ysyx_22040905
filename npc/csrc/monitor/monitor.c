@@ -59,7 +59,7 @@ void load_elf(char *s){
   }
 }
 void ftrace_add(uint64_t addr,uint64_t dnpc,int d){
-  printf("\n\n1\n\n");
+  //printf("\n\n1\n\n");
   FILE *fp;
   fp=fopen("build/ftrace.txt", "a");
   int flag=1;

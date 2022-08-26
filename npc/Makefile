@@ -63,7 +63,8 @@ run: $(BIN)
 
 #itrace
 CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14   -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE
-ref = $(shell llvm-config-13 --libs) $(NEMU_HOME)/build/riscv64-nemu-interpreter-so
+REF=$(NEMU_HOME)/build/riscv64-nemu-interpreter-so
+LDFLAGS += $(shell llvm-config-13 --libs) $(REF) 
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
@@ -76,10 +77,10 @@ sim: $(VSRCS) $(CSRCSS)
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 runb: sim
-	./build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(ref)
+	./build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(REF)
 	gtkwave wave.vcd	
 
 gdb: sim
-	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(ref)
+	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(REF)
 
 

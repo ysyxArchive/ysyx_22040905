@@ -9,7 +9,12 @@ typedef uint32_t paddr_t;
 
 uint32_t pmem_inst[pmem_size];
 uint8_t  pmem_data[pmem_size*8];
-
+int get_pmem_size(){
+  return pmem_size;
+}
+uint32_t* get_pmem(){
+  return pmem_inst;
+}
 uint32_t pmem_inst_read(uint64_t pc){
   return pmem_inst[(pc-0x80000000)/4];
 }

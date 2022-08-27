@@ -41,7 +41,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   assert(ref_difftest_init);
 
   ref_difftest_init(port);
-  ref_difftest_memcpy(0x80000000,pmem_inst,pmem_size, DIFFTEST_TO_REF);
+  ref_difftest_memcpy(0x80000000,get_pmem(),get_pmem_size()*4,DIFFTEST_TO_REF);
   ref_difftest_regcpy(cpu_gpr, DIFFTEST_TO_REF);
 }
 bool isa_difftest_checkregs(uint64_t *ref_gpr, uint64_t pc) {

@@ -9,14 +9,15 @@ void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction) {
 
 void difftest_regcpy(void *dut, bool direction) {
   if(direction==DIFFTEST_TO_DUT){
-    for(int i=0;i<32;i++){
-      *(uint64_t  *)(dut+8*i) = gpr(i);
-    }
     printf("\n");
     for(int i=0;i<32;i++){
       printf("%d:%08lx %08lx\n",i,gpr(i),*(uint64_t  *)(dut+8*i));
     } 
     printf("\n");
+    for(int i=0;i<32;i++){
+      *(uint64_t  *)(dut+8*i) = gpr(i);
+    }
+    
   }
   else{
     for(int i=0;i<32;i++){

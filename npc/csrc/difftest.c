@@ -61,8 +61,8 @@ void checkregs(uint64_t *ref_gpr, uint64_t pc) {
     state=2;
   }
 }
+uint64_t ref_gpr[32];
 void difftest_step(uint64_t pc) {
-  uint64_t ref_gpr[32];
   ref_difftest_exec(1);
   ref_difftest_regcpy(ref_gpr, DIFFTEST_TO_DUT);
   checkregs(ref_gpr, pc);

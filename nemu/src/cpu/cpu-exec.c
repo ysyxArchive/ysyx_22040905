@@ -3,6 +3,7 @@
 #include <cpu/difftest.h>
 #include <locale.h>
 #include "../monitor/sdb/sdb.h"
+#include "../isa/riscv64/local-include/reg.h"
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -96,8 +97,10 @@ void cpu_exec(uint64_t n) {
 
   uint64_t timer_start = get_time();
 
+    printf("%08lx\n",gpr(5));
   execute(n);
 
+    //printf("%08x\n",gpr(5));
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
 

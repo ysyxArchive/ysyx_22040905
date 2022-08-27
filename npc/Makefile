@@ -62,7 +62,7 @@ run: $(BIN)
 	$^
 
 REF=$(NEMU_HOME)/build/riscv64-nemu-interpreter-so
-CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14  -L$(REF) -fPIC -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE  
+CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14  -L$(REF) -fPIC -fsanitize=address -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE  
 LDFLAGS += $(shell llvm-config-13 --libs) -L$(REF) -fPIC -fsanitize=address 
 
 sim: $(VSRCS) $(CSRCSS)

@@ -48,9 +48,9 @@ bool isa_difftest_checkregs(uint64_t *ref_gpr, uint64_t pc) {
   int flag=1;
   for(int i=0;i<32;i++)
   {
-    if(cpu_gpr[i]==ref_gpr[i]){
+    if(cpu_gpr[i]!=ref_gpr[i]){
       flag=0;
-      printf("%s is different after executing instruction at pc = %08lx, right = %016lx, wrong = %016lx, diff = %016lx\n",cpu_name[i], pc, ref_gpr[i], cpu_gpr[i], ref_gpr[i] ^ cpu_gpr[i]);
+      printf("%s is different after executing instruction at pc = 0x%08lx, right = 0x%016lx, wrong = 0x%016lx, diff = 0x%016lx\n",cpu_name[i], pc, ref_gpr[i], cpu_gpr[i], ref_gpr[i] ^ cpu_gpr[i]);
     }
   }
   if(flag) return true;

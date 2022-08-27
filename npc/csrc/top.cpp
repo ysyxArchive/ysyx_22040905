@@ -83,7 +83,7 @@ void init(int argc,char *argv[]){
   init_sdb();
   init_disasm("riscv64-pc-linux-gnu");
   load_elf(argv[4]);
-  init_wp_pool();
+  //init_wp_pool();
   reset();
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
 }

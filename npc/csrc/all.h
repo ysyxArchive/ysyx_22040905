@@ -17,6 +17,8 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 
 extern int state;
 extern uint64_t *cpu_gpr;
+extern uint32_t *pmem_inst;
+extern const int pmem_size;
 
 void execute(uint64_t n);
 

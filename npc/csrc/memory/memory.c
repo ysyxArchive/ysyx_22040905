@@ -3,7 +3,7 @@
 #include<assert.h>
 #include"../all.h"
 
-#define pmem_size 32768
+const int pmem_size=32768;
 #define CONFIG_MBASE 0x80000000
 typedef uint32_t paddr_t;
 

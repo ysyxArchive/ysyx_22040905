@@ -16,7 +16,7 @@ void difftest_regcpy(void *dut, bool direction) {
   else{
     for(int i=0;i<32;i++){
       gpr(i)= *(uint64_t  *)(dut+8*i);
-      printf("%d:%08lx %08lx\n",i,gpr(i),*(uint64_t  *)(dut+8*i));
+      //printf("%d:%08lx %08lx\n",i,gpr(i),*(uint64_t  *)(dut+8*i));
     }
   }
 }

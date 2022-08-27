@@ -60,7 +60,8 @@ void free_wp(WP *wp){
 }
 
 bool change(){
-  int flag=0;
+  return true;
+  /*int flag=0;
   WP *tmp=head->next;
   while(tmp!=NULL){
     bool success=true;
@@ -75,7 +76,7 @@ bool change(){
     tmp=tmp->next;
   }
   if(flag)return true;
-  return false;
+  return false;*/
 }
 void info_wp(){
   WP *tmp=head->next;

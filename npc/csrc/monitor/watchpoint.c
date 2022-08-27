@@ -44,6 +44,8 @@ WP* new_wp(){
   u->next=NULL;
   return u;
 }
+
+
 void free_wp(WP *wp){
   WP *tmp=head;
   while(tmp->next!=wp){

@@ -36,7 +36,9 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
+  printf("%08lx\n",gpr(5));
   isa_exec_once(s);
+  printf("%08lx\n",gpr(5));
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
@@ -63,9 +65,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
 static void execute(uint64_t n) {
   Decode s;
   for (;n > 0; n --) {
-  printf("%08lx\n",gpr(5));
     exec_once(&s, cpu.pc);
-  printf("%08lx\n",gpr(5));
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;

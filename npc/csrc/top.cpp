@@ -50,9 +50,8 @@ void sim_exit(){
 void reset()
 {
   top->reset=1;
-  step_and_dump_wave();
+  step_and_dump_wave();  
   top->reset=0;
-  pc=top->io_pc;
 }
 void exec_once(){
   pc=top->io_pc;

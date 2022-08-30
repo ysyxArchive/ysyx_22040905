@@ -15,7 +15,7 @@ class top extends Module{
     val inst=Wire(UInt(32.W))
     ifu.io.pc:=pc;
     inst:=ifu.io.inst
-    it.io.pc:=io.pc
+    it.io.pc:=pc
     it.io.inst:=inst
     idu.io.inst:=inst
     exu.io.rs1:=idu.io.rs1

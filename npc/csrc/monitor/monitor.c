@@ -71,7 +71,10 @@ void ftrace_add(uint64_t addr,uint64_t dnpc,int d){
     break;
   }
   if(flag){
-    fprintf(fp,"%s:\t???\n",addr);
+    fprintf(fp,"0x%08lx:\t???\n",addr);
+    /*for(int i=0;i<func_num;i++){
+      fprintf("fp,%s",func[i].str);
+    }*/
   }
   fclose(fp);
 }

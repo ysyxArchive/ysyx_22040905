@@ -992,7 +992,7 @@ module top(
   assign exu_io_op = idu_io_op; // @[top.scala 25:14]
   assign exu_io_typ = idu_io_typ; // @[top.scala 26:15]
   assign exu_io_pc = pc; // @[top.scala 27:14]
-  assign it_pc = io_pc; // @[top.scala 18:13]
+  assign it_pc = pc; // @[top.scala 18:13]
   assign it_inst = ifu_inst; // @[top.scala 15:18 top.scala 17:9]
   always @(posedge clock) begin
     if (reset) begin // @[top.scala 10:19]

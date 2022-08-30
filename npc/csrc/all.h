@@ -1,6 +1,6 @@
 #ifndef __ALL_H__
 #define __ALL_H__
-
+#include <cstdint>
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
@@ -32,7 +32,6 @@ void del_wp(int id);
 uint64_t expr(char *e,bool *success);
 
 void pmem_init(char *s);
-uint32_t pmem_inst_read(uint64_t pc);
 uint64_t pmem_data_read(uint32_t addr,int len);
 void pmem_data_write(uint32_t addr,int len,uint64_t data);
 

@@ -4,17 +4,20 @@ import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
 class top extends Module{
     val io=IO(new Bundle{
-        val inst=Input(UInt(32.W))
         val pc=Output(UInt(64.W))
         val result=Output(UInt(64.W))
     })
     val pc=RegInit("x80000000".U(64.W))
+    val ifu=Module(new IFU)
     val idu=Module(new IDU)
     val exu=Module(new EXU)
     val it=Module(new itrace)
+    val inst=Wire(UInt(32.W))
+    ifu.io.pc:=pc;
+    inst:=ifu.io.inst
     it.io.pc:=io.pc
-    it.io.inst:=io.inst
-    idu.io.inst:=io.inst
+    it.io.inst:=inst
+    idu.io.inst:=inst
     exu.io.rs1:=idu.io.rs1
     exu.io.rs2:=idu.io.rs2
     exu.io.rd:=idu.io.rd

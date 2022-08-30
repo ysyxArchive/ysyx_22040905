@@ -9,7 +9,6 @@
 #include <verilated_dpi.h>
 #include "all.h"
 //#include<nvboard.h>
-
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 typedef unsigned long long ull;
@@ -53,9 +52,9 @@ void reset()
   top->reset=1;
   step_and_dump_wave();
   top->reset=0;
+  pc=top->io_pc;
 }
 void exec_once(){
-  top->io_inst = pmem_inst_read(top->io_pc);
   pc=top->io_pc;
   step_and_dump_wave();
   dump_itrace();
@@ -124,7 +123,7 @@ void dump_ftrace(){
 int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
-  init(argc,argv); 
+  init(argc,argv);
   if(strcmp(argv[2],"-g")==0) sdb_mainloop();
   else exec();
 

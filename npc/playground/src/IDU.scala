@@ -29,7 +29,7 @@ class IDU extends Module{
     val typ=Wire(UInt(6.W))
     typ:=Mux((op(4)|op(5)),"b000001".U,    //I
           Mux((op(0)|op(1)),"b000010".U,    //U
-          Mux((op(14)),             "b000100".U,   //S
+          Mux((op(2)),             "b000100".U,   //S
           Mux((op(3)),             "b001000".U,    //J
           Mux((op(12)),            "b010000".U,    //B
           Mux((op(13)),            "b100000".U,    //R

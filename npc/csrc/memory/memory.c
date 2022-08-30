@@ -15,8 +15,11 @@ int get_pmem_size(){
 uint32_t* get_pmem(){
   return pmem_inst;
 }
-uint32_t pmem_inst_read(uint64_t pc){
-  return pmem_inst[(pc-0x80000000)/4];
+extern "C" void pmem_inst_read(long long pc,int *inst){
+    uint64_t p=(uint64_t)pc;
+    if(p==0){*inst=0;return;}
+    if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+pmem_size)){printf("%ld\n",p);assert(0);}
+    *inst=(int)pmem_inst[(p-0x80000000)/4];
 }
 void pmem_init(char *s){ 
   //init inst
@@ -36,7 +39,7 @@ void pmem_init(char *s){
     pmem_data[i]=0;
   }
   /*for(int i=0;i<size;i++){
-    printf("%08x\n",pmem[i]);
+    printf("%08x\n",pmem_inst[i]);
   }*/
 }
 
@@ -56,7 +59,7 @@ void host_write(void *addr, int len, uint64_t data) {
     case 2: *(uint16_t *)addr = data; return;
     case 4: *(uint32_t *)addr = data; return;
     case 8: *(uint64_t *)addr = data; return;
-    default: assert(0);
+    default: printf("LEN CANNOT BE %d\n",len);assert(0);
   }
 }
 
@@ -71,5 +74,22 @@ uint64_t pmem_data_read(paddr_t addr,int len){
 void pmem_data_write(paddr_t addr, int len, uint64_t data) {
   host_write(guest_to_host(addr), len, data);
 }
-
-
+//DPI-C
+extern "C" void pmem_read(long long raddr, long long *rdata) {
+  if(raddr==0) { *rdata=0;return; }
+  *rdata=(long long)host_read(guest_to_host(((uint64_t)raddr) & ~0x7ull), 8); 
+}
+extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
+  //printf("%lld %lld %d\n",waddr,wdata,wmask);
+  uint64_t addr=waddr;
+  uint64_t data=wdata;
+  uint8_t mask=wmask;
+  if(mask==0)return;
+  int len=0;
+  while(mask&1){
+    len++;
+    mask>>=1;
+    if(len>8){printf("wmask:%d\nlen:%d\n",mask,len); assert(0);}
+  }
+  pmem_data_write(addr & ~0x7ull, len,data);
+}

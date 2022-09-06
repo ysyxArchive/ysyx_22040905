@@ -54,7 +54,6 @@ static int cmd_si(char *args)
   if(state==1)return -1;
   for(int i=0;i<num;i++){
     execute(1);
-    print_itrace();
   }
   return 0;
 }

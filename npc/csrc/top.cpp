@@ -9,6 +9,7 @@
 #include <verilated_dpi.h>
 #include "all.h"
 //#include<nvboard.h>
+
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 typedef unsigned long long ull;
@@ -16,6 +17,7 @@ Vtop* top = NULL;
 //void nvboard_bind_all_pins(Vtop* top);
 int state=0;
 uint64_t pc=0;
+int gdb=0;
 void dump_ftrace();
 void cpp_break()
 {
@@ -43,29 +45,40 @@ static void step_and_dump_wave(){
 }
 
 void sim_exit(){
-  step_and_dump_wave();
+  //step_and_dump_wave();
   tfp->close();
 }
 
 void reset()
 {
   top->reset=1;
-  step_and_dump_wave();  
+
+  top->clock=0;
+  top->eval();
+  contextp->timeInc(1);
+  tfp->dump(contextp->time());
+
+  top->clock=1;
+  top->eval();
+  contextp->timeInc(1);
+  tfp->dump(contextp->time());
+
   top->reset=0;
+  //step_and_dump_wave();  
 }
 void exec_once(){
   pc=top->io_pc;
-  step_and_dump_wave();
   dump_itrace();
+  if (gdb) print_itrace();
   dump_ftrace();
+  step_and_dump_wave();
   difftest_step(pc);
 //nvboard_update();
 }
 void execute(u_int64_t n){
   while(n--) {
-    exec_once();
     if(state!=0)return;
-
+    exec_once();
   }
 }
 
@@ -92,7 +105,7 @@ extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
 void dump_gpr() {
   int i;
   for (i = 0; i < 32; i++) {
-    printf("gpr[%d] = 0x%lx\n", i, cpu_gpr[i]);
+    printf("%s = 0x%lx\n",cpu_name[i], cpu_gpr[i]);
   }
 }
 uint64_t *cpu_itrace = NULL;
@@ -123,7 +136,7 @@ int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
   init(argc,argv);
-  if(strcmp(argv[2],"-g")==0) sdb_mainloop();
+  if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
   if(state==1)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);

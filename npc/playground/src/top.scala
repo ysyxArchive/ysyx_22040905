@@ -5,7 +5,6 @@ import chisel3.util.experimental.loadMemoryFromFileInline
 class top extends Module{
     val io=IO(new Bundle{
         val pc=Output(UInt(64.W))
-        val result=Output(UInt(64.W))
     })
     val pc=RegInit("x80000000".U(64.W))
     val ifu=Module(new IFU)
@@ -13,11 +12,12 @@ class top extends Module{
     val exu=Module(new EXU)
     val it=Module(new itrace)
     val inst=Wire(UInt(32.W))
-    ifu.io.pc:=pc;
+    ifu.io.pc:=pc
     inst:=ifu.io.inst
-    it.io.pc:=pc
+    it.io.pc:=exu.io.pc_dnpc
     it.io.inst:=inst
     idu.io.inst:=inst
+    exu.io.reset:=reset
     exu.io.rs1:=idu.io.rs1
     exu.io.rs2:=idu.io.rs2
     exu.io.rd:=idu.io.rd
@@ -26,6 +26,5 @@ class top extends Module{
     exu.io.typ:=idu.io.typ
     exu.io.pc:=pc
     pc:=exu.io.pc_dnpc
-    io.result:=exu.io.result
     io.pc:=pc
 }

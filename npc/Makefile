@@ -68,7 +68,7 @@ LDFLAGS += $(shell llvm-config-13 --libs) -L$(REF) -fPIC -fsanitize=address
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(BUILD_DIR)/*
-	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt
+	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt $(BUILD_DIR)/mtrace.txt
 	verilator  --cc --exe --build --trace \
  	--top-module $(TOPNAME) $^ \
 	-LDFLAGS -lreadline \
@@ -77,9 +77,7 @@ sim: $(VSRCS) $(CSRCSS)
 
 runb: sim
 	./build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(REF)
-	gtkwave wave.vcd	
-
 gdb: sim
 	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(REF)
-
-
+wave: 
+	gtkwave wave.vcd	

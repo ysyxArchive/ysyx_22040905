@@ -77,7 +77,11 @@ void pmem_data_write(paddr_t addr, int len, uint64_t data) {
 //DPI-C
 extern "C" void pmem_read(long long raddr, long long *rdata) {
   if(raddr==0) { *rdata=0;return; }
-  *rdata=(long long)host_read(guest_to_host(((uint64_t)raddr) & ~0x7ull), 8); 
+  *rdata=(long long)host_read(guest_to_host(((uint64_t)raddr) & ~0x7ull), 8);
+  FILE *fp;
+  fp=fopen("build/mtrace.txt","a");
+  fprintf(fp,"0x%08lx:\tpmem_read\t0x%08llx\t%08llx\n",top->io_pc,raddr,*rdata);
+  fclose(fp); 
 }
 extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
   //printf("%lld %lld %d\n",waddr,wdata,wmask);
@@ -92,4 +96,8 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
     if(len>8){printf("wmask:%d\nlen:%d\n",mask,len); assert(0);}
   }
   pmem_data_write(addr & ~0x7ull, len,data);
+  FILE *fp;
+  fp=fopen("build/mtrace.txt","a");
+  fprintf(fp,"0x%08lx:\tpmem_write\t0x%08llx:\t%08x\t%08lx\n",top->io_pc,addr & ~0x7ull, len,data);
+  fclose(fp);
 }

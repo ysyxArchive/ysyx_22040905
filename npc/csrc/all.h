@@ -1,6 +1,7 @@
 #ifndef __ALL_H__
 #define __ALL_H__
 #include <cstdint>
+#include "../build/obj_dir/Vtop.h"
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
@@ -17,6 +18,9 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 
 extern int state;
 extern uint64_t *cpu_gpr;
+extern const char *cpu_name[32];
+extern uint64_t pc;
+extern Vtop* top; 
 
 int get_pmem_size();
 uint32_t* get_pmem();

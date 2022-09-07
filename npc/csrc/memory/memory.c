@@ -77,7 +77,7 @@ extern "C" void pmem_read(long long raddr, long long *rdata) {
   *rdata=(long long)pmem_read((((uint64_t)raddr) & ~0x7ull), 8);
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
-  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08llx\tdata=%016llx\n",top->io_pc,raddr,*rdata);
+  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08llx\tdata=%016llx\n",top->io_pc,raddr& ~0x7ull,*rdata);
   fclose(fp); 
 }
 extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {

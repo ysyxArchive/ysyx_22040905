@@ -23,7 +23,7 @@ extern uint64_t pc;
 extern Vtop* top; 
 
 int get_pmem_size();
-uint32_t* get_pmem();
+uint8_t* get_pmem();
 void execute(uint64_t n);
 
 void sdb_mainloop();
@@ -36,8 +36,8 @@ void del_wp(int id);
 uint64_t expr(char *e,bool *success);
 
 void pmem_init(char *s);
-uint64_t pmem_data_read(uint32_t addr,int len);
-void pmem_data_write(uint32_t addr,int len,uint64_t data);
+uint64_t pmem_read(uint32_t addr,int len);
+void pmem_write(uint32_t addr,int len,uint64_t data);
 
 void dump_gpr();
 void dump_itrace();

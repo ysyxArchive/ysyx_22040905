@@ -94,7 +94,7 @@ static int cmd_x(char *args)
   //printf("%lx %d\n",addr,len);
   for (int i = 0; i < 8 * len; i += 8)
   {
-    printf("0x%lx:\t\t0x%016lx\n", addr + i, pmem_data_read(addr + i, 8));
+    printf("0x%lx:\t\t0x%016lx\n", addr + i, pmem_read(addr + i, 8));
   }
   return 0;
 }

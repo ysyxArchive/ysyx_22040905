@@ -207,7 +207,7 @@ uint32_t eval (int p,int q){
       case TK_AND: return val1&&val2;
       case TK_EQ:  return val1==val2;
       case TK_UEQ: return val1!=val2; 
-      case DEREF: return pmem_data_read((uint32_t)(val2),4);
+      case DEREF: return pmem_read((uint32_t)(val2),4);
       default: assert(0);
     }
   }

@@ -3,41 +3,38 @@
 #include<assert.h>
 #include"../all.h"
 
-const int pmem_size=32768;
+const int pmem_size=131072;
 #define CONFIG_MBASE 0x80000000
 typedef uint32_t paddr_t;
 
-uint32_t pmem_inst[pmem_size];
-uint8_t  pmem_data[pmem_size*8];
+uint8_t  pmem[pmem_size];
 int get_pmem_size(){
   return pmem_size;
 }
-uint32_t* get_pmem(){
-  return pmem_inst;
+uint8_t* get_pmem(){
+  return pmem;
 }
 extern "C" void pmem_inst_read(long long pc,int *inst){
-    uint64_t p=(uint64_t)pc;
+    uint32_t p=(uint32_t)pc;
     if(p==0){*inst=0;return;}
-    if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+pmem_size)){printf("%ld\n",p);assert(0);}
-    *inst=(int)pmem_inst[(p-0x80000000)/4];
+    if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+pmem_size)){printf("%d\n",p);assert(0);}
+    *inst=(int)pmem_read(pc,4);
 }
 void pmem_init(char *s){ 
-  //init inst
+  for(int i=0;i<pmem_size;i++){
+    pmem[i]=0;
+  }
   FILE *fp;
   fp=fopen(s,"r");
   assert(fp!=NULL);
   fseek(fp, 0, SEEK_END);
   int size = ftell(fp);
-  size=size/4;
   fseek(fp,0,SEEK_SET);
-  int ret=fread(pmem_inst,4,size,fp);
+  int ret=fread(pmem,1,size,fp);
   assert(ret!=0);
   fclose(fp);
 
-  //inst data
-  for(int i=0;i<pmem_size;i++){
-    pmem_data[i]=0;
-  }
+  
   /*for(int i=0;i<size;i++){
     printf("%08x\n",pmem_inst[i]);
   }*/
@@ -63,24 +60,24 @@ void host_write(void *addr, int len, uint64_t data) {
   }
 }
 
-uint8_t* guest_to_host(paddr_t paddr) { return pmem_data + paddr - CONFIG_MBASE; }
-paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem_data + CONFIG_MBASE; }
+uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
+paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
-uint64_t pmem_data_read(paddr_t addr,int len){
+uint64_t pmem_read(paddr_t addr,int len){
   uint64_t ret=host_read(guest_to_host(addr), len);
   return ret;
 }
 
-void pmem_data_write(paddr_t addr, int len, uint64_t data) {
+void pmem_write(paddr_t addr, int len, uint64_t data) {
   host_write(guest_to_host(addr), len, data);
 }
 //DPI-C
 extern "C" void pmem_read(long long raddr, long long *rdata) {
   if(raddr==0) { *rdata=0;return; }
-  *rdata=(long long)host_read(guest_to_host(((uint64_t)raddr) & ~0x7ull), 8);
+  *rdata=(long long)pmem_read((((uint64_t)raddr) & ~0x7ull), 8);
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
-  fprintf(fp,"0x%08lx:\tpmem_read\t0x%08llx\t%08llx\n",top->io_pc,raddr,*rdata);
+  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08llx\tdata=%016llx\n",top->io_pc,raddr,*rdata);
   fclose(fp); 
 }
 extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
@@ -95,9 +92,9 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
     mask>>=1;
     if(len>8){printf("wmask:%d\nlen:%d\n",mask,len); assert(0);}
   }
-  pmem_data_write(addr & ~0x7ull, len,data);
+  pmem_write(addr & ~0x7ull, len,data);
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
-  fprintf(fp,"0x%08lx:\tpmem_write\t0x%08llx:\t%08x\t%08lx\n",top->io_pc,addr & ~0x7ull, len,data);
+  fprintf(fp,"0x%08lx:\tpmem_write\taddr=0x%08llx\tlen=%08x\tdata=%016lx\n",top->io_pc,addr & ~0x7ull, len,data);
   fclose(fp);
 }

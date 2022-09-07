@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
   else exec();
 
   if(state==1)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);
-  else printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
+  else {printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);return -1;}
   sim_exit();
   //nvboard_quit();
 }

@@ -874,7 +874,7 @@ module ALU(
   wire [64:0] sum = _sum_T_1[64:0]; // @[ALU.scala 17:17 ALU.scala 24:8]
   wire  adder_cout = sum[64]; // @[ALU.scala 25:20]
   wire [63:0] adder_result = sum[63:0]; // @[ALU.scala 26:22]
-  wire  slt_result_lo = io_src1[63] & ~io_src2[63] | ~(io_src1[63] ^ io_src2[63]) & adder_result[63]; // @[ALU.scala 28:61]
+  wire  slt_result_lo = $signed(io_src1) < $signed(io_src2); // @[ALU.scala 28:48]
   wire [63:0] slt_result = {63'h0,slt_result_lo}; // @[Cat.scala 30:58]
   wire  sltu_result_lo = ~adder_cout; // @[ALU.scala 29:35]
   wire [63:0] sltu_result = {63'h0,sltu_result_lo}; // @[Cat.scala 30:58]

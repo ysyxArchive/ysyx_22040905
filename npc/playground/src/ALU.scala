@@ -25,7 +25,7 @@ class ALU extends Module{
     adder_cout:=sum(64)
     adder_result:=sum(63,0)
 
-    slt_result:=Cat(Fill(63,0.U),(io.src1(63)& ~io.src2(63))|(~(io.src1(63)^io.src2(63))&adder_result(63)))
+    slt_result:=Cat(Fill(63,0.U),(io.src1(63)& ~io.src2(63))|((~(io.src1(63)^io.src2(63)))&adder_result(63)))
     sltu_result:=Cat(Fill(63,0.U),~adder_cout)
     eql_result:=Cat(Fill(63,0.U),adder_result===0.U)
 

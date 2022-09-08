@@ -3,13 +3,13 @@
 #include<assert.h>
 #include"../all.h"
 
-#define pmem_size 0x8000
+#define CONFIG_MSIZE 0x8000000
 #define CONFIG_MBASE 0x80000000
 typedef uint32_t paddr_t;
 
-uint8_t  pmem[pmem_size];
+static uint8_t pmem[CONFIG_MSIZE] __attribute((aligned(4096))) = {};
 uint64_t get_pmem_size(){
-  return pmem_size;
+  return CONFIG_MSIZE;
 }
 uint8_t* get_pmem(){
   return pmem;
@@ -17,12 +17,14 @@ uint8_t* get_pmem(){
 extern "C" void pmem_inst_read(long long pc,int *inst){
     uint32_t p=(uint32_t)pc;
     if(p==0){*inst=0;return;}
-    if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+pmem_size)){printf("%d\n",p);assert(0);}
+    if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("%d\n",p);assert(0);}
     *inst=(int)pmem_read(pc,4);
 }
 void pmem_init(char *s){ 
-  for(int i=0;i<pmem_size;i++){
-    pmem[i]=0;
+  uint32_t *p = (uint32_t *)pmem;
+  int i;
+  for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
+    p[i] = rand();
   }
   FILE *fp;
   fp=fopen(s,"r");

@@ -8,6 +8,11 @@
         "bitset": "c",
         "chrono": "c",
         "cstdint": "cpp",
-        "history.h": "c"
+        "history.h": "c",
+        "*.tcc": "c",
+        "condition_variable": "c",
+        "string_view": "c",
+        "type_traits": "c",
+        "limits": "c"
     }
 }

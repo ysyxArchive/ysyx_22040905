@@ -38,7 +38,7 @@ class IDU extends Module{
 
            Mux((io.inst(6,0)==="b0110011".U)&(io.inst(14,12)==="b101".U)&(io.inst(31,25)==="b0000000".U), Cat(Fill(43,0.U),Cat(1.U,Fill(20,0.U))),          //srl,R
            Mux((io.inst(6,0)==="b0111011".U)&(io.inst(14,12)==="b101".U)&(io.inst(31,25)==="b0000000".U), Cat(Fill(42,0.U),Cat(1.U,Fill(21,0.U))),          //srlw,R
-           Mux((io.inst(6,0)==="b0011011".U)&(io.inst(14,12)==="b101".U)&(io.inst(31,26)==="b010000".U ), Cat(Fill(41,0.U),Cat(1.U,Fill(22,0.U))),          //srli,I
+           Mux((io.inst(6,0)==="b0010011".U)&(io.inst(14,12)==="b101".U)&(io.inst(31,26)==="b000000".U ), Cat(Fill(41,0.U),Cat(1.U,Fill(22,0.U))),          //srli,I
            Mux((io.inst(6,0)==="b0011011".U)&(io.inst(14,12)==="b101".U)&(io.inst(31,26)==="b000000".U ), Cat(Fill(40,0.U),Cat(1.U,Fill(23,0.U))),          //srliw,I
            Mux((io.inst(6,0)==="b0110111".U)                                                            , Cat(Fill(39,0.U),Cat(1.U,Fill(24,0.U))),          //lui,U
            Mux((io.inst(6,0)==="b0010111".U)                                                            , Cat(Fill(38,0.U),Cat(1.U,Fill(25,0.U))),          //auipc,U

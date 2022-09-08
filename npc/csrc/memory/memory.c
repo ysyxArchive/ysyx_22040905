@@ -3,12 +3,12 @@
 #include<assert.h>
 #include"../all.h"
 
-const int pmem_size=131072;
+#define pmem_size 0x8000
 #define CONFIG_MBASE 0x80000000
 typedef uint32_t paddr_t;
 
 uint8_t  pmem[pmem_size];
-int get_pmem_size(){
+uint64_t get_pmem_size(){
   return pmem_size;
 }
 uint8_t* get_pmem(){
@@ -77,7 +77,7 @@ extern "C" void pmem_read(long long raddr, long long *rdata) {
   *rdata=(long long)pmem_read((((uint64_t)raddr)), 8);
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
-  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08llx\tdata=%016llx\n",top->io_pc,raddr& ~0x7ull,*rdata);
+  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08llx\tdata=%016llx\n",top->io_pc,raddr,*rdata);
   fclose(fp); 
 }
 extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
@@ -95,6 +95,6 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
   pmem_write(addr, len,data);
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
-  fprintf(fp,"0x%08lx:\tpmem_write\taddr=0x%08llx\tlen=%08x\tdata=%016lx\n",top->io_pc,addr & ~0x7ull, len,data);
+  fprintf(fp,"0x%08lx:\tpmem_write\taddr=0x%08lx\tlen=%08x\tdata=%016lx\n",top->io_pc,addr, len,data);
   fclose(fp);
 }

@@ -22,7 +22,7 @@ extern const char *cpu_name[32];
 extern uint64_t pc;
 extern Vtop* top; 
 
-int get_pmem_size();
+uint64_t get_pmem_size();
 uint8_t* get_pmem();
 void execute(uint64_t n);
 

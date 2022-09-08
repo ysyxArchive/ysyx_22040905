@@ -70,7 +70,9 @@ static void execute(uint64_t n) {
     IFDEF(CONFIG_DEVICE, device_update());
   }
 }
-
+uint64_t get_pc(){
+  return cpu.pc;
+}
 static void statistic() {
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")

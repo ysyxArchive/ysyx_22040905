@@ -72,7 +72,7 @@ void exec_once(){
   if (gdb) print_itrace();
   dump_ftrace();
   step_and_dump_wave();
-  difftest_step(pc);
+  difftest_step(top->io_pc);
 //nvboard_update();
 }
 void execute(u_int64_t n){

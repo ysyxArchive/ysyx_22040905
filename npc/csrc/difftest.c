@@ -47,7 +47,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc) {
   int flag=1;
   if(ref_pc!=pc){
-    //flag=0;
+    flag=0;
     printf("ref_pc=%08lx\tdut_pc=%08lx\n",ref_pc,pc);
   }
   for(int i=0;i<32;i++)

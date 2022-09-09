@@ -46,7 +46,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     fmt++;
     switch(*fmt){
-	  case 'c':
+	    case 'c':
         *str++ = (unsigned char) va_arg(ap, int); 
         break;
       case 's':

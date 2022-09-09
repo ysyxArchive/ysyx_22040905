@@ -4,10 +4,9 @@
 #include <klib-macros.h>
 void __am_timer_init() {
 }
-int flag=1;
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   ioe_read (AM_TIMER_UPTIME,&(uptime->us));
-  if(flag==1){printf("%d",(int)(uptime->us));flag=0;}
+  if(uptime->us%1000000==0)printf("%d",(int)(uptime->us));
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

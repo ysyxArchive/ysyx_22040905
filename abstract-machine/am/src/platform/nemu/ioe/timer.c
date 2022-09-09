@@ -3,10 +3,11 @@
 #include <klib.h>
 #include <klib-macros.h>
 void __am_timer_init() {
-  outl(RTC_ADDR, 0); 
+  //outl(RTC_ADDR, 0); 
 }
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us=inl(RTC_ADDR);
+  printf("%d\n",inl(RTC_ADDR));
+  printf("%d\n",inl(0x48));
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

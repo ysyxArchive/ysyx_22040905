@@ -20,9 +20,9 @@ char *number(char *str,int num){
   return str;
 }
 
-char buf[1024];  
 int printf(const char *fmt, ...) {
   va_list ap;
+char buf[1024];  
   int len=0;
   va_start(ap,fmt);
   len=vsprintf(buf,fmt,ap);

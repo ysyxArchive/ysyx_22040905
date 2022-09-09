@@ -15,6 +15,7 @@
         "type_traits": "c",
         "limits": "c",
         "cpu.h": "c",
-        "atomic": "c"
+        "atomic": "c",
+        "string.h": "c"
     }
 }

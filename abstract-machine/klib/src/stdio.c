@@ -20,7 +20,14 @@ char *number(char *str,int num){
   return str;
 }
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  char *buf="";
+  va_list ap;
+  int i;
+  va_start(ap,fmt);
+  i=vsprintf(buf,fmt,ap);
+  va_end(ap);
+  return i;
+  //for()
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {

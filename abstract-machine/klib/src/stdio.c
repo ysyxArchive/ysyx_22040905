@@ -19,8 +19,9 @@ char *number(char *str,int num){
   }
   return str;
 }
+
+static char buf[1024];  
 int printf(const char *fmt, ...) {
-  char *buf="";
   va_list ap;
   int len=0;
   va_start(ap,fmt);

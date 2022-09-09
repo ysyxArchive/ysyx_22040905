@@ -29,7 +29,9 @@ int printf(const char *fmt, ...) {
   for(int i=-1;i<=len;i++){
     putch(buf[i]);
   }
-  putch(len+'0');
+  putch(len/10+'0');
+  putch(len%10+'0');
+  
   return len;
 }
 

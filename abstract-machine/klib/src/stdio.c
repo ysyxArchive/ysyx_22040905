@@ -28,7 +28,7 @@ int printf(const char *fmt, ...) {
   va_end(ap);
   */
   int len=5;
-  for(int i=0;i<len;i++){
+  for(int i=0;i<=len;i++){
     putch(*(buf+i));
   }
   return len;

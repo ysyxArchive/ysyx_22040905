@@ -16,6 +16,8 @@
         "limits": "c",
         "cpu.h": "c",
         "atomic": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "nemu.h": "c",
+        "am.h": "c"
     }
 }

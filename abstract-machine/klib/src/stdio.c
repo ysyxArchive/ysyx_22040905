@@ -22,12 +22,14 @@ char *number(char *str,int num){
 int printf(const char *fmt, ...) {
   char *buf="";
   va_list ap;
-  int i;
+  int len=0;
   va_start(ap,fmt);
-  i=vsprintf(buf,fmt,ap);
+  len=vsprintf(buf,fmt,ap);
   va_end(ap);
-  return i;
-  //for()
+  for(int i=0;i<len;i++){
+    putch(*(buf+i));
+  }
+  return len;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {

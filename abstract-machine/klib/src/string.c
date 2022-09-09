@@ -37,7 +37,6 @@ char *strncpy(char *dst, const char *src, size_t n) {
 char *strcat(char *dst, const char *src) {
   //panic("Not implemented");
   strcpy (dst + strlen (dst), src); 
-  assert(0); 
   return dst;
 }
 

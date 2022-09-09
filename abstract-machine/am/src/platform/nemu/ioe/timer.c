@@ -1,6 +1,7 @@
 #include <am.h>
 #include <nemu.h>
 #include <klib.h>
+#include <klib-macros.h>
 void __am_timer_init() {
 }
 

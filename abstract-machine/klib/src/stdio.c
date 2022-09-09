@@ -26,8 +26,8 @@ int printf(const char *fmt, ...) {
   va_start(ap,fmt);
   len=vsprintf(buf,fmt,ap);
   va_end(ap);
-  for(int i=0;i<=len;i++){
-    putch(*(buf+i));
+  for(int i=0;i<len;i++){
+    putch(buf[i]);
   }
   return len;
 }

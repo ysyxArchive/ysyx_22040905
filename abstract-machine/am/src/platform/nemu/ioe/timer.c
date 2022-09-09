@@ -6,7 +6,7 @@ void __am_timer_init() {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   ioe_read (AM_TIMER_UPTIME,&(uptime->us));
-  printf("%d\n",1);
+  //printf("%d",1);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

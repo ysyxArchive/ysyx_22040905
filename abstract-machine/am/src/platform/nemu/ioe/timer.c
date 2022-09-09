@@ -3,10 +3,10 @@
 #include <klib.h>
 #include <klib-macros.h>
 void __am_timer_init() {
+  outl(AM_TIMER_UPTIME, 0); 
 }
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  ioe_read (AM_TIMER_UPTIME,&(uptime->us));
-  printf("%d",1);
+  uptime->us=inl(AM_TIMER_UPTIME); 
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

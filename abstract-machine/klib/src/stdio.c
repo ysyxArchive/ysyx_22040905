@@ -20,14 +20,12 @@ char *number(char *str,int num){
   return str;
 }
 int printf(const char *fmt, ...) {
-  char *buf="1234\n";
-  /*va_list ap;
+  char *buf="";
+  va_list ap;
   int len=0;
   va_start(ap,fmt);
   len=vsprintf(buf,fmt,ap);
   va_end(ap);
-  */
-  int len=5;
   for(int i=0;i<=len;i++){
     putch(*(buf+i));
   }

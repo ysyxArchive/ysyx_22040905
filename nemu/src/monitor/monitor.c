@@ -38,7 +38,6 @@ static long load_img() {
     Log("No image is given. Use the default build-in image.");
     return 4096; // built-in image size
   }
-
   FILE *fp = fopen(img_file, "rb");
   Assert(fp, "Can not open '%s'", img_file);
 
@@ -62,6 +61,7 @@ struct func{
 }func[32768];
 int func_num=0;
 
+#ifdef CONFIG_ITRACE
 static void load_elf(){
   Elf64_Ehdr ehdr[1];
   Elf64_Shdr shdr[2048];
@@ -104,7 +104,6 @@ static void load_elf(){
   }
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
-  return;
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;
@@ -120,6 +119,10 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
   }
   fclose(fp);
 }
+#else
+static void load_elf(){}
+void ftrace_add(int64_t addr,int64_t dnpc,int d){}
+#endif
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
@@ -137,7 +140,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'p': sscanf(optarg, "%d", &difftest_port); break;
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
-      case 'e': break; elf = optarg; break;  
+      case 'e': elf = optarg; break;  
       case 1: img_file = optarg; return optind - 1;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);

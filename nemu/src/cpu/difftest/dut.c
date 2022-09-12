@@ -116,6 +116,7 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 void init_difftest(char *ref_so_file, long img_size, int port) { }
 #endif
 
+#ifdef CONFIG_ITRACE
 #ifndef ir_max
 #define ir_max 10
 #endif
@@ -153,3 +154,8 @@ void iringbuf_print(){
   }
   printf("\n");
 }
+#else
+void init_iringbuf(){}
+void iringbuf_add(char* s){}
+void iringbuf_print(){}
+#endif

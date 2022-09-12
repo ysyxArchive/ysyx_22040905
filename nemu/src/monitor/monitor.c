@@ -104,6 +104,7 @@ static void load_elf(){
   }
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
+  return;
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;

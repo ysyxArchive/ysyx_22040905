@@ -24,6 +24,9 @@ run: run-env
 	touch $(BUILD_DIR)/nemu-mtrace.txt
 	rm -rf $(BUILD_DIR)/nemu-ftrace.txt
 	touch $(BUILD_DIR)/nemu-ftrace.txt
+	rm -rf $(BUILD_DIR)/nemu-dtrace.txt
+	touch $(BUILD_DIR)/nemu-dtrace.txt
+
 	$(NEMU_EXEC)
 
 gdb: run-env

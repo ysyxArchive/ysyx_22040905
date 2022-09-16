@@ -18,6 +18,7 @@
         "atomic": "c",
         "string.h": "c",
         "nemu.h": "c",
-        "am.h": "c"
+        "am.h": "c",
+        "isa.h": "c"
     }
 }

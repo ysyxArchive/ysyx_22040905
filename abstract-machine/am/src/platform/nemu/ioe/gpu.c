@@ -18,7 +18,7 @@ void __am_gpu_init() {
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
-  outl(VGACTL_ADDR,(W << 16) | H);
+  outl(VGACTL_ADDR,(w << 16) | h);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {

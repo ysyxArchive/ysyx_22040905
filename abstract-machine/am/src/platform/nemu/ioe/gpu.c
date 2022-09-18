@@ -2,7 +2,8 @@
 #include <nemu.h>
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-int  W=0,H=0;
+# define W    (400)
+# define H    (300)
 
 //#define FPS   60
 
@@ -10,7 +11,6 @@ void __am_gpu_init() {
   int i;
   int w = inw(VGACTL_ADDR);  
   int h = inw(VGACTL_ADDR+2);
-  W=w,H=h;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);

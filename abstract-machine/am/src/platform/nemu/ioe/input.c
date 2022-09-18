@@ -4,6 +4,6 @@
 #define KEYDOWN_MASK 0x8000
 
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
-  kbd->keydown = inb(KBD_ADDR);
-  kbd->keycode = kbd->keydown?inb(KBD_ADDR):AM_KEY_NONE;
+  kbd->keydown = 0; //inb(KBD_ADDR);
+  kbd->keycode = AM_KEY_NONE;
 }

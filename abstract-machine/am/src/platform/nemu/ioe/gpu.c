@@ -38,7 +38,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
-  int x = ctl->x+1, y = ctl->y+1, w = ctl->w, h = ctl->h;
+  int x = ctl->x+10, y = ctl->y+10, w = ctl->w, h = ctl->h;
   for(int i=0;i<h;i++)
   for(int j=0;j<w;j++){
     fb[(y+i)*W+x+j]=(*((uint32_t *)(ctl->pixels)));

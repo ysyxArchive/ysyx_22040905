@@ -57,6 +57,7 @@ static inline void update_screen() {
 #endif
 void vga_update_screen() {
   if(mmio_read(CONFIG_VGA_CTL_MMIO+4,4)){
+    printf("1\n");
     update_screen();
     mmio_write(CONFIG_VGA_CTL_MMIO+4,4,0);
   }

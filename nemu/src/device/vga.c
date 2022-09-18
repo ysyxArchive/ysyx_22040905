@@ -55,10 +55,10 @@ static inline void update_screen() {
 }
 #endif
 #endif
+
 void vga_update_screen() {
   
-  if(vgactl_port_base[1]){
-    printf("1\n");
+  if(vgactl_port_base[1]==1){
     update_screen();
     vgactl_port_base[1]=0;
   }

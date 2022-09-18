@@ -5,5 +5,5 @@
 
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   kbd->keydown = inb(KBD_ADDR);
-  kbd->keycode = kbd->keydown?inb(KBD_ADDR+4):AM_KEY_NONE;
+  kbd->keycode = kbd->keydown?inb(KBD_ADDR):AM_KEY_NONE;
 }

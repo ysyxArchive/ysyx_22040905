@@ -7,7 +7,7 @@
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   kbd->keydown = 0; //inb(KBD_ADDR);
   kbd->keycode = AM_KEY_NONE;
-  for(int i=0;i<12;i+=4){
+  for(int i=0;i<8;i+=4){
     printf("%08x\n",inb(KBD_ADDR+i));
   }
 }

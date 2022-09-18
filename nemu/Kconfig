@@ -157,7 +157,7 @@ config MTRACE
 config DTRACE
   depends on TRACE
   bool "Enable dtrace"
-  default n
+  default y
 
 
 config DIFFTEST

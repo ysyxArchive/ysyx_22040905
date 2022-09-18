@@ -7,18 +7,13 @@
 
 //#define FPS   60
 
-#define RMASK 0x00ff0000
-#define GMASK 0x0000ff00
-#define BMASK 0x000000ff
-#define AMASK 0x00000000
 void __am_gpu_init() {
   int i;
-  int w = W*2;  
-  int h = H*2;
+  int w = 0;  
+  int h = 0;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
-  outl(VGACTL_ADDR,(w << 16) | h);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {

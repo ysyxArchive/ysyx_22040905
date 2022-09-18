@@ -56,10 +56,10 @@ static inline void update_screen() {
 #endif
 #endif
 void vga_update_screen() {
-  if(mmio_read(CONFIG_VGA_CTL_MMIO,8)){
+  //if(mmio_read(CONFIG_VGA_CTL_MMIO,8)){
     update_screen();
-    mmio_write(CONFIG_VGA_CTL_MMIO,8,0);
-  }
+  //  mmio_write(CONFIG_VGA_CTL_MMIO,8,0);
+  //}
   // TODO: call `update_screen()` when the sync register is non-zero,
   // then zero out the sync register
 }

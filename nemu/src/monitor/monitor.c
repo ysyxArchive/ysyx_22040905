@@ -61,7 +61,7 @@ struct func{
 }func[32768];
 int func_num=0;
 
-#ifdef CONFIG_ITRACE
+#ifdef CONFIG_FTRACE
 static void load_elf(){
   Elf64_Ehdr ehdr[1];
   Elf64_Shdr shdr[2048];

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Sep 19 19:22:57 2022
+# Make data base, printed on Mon Sep 19 20:49:07 2022
 
 # Variables
 
@@ -110,7 +110,7 @@ SNAP_REEXEC =
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 18173
+VSCODE_PID = 26112
 # environment
 SDKMAN_DIR = /home/agustin/.sdkman
 # environment
@@ -242,7 +242,7 @@ MANAGERPID = 1075
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 18125
+GIO_LAUNCHED_DESKTOP_FILE_PID = 26062
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -279,6 +279,9 @@ PAPERSIZE = letter
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 # environment
 SNAP_VERSION = 74b1f979
 # environment
@@ -292,9 +295,6 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 SNAP_COMMON = /var/snap/code/common
 # default
- 
-make: *** No rule to make target 'all'.  Stop.
-
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
 SNAP_USER_DATA = /home/agustin/snap/code/108
@@ -396,6 +396,6 @@ all:
 # strcache performance: lookups = 38 / hit rate = 28%
 # hash-table stats:
 # Load=27/8192=0%, Rehash=0, Collisions=0/38=0%
-# Finished Make data base on Mon Sep 19 19:22:57 2022
+# Finished Make data base on Mon Sep 19 20:49:07 2022
 
  

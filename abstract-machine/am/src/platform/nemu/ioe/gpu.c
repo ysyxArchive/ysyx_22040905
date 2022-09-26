@@ -18,10 +18,9 @@
 #define BMASK 0x000000ff
 #define AMASK 0x00000000
 
-int ww,hh;
 void __am_gpu_init() {//test code
-    ww = inw(VGACTL_ADDR);  
-    hh = inw(VGACTL_ADDR+2);
+//  int w = inw(VGACTL_ADDR);  
+//  int h = inw(VGACTL_ADDR+2);
 //  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 //  for (int i = 0; i < w * h; i ++) fb[i] =i;
 //  outl(SYNC_ADDR, 1);
@@ -37,7 +36,6 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 
 uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  for(int i=0;i<ww*hh;i++) fb[i]=0;
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   int cnt=0;
   for(int i=0;i<h;i++)

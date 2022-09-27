@@ -102,9 +102,9 @@ uint64_t *cpu_itrace = NULL;
 extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
   cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
-char p[30];
+char p[99];
 void dump_itrace() {
-  disassemble(p,30,cpu_itrace[0], (uint8_t *)&(cpu_itrace[1]), 4);
+  disassemble(p,99,cpu_itrace[0], (uint8_t *)&(cpu_itrace[1]), 4);
   FILE *fp;
   fp=fopen("build/itrace.txt","a");
   fprintf(fp,"0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);

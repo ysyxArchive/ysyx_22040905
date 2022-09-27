@@ -44,11 +44,11 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   ref_difftest_memcpy(0x80000000,get_pmem(),get_pmem_size(),DIFFTEST_TO_REF);
   ref_difftest_regcpy(cpu_gpr,&pc, DIFFTEST_TO_REF);
 }
-bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc) {
+bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc,uint64_t pcc) {
   int flag=1;
-  if(ref_pc!=pc){
+  if(ref_pc!=pcc){
     flag=0;
-    printf("ref_pc=%08lx\tdut_pc=%08lx\n",ref_pc,pc);
+    printf("ref_pc=%08lx\tdut_pc=%08lx\n",ref_pc,pcc);
   }
   for(int i=0;i<32;i++)
   {
@@ -60,15 +60,15 @@ bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc) {
   if(flag) return true;
   return false;
 }
-void checkregs(uint64_t *ref_gpr,uint64_t ref_pc, uint64_t pc) {
-  if (!isa_difftest_checkregs(ref_gpr, ref_pc,pc)) {
+void checkregs(uint64_t *ref_gpr,uint64_t ref_pc, uint64_t pc,uint64_t pcc) {
+  if (!isa_difftest_checkregs(ref_gpr, ref_pc,pc,pcc)) {
     state=2;
   }
 }
 uint64_t ref_gpr[32];
 uint64_t ref_pc;
-void difftest_step(uint64_t pc) {
+void difftest_step(uint64_t pc,uint64_t pcc) {
   ref_difftest_exec(1);
   ref_difftest_regcpy(ref_gpr,&ref_pc, DIFFTEST_TO_DUT);
-  checkregs(ref_gpr,ref_pc, pc);
+  checkregs(ref_gpr,ref_pc,pc, pcc);
 }

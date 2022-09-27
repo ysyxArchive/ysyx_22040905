@@ -26,3 +26,5 @@ run: image
 
 gdb: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) gdb IMG=$(IMAGE)
+wave: image
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) wave IMG=$(IMAGE)

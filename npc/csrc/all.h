@@ -13,7 +13,7 @@ typedef unsigned long  uint64_t;
 
 #define DIFFTEST_TO_DUT 0
 #define DIFFTEST_TO_REF 1
-void difftest_step(uint64_t pc);
+void difftest_step(uint64_t pc,uint64_t pcc);
 void init_difftest(char *ref_so_file, long img_size, int port);
 
 extern int state;
@@ -41,7 +41,7 @@ void pmem_write(uint32_t addr,int len,uint64_t data);
 
 void dump_gpr();
 void dump_itrace();
-void print_itrace();
+void print_itrace(uint64_t pc);
 void ftrace_add(uint64_t addr,uint64_t dnpc,int d);
 void load_elf(char *s);
 

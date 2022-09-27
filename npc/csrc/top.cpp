@@ -52,27 +52,17 @@ void sim_exit(){
 void reset()
 {
   top->reset=1;
-
-  top->clock=0;
-  top->eval();
-  contextp->timeInc(1);
-  tfp->dump(contextp->time());
-
-  top->clock=1;
-  top->eval();
-  contextp->timeInc(1);
-  tfp->dump(contextp->time());
-
+  step_and_dump_wave();
   top->reset=0;
   //step_and_dump_wave();  
 }
 void exec_once(){
   pc=top->io_pc;
   dump_itrace();
-  if (gdb) print_itrace();
-  dump_ftrace();
+  if (gdb) print_itrace(top->io_pc);
   step_and_dump_wave();
-  //difftest_step(top->io_pc);
+  difftest_step(pc,top->io_pc);
+  dump_ftrace();
 //nvboard_update();
 }
 void execute(u_int64_t n){
@@ -120,8 +110,8 @@ void dump_itrace() {
   fprintf(fp,"0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);
   fclose(fp);
 }
-void print_itrace(){
-  printf("0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);
+void print_itrace(uint64_t pcc){
+  printf("0x%08lx:\t%08lx\t%s\n",pcc,cpu_itrace[1],p);
 }
 void dump_ftrace(){
   if(BITS(cpu_itrace[1],6,0)==0b1101111){

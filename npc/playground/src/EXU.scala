@@ -114,5 +114,6 @@ class EXU extends Module{
                       4.U))))))))
       alu_pc.io.op:=  Mux(io.op(37),1024.U,1.U)
 
-      io.pc_dnpc:= Mux(io.reset.asBool,io.pc,alu_pc.io.result)
+      io.pc_dnpc:= Mux(io.reset.asBool,io.pc,
+                   alu_pc.io.result)
 }

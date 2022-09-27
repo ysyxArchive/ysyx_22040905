@@ -79,5 +79,5 @@ runb: sim
 	./build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(REF)
 gdb: sim
 	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(REF)
-wave: 
+wave: runb
 	gtkwave wave.vcd	

@@ -105,6 +105,7 @@ extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
 char p[99];
 void dump_itrace() {
   disassemble(p,99,cpu_itrace[0], (uint8_t *)&(cpu_itrace[1]), 4);
+  printf("%ld\n",cpu_itrace[0]);
   FILE *fp;
   fp=fopen("build/itrace.txt","a");
   fprintf(fp,"0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);

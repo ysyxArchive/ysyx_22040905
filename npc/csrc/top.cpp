@@ -61,7 +61,7 @@ void exec_once(){
   dump_itrace();
   if (gdb) print_itrace(top->io_pc);
   step_and_dump_wave();
-  difftest_step(pc,top->io_pc);
+  //difftest_step(pc,top->io_pc);
   dump_ftrace();
 //nvboard_update();
 }
@@ -105,7 +105,6 @@ extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
 char p[99];
 void dump_itrace() {
   disassemble(p,99,pc, (uint8_t *)&(cpu_itrace[1]), 4);
-  printf("%ld\n",cpu_itrace[0]);
   FILE *fp;
   fp=fopen("build/itrace.txt","a");
   fprintf(fp,"0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);

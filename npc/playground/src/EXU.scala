@@ -67,9 +67,9 @@ class EXU extends Module{
                         Mux(io.op(42)|io.op(43)|io.op(44)|io.op(45),dest,
                         Mux(io.op(56)|io.op(58)|io.op(60)|io.op(62),Cat(Fill(32,0.U),src2(31,0)),
                         src2)))))
-      alu_dest.io.op  :=Mux(io.op(0)|io.op(1)|io.op(2)|io.op(3)|io.op(7)|io.op(24)|io.op(25)|io.op(36)|io.op(37)|io.op(38)|io.op(39)|io.op(40)|io.op(41)|io.op(42)|io.op(43)|io.op(44)|io.op(45)|io.op(46)|io.op(47)|io.op(48),1.U, //add
+      alu_dest.io.op  :=Mux(io.op(0)|io.op(1)|io.op(2)|io.op(3)|io.op(24)|io.op(25)|io.op(36)|io.op(37)|io.op(38)|io.op(39)|io.op(40)|io.op(41)|io.op(42)|io.op(43)|io.op(44)|io.op(45)|io.op(46)|io.op(47)|io.op(48),1.U, //add
                         Mux(io.op(4)|io.op(5),2.U,//sub
-                        Mux(io.op(6),4.U,//and
+                        Mux(io.op(6)|io.op(7),4.U,//and
                         Mux(io.op(8)|io.op(9),8.U,//or
                         Mux(io.op(10)|io.op(11),16.U,//xor
                         Mux(io.op(12)|io.op(13)|io.op(14)|io.op(15)|io.op(19),32.U,//sll

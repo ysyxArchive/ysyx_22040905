@@ -1001,7 +1001,7 @@ module EXU(
     _alu_dest_io_op_T_117; // @[EXU.scala 75:28]
   wire [18:0] _alu_dest_io_op_T_119 = io_op[10] | io_op[11] ? 19'h10 : _alu_dest_io_op_T_118; // @[EXU.scala 74:28]
   wire [18:0] _alu_dest_io_op_T_120 = io_op[8] | io_op[9] ? 19'h8 : _alu_dest_io_op_T_119; // @[EXU.scala 73:28]
-  wire [18:0] _alu_dest_io_op_T_121 = io_op[6] ? 19'h4 : _alu_dest_io_op_T_120; // @[EXU.scala 72:28]
+  wire [18:0] _alu_dest_io_op_T_121 = io_op[6] | io_op[7] ? 19'h4 : _alu_dest_io_op_T_120; // @[EXU.scala 72:28]
   wire [18:0] _alu_dest_io_op_T_122 = io_op[4] | io_op[5] ? 19'h2 : _alu_dest_io_op_T_121; // @[EXU.scala 71:28]
   wire [31:0] gpr_io_val_w_hi = alu_dest_io_result[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 72:12]
   wire [31:0] gpr_io_val_w_lo = alu_dest_io_result[31:0]; // @[EXU.scala 94:196]
@@ -1089,9 +1089,9 @@ module EXU(
   assign alu_dest_io_src1 = io_op[13] | io_op[21] | io_op[23] | io_op[56] | io_op[58] | io_op[60] | io_op[62] ?
     _alu_dest_io_src1_T_13 : _alu_dest_io_src1_T_22; // @[EXU.scala 60:28]
   assign alu_dest_io_src2 = io_op[13] | io_op[17] | io_op[21] ? _alu_dest_io_src2_T_5 : _alu_dest_io_src2_T_28; // @[EXU.scala 64:28]
-  assign alu_dest_io_op = io_op[0] | io_op[1] | io_op[2] | io_op[3] | io_op[7] | io_op[24] | io_op[25] | io_op[36] |
-    io_op[37] | io_op[38] | io_op[39] | io_op[40] | io_op[41] | io_op[42] | io_op[43] | io_op[44] | io_op[45] | io_op[46
-    ] | io_op[47] | io_op[48] ? 19'h1 : _alu_dest_io_op_T_122; // @[EXU.scala 70:28]
+  assign alu_dest_io_op = io_op[0] | io_op[1] | io_op[2] | io_op[3] | io_op[24] | io_op[25] | io_op[36] | io_op[37] |
+    io_op[38] | io_op[39] | io_op[40] | io_op[41] | io_op[42] | io_op[43] | io_op[44] | io_op[45] | io_op[46] | io_op[47
+    ] | io_op[48] ? 19'h1 : _alu_dest_io_op_T_122; // @[EXU.scala 70:28]
   assign alu_pc_io_src1 = io_op[37] ? src1 : io_pc; // @[EXU.scala 105:26]
   assign alu_pc_io_src2 = io_op[30] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_29; // @[EXU.scala 106:26]
   assign alu_pc_io_op = {{8'd0}, _alu_pc_io_op_T_1}; // @[EXU.scala 115:26]

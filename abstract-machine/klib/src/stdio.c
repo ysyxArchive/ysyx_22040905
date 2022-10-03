@@ -3,7 +3,6 @@
 #include <klib-macros.h>
 #include <stdarg.h>
 #include <string.h>
-
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 char *number(char *str,int num){
@@ -27,6 +26,7 @@ int printf(const char *fmt, ...) {
   va_start(ap,fmt);
   len=vsprintf(buf,fmt,ap);
   va_end(ap);
+  if(len>1024){printf("****printf_buffer_overflow****\n");return 0;}
   for(int i=0;i<len;i++){
     putch(buf[i]);
   }

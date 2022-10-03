@@ -2,7 +2,13 @@
 #include<stdio.h>
 #include<assert.h>
 #include"../all.h"
-#include<time.h>
+#include <sys/time.h>
+ 
+long getMicrotime(){
+	struct timeval currentTime;
+	gettimeofday(&currentTime, NULL);
+	return currentTime.tv_sec * (int)1e6 + currentTime.tv_usec;
+}
 
 #define CONFIG_MSIZE 0x8000000
 #define CONFIG_MBASE 0x80000000
@@ -90,17 +96,14 @@ void pmem_write(paddr_t addr, int len, uint64_t data) {
   host_write(guest_to_host(addr), len, data);
 }
 
-time_t tmpcal_ptr;
 //DPI-C
 extern "C" void pmem_read(long long raddr, long long *rdata) {
   if(raddr==RTC_ADDR){
-    time(&tmpcal_ptr);
-    *rdata=tmpcal_ptr%(1ll<<32);
+    *rdata=getMicrotime()%(1ll<<32);
     return;
   }
   if(raddr==RTC_ADDR+4){
-    time(&tmpcal_ptr);
-    *rdata=tmpcal_ptr/(1ll<<32);
+    *rdata=getMicrotime()/(1ll<<32);
     return;
   }
   if(raddr==0) { *rdata=0;return; }

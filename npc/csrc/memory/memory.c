@@ -36,10 +36,13 @@ uint64_t get_pmem_size(){
 uint8_t* get_pmem(){
   return pmem;
 }
+void check_bound(uint32_t p){
+  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("%d\n",p);assert(0);}
+}
 extern "C" void pmem_inst_read(long long pc,int *inst){
     uint32_t p=(uint32_t)pc;
     if(p==0){*inst=0;return;}
-    if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("%d\n",p);assert(0);}
+    check_bound(p);
     *inst=(int)pmem_read(pc,4);
 }
 void pmem_init(char *s){ 
@@ -88,11 +91,13 @@ uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 uint64_t pmem_read(paddr_t addr,int len){
+  check_bound(addr);
   uint64_t ret=host_read(guest_to_host(addr), len);
   return ret;
 }
 
 void pmem_write(paddr_t addr, int len, uint64_t data) {
+  check_bound(addr);
   host_write(guest_to_host(addr), len, data);
 }
 

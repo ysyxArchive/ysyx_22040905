@@ -61,7 +61,7 @@ void exec_once(){
   dump_itrace();
   if (gdb) print_itrace(top->io_pc);
   step_and_dump_wave();
-  difftest_step(pc,top->io_pc);
+  //difftest_step(pc,top->io_pc);
   dump_ftrace();
 //nvboard_update();
 }

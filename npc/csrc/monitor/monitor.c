@@ -16,7 +16,7 @@ void load_elf(char *s){
   elf=s;
   Elf64_Ehdr ehdr[1];
   Elf64_Shdr shdr[2048];
-  Elf64_Sym symtab[400];
+  Elf64_Sym symtab[32768];
   if(elf==NULL){
     printf("No elf is given.\n");
     return;
@@ -32,6 +32,7 @@ void load_elf(char *s){
   int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
   assert(ret!=0);
   int count = ehdr->e_shnum;    //节头表数量
+
   fseek(fp, ehdr->e_shoff, SEEK_SET);
   ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
   assert(ret!=0);

@@ -65,7 +65,7 @@ int func_num=0;
 static void load_elf(){
   Elf64_Ehdr ehdr[1];
   Elf64_Shdr shdr[2048];
-  Elf64_Sym symtab[400];
+  Elf64_Sym symtab[32768];
   if(elf==NULL){
     Log("No elf is given.");
     return;

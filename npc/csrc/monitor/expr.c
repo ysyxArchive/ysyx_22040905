@@ -34,7 +34,7 @@ static struct rule {
   {"&&", TK_AND},                 // and
 
 };
-static uint32_t pr[500];//precedence of operator
+static uint32_t pr[50000];//precedence of operator
 #define NR_REGEX ARRLEN(rules)
 
 static regex_t re[NR_REGEX] = {};

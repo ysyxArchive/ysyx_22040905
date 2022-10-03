@@ -51,14 +51,14 @@ class EXU extends Module{
                      0.U)
       pmem.io.waddr:=Mux(io.op(42)|io.op(43)|io.op(44)|io.op(45),alu_dest.io.result,0.U)
       pmem.io.wdata:=Mux(io.op(42)|io.op(43)|io.op(44)|io.op(45),src2,0.U)
-      pmem.io.wmask:=Mux(io.op(42),Fill(8,1.U),
-                     Mux(io.op(43),Fill(16,1.U),
-                     Mux(io.op(44),Fill(32,1.U),
-                     Mux(io.op(45),Fill(64,1.U),
+      pmem.io.wmask:=Mux(io.op(42),Cat(Fill(63,0.U),Fill(1,1.U)),
+                     Mux(io.op(43),Cat(Fill(62,0.U),Fill(2,1.U)),
+                     Mux(io.op(44),Cat(Fill(60,0.U),Fill(4,1.U)),
+                     Mux(io.op(45),Cat(Fill(56,0.U),Fill(8,1.U)),
                      0.U))))
 
       alu_dest.io.src1:=Mux(io.op(13)|io.op(21)|io.op(23)|io.op(56)|io.op(58)|io.op(60)|io.op(62),Cat(Fill(32,0.U),src1(31,0)),
-                        Mux(io.op(17),Cat(Fill(32,src1(31)),src1(31,0)),
+                        Mux(io.op(17)|io.op(19),Cat(Fill(32,src1(31)),src1(31,0)),
                         Mux(io.op(36)|io.op(37),io.pc,
                         src1)))
       alu_dest.io.src2:=Mux(io.op(13)|io.op(17)|io.op(21),Cat(Fill(59,0.U),src2(4,0)),
@@ -72,9 +72,9 @@ class EXU extends Module{
                         Mux(io.op(6)|io.op(7),4.U,//and
                         Mux(io.op(8)|io.op(9),8.U,//or
                         Mux(io.op(10)|io.op(11),16.U,//xor
-                        Mux(io.op(12)|io.op(13)|io.op(14)|io.op(15)|io.op(19),32.U,//sll
+                        Mux(io.op(12)|io.op(13)|io.op(14)|io.op(15),32.U,//sll
                         Mux(io.op(20)|io.op(21)|io.op(22)|io.op(23),64.U,//srl
-                        Mux(io.op(16)|io.op(17)|io.op(18),128.U,//sra
+                        Mux(io.op(16)|io.op(17)|io.op(18)|io.op(19),128.U,//sra
                         Mux(io.op(26)|io.op(28)|io.op(32)|io.op(34),256.U,//slt
                         Mux(io.op(27)|io.op(29)|io.op(33)|io.op(35),512.U,//sltu
                         Mux(io.op(30)|io.op(31),2048.U,  //eql

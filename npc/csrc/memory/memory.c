@@ -2,9 +2,25 @@
 #include<stdio.h>
 #include<assert.h>
 #include"../all.h"
+#include<time.h>
 
 #define CONFIG_MSIZE 0x8000000
 #define CONFIG_MBASE 0x80000000
+
+#define DEVICE_BASE 0xa0000000
+
+#define MMIO_BASE 0xa0000000
+
+#define SERIAL_PORT     (DEVICE_BASE + 0x00003f8)
+#define KBD_ADDR        (DEVICE_BASE + 0x0000060)
+#define RTC_ADDR        (DEVICE_BASE + 0x0000048)
+#define VGACTL_ADDR     (DEVICE_BASE + 0x0000100)
+#define AUDIO_ADDR      (DEVICE_BASE + 0x0000200)
+#define DISK_ADDR       (DEVICE_BASE + 0x0000300)
+#define FB_ADDR         (MMIO_BASE   + 0x1000000)
+#define AUDIO_SBUF_ADDR (MMIO_BASE   + 0x1200000)
+
+
 typedef uint32_t paddr_t;
 
 static uint8_t pmem[CONFIG_MSIZE] __attribute((aligned(4096))) = {};
@@ -73,8 +89,20 @@ uint64_t pmem_read(paddr_t addr,int len){
 void pmem_write(paddr_t addr, int len, uint64_t data) {
   host_write(guest_to_host(addr), len, data);
 }
+
+time_t tmpcal_ptr;
 //DPI-C
 extern "C" void pmem_read(long long raddr, long long *rdata) {
+  if(raddr==RTC_ADDR){
+    time(&tmpcal_ptr);
+    *rdata=tmpcal_ptr%(1ll<<32);
+    return;
+  }
+  if(raddr==RTC_ADDR+4){
+    time(&tmpcal_ptr);
+    *rdata=tmpcal_ptr/(1ll<<32);
+    return;
+  }
   if(raddr==0) { *rdata=0;return; }
   *rdata=(long long)pmem_read((((uint64_t)raddr)), 8);
   FILE *fp;
@@ -87,6 +115,10 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
   uint64_t addr=waddr;
   uint64_t data=wdata;
   uint8_t mask=wmask;
+  if(addr==0x00a00003f8){
+    printf("%c",(char)data );
+    return;
+  }
   if(mask==0)return;
   int len=0;
   while(mask&1){

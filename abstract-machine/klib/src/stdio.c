@@ -20,7 +20,7 @@ char *number(char *str,int num){
   return str;
 }
 
-static char buf[1024];  
+static char buf[32768];  
 int printf(const char *fmt, ...) {
   va_list ap;
   int len=0;

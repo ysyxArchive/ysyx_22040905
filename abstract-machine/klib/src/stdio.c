@@ -27,7 +27,7 @@ int printf(const char *fmt, ...) {
   va_start(ap,fmt);
   len=vsprintf(buf,fmt,ap);
   va_end(ap);
-  if(len>1024){printf("****printf_buffer_overflow****\n");return 0;}
+  if(len>32768){printf("****printf_buffer_overflow****\n");return 0;}
   for(int i=0;i<len;i++){
     putch(buf[i]);
   }

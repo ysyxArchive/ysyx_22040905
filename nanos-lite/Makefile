@@ -30,5 +30,5 @@ update:
 	@ln -sf $(NAVY_HOME)/build/ramdisk.h src/files.h
 	@ln -sf $(NAVY_HOME)/libs/libos/src/syscall.h src/syscall.h
 
-.PHONY: update
+.PHONY: update 
 endif

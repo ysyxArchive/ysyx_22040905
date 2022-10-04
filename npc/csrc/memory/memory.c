@@ -111,6 +111,7 @@ extern "C" void pmem_read(long long raddr, long long *rdata) {
     *rdata=getMicrotime()/(1ll<<32);
     return;
   }
+  
   if(raddr==0) { *rdata=0;return; }
   *rdata=(long long)pmem_read((((uint64_t)raddr)), 8);
   FILE *fp;

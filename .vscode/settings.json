@@ -22,6 +22,10 @@
         "isa.h": "c",
         "sdl.h": "c",
         "klib-macros.h": "c",
-        "klib.h": "c"
+        "klib.h": "c",
+        "decode.h": "c",
+        "ifetch.h": "c",
+        "reg.h": "c",
+        "common.h": "c"
     }
 }

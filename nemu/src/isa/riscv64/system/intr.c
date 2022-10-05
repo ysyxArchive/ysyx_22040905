@@ -12,6 +12,8 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
     return cpu.mtvec;
   }
   else if(NO==2){
+    cpu.mepc=0;
+    cpu.mcause=0;
     return cpu.mepc;
   }
   return 0;

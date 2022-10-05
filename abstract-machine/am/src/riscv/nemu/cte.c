@@ -4,14 +4,15 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-  for(int i=0;i<32;i++){
+  /*for(int i=0;i<32;i++){
     printf("%lx ",c->gpr[i]);
   }
   printf("\n");
-  printf("%lx %lx %lx\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);
+  printf("%lx %lx %lx\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);*/
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
+      case 0xb: ev.event = EVENT_YIELD; break;
       default: ev.event = EVENT_ERROR; break;
     }
 

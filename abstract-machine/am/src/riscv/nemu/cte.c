@@ -4,12 +4,12 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-  printf("%d\n\n",1232345999967);  
+  printf("%lld\n\n",1232345999967);  
   for(int i=0;i<32;i++){
-    printf("%d ",c->gpr[i]);
+    printf("%lld ",c->gpr[i]);
   }
   printf("\n");
-  printf("%d %d %d\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);
+  printf("%lld %lld %lld\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {

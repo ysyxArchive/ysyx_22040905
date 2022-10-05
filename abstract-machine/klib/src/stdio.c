@@ -7,12 +7,14 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 char *number(char *str,int num){
-  char ss[10]={0};
+  char ss[100]={0};
   int len=0;
   do{
     ss[len++]=num%10+'0';
     num/=10;
-    assert(len<=10);
+    if(len>=100){
+      printf("****number_buffer_overflow****\n");
+    }
   }while(num>0);
   for(int i=0;i<len;i++){
     *str++=ss[len-i-1];

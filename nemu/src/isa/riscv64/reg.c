@@ -11,10 +11,9 @@ const char *regs[] = {
 void isa_reg_display() {
   printf("%s:%lx\n","pc",cpu.pc);
   for(int i=0;i<32;i++){
-    printf("%s:%lx\t\t",reg_name(i,8),gpr(i));
-    if((i+1)%4==0)printf("\n");
+    printf("%s:%lx\n",reg_name(i,8),gpr(i));
   }
-  printf("cpu.mcause:%lx\t\tcpu.mstatus:%lx\t\tcpu.mepc:%lx\n",cpu.mcause,cpu.mstatus, cpu.mepc);
+  printf("cpu.mcause:%lx\ncpu.mstatus:%lx\ncpu.mepc:%lx\n",cpu.mcause,cpu.mstatus, cpu.mepc);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

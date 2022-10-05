@@ -18,7 +18,7 @@ Context* __am_irq_handle(Context *c) {
     printf("%d",c->gpr[i]);
   }
   printf("\n");
-  printf("%d %d %d\n",c->mcause,c->mstatus, c->mepc);
+  printf("%d %d %d\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);
   return c;
 }
 

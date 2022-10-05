@@ -4,7 +4,12 @@
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
-Context* __am_irq_handle(Context *c) {
+Context* __am_irq_handle(Context *c) {  
+  for(int i=0;i<32;i++){
+    printf("%d",c->gpr[i]);
+  }
+  printf("\n");
+  printf("%d %d %d\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
@@ -14,11 +19,7 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
   }
-  for(int i=0;i<32;i++){
-    printf("%d",c->gpr[i]);
-  }
-  printf("\n");
-  printf("%d %d %d\n\n\n\n\n\n\n\n\n\n\n\n\n",c->mcause,c->mstatus, c->mepc);
+
   return c;
 }
 

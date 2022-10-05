@@ -4,7 +4,6 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-  printf("%lld\n\n",1232345999967);  
   for(int i=0;i<32;i++){
     printf("%lld ",c->gpr[i]);
   }

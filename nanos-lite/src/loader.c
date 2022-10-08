@@ -20,7 +20,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr[1];
   Elf_Phdr phdr[2048];
   ramdisk_read(ehdr,0,get_ramdisk_size());
-  printf("%p %p\n",ehdr,&ramdisk_start);
+  //printf("%p %p\n",ehdr,&ramdisk_start);
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
   int num=ehdr->e_phnum;
   memcpy(phdr,ehdr+(ehdr->e_phoff),ehdr->e_phentsize);
@@ -28,14 +28,15 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     if(phdr[i].p_type==PT_LOAD){
       memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);
       memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
-      printf("%p",ehdr+(phdr[i].p_offset));
+      //printf("%p",ehdr+(phdr[i].p_offset));
+      uint64_t t=(uint64_t)(&ramdisk_start);
       for(uint64_t i=0;i<10;i++){
-        //printf("%016lx\n",*((uint64_t *)(+8*i)));
+        printf("%016lx\n",*((uint64_t *)(t+8*i)));
       }
       printf("***************\n");
       memcpy((void *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
       for(uint64_t i=0;i<10;i++){
-        //printf("%016lx\n",*((uint64_t *)((0x83000000)+8*i)));
+        printf("%016lx\n",*((uint64_t *)((0x83000000)+8*i)));
       }
       printf("***************\n");
       //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,vhdr[i].p_paddr,phdr[i].p_filesz,phdr[i].p_memsz);

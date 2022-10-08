@@ -15,19 +15,16 @@ size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t get_ramdisk_size();
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  /*Elf_Ehdr ehdr[1];
+  Elf_Ehdr ehdr[1];
+  /*
   FILE *fp = &ramdisk_start;
   fseek(fp,0,SEEK_SET);
   int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
   assert(ret!=0);
   printf("%lx\n",ehdr->e_ident);
   //assert(*(uint64_t *)ehdr->e_ident == 0xBadC0de);*/
-  char buf[40];
-  int len=ramdisk_read(buf,0,4);
-  for(int i=0;i<len;i++){
-  printf("%c",*(buf+i));
-  }
-  printf("\n");
+  ramdisk_read(ehdr,0,get_ramdisk_size());
+  printf("%s",ehdr->e_ident);
   return 0;//(uint64_t)&ramdisk_start;
 }
 

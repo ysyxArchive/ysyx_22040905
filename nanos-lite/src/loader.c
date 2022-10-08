@@ -28,8 +28,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     if(phdr[i].p_type==PT_LOAD){
       memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);
       memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
-      memcpy((uint8_t *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
-      printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_paddr,phdr[i].p_filesz,phdr[i].p_memsz);
+      ramdisk_write(buf,(phdr[i].p_vaddr),phdr[i].p_memsz);
+      printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_vaddr,phdr[i].p_filesz,phdr[i].p_memsz);
     }
   }
   return (uintptr_t)(0x83000000);

@@ -24,7 +24,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
   int num=ehdr->e_phnum;
   memcpy(phdr,ehdr+(ehdr->e_phoff),ehdr->e_phentsize);
-  uintptr_t t=0;
+  uintptr_t t=0x88000000;
   for(int i=0;i<num;i++){
     if(phdr[i].p_type==PT_LOAD){
       memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);

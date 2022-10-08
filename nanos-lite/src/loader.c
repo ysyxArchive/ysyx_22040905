@@ -21,7 +21,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   printf("%x",ehdr->e_ident[i]);
   printf("\n");
   printf("%x\n",*(uint32_t *)ehdr->e_ident);
-  assert(*(uint32_t *)ehdr->e_ident == 0x7f454c46);
+  assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
   return (uintptr_t)ehdr;
 }
 

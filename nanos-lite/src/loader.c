@@ -28,12 +28,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //printf("%c",*(buf+i));
   //}
   printf("\n");
-  return (uint64_t)&ramdisk_start;
+  return 0;//(uint64_t)&ramdisk_start;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
-  Log("Jump to entry = %p", (void *)entry);
+  //Log("Jump to entry = %p", (void *)entry);
   ((void(*)())entry) ();
 }
 

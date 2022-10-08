@@ -20,7 +20,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr[1];
   Elf_Phdr phdr[2048];
   ramdisk_read(ehdr,0,get_ramdisk_size());
-  //printf("%x\n",*(uint32_t *)ehdr->e_ident);
+  printf("%x\n",*(uint32_t *)ehdr->e_ident);
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
   int num=ehdr->e_phnum;
   memcpy(phdr,ehdr+(ehdr->e_phoff),ehdr->e_phentsize);

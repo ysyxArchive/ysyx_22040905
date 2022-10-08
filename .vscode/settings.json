@@ -26,6 +26,8 @@
         "decode.h": "c",
         "ifetch.h": "c",
         "reg.h": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "proc.h": "c",
+        "memory.h": "c"
     }
 }

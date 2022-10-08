@@ -9,11 +9,13 @@
 # define Elf_Ehdr Elf32_Ehdr
 # define Elf_Phdr Elf32_Phdr
 #endif
-
+extern uint8_t ramdisk_start;
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t get_ramdisk_size();
 
+
+uint8_t buf[131072];
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr[1];
   Elf_Phdr phdr[2048];
@@ -21,10 +23,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //printf("%x\n",*(uint32_t *)ehdr->e_ident);
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
   int num=ehdr->e_phnum;
-  ramdisk_read(phdr,ehdr->e_phoff,ehdr->e_ehsize);
+  memcpy(phdr,ehdr+(ehdr->e_phoff),ehdr->e_phentsize);
   for(int i=0;i<num;i++){
     if(phdr[i].p_type==PT_LOAD){
-      printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_vaddr,phdr[i].p_filesz,phdr[i].p_memsz);
+      memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);
+      memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
+      memcpy((uint8_t *)(0x80000000),buf,phdr[i].p_memsz);
+      //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_vaddr,phdr[i].p_filesz,phdr[i].p_memsz);
     }
   }
   return (uintptr_t)ehdr;

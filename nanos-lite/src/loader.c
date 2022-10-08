@@ -27,7 +27,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for(int i=0;i<4;i++){
   printf("%c",*(ehdr->e_ident+i));
   }
-  return 0;//(uint64_t)&ramdisk_start;
+  return 1;//(uint64_t)&ramdisk_start;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

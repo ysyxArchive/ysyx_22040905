@@ -24,13 +24,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
   int num=ehdr->e_phnum;
   memcpy(phdr,ehdr+(ehdr->e_phoff),ehdr->e_phentsize);
-  uintptr_t t=0x88000000;
+  uintptr_t t=0;
   for(int i=0;i<num;i++){
     if(phdr[i].p_type==PT_LOAD){
       memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);
       memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
       memcpy((uint8_t *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
-      t=t<(phdr[i].p_vaddr)?t:(phdr[i].p_vaddr);
+      t=t>(phdr[i].p_vaddr)?t:(phdr[i].p_vaddr);
       printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_vaddr,phdr[i].p_filesz,phdr[i].p_memsz);
     }
   }

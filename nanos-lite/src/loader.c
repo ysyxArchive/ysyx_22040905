@@ -28,7 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     if(phdr[i].p_type==PT_LOAD){
       memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);
       memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
-      memcpy((uint8_t *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
+      memcpy((void *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
       for(int i=0;i<10;i++){
         printf("%lx\n",*((uint64_t *)(0x83000000)));
       }

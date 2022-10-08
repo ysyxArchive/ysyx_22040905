@@ -25,7 +25,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   char buf[40];
   int len=ramdisk_read(buf,0,4);
   for(int i=0;i<len;i++){
-  printf("%c",*(buf+i));
+  //printf("%c",*(buf+i));
   }
   printf("\n");
   return (uint64_t)&ramdisk_start;
@@ -33,7 +33,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
-  //Log("Jump to entry = %p", (void *)entry);
+  Log("Jump to entry = %p", (void *)entry);
   ((void(*)())entry) ();
 }
 

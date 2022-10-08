@@ -32,6 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_vaddr,phdr[i].p_filesz,phdr[i].p_memsz);
     }
   }
+  printf("%lx\n",(uintptr_t)ehdr);
   return (uintptr_t)ehdr;
 }
 

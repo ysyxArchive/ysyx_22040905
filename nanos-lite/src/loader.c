@@ -25,9 +25,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //assert(*(uint64_t *)ehdr->e_ident == 0xBadC0de);*/
   ramdisk_read(ehdr,0,get_ramdisk_size());
   for(int i=0;i<4;i++){
-  printf("%c",*(ehdr->e_ident+i));
+  //printf("%c",*(ehdr->e_ident+i));
   }
-  return 1;//(uint64_t)&ramdisk_start;
+  return 0;//(uint64_t)&ramdisk_start;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

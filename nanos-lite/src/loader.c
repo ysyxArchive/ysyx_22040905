@@ -22,11 +22,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   assert(ret!=0);
   printf("%lx\n",ehdr->e_ident);
   //assert(*(uint64_t *)ehdr->e_ident == 0xBadC0de);*/
-  char buf[40];
-  int len=ramdisk_read(buf,0,4);
-  for(int i=0;i<len;i++){
+  //char buf[40];
+  //int len=ramdisk_read(buf,0,4);
+  //for(int i=0;i<len;i++){
   //printf("%c",*(buf+i));
-  }
+  //}
   printf("\n");
   return (uint64_t)&ramdisk_start;
 }

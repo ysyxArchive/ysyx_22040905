@@ -28,7 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     if(phdr[i].p_type==PT_LOAD){
       memcpy(buf,ehdr+(phdr[i].p_offset),phdr[i].p_filesz);
       memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
-      ramdisk_write(buf,phdr[i].p_vaddr-ramdisk_start,phdr[i].p_memsz);
+      ramdisk_write(buf,phdr[i].p_vaddr-(uintptr_t)(&ramdisk_start),phdr[i].p_memsz);
       //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,phdr[i].p_vaddr,phdr[i].p_filesz,phdr[i].p_memsz);
     }
   }

@@ -16,12 +16,13 @@ size_t get_ramdisk_size();
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr[1];
+  Elf_Phdr phdr[2048];
   ramdisk_read(ehdr,0,get_ramdisk_size());
-  for(int i=0;i<16;i++)
-  printf("%x",ehdr->e_ident[i]);
-  printf("\n");
   printf("%x\n",*(uint32_t *)ehdr->e_ident);
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
+  //uint64_t num=ehdr->e_phnum;
+  ramdisk_read(phdr,ehdr->e_phoff,ehdr->e_ehsize);
+
   return (uintptr_t)ehdr;
 }
 

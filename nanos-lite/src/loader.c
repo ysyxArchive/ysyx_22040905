@@ -33,14 +33,14 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memcpy((void *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
       printf("%lx %lx\n",ehdr->e_phoff+(phdr[i].p_offset),phdr[i].p_filesz);
       for(uint64_t j=0;j<phdr[i].p_memsz;j++){ 
-      printf("%02x",buf[j]);
-      if((j+1)%16==0)printf("\n");
+      //printf("%02x",buf[j]);
+      //if((j+1)%16==0)printf("\n");
       }
       printf("************\n");
       //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,vhdr[i].p_paddr,phdr[i].p_filesz,phdr[i].p_memsz);
     }
   }
-  return (uintptr_t)(0x83000000);
+  return (uintptr_t)(ehdr->e_entry);
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

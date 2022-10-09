@@ -28,6 +28,8 @@
         "reg.h": "c",
         "common.h": "c",
         "proc.h": "c",
-        "memory.h": "c"
+        "memory.h": "c",
+        "map.h": "c",
+        "debug.h": "c"
     }
 }

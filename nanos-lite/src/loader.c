@@ -28,7 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memcpy(buf,ehdr+ehdr->e_phoff+(phdr[i].p_offset),phdr[i].p_filesz);
       memset(buf+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
       memcpy((void *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
-      printf("%lx %lx\n",phdr[i].p_filesz,phdr[i].p_memsz);
+      printf("%p %lx\n",ehdr+ehdr->e_phoff+(phdr[i].p_offset),phdr[i].p_filesz);
       for(uint64_t j=0;j<phdr[i].p_memsz;j++){ 
       printf("%02x",buf[j]);
       if((j+1)%16==0)printf("\n");

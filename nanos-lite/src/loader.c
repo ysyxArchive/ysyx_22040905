@@ -31,7 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       printf("%lx %lx\n",phdr[i].p_filesz,phdr[i].p_memsz);
       for(uint64_t j=0;j<phdr[i].p_memsz;j++){ 
       printf("%02x",buf[j]);
-      if((j+1)%4==0)printf("\n");
+      if((j+1)%16==0)printf("\n");
       }
       printf("************\n");
       //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,vhdr[i].p_paddr,phdr[i].p_filesz,phdr[i].p_memsz);

@@ -7,7 +7,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
    */
   if(NO==1){
     cpu.mepc=epc;
-    if(epc>0x83000000)cpu.mcause=0xb;
+    if(epc<0x83000000)cpu.mcause=0xb;
     else cpu.mcause=0x3;
 #ifdef CONFIG_ETRACE	  
 	FILE *fp;

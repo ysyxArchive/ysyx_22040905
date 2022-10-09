@@ -30,7 +30,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memcpy((void *)(phdr[i].p_vaddr),buf,phdr[i].p_memsz);
       printf("%lx %lx\n",phdr[i].p_filesz,phdr[i].p_memsz);
       for(uint64_t i=0;i<phdr[i].p_memsz;i++){ 
-      printf("%x\n",buf[i]);
+      printf("%x\n",buf[4]);
       }
       printf("************\n");
       //printf("%lx\t%lx\t%lx\t%lx\n",phdr[i].p_offset,vhdr[i].p_paddr,phdr[i].p_filesz,phdr[i].p_memsz);

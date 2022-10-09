@@ -14,9 +14,10 @@ size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t get_ramdisk_size();
 
-
-char buf[1048576];
+#define BUF_SIZE 1048576
+char buf[BUF_SIZE];
 static uintptr_t loader(PCB *pcb, const char *filename) {
+  assert(BUF_SIZE>=get_ramdisk_size());
   ramdisk_read(buf,0,get_ramdisk_size());
   Elf_Ehdr* ehdr=(Elf_Ehdr*)buf;
   Elf_Phdr* phdr=(Elf_Phdr*)(buf+ehdr->e_phoff);
@@ -24,9 +25,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for(unsigned i=0;i<ehdr->e_phnum;i++){
     if(phdr[i].p_type==PT_LOAD &&phdr[i].p_memsz){
       if(phdr[i].p_filesz){
-        memcpy((void *)phdr[i].p_vaddr,(uint8_t*)buf+phdr[i].p_offset,phdr[i].p_filesz);
+        memcpy((uint8_t *)phdr[i].p_vaddr,(uint8_t*)buf+phdr[i].p_offset,phdr[i].p_filesz);
       }
-      memset((void *)phdr[i].p_vaddr+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
+      memset((uint8_t *)phdr[i].p_vaddr+phdr[i].p_filesz,0,phdr[i].p_memsz-phdr[i].p_filesz);
     }
   }
 

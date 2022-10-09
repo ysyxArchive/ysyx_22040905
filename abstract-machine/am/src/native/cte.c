@@ -18,7 +18,6 @@ void __am_panic_on_return() { panic("should not reach here\n"); }
 static void irq_handle(Context *c) {
   c->vm_head = thiscpu->vm_head;
   c->ksp = thiscpu->ksp;
-
   if (thiscpu->ev.event == EVENT_ERROR) {
     uintptr_t rip = c->uc.uc_mcontext.gregs[REG_RIP];
     printf("Unhandle signal '%s' at rip = %p, badaddr = %p, cause = 0x%x\n",

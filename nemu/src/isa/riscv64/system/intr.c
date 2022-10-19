@@ -21,7 +21,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   }
   else if(NO==1){
     cpu.mepc=epc;
-    cpu.mcause=0xb;
+    cpu.mcause=0x3;
     return cpu.mtvec;
   }
   else if(NO==0){

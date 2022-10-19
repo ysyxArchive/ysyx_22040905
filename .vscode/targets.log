@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Oct 19 21:24:27 2022
+# Make data base, printed on Wed Oct 19 23:59:18 2022
 
 # Variables
 
@@ -110,7 +110,7 @@ SNAP_REEXEC =
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 2821
+VSCODE_PID = 30665
 # environment
 SDKMAN_DIR = /home/agustin/.sdkman
 # environment
@@ -244,7 +244,7 @@ MANAGERPID = 1050
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2727
+GIO_LAUNCHED_DESKTOP_FILE_PID = 30618
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -398,6 +398,6 @@ all:
 # strcache performance: lookups = 37 / hit rate = 29%
 # hash-table stats:
 # Load=26/8192=0%, Rehash=0, Collisions=0/37=0%
-# Finished Make data base on Wed Oct 19 21:24:27 2022
+# Finished Make data base on Wed Oct 19 23:59:18 2022
 
  

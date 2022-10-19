@@ -2,8 +2,8 @@
 #include "syscall.h"
 
 size_t SYS_yield(){
-  yield();
   printf("111\n");
+  yield();
   return 0;
 }
 

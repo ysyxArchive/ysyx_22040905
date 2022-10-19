@@ -3,6 +3,8 @@
 
 size_t SYS_yield(){
   yield();
+  
+printf("111\n");
   return 0;
 }
 

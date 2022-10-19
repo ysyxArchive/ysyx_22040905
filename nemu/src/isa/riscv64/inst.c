@@ -125,7 +125,7 @@ static int decode_exec(Decode *s) {
 
   INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, R(dest)=CSR(src2);CSR(src2)=src1);
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, R(dest)=CSR(src2);CSR(src2)=CSR(src2)|src1);
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc=isa_raise_intr(R(17),s->pc);printf("%lx\n%lx\n%lx\n%lx\n",R(10),R(11),R(12),R(17)););
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, printf("%lx\n%lx\n%lx\n%lx\n",R(10),R(11),R(12),R(17));s->dnpc=isa_raise_intr(R(17),s->pc););
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc=isa_raise_intr(0,s->pc));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));

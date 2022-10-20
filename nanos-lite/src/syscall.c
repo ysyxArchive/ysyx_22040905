@@ -17,7 +17,7 @@ size_t SYS_write(int fd,uintptr_t *buf,size_t count){
   for(;i<count&&((*(buf+i))!='\0');i++){
   putch(*(buf+i));
   } 
-  printf("\n%c\n",*buf);
+  printf("\n%c\n",*buf+1);
   return i;
 }
 

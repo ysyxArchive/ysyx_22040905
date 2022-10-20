@@ -28,7 +28,7 @@ void do_syscall(Context *c) {
   switch(a[0]){
     case 0: printf("SYS_exit(%lx)\n",c->GPRx);break;
     case 1: printf("SYS_yield()\n");break;
-    case 4: printf("\nSYS_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
+    case 4: printf("SYS_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
   }
 #endif
 

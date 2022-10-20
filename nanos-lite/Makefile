@@ -25,11 +25,11 @@ ifeq ($(wildcard $(NAVY_HOME)/libs/libos/src/syscall.h),)
 endif
 
 ifeq ($(wildcard build/strace.txt),)
-	@echo "1"
+	@echo "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
 	@rm -rf build/strace.txt
 	@touch build/strace.txt
 else
-	@echo "2"
+	@echo "22222222222222222222222222222222222222222222222222222222222222222222222222222222222"
 	@touch build/strace.txt
 endif
 

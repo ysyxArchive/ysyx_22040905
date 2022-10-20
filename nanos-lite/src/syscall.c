@@ -18,7 +18,7 @@ size_t SYS_write(int fd,const void *buf,size_t count){
   for(;i<count&&((*(buff+i))!='\0');i++){
   putch(*(buff+i));
   } 
-  return i;
+  return i+1;
 }
 
 void do_syscall(Context *c) {

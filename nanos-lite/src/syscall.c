@@ -13,8 +13,8 @@ size_t SYS_exit(uintptr_t code){
 
 size_t SYS_write(int fd,uintptr_t *buf,size_t count){
   printf("%d\n",fd);
-  if((fd!=1)||(fd!=2)) return -1;//error
-  printf("1\n");
+  if(!((fd==1)||(fd==2))) return -1;//error
+  printf("2\n");
   int i=0;
   for(;i<count&&((*(buf+i))!='\0');i++){
   putch(*(buf+i));

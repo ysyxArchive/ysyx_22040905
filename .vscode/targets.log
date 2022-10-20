@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Oct 20 13:18:39 2022
+# Make data base, printed on Thu Oct 20 13:44:58 2022
 
 # Variables
 
@@ -281,7 +281,6 @@ IM_CONFIG_PHASE = 1
 PAPERSIZE = letter
 # default
 .RECIPEPREFIX := 
- 
 # automatic
 <F = $(notdir $<)
 # environment
@@ -368,6 +367,7 @@ Makefile:
 
 # Not a target:
 .DEFAULT:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -398,6 +398,6 @@ all:
 # strcache performance: lookups = 37 / hit rate = 29%
 # hash-table stats:
 # Load=26/8192=0%, Rehash=0, Collisions=0/37=0%
-# Finished Make data base on Thu Oct 20 13:18:39 2022
+# Finished Make data base on Thu Oct 20 13:44:58 2022
 
  

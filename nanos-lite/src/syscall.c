@@ -15,10 +15,13 @@ size_t SYS_write(int fd,const void *buf,size_t count){
   char *buff=(char *)buf;
   if(!((fd==1)||(fd==2))) return -1;//error
   int i=0;
-  for(;((*(buff+i))!='\0');i++){
+  for(;i<count&&((*(buff+i))!='\0');i++){
   putch(*(buff+i));
   } 
   return i+1;
+}
+int SYS_brk(void *addr){
+  return 0;
 }
 
 void do_syscall(Context *c) {
@@ -33,9 +36,10 @@ void do_syscall(Context *c) {
 #endif
 
   switch (a[0]) {
-    case 0: SYS_exit(c->GPRx);break;
+    case 0: c->GPRx=SYS_exit(c->GPRx);break;
     case 1: c->GPRx=SYS_yield();break;
-    case 4: c->GPRx=SYS_write(c->GPR2,(void *)c->GPR3,c->GPR4);break; 
+    case 4: c->GPRx=SYS_write(c->GPR2,(void *)c->GPR3,c->GPR4);break;
+    case 9: c->GPRx=SYS_brk((void *)c->GPR2);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }

@@ -31,6 +31,10 @@
         "memory.h": "c",
         "map.h": "c",
         "debug.h": "c",
-        "riscv.h": "c"
+        "riscv.h": "c",
+        "unistd.h": "c",
+        "vfprintf.h": "c",
+        "newlib.h": "c",
+        "stat.h": "c"
     }
 }

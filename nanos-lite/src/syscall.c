@@ -14,8 +14,8 @@ size_t SYS_exit(uintptr_t code){
 size_t SYS_write(int fd,uintptr_t *buf,size_t count){
   if(fd!=1||fd!=2) return -1;//error
   int i=0;
-  for(;i<count&&((*(buf+i))!='\0');i++){
   printf("%c",*(buf+i));
+  for(;i<count&&((*(buf+i))!='\0');i++){
   putch(*(buf+i));
   } 
   return i;

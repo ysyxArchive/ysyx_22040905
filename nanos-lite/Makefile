@@ -24,15 +24,6 @@ ifeq ($(wildcard $(NAVY_HOME)/libs/libos/src/syscall.h),)
   $(error $$NAVY_HOME must be a Navy-apps repo)
 endif
 
-ifeq ($(wildcard build/strace.txt),)
-	@echo "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
-	@rm -rf build/strace.txt
-	@touch build/strace.txt
-else
-	@echo "22222222222222222222222222222222222222222222222222222222222222222222222222222222222"
-	@touch build/strace.txt
-endif
-
 update:
 	$(MAKE) -s -C $(NAVY_HOME) ISA=$(ISA) ramdisk
 	@ln -sf $(NAVY_HOME)/build/ramdisk.img $(RAMDISK_FILE)

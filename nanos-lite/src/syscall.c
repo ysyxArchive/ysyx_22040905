@@ -32,7 +32,7 @@ void do_syscall(Context *c) {
     case 0: printf("SYS_exit(%lx)\n",c->GPRx);break;
     case 1: printf("SYS_yield()\n");break;
     case 4: printf("SYS_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
-    case 9: printf("SYS_brk(%lx)",c->GPR2);break;
+    case 9: printf("SYS_brk(%lx)\n",c->GPR2);break;
   }
 #endif
 

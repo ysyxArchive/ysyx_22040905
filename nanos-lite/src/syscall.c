@@ -15,8 +15,8 @@ void do_syscall(Context *c) {
   a[0] = c->GPR1;
 #ifdef STRACE
   switch(a[0]){
-    case 0: printf("SYS_exit(%lx)\n",c->GPRx);
-    case 1: printf("SYS_yield()\n");
+    case 0: printf("SYS_exit(%lx)\n",c->GPRx);break;
+    case 1: printf("SYS_yield()\n");break;
   }
 #endif
 

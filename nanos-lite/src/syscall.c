@@ -15,7 +15,7 @@ size_t SYS_write(int fd,const void *buf,size_t count){
   char *buff=(char *)buf;
   if(!((fd==1)||(fd==2))) return -1;//error
   int i=0;
-  for(;i<count&&((*(buff+i))!='\0');i++){
+  for(;((*(buff+i))!='\0');i++){
   putch(*(buff+i));
   } 
   return i+1;

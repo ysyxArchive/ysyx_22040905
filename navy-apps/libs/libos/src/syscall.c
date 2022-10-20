@@ -68,7 +68,7 @@ extern char _end;
 intptr_t _program_break=0;
 void *_sbrk(intptr_t increment) {
   char buf[100000];
-  sprintf(buf,"%x\n",_end);
+  sprintf(buf,"%10p\n",&_end);
   _write(1,buf,1000);
   if(_program_break==0)_program_break=_end;
   if(_syscall_(SYS_brk,_program_break+increment,0,0)==0){

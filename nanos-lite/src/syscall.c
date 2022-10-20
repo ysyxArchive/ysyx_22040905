@@ -18,7 +18,6 @@ size_t SYS_write(int fd,const void *buf,size_t count){
   for(;i<count&&((*(buff+i))!='\0');i++){
   putch(*(buff+i));
   } 
-  printf("\n%c\n",*(buff+8));
   return i;
 }
 

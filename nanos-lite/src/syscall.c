@@ -23,14 +23,6 @@ size_t SYS_write(int fd,uintptr_t *buf,size_t count){
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
-
-
-  switch (a[0]) {
-    case 0: SYS_exit(c->GPRx);break;
-    case 1: c->GPRx=SYS_yield();break;
-    case 4: c->GPRx=SYS_write(c->GPR2,(uintptr_t *)c->GPR3,c->GPR4);break; 
-    default: panic("Unhandled syscall ID = %d", a[0]);
-  }
 #ifdef STRACE
   switch(a[0]){
     case 0: printf("SYS_exit(%lx)\n",c->GPRx);break;
@@ -38,4 +30,11 @@ void do_syscall(Context *c) {
     case 4: printf("\nSYS_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
   }
 #endif
+
+  switch (a[0]) {
+    case 0: SYS_exit(c->GPRx);break;
+    case 1: c->GPRx=SYS_yield();break;
+    case 4: c->GPRx=SYS_write(c->GPR2,(uintptr_t *)c->GPR3,c->GPR4);break; 
+    default: panic("Unhandled syscall ID = %d", a[0]);
+  }
 }

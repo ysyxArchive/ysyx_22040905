@@ -65,12 +65,9 @@ int _write(int fd, void *buf, size_t count) {
   return 0;
 }
 extern char _end;
-intptr_t _program_break=0;
+intptr_t _program_break=(intptr_t)&_end;
 void *_sbrk(intptr_t increment) {
-  char buf[100000];
-  sprintf(buf,"%10p\n",&_end);
-  _write(1,buf,1000);
-  if(_program_break==0)_program_break=_end;
+  //if(_program_break==0)_program_break=&_end;
   if(_syscall_(SYS_brk,_program_break+increment,0,0)==0){
     intptr_t ret=_program_break;
     _program_break+=increment;

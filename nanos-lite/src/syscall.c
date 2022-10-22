@@ -32,7 +32,8 @@ size_t sys_close(uintptr_t fd){
 size_t sys_lseek(uintptr_t fd, uintptr_t offset, uintptr_t whence){
   return fs_lseek((int) fd, (size_t) offset, (int) whence);
 }
-uintptr_t program_break=0;
+extern char _end;
+intptr_t program_break=(intptr_t)&_end;
 size_t sys_brk(void *addr){
   program_break=(uintptr_t)addr;
   return 0;

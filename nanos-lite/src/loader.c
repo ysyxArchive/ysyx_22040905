@@ -19,7 +19,6 @@ size_t get_file_size(int fd);
 char buf[BUF_SIZE];
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd=fs_open(filename,0,0);
-  printf("%x\n\n",fd);
   fs_read(fd,buf,get_file_size(fd));
   fs_close(fd);
   Elf_Ehdr* ehdr=(Elf_Ehdr*)buf;

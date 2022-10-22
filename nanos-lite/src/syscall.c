@@ -21,13 +21,7 @@ size_t sys_read(uintptr_t fd,uintptr_t buf,uintptr_t len){
 }
 
 size_t sys_write(int fd,const void *buf,size_t count){
-  char *buff=(char *)buf;
-  if(!((fd==1)||(fd==2))) return -1;//error
-  int i=0;
-  for(;i<count&&((*(buff+i))!='\0');i++){
-  putch(*(buff+i));
-  } 
-  return i+1;
+  return fs_write(fd,buf,count);
 }
 
 size_t sys_close(uintptr_t fd){

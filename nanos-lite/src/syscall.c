@@ -45,10 +45,10 @@ void do_syscall(Context *c) {
     case 0: printf("sys_exit(%lx)\n",c->GPRx);break;
     case 1: printf("sys_yield\n");break;
     case 2: printf("sys_open(%s,%lx,%lx)\n",(char *)c->GPR2,c->GPR3,c->GPR4);break;
-    case 3: printf("sys_read(%lx,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
-    case 4: printf("sys_write(%lx,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 3: printf("sys_read(%s,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 4: printf("sys_write(%s,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
     case 7: printf("sys_close(%lx)\n",fd_name(c->GPR2));break;
-    case 8: printf("sys_lseek(%lx,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 8: printf("sys_lseek(%s,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
     case 9: printf("sys_brk(%lx)\n",c->GPR2);break;
   }
 #endif

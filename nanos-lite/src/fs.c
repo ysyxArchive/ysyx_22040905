@@ -52,11 +52,13 @@ size_t fs_read(int fd, void *buf, size_t len){
   return len;
 }
 size_t fs_write(int fd, const void *buf, size_t len){
+  int i=0;
   if(fd==FD_STDOUT||fd==FD_STDERR){
     char *buff=(char *)buf;
-    for(int i=0;i<len&&(*(buff+i)!='\0');i++){
+    for(;i<len&&(*(buff+i)!='\0');i++){
       putch(*(buff+i));
     }
+    return i;
   }
   else{
     assert(file_table[fd].open_offset+len<=file_table[fd].size);

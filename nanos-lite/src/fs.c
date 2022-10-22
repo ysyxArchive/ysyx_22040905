@@ -32,13 +32,13 @@ static Finfo file_table[] __attribute__((used)) = {
 };
 
 int fs_open(const char *pathname, int flags, int mode){
-    for(int i=FD_FB;i<sizeof(file_table) / sizeof(file_table[0]);i++)
-    {
-      if(strcmp(file_table[i].name,pathname)==0){
-        printf("%s %s\n",file_table[i].name,pathname);
-      }
+  for(int i=FD_FB;i<sizeof(file_table) / sizeof(file_table[0]);i++)
+  {
+    if(strcmp(file_table[i].name,pathname)==0){
+      return i;
     }
-    return 0;
+  }
+  assert(0);
 }
 size_t fs_read(int fd, void *buf, size_t len);
 size_t fs_write(int fd, const void *buf, size_t len);

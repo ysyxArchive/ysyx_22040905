@@ -14,13 +14,13 @@ extern uint8_t ramdisk_start;
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t get_ramdisk_size();
+size_t get_file_size(int fd);
 
 #define BUF_SIZE 1048576
 char buf[BUF_SIZE];
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  fs_open("/share/music/rhythm/Fa.ogg",1,1);
-  assert(BUF_SIZE>=get_ramdisk_size());
-  ramdisk_read(buf,0,get_ramdisk_size());
+  int fd=fs_open(filename,0,0);
+  fs_read(fd,buf,get_file_size(fd));
   Elf_Ehdr* ehdr=(Elf_Ehdr*)buf;
   Elf_Phdr* phdr=(Elf_Phdr*)(buf+ehdr->e_phoff);
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);

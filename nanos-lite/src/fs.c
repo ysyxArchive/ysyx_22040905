@@ -3,6 +3,9 @@
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
+size_t ramdisk_read(void *buf, size_t offset, size_t len);
+size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+
 typedef struct {
   char *name;
   size_t size;
@@ -40,11 +43,18 @@ int fs_open(const char *pathname, int flags, int mode){
   }
   assert(0);
 }
-size_t fs_read(int fd, void *buf, size_t len);
+size_t fs_read(int fd, void *buf, size_t len){
+  assert(len<=file_table[fd].size);
+  ramdisk_read(buf,file_table[fd].disk_offset,len);
+  return len;
+}
 size_t fs_write(int fd, const void *buf, size_t len);
 size_t fs_lseek(int fd, size_t offset, int whence);
 int fs_close(int fd){
   return 0;
+}
+size_t get_file_size(int fd){
+  return file_table[fd].size;
 }
 void init_fs() {
   // TODO: initialize the size of /dev/fb

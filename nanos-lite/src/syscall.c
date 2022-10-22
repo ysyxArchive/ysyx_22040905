@@ -53,7 +53,7 @@ void do_syscall(Context *c) {
     case 3: printf("sys_read(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
     case 4: printf("sys_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
     case 7: printf("sys_close(%lx)\n",c->GPR2);break;
-    case 8: printf("sys_lseek(%lx,%lx,%lx)",c->GPR2,c->GPR3,c->GPR4);break;
+    case 8: printf("sys_lseek(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
     case 9: printf("sys_brk(%lx)\n",c->GPR2);break;
   }
 #endif

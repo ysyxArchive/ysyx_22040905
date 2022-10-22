@@ -1,5 +1,7 @@
 #include <common.h>
 #include "syscall.h"
+extern void do_syscall(Context *c);
+
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case 1: printf("YIELD\n");break;

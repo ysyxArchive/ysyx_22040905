@@ -2,6 +2,7 @@
 #include "syscall.h"
 #include <fs.h>
 
+
 size_t sys_exit(uintptr_t code){
   halt(code);
   return 0;
@@ -44,10 +45,10 @@ void do_syscall(Context *c) {
     case 0: printf("sys_exit(%lx)\n",c->GPRx);break;
     case 1: printf("sys_yield\n");break;
     case 2: printf("sys_open(%s,%lx,%lx)\n",(char *)c->GPR2,c->GPR3,c->GPR4);break;
-    case 3: printf("sys_read(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
-    case 4: printf("sys_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
-    case 7: printf("sys_close(%lx)\n",c->GPR2);break;
-    case 8: printf("sys_lseek(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
+    case 3: printf("sys_read(%lx,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 4: printf("sys_write(%lx,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 7: printf("sys_close(%lx)\n",fd_name(c->GPR2));break;
+    case 8: printf("sys_lseek(%lx,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
     case 9: printf("sys_brk(%lx)\n",c->GPR2);break;
   }
 #endif
@@ -57,7 +58,7 @@ void do_syscall(Context *c) {
     case 1: c->GPRx=sys_yield();break;
     case 2: c->GPRx=sys_open(c->GPR2,c->GPR3,c->GPR4);break;
     case 3: c->GPRx=sys_read(c->GPR2,c->GPR3,c->GPR4);break;
-    case 4: c->GPRx=sys_write(c->GPR2,(void *)c->GPR3,c->GPR4);printf("\n%x\n",c->GPRx);break;
+    case 4: c->GPRx=sys_write(c->GPR2,(void *)c->GPR3,c->GPR4);break;
     case 7: c->GPRx=sys_close(c->GPR2);break;
     case 8: c->GPRx=sys_lseek(c->GPR2,c->GPR3,c->GPR4);break;
     case 9: c->GPRx=sys_brk((void *)c->GPR2);break;

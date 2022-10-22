@@ -86,6 +86,9 @@ int fs_close(int fd){
 size_t get_file_size(int fd){
   return file_table[fd].size;
 }
+char *fd_name(int fd){
+  return file_table[fd].name;
+}
 void init_fs() {
   // TODO: initialize the size of /dev/fb
 }

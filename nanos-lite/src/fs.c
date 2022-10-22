@@ -34,7 +34,7 @@ static Finfo file_table[] __attribute__((used)) = {
 int fs_open(const char *pathname, int flags, int mode){
     for(int i=FD_FB;i<sizeof(file_table) / sizeof(file_table[0]);i++)
     {
-      printf("%s\n",file_table[i]);
+      printf("%s\n",file_table[i].name);
     }
     return 0;
 }

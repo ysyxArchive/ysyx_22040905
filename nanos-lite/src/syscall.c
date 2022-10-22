@@ -1,17 +1,17 @@
 #include <common.h>
 #include "syscall.h"
 
-size_t SYS_yield(){
+size_t sys_yield(){
   yield();
   return 0;
 }
 
-size_t SYS_exit(uintptr_t code){
+size_t sys_exit(uintptr_t code){
   halt(code);
   return 0;
 }
 
-size_t SYS_write(int fd,const void *buf,size_t count){
+size_t sys_write(int fd,const void *buf,size_t count){
   char *buff=(char *)buf;
   if(!((fd==1)||(fd==2))) return -1;//error
   int i=0;
@@ -20,7 +20,7 @@ size_t SYS_write(int fd,const void *buf,size_t count){
   } 
   return i+1;
 }
-int SYS_brk(void *addr){
+int sys_brk(void *addr){
   return 0;
 }
 
@@ -29,18 +29,18 @@ void do_syscall(Context *c) {
   a[0] = c->GPR1;
 #ifdef STRACE
   switch(a[0]){
-    case 0: printf("SYS_exit(%lx)\n",c->GPRx);break;
-    case 1: printf("SYS_yield()\n");break;
-    case 4: printf("SYS_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
-    case 9: printf("SYS_brk(%lx)\n",c->GPR2);break;
+    case 0: printf("sys_exit(%lx)\n",c->GPRx);break;
+    case 1: printf("sys_yield()\n");break;
+    case 4: printf("sys_write(%lx,%lx,%lx)\n",c->GPR2,c->GPR3,c->GPR4);break;
+    case 9: printf("sys_brk(%lx)\n",c->GPR2);break;
   }
 #endif
 
   switch (a[0]) {
-    case 0: c->GPRx=SYS_exit(c->GPRx);break;
-    case 1: c->GPRx=SYS_yield();break;
-    case 4: c->GPRx=SYS_write(c->GPR2,(void *)c->GPR3,c->GPR4);break;
-    case 9: c->GPRx=SYS_brk((void *)c->GPR2);break;
+    case 0: c->GPRx=sys_exit(c->GPRx);break;
+    case 1: c->GPRx=sys_yield();break;
+    case 4: c->GPRx=sys_write(c->GPR2,(void *)c->GPR3,c->GPR4);break;
+    case 9: c->GPRx=sys_brk((void *)c->GPR2);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }

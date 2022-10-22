@@ -11,8 +11,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 extern uint8_t ramdisk_start;
-size_t ramdisk_read(void *buf, size_t offset, size_t len);
-size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+
 size_t get_ramdisk_size();
 size_t get_file_size(int fd);
 
@@ -21,6 +20,7 @@ char buf[BUF_SIZE];
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd=fs_open(filename,0,0);
   fs_read(fd,buf,get_file_size(fd));
+  fs_close(fd);
   Elf_Ehdr* ehdr=(Elf_Ehdr*)buf;
   Elf_Phdr* phdr=(Elf_Phdr*)(buf+ehdr->e_phoff);
   assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);

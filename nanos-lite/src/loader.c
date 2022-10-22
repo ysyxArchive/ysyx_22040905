@@ -1,6 +1,7 @@
 #include <proc.h>
 #include <elf.h>
 #include <stdio.h>
+#include <fs.h>
 
 #ifdef __LP64__
 # define Elf_Ehdr Elf64_Ehdr
@@ -17,6 +18,7 @@ size_t get_ramdisk_size();
 #define BUF_SIZE 1048576
 char buf[BUF_SIZE];
 static uintptr_t loader(PCB *pcb, const char *filename) {
+  fs_open("cc",1,1);
   assert(BUF_SIZE>=get_ramdisk_size());
   ramdisk_read(buf,0,get_ramdisk_size());
   Elf_Ehdr* ehdr=(Elf_Ehdr*)buf;

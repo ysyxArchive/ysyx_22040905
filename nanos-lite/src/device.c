@@ -32,6 +32,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   char buff[100];
   sprintf(buff,"k%c %s\n",kbd.keydown?'d':'u',keyname[kbd.keycode]);
   int lenn=strlen(buff);
+  printf("%d %d\n",lenn,len);
   assert(lenn>len);
   strcpy((char *)buf+offset,buff);
   return lenn;

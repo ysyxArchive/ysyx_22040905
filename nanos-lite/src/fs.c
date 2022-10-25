@@ -55,7 +55,13 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 size_t fs_write(int fd, const void *buf, size_t len){
   if(file_table[fd].write!=NULL){
-    return file_table[fd].write(buf,0,len);
+    //return file_table[fd].write(buf,0,len);
+  int i=0;
+  char *buff=(char *)buf;
+  for(;i<len&&(*(buff+i)!='\0');i++){
+    putch(*(buff+i));
+  }
+  return i;
   }
   else{
     assert(file_table[fd].open_offset+len<=program_break);

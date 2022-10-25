@@ -1,7 +1,7 @@
 #include <common.h>
 #include "syscall.h"
 #include <fs.h>
-
+#include "time.h"
 
 size_t sys_exit(uintptr_t code){
   halt(code);
@@ -31,6 +31,16 @@ size_t sys_close(uintptr_t fd){
 
 size_t sys_lseek(uintptr_t fd, uintptr_t offset, uintptr_t whence){
   return fs_lseek((int) fd, (size_t) offset, (int) whence);
+}
+
+int sys_gettimeofday(uintptr_t v,uintptr_t z){
+  struct timeval *tv=(struct timeval *)v;
+  struct timezone *tz=(struct timezone *)z;
+  ioe_read(AM_TIMER_UPTIME,&(tv->tv_usec));
+  tv->tv_sec=tv->tv_usec/1000000;
+  tz->tz_minuteswest=0;
+  tz->tz_dsttime=0;
+  return 1;
 }
 extern char _end;
 intptr_t program_break=(intptr_t)&_end;
@@ -64,6 +74,7 @@ void do_syscall(Context *c) {
     case 7: c->GPRx=sys_close(c->GPR2);break;
     case 8: c->GPRx=sys_lseek(c->GPR2,c->GPR3,c->GPR4);break;
     case 9: c->GPRx=sys_brk((void *)c->GPR2);break;
+    case 19:c->GPRx=sys_gettimeofday(c->GPR2,c->GPR3);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }

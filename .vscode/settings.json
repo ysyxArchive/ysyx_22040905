@@ -36,6 +36,7 @@
         "vfprintf.h": "c",
         "newlib.h": "c",
         "stat.h": "c",
-        "elf.h": "c"
+        "elf.h": "c",
+        "time.h": "c"
     }
 }

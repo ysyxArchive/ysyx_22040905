@@ -4,7 +4,7 @@
 int main() {
   NDL_Init(0);
   uint32_t ms=NDL_GetTicks();
-  double t=0; 
+  float t=0; 
   while (1) {
     if (NDL_GetTicks()-ms>=1000000) {
       t+=0.5;

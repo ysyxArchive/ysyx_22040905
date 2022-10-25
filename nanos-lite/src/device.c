@@ -13,7 +13,10 @@ static const char *keyname[256] __attribute__((used)) = {
   [AM_KEY_NONE] = "NONE",
   AM_KEYS(NAME)
 };
-
+struct AM_INPUT_KEYBRD_T{ 
+  bool keydown;
+  int keycode;
+}kbd;
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   int i=0;
   char *buff=(char *)buf;
@@ -24,7 +27,14 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  ioe_read(AM_INPUT_KEYBRD,&kbd);
+  if(kbd.keycode==AM_KEY_NONE) return 0;
+  char buff[100];
+  sprintf(buff,"k%c %s\n",kbd.keydown?'d':'u',keyname[kbd.keycode]);
+  int lenn=strlen(buff);
+  assert(lenn>len);
+  strcpy((char *)buf+offset,buff);
+  return lenn;
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {

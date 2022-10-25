@@ -8,8 +8,7 @@ int main() {
     if (NDL_PollEvent(buf, sizeof(buf))) {
       int l=0;
       for(int i=0;buf[i]!='\0';i++){
-        if(buf[i]=='\n'){l++;
-        printf("i:%d\n",i);}
+        if(buf[i]=='\n'){l++;}
       }
       printf("receive event: %s\n", buf);
     }

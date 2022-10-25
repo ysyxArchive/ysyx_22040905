@@ -33,7 +33,7 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
 #include "files.h"
 };
 
@@ -54,8 +54,7 @@ size_t fs_read(int fd, void *buf, size_t len){
   return len;
 }
 size_t fs_write(int fd, const void *buf, size_t len){
-  if(fd==1||fd==2){//file_table[fd].write!=NULL){
-    //return file_table[fd].write(buf,0,len);
+  if((fd==1)||(fd==2)){
   int i=0;
   char *buff=(char *)buf;
   for(;i<len&&(*(buff+i)!='\0');i++){

@@ -14,7 +14,7 @@ struct timezone tz;
 
 uint32_t NDL_GetTicks() {//ms
   gettimeofday(&tv,&tz);
-  return tv.tv_usec*1000;
+  return tv.tv_usec/1000;
 }
 
 int NDL_PollEvent(char *buf, int len) {

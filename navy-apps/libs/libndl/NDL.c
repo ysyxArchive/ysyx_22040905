@@ -24,9 +24,7 @@ int NDL_PollEvent(char *buf, int len) {
     flag=1;
     if(fscanf(fp,"%c",buf+i)==EOF)flag=0;
     if(*(buf+i)=='\n'){
-      printf("i:%d\n",i);
-      *(buf+i)=='\0';
-      *(buf+i-1)=='\0';
+      *(buf+i)='\0';
       break;
     }
   }

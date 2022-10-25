@@ -4,11 +4,11 @@
 int main() {
   NDL_Init(0);
   uint32_t ms=NDL_GetTicks();
-  float t=0; 
+  int t=0; 
   while (1) {
     if (NDL_GetTicks()-ms>=1000000) {
-      t+=0.5;
-      printf("Hello World at the second %.1f\n",t);
+      t+=1;
+      printf("Hello World at the second %d.%d\n",t/2,(t%2)?5:0);
       ms=NDL_GetTicks() ;
     }
   }

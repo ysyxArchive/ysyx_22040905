@@ -39,7 +39,7 @@ void NDL_OpenCanvas(int *w, int *h) {
     int max_w,max_h;
     FILE* fp=fopen("/proc/dispinfo","r");
     fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&max_w,&max_h);
-    if(screen_w==0&&screen_h==0) {
+    if((*w)==0&&(*h)==0) {
       screen_w = max_w; screen_h = max_h;
     }
     else {

@@ -35,7 +35,7 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDOUT]   = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR]   = {"stderr", 0, 0, invalid_read, serial_write},
   [FD_EVENTS]   = {"/dev/events", 0, 0, events_read, invalid_write},
-  [FD_FB]       = {"/dev/fb", 0, 0, invalid_read, invalid_write},
+  [FD_FB]       = {"/dev/fb", 0, 0, invalid_read, fb_write},
   [FD_DISPINFO] = {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
 #include "files.h"
 };
@@ -91,5 +91,6 @@ char *fd_name(int fd){
   return file_table[fd].name;
 }
 void init_fs() {
+  file_table[FD_FB].size=90112;
   // TODO: initialize the size of /dev/fb
 }

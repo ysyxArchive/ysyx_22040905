@@ -33,9 +33,6 @@ int NDL_PollEvent(char *buf, int len) {
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
-  if (getenv("NWM_APP")) {
-    int fbctl = 4;
-    fbdev = 5;
     int max_w,max_h;
     FILE* fp=fopen("/proc/dispinfo","r");
     fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&max_w,&max_h);
@@ -47,6 +44,9 @@ void NDL_OpenCanvas(int *w, int *h) {
       screen_w = *w; screen_h = *h;
     }
     assert((screen_w<=max_w)&&(screen_h<=max_h));
+  if (getenv("NWM_APP")) {
+    int fbctl = 4;
+    fbdev = 5;
     char buf[64];
     int len = sprintf(buf, "%d %d", screen_w, screen_h);
     // let NWM resize the window and create the frame buffer

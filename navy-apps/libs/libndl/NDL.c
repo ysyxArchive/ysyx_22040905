@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <assert.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -35,7 +36,16 @@ void NDL_OpenCanvas(int *w, int *h) {
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
-    screen_w = *w; screen_h = *h;
+    int max_w,max_h;
+    FILE* fp=fopen("/proc/dispinfo","r");
+    fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&max_w,&max_h);
+    if(screen_w==0&&screen_h==0) {
+      screen_w = max_w; screen_h = max_h;
+    }
+    else {
+      screen_w = *w; screen_h = *h;
+    }
+    assert((screen_w<=max_w)&&(screen_h<=max_h));
     char buf[64];
     int len = sprintf(buf, "%d %d", screen_w, screen_h);
     // let NWM resize the window and create the frame buffer

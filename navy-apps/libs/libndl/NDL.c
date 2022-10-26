@@ -35,11 +35,11 @@ int NDL_PollEvent(char *buf, int len) {
 void NDL_OpenCanvas(int *w, int *h) {
     int max_w,max_h;
     FILE* fp=fopen("/proc/dispinfo","r");
-    char buf[100];
+    /*char buf[100];
     fscanf(fp,"%s",buf);
-    printf("%s\n",buf);
-    //fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&max_w,&max_h);
-    //printf("*%d %d\n",max_w,max_h);
+    printf("%s\n",buf);*/
+    fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&max_w,&max_h);
+    printf("*%d %d\n",max_w,max_h);
     if((*w)==0&&(*h)==0) {
       screen_w = max_w; screen_h = max_h;
     }

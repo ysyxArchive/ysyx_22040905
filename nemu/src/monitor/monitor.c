@@ -121,7 +121,7 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
     flag=0;
     if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);
     else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i].str);
-    printf("%d\n",i);
+    //printf("%d\n",i);
     break;
   }
   if(flag){

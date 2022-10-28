@@ -112,10 +112,12 @@ static void load_elf(){
     fclose(fp);
   }
   printf("***************************\n");
-for(int l=0;l<elf_num;l++)
+for(int l=0;l<elf_num;l++){
+  printf("%d\n\n\n\n",l);
   for(int i=0;i<func_num[l];i++){
     printf("%d\t%s\n",i,func[i][l].str);
   }
+}
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;

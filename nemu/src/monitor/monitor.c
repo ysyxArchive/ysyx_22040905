@@ -63,39 +63,39 @@ static struct fun{
 }func[100000];
 int func_num=0;
 
-#define BUF_SIZE 1048576
-uint8_t buf[BUF_SIZE];
-
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");
     return;
   }
   for(int l=0;l<elf_num;l++){
-    memset(buf,0,sizeof(buf));
+    Elf64_Ehdr ehdr[1];
+    Elf64_Shdr shdr[2048];
+    Elf64_Sym symtab[32768];
+    char strtab[32768];
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
-    fseek(fp,0,SEEK_END);
     fseek(fp,0,SEEK_SET);
-    assert(0!=fread(buf,sizeof(Elf64_Ehdr), 1, fp));
-    fclose(fp);
-    Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
-    Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
-    printf("%ld\n",ehdr->e_shoff);
-    Elf64_Sym* symtab=NULL;
-    char *strtab=NULL;
+    int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
+    assert(ret!=0);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量
+    fseek(fp, ehdr->e_shoff, SEEK_SET);
+    ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
+    assert(ret!=0);
     int flag=0,num=0;
-    for(int i = 0; i < count; i++) {
-        printf("%ld\n\n",shdr[i].sh_offset);
+    for(int i = 0; i < count; ++i) {
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
-        strtab=(char *)(buf+shdr[i].sh_offset);
+        fseek(fp,shdr[i].sh_offset,SEEK_SET);
+        ret=fread(strtab, 1, shdr[i].sh_size, fp);
+        assert(ret!=0);
         flag=1;
       }
       else if(shdr[i].sh_type==SHT_SYMTAB){
+        fseek(fp,shdr[i].sh_offset,SEEK_SET);
         num=shdr[i].sh_size/shdr[i].sh_entsize;
-        symtab=(Elf64_Sym *)(buf+shdr[i].sh_offset);
+        ret=fread(symtab,shdr[i].sh_entsize,num, fp);
+        assert(ret!=0); 
       }
     }
     fclose(fp);
@@ -104,7 +104,7 @@ static void load_elf(){
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
         func[func_num++].str=strtab+symtab[j].st_name;
-        printf("%d %s\n",func_num-1,func[func_num-1].str);
+        //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }
 

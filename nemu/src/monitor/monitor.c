@@ -73,10 +73,6 @@ static void load_elf(){
     Elf64_Shdr shdr[2048];
     Elf64_Sym symtab[32768];
     char strtab[32768];
-    memset(ehdr,0,sizeof(ehdr));
-    memset(shdr,0,sizeof(shdr));
-    memset(symtab,0,sizeof(symtab));
-    memset(strtab,0,sizeof(strtab));
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_SET);
@@ -108,7 +104,7 @@ static void load_elf(){
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
         func[func_num++].str=strtab+symtab[j].st_name;
-        printf("%d %s\n",func_num-1,func[func_num-1].str);
+        //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }
   }

@@ -72,10 +72,9 @@ static void load_elf(){
     Log("No elf is given.");
     return;
   }
-  for(int l=0;l<elf_num;l++){
+  for(int l=0;l<1;l++){
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
-    printf("\n\n\n\n%s\n",elf[l]);
     fseek(fp,0,SEEK_SET);
     int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
     assert(ret!=0);

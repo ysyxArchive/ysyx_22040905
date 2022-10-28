@@ -140,6 +140,9 @@ static int parse_args(int argc, char *argv[]) {
     {"elf"      , required_argument, NULL, 'e'},
     {0          , 0                , NULL,  0 },
   };
+  for(int i=0;i<argc;i++){
+    printf("%s\n",argv[i]);
+  }
   int o;
   while ( (o = getopt_long(argc, argv, "-bhe:l:d:p:", table, NULL)) != -1) {
     switch (o) {

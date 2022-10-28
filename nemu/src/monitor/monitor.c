@@ -70,7 +70,7 @@ static void load_elf(){
   }
   //elf[1]="/home/agustin/ysyx-workbench/navy-apps/fsimg/bin/bmp-test";
   for(int l=0;l<1;l++){
-    printf("\n\n\n%s\n",elf[l]);
+    //printf("\n\n\n%s\n",elf[l]);
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];
     Elf64_Sym symtab[32768];
@@ -116,12 +116,13 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;
-  for(int i=0;i<func_num;i++){
+  int i;
+  for(i=0;i<func_num;i++){
     if(dnpc<func[i].begin||dnpc>=func[i].end)continue;
     flag=0;
     if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);
     else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i].str);
-    //printf("%d\n",i);
+    printf("%d\n",i);
     break;
   }
   if(flag){

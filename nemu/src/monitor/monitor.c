@@ -31,7 +31,7 @@ static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static int difftest_port = 1234;
-static char *elf = NULL;
+static char *elf[10];
 
 static long load_img() {
   if (img_file == NULL) {
@@ -53,53 +53,58 @@ static long load_img() {
   fclose(fp);
   return size;
 }
-char strtab[32768];
+//elf
+int elf_num=0;
+#ifdef CONFIG_FTRACE
+char strtab[32768*10];
 struct func{
   uint64_t begin;
   uint64_t end;
   char * str;
-}func[32768];
+}func[32768*10];
 int func_num=0;
 
-#ifdef CONFIG_FTRACE
 static void load_elf(){
   Elf64_Ehdr ehdr[1];
   Elf64_Shdr shdr[2048];
   Elf64_Sym symtab[32768];
-  if(elf==NULL){
+  if(elf[0]==NULL){
     Log("No elf is given.");
     return;
   }
-  FILE *fp = fopen(elf, "rb");
-  Assert(fp, "Can not open '%s'",elf);
+  printf("*********%s*************\n",elf[3]);
+  for(int l=0;l<elf_num;l++){
+    FILE *fp = fopen(elf[l], "rb");
+    Assert(fp, "Can not open '%s'",elf[l]);
 
-  fseek(fp,0,SEEK_SET);
-  int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
-  assert(ret!=0);
-  int count = ehdr->e_shnum;    //节头表数量
-  fseek(fp, ehdr->e_shoff, SEEK_SET);
-  ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
-  assert(ret!=0);
-  int flag=0,num=0;
-  for(int i = 0; i < count; ++i) {
-    if(shdr[i].sh_type==SHT_STRTAB&&!flag){
-      fseek(fp,shdr[i].sh_offset,SEEK_SET);
-      ret=fread(strtab, 1, shdr[i].sh_size, fp);
-      assert(ret!=0);
-      flag=1;
-    }
-    else if(shdr[i].sh_type==SHT_SYMTAB){
-      fseek(fp,shdr[i].sh_offset,SEEK_SET);
-      num=shdr[i].sh_size/shdr[i].sh_entsize;
-      ret=fread(symtab,shdr[i].sh_entsize,num, fp);
-      assert(ret!=0); 
-    }
-    for(int j=0;j<num;j++){
-          if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-            func[func_num].begin=symtab[j].st_value;
-            func[func_num].end=symtab[j].st_value+symtab[j].st_size;
-            func[func_num++].str=strtab+symtab[j].st_name;
-          }
+    fseek(fp,0,SEEK_SET);
+    int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
+    assert(ret!=0);
+    int count = ehdr->e_shnum;    //节头表数量
+    fseek(fp, ehdr->e_shoff, SEEK_SET);
+    ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
+    assert(ret!=0);
+    int flag=0,num=0;
+    for(int i = 0; i < count; ++i) {
+      if(shdr[i].sh_type==SHT_STRTAB&&!flag){
+        fseek(fp,shdr[i].sh_offset,SEEK_SET);
+        ret=fread(strtab, 1, shdr[i].sh_size, fp);
+        assert(ret!=0);
+        flag=1;
+      }
+      else if(shdr[i].sh_type==SHT_SYMTAB){
+        fseek(fp,shdr[i].sh_offset,SEEK_SET);
+        num=shdr[i].sh_size/shdr[i].sh_entsize;
+        ret=fread(symtab,shdr[i].sh_entsize,num, fp);
+        assert(ret!=0); 
+      }
+      for(int j=0;j<num;j++){
+            if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
+              func[func_num].begin=symtab[j].st_value;
+              func[func_num].end=symtab[j].st_value+symtab[j].st_size;
+              func[func_num++].str=strtab+symtab[j].st_name;
+            }
+      }
     }
   }
 }
@@ -140,7 +145,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'p': sscanf(optarg, "%d", &difftest_port); break;
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
-      case 'e': elf = optarg; break;  
+      case 'e': elf[elf_num++] = optarg; assert(elf_num<=10);break;  
       case 1: img_file = optarg; return optind - 1;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);

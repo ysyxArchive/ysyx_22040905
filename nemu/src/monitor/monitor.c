@@ -60,7 +60,7 @@ struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;
-}func[32768][100];
+}func[10000][100];
 int func_num[100];
 
 static void load_elf(){
@@ -116,15 +116,7 @@ for(int l=0;l<elf_num;l++)
     printf("%d\t%s\n",i,func[i][l].str);
   }
 }
-int ff=1;
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
-  if(ff){
-    
-  printf("***************************\n");
-    for(int l=0;l<elf_num;l++)
-  for(int i=0;i<func_num[l];i++){
-    printf("%d\t%s\n",i,func[i][l].str);
-  }ff=0;}
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;

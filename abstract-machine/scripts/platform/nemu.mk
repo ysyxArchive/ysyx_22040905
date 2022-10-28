@@ -11,8 +11,8 @@ CFLAGS    += -fdata-sections -ffunction-sections
 LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
              --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
-NAVY =$(NAVY_HOME)/build/ramdisk.img
-NEMUFLAGS += -e $(IMAGE).elf -e $(NAVY) -l $(shell dirname $(IMAGE).elf)/nemu-log.txt
+$(eval NAVY := $(shell find -L ./fsimg -type f))
+NEMUFLAGS += -e $(IMAGE).elf  $(addprefix -e , $(NAVY)) -l $(shell dirname $(IMAGE).elf)/nemu-log.txt
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 CFLAGS += -I$(AM_HOME)/am/src/platform/nemu/include

@@ -60,7 +60,7 @@ struct func{
   uint64_t begin;
   uint64_t end;
   char * str;
-}func[32768*10];
+}func[32768*30];
 int func_num=0;
 
 static void load_elf(){
@@ -68,8 +68,8 @@ static void load_elf(){
     Log("No elf is given.");
     return;
   }
+  //elf[1]="/home/agustin/ysyx-workbench/navy-apps/fsimg/bin/bmp-test";
   for(int l=0;l<elf_num;l++){
-    printf("\n\n%s\n",elf[l]);
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];
     Elf64_Sym symtab[32768];

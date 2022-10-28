@@ -56,12 +56,13 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
-struct fun{
+static struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;
 }func[100000];
 int func_num=0;
+
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");

@@ -60,7 +60,7 @@ volatile struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;
-}func[10000][100];
+}func[10000];
 int func_num[100];
 
 static void load_elf(){
@@ -105,19 +105,19 @@ static void load_elf(){
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-        func[func_num[l]][l].begin=symtab[j].st_value;
-        func[func_num[l]][l].end=symtab[j].st_value+symtab[j].st_size;
-        func[func_num[l]++][l].str=strtab+symtab[j].st_name;
+        func[func_num[l]].begin=symtab[j].st_value;
+        func[func_num[l]].end=symtab[j].st_value+symtab[j].st_size;
+        func[func_num[l]++].str=strtab+symtab[j].st_name;
       }
     }
     printf("***************************\n"); 
     for(int i=0;i<func_num[l];i++){
-      printf("%d\t%s\n",i,func[i][l].str);}
+      printf("%d\t%s\n",i,func[i].str);}
   }
   printf("###########################\n");
 for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
-    printf("%d\t%s\n",i,func[i][l].str);
+    printf("%d\t%s\n",i,func[i].str);
   }
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
@@ -126,10 +126,10 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
   int flag=1;
   for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
-    if(dnpc<func[i][l].begin||dnpc>=func[i][l].end)continue;
+    if(dnpc<func[i].begin||dnpc>=func[i].end)continue;
     flag=0;
-    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i][l].str,dnpc);
-    else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i][l].str);
+    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);
+    else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i].str);
     break;
   }
   if(flag){

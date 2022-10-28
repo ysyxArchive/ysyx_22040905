@@ -80,14 +80,15 @@ static void load_elf(){
     fseek(fp,0,SEEK_SET);
     assert(0!=fread(buf, file_size, 1, fp));
     fclose(fp);
-    printf("%d\n",file_size);
     Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
     Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
     Elf64_Sym* symtab=NULL;
     char *strtab=NULL;
+    printf("%d\n",file_size);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量
     int flag=0,num=0;
+    printf("%d\n",file_size);
     for(int i = 0; i < count; i++) {
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
         strtab=(char *)(buf+shdr[i].sh_offset);

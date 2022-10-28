@@ -112,7 +112,7 @@ static void load_elf(){
     printf("%d\t%s\n",i,func[i][l].str);}
     fclose(fp);
   }
-  printf("***************************\n");
+  printf("###########################\n");
 for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
     printf("%d\t%s\n",i,func[i][l].str);

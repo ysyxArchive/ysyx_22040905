@@ -104,7 +104,7 @@ static void load_elf(){
               func[func_num].begin=symtab[j].st_value;
               func[func_num].end=symtab[j].st_value+symtab[j].st_size;
               func[func_num++].str=strtab+symtab[j].st_name;
-              if(strcmp(func[func_num-1].str,"")!=0)printf("%d %s\n",func_num,func[func_num-1].str);
+              if(strcmp(func[func_num-1].str,"")!=0)printf("%d %s\n",func_num-1,func[func_num-1].str);
               else func_num--;
             }
       }

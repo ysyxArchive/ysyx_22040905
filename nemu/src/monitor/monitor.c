@@ -56,7 +56,7 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
-struct fun{
+volatile struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;

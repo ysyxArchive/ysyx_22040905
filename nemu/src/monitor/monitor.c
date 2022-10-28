@@ -69,6 +69,7 @@ static void load_elf(){
     return;
   }
   for(int l=0;l<elf_num;l++){
+    printf("\n\n%s\n",elf[l]);
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];
     Elf64_Sym symtab[32768];

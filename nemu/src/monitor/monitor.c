@@ -72,6 +72,7 @@ static void load_elf(){
     return;
   }
   for(int l=0;l<elf_num;l++){
+    printf("************\n");
     memset(buf,0,sizeof(buf));
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);

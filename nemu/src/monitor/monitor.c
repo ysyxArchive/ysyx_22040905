@@ -117,8 +117,10 @@ for(int l=0;l<elf_num;l++)
 }
 int ff=1;
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
+  if(ff){
+    
   printf("***************************\n");
-  if(ff){for(int l=0;l<elf_num;l++)
+    for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
     printf("%d\t%s\n",i,func[i][l].str);
   }ff=0;}

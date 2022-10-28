@@ -93,7 +93,7 @@ static void load_elf(){
         flag=1;
       }
       else if(shdr[i].sh_type==SHT_SYMTAB){
-        printf("111\n");
+        printf("111\n\n\n\n\n\n");
         num=shdr[i].sh_size/shdr[i].sh_entsize;
         symtab=(Elf64_Sym *)(buf+shdr[i].sh_offset);
       }

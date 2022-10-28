@@ -105,6 +105,7 @@ static void load_elf(){
             }
       }
     }
+    fclose(fp);
   }
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){

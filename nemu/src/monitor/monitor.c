@@ -110,9 +110,14 @@ static void load_elf(){
 
     fclose(fp);
   }
+for(int l=0;l<elf_num;l++)
+  for(int i=0;i<func_num[l];i++){
+    printf("%d\t%s\n",i,func[i][l].str);
+  }
 }
 int ff=1;
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
+  printf("***************************\n");
   if(ff){for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
     printf("%d\t%s\n",i,func[i][l].str);

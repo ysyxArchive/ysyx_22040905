@@ -91,6 +91,6 @@ char *fd_name(int fd){
   return file_table[fd].name;
 }
 void init_fs() {
-  file_table[FD_FB].size=90112;
+  file_table[FD_FB].size=190112;
   // TODO: initialize the size of /dev/fb
 }

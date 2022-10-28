@@ -79,7 +79,7 @@ static void load_elf(){
     int file_size=ftell(fp)/sizeof(long);
     printf("%d\n",file_size);
     fseek(fp,0,SEEK_SET);
-    assert(0!=fread(buf, sizeof(Elf64_Ehdr), 1, fp));
+    assert(0!=fread(buf, file_size, 1, fp));
     fclose(fp);
     Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
     Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);

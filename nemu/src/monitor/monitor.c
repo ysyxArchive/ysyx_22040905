@@ -88,7 +88,7 @@ static void load_elf(){
     int count = ehdr->e_shnum;    //节头表数量
     int flag=0,num=0;
     for(int i = 0; i < count; i++) {
-        printf("%d\n\n",shdr[i].sh_type);
+        printf("%ld\n\n",shdr[i].sh_size);
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
         strtab=(char *)(buf+shdr[i].sh_offset);
         flag=1;

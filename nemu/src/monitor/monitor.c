@@ -107,6 +107,8 @@ static void load_elf(){
             }
       }
     }
+    printf("func_name=%d\n",func_num);
+
     fclose(fp);
   }
 }

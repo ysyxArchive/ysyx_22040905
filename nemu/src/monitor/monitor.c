@@ -69,7 +69,7 @@ static void load_elf(){
     return;
   }
   //elf[1]="/home/agustin/ysyx-workbench/navy-apps/fsimg/bin/bmp-test";
-  for(int l=0;l<1;l++){
+  for(int l=0;l<elf_num;l++){
     //printf("\n\n\n%s\n",elf[l]);
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];

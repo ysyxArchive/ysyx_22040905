@@ -53,8 +53,6 @@ static long load_img() {
   fclose(fp);
   return size;
 }
-#pragma GCC push_options
-#pragma GCC optimize ("O0")
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
@@ -65,10 +63,6 @@ volatile struct fun{
 }func[10000][100];
 int func_num[100];
 
-#define BUF_SIZE 1048576
-char buf[BUF_SIZE];
-
-char *strtab=NULL;
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");
@@ -76,29 +70,33 @@ static void load_elf(){
   }
   memset(func_num,0,sizeof(func_num));
   for(int l=0;l<elf_num;l++){
-    memset(buf,0,sizeof(buf));
-    Elf64_Sym* symtab=NULL;
-
+    Elf64_Ehdr ehdr[1];
+    Elf64_Shdr shdr[2048];
+    Elf64_Sym symtab[32768];
+    char strtab[32768];
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
-
     fseek(fp,0,SEEK_SET);
-    assert(1==fread(buf, sizeof(Elf64_Ehdr), 1, fp));
-
-    Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
+    int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
+    assert(ret!=0);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
-
     int count = ehdr->e_shnum;    //节头表数量
-    Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
+    fseek(fp, ehdr->e_shoff, SEEK_SET);
+    ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
+    assert(ret!=0);
     int flag=0,num=0;
     for(int i = 0; i < count; ++i) {
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
-        strtab=(char *)(buf+shdr[i].sh_offset);
+        fseek(fp,shdr[i].sh_offset,SEEK_SET);
+        ret=fread(strtab, 1, shdr[i].sh_size, fp);
+        assert(ret!=0);
         flag=1;
       }
       else if(shdr[i].sh_type==SHT_SYMTAB){
+        fseek(fp,shdr[i].sh_offset,SEEK_SET);
         num=shdr[i].sh_size/shdr[i].sh_entsize;
-        symtab=(Elf64_Sym*)(buf+shdr[i].sh_offset);
+        ret=fread(symtab,shdr[i].sh_entsize,num, fp);
+        assert(ret!=0); 
       }
       for(int j=0;j<num;j++){
             if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
@@ -110,16 +108,16 @@ static void load_elf(){
       }
 
     }
-    printf("%d\n\n\n\n",l);for(int m=0;m<func_num[l];m++){printf("%d\t%s\n",m,func[m][l].str);}
-    fclose(fp);
+   printf("***************************\n"); 
+  for(int i=0;i<func_num[l];i++){
+    printf("%d\t%s\n",i,func[i][l].str);
+    fclose(fp);}
   }
   printf("***************************\n");
-for(int l=0;l<elf_num;l++){
-  printf("%d\n\n\n\n",l);
+for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
     printf("%d\t%s\n",i,func[i][l].str);
   }
-}
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;
@@ -142,7 +140,6 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
 static void load_elf(){}
 void ftrace_add(int64_t addr,int64_t dnpc,int d){}
 #endif
-#pragma GCC pop_options
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},

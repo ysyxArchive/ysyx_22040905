@@ -56,11 +56,11 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
-struct func{
+volatile struct func{
   uint64_t begin;
   uint64_t end;
   char * str;
-}func[32768*30];
+}func[32768];
 int func_num=0;
 
 static void load_elf(){
@@ -69,7 +69,7 @@ static void load_elf(){
     return;
   }
   //elf[1]="/home/agustin/ysyx-workbench/navy-apps/fsimg/bin/bmp-test";
-  for(int l=0;l<elf_num;l++){
+  for(int l=0;l<1;l++){
     //printf("\n\n\n%s\n",elf[l]);
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];
@@ -104,8 +104,7 @@ static void load_elf(){
               func[func_num].begin=symtab[j].st_value;
               func[func_num].end=symtab[j].st_value+symtab[j].st_size;
               func[func_num++].str=strtab+symtab[j].st_name;
-              if(strcmp(func[func_num-1].str,"")!=0)printf("%d %s\n",func_num-1,func[func_num-1].str);
-              else func_num--;
+              printf("%d %s\n",func_num-1,func[func_num-1].str);
             }
       }
     }

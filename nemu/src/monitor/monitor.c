@@ -76,13 +76,12 @@ static void load_elf(){
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_END);
-    int file_size=ftell(fp)/sizeof(long);
     fseek(fp,0,SEEK_SET);
-    assert(0!=fread(buf, file_size, 1, fp));
+    assert(0!=fread(buf,sizeof(Elf64_Ehdr), 1, fp));
     fclose(fp);
     Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
     Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
-    printf("%d\n",file_size*8);
+    printf("%ld\n",ehdr->e_shoff);
     Elf64_Sym* symtab=NULL;
     char *strtab=NULL;
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);

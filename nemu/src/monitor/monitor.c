@@ -82,7 +82,7 @@ static void load_elf(){
     fclose(fp);
     Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
     Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
-    printf("%d\n",file_size*4);
+    printf("%d\n",file_size*8);
     Elf64_Sym* symtab=NULL;
     char *strtab=NULL;
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);

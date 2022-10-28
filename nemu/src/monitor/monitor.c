@@ -60,18 +60,16 @@ struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;
-};
-volatile struct fun func[32768];
-int func_num=0;
+}func[32768][100];
+int func_num[100];
 
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");
     return;
   }
-  //elf[1]="/home/agustin/ysyx-workbench/navy-apps/fsimg/bin/bmp-test";
+  memset(func_num,0,sizeof(func_num));
   for(int l=0;l<elf_num;l++){
-    //printf("\n\n\n%s\n",elf[l]);
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];
     Elf64_Sym symtab[32768];
@@ -102,10 +100,10 @@ static void load_elf(){
       }
       for(int j=0;j<num;j++){
             if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-              func[func_num].begin=symtab[j].st_value;
-              func[func_num].end=symtab[j].st_value+symtab[j].st_size;
-              func[func_num++].str=strtab+symtab[j].st_name;
-              printf("%d %s\n",func_num-1,func[func_num-1].str);
+              func[func_num[l]][l].begin=symtab[j].st_value;
+              func[func_num[l]][l].end=symtab[j].st_value+symtab[j].st_size;
+              func[func_num[l]++][l].str=strtab+symtab[j].st_name;
+              printf("%d %s\n",func_num[l]-1,func[func_num[l]-1][l].str);
             }
       }
     }
@@ -113,18 +111,21 @@ static void load_elf(){
     fclose(fp);
   }
 }
+int ff=1;
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
-  for(int i=0;i<func_num;i++){
-    printf("%d\t%s\n",i,func[i].str);
-  }
+  if(ff){for(int l=0;l<elf_num;l++)
+  for(int i=0;i<func_num[l];i++){
+    printf("%d\t%s\n",i,func[i][l].str);
+  }ff=1;}
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;
-  for(int i=0;i<func_num;i++){
-    if(dnpc<func[i].begin||dnpc>=func[i].end)continue;
+  for(int l=0;l<elf_num;l++)
+  for(int i=0;i<func_num[l];i++){
+    if(dnpc<func[i][l].begin||dnpc>=func[i][l].end)continue;
     flag=0;
-    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);
-    else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i].str);
+    if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i][l].str,dnpc);
+    else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i][l].str);
     break;
   }
   if(flag){

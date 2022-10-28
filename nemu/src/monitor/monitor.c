@@ -68,7 +68,6 @@ static void load_elf(){
     Log("No elf is given.");
     return;
   }
-  memset(func_num,0,sizeof(func_num));
   for(int l=0;l<elf_num;l++){
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];
@@ -110,8 +109,8 @@ static void load_elf(){
     }
    printf("***************************\n"); 
   for(int i=0;i<func_num[l];i++){
-    printf("%d\t%s\n",i,func[i][l].str);
-    fclose(fp);}
+    printf("%d\t%s\n",i,func[i][l].str);}
+    fclose(fp);
   }
   printf("***************************\n");
 for(int l=0;l<elf_num;l++)

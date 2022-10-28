@@ -49,19 +49,20 @@ size_t sys_brk(void *addr){
   return 0;
 }
 
+char *ma[]={"SEEK_SET","SEEK_CUR","SEEK_END"};
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
 #ifdef STRACE
   switch(a[0]){
-    case 0: printf("sys_exit(%lx)\n",c->GPRx);break;
+    case 0: printf("sys_exit(0x%lx)\n",c->GPRx);break;
     case 1: printf("sys_yield\n");break;
-    case 2: printf("sys_open(%s,%lx,%lx)\n",(char *)c->GPR2,c->GPR3,c->GPR4);break;
-    case 3: printf("sys_read(%s,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
-    case 4: printf("sys_write(%s,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 2: printf("sys_open(%s,0x%lx,0x%lx)\n",(char *)c->GPR2,c->GPR3,c->GPR4);break;
+    case 3: printf("sys_read(%s,0x%lx,0x%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
+    case 4: printf("sys_write(%s,0x%lx,0x%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
     case 7: printf("sys_close(%s)\n",fd_name(c->GPR2));break;
-    case 8: printf("sys_lseek(%s,%lx,%lx)\n",fd_name(c->GPR2),c->GPR3,c->GPR4);break;
-    case 9: printf("sys_brk(%lx)\n",c->GPR2);break;
+    case 8: printf("sys_lseek(%s,0x%lx,%s)\n",fd_name(c->GPR2),c->GPR3,ma[c->GPR4]);break;
+    case 9: printf("sys_brk(0x%lx)\n",c->GPR2);break;
   }
 #endif
 

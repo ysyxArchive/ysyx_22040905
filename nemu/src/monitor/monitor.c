@@ -77,10 +77,10 @@ static void load_elf(){
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_END);
     int file_size=ftell(fp)/sizeof(long);
-    printf("%d\n",file_size);
     fseek(fp,0,SEEK_SET);
     assert(0!=fread(buf, file_size, 1, fp));
     fclose(fp);
+    printf("%d\n",file_size);
     Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
     Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
     Elf64_Sym* symtab=NULL;

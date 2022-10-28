@@ -80,7 +80,7 @@ static void load_elf(){
     fseek(fp,0,SEEK_SET);
     int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
     assert(ret!=0);
-    //assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
+    assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量
     fseek(fp, ehdr->e_shoff, SEEK_SET);
     ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);

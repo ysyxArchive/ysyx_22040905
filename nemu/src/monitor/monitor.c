@@ -65,6 +65,10 @@ volatile struct fun{
 }func[10000][100];
 int func_num[100];
 
+#define BUF_SIZE 1048576
+char buf[BUF_SIZE];
+
+char *strtab=NULL;
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");
@@ -72,33 +76,29 @@ static void load_elf(){
   }
   memset(func_num,0,sizeof(func_num));
   for(int l=0;l<elf_num;l++){
-    Elf64_Ehdr ehdr[1];
-    Elf64_Shdr shdr[2048];
-    Elf64_Sym symtab[32768];
-    char strtab[32768];
+    memset(buf,0,sizeof(buf));
+    Elf64_Sym* symtab=NULL;
+
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
+
     fseek(fp,0,SEEK_SET);
-    int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
-    assert(ret!=0);
+    assert(1==fread(buf, sizeof(Elf64_Ehdr), 1, fp));
+
+    Elf64_Ehdr* ehdr=(Elf64_Ehdr*)buf;
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
+
     int count = ehdr->e_shnum;    //节头表数量
-    fseek(fp, ehdr->e_shoff, SEEK_SET);
-    ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
-    assert(ret!=0);
+    Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
     int flag=0,num=0;
     for(int i = 0; i < count; ++i) {
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
-        fseek(fp,shdr[i].sh_offset,SEEK_SET);
-        ret=fread(strtab, 1, shdr[i].sh_size, fp);
-        assert(ret!=0);
+        strtab=(char *)(buf+shdr[i].sh_offset);
         flag=1;
       }
       else if(shdr[i].sh_type==SHT_SYMTAB){
-        fseek(fp,shdr[i].sh_offset,SEEK_SET);
         num=shdr[i].sh_size/shdr[i].sh_entsize;
-        ret=fread(symtab,shdr[i].sh_entsize,num, fp);
-        assert(ret!=0); 
+        symtab=(Elf64_Sym*)(buf+shdr[i].sh_offset);
       }
       for(int j=0;j<num;j++){
             if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){

@@ -60,9 +60,8 @@ struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;
-}func[10000];
-int func_num[100];
-struct fun funcc[10000][100];
+}func[100000];
+int func_num=0;
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");
@@ -105,32 +104,18 @@ static void load_elf(){
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-        func[func_num[l]].begin=symtab[j].st_value;
-        func[func_num[l]].end=symtab[j].st_value+symtab[j].st_size;
-        func[func_num[l]++].str=strtab+symtab[j].st_name;
+        func[func_num].begin=symtab[j].st_value;
+        func[func_num].end=symtab[j].st_value+symtab[j].st_size;
+        func[func_num++].str=strtab+symtab[j].st_name;
       }
     }
-    printf("***************************\n"); 
-    for(int i=0;i<func_num[l];i++){
-      printf("%d\t%s\n",i,func[i].str);}
-    for(int i=0;i<func_num[l];i++){
-      funcc[i][l].str=func[i].str;
-      funcc[i][l].begin=func[i].begin;
-      funcc[i][l].end=func[i].end;
-    }
-  }
-  printf("###########################\n");
-for(int l=0;l<elf_num;l++)
-  for(int i=0;i<func_num[l];i++){
-    printf("%d\t%s\n",i,funcc[i][l].str);
   }
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;
-  for(int l=0;l<elf_num;l++)
-  for(int i=0;i<func_num[l];i++){
+  for(int i=0;i<func_num;i++){
     if(dnpc<func[i].begin||dnpc>=func[i].end)continue;
     flag=0;
     if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);

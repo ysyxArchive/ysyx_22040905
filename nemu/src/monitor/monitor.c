@@ -53,6 +53,8 @@ static long load_img() {
   fclose(fp);
   return size;
 }
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
@@ -140,6 +142,7 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
 static void load_elf(){}
 void ftrace_add(int64_t addr,int64_t dnpc,int d){}
 #endif
+#pragma GCC pop_options
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},

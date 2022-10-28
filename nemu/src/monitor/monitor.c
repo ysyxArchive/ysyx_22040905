@@ -99,7 +99,6 @@ static void load_elf(){
       }
     }
     fclose(fp);
-    printf("%s\n",func[0].str);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
         func[func_num].begin=symtab[j].st_value;
@@ -108,6 +107,8 @@ static void load_elf(){
         printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }
+
+    printf("####%s\n",func[0].str);
   }
   for(int i=0;i<func_num;i++)
     printf("%d %s\n",i,func[i].str);

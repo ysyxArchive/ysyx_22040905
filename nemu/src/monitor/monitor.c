@@ -88,12 +88,12 @@ static void load_elf(){
     int count = ehdr->e_shnum;    //节头表数量
     int flag=0,num=0;
     for(int i = 0; i < count; i++) {
+        printf("%d\n\n",i);
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
         strtab=(char *)(buf+shdr[i].sh_offset);
         flag=1;
       }
       else if(shdr[i].sh_type==SHT_SYMTAB){
-        printf("111\n\n\n\n\n\n");
         num=shdr[i].sh_size/shdr[i].sh_entsize;
         symtab=(Elf64_Sym *)(buf+shdr[i].sh_offset);
       }

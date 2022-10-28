@@ -56,7 +56,6 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
-char strtab[32768*10];
 struct func{
   uint64_t begin;
   uint64_t end;
@@ -65,14 +64,15 @@ struct func{
 int func_num=0;
 
 static void load_elf(){
-  Elf64_Ehdr ehdr[1];
-  Elf64_Shdr shdr[2048];
-  Elf64_Sym symtab[32768];
   if(elf[0]==NULL){
     Log("No elf is given.");
     return;
   }
-  for(int l=0;l<1;l++){
+  for(int l=0;l<elf_num;l++){
+    Elf64_Ehdr ehdr[1];
+    Elf64_Shdr shdr[2048];
+    Elf64_Sym symtab[32768];
+    char strtab[32768];
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_SET);

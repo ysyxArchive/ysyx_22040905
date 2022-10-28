@@ -72,13 +72,11 @@ static void load_elf(){
     return;
   }
   for(int l=0;l<elf_num;l++){
-    printf("************\n");
     memset(buf,0,sizeof(buf));
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
-    fseek(fp,0L,SEEK_END);
+    fseek(fp,0,SEEK_END);
     int file_size=ftell(fp);
-    printf("\n\n");
     printf("%d\n",file_size);
     assert(0==fread(buf, file_size, 1, fp));
     fclose(fp);

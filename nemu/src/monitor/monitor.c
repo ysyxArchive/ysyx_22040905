@@ -103,7 +103,7 @@ static void load_elf(){
               func[func_num[l]][l].begin=symtab[j].st_value;
               func[func_num[l]][l].end=symtab[j].st_value+symtab[j].st_size;
               func[func_num[l]++][l].str=strtab+symtab[j].st_name;
-              printf("%d %s\n",func_num[l]-1,func[func_num[l]-1][l].str);
+              //printf("%d %s\n",func_num[l]-1,func[func_num[l]-1][l].str);
             }
       }
     }
@@ -116,7 +116,7 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
   if(ff){for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
     printf("%d\t%s\n",i,func[i][l].str);
-  }ff=1;}
+  }ff=0;}
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;

@@ -104,7 +104,7 @@ static void load_elf(){
               func[func_num].begin=symtab[j].st_value;
               func[func_num].end=symtab[j].st_value+symtab[j].st_size;
               func[func_num++].str=strtab+symtab[j].st_name;
-              //printf("%d %s\n",func_num,func[func_num-1].str);
+              printf("%d %s\n",func_num,func[func_num-1].str);
             }
       }
     }
@@ -122,7 +122,7 @@ void ftrace_add(int64_t addr,int64_t dnpc,int d){
     flag=0;
     if(d) fprintf(fp,"0x%08lx:\tcall [%s@0x%08lx]\n",addr,func[i].str,dnpc);
     else fprintf(fp,"0x%08lx:\tret [%s]\n",addr,func[i].str);
-    printf("%d\t",i);
+    //printf("%d\t",i);
     break;
   }
   if(flag){

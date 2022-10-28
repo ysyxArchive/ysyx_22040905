@@ -56,13 +56,13 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
-volatile struct fun{
+struct fun{
   uint64_t begin;
   uint64_t end;
   char * str;
 }func[10000];
 int func_num[100];
-
+struct fun funcc[10000][100];
 static void load_elf(){
   if(elf[0]==NULL){
     Log("No elf is given.");
@@ -113,11 +113,16 @@ static void load_elf(){
     printf("***************************\n"); 
     for(int i=0;i<func_num[l];i++){
       printf("%d\t%s\n",i,func[i].str);}
+    for(int i=0;i<func_num[l];i++){
+      funcc[i][l].str=func[i].str;
+      funcc[i][l].begin=func[i].begin;
+      funcc[i][l].end=func[i].end;
+    }
   }
   printf("###########################\n");
 for(int l=0;l<elf_num;l++)
   for(int i=0;i<func_num[l];i++){
-    printf("%d\t%s\n",i,func[i].str);
+    printf("%d\t%s\n",i,funcc[i][l].str);
   }
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){

@@ -84,17 +84,16 @@ static void load_elf(){
     Elf64_Shdr* shdr=(Elf64_Shdr*)(buf+ehdr->e_shoff);
     Elf64_Sym* symtab=NULL;
     char *strtab=NULL;
-    printf("%d\n",file_size);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量
     int flag=0,num=0;
-    printf("%d\n",file_size);
     for(int i = 0; i < count; i++) {
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
         strtab=(char *)(buf+shdr[i].sh_offset);
         flag=1;
       }
       else if(shdr[i].sh_type==SHT_SYMTAB){
+        printf("111\n");
         num=shdr[i].sh_size/shdr[i].sh_entsize;
         symtab=(Elf64_Sym *)(buf+shdr[i].sh_offset);
       }

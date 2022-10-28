@@ -113,7 +113,12 @@ static void load_elf(){
     }
   }
 }
+int ff=1;
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
+  if(ff){
+    printf("%d %s\n",func_num-1,func[func_num-1].str);
+    ff=0;
+  }
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-ftrace.txt", "a");
   int flag=1;

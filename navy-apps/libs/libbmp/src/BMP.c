@@ -49,8 +49,8 @@ void* BMP_Load(const char *filename, int *width, int *height) {
   fclose(fp);
   if (width) *width = w;
   if (height) *height = h;
-  for(int i=0;i<w*h;i++)
+  /*for(int i=0;i<w*h;i++)
     printf("%08x\n",pixels[i]);
-  printf("**********\n");
+  printf("**********\n");*/
   return pixels;
 }

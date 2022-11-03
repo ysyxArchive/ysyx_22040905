@@ -45,7 +45,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 AM_GPU_FBDRAW_T ctl;
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  assert(buf==NULL);
+  assert(buf!=NULL);
   strncpy(ctl.pixels,buf,len);
   ctl.x=offset/cfg.width;
   ctl.y=offset%cfg.width;

@@ -108,10 +108,10 @@ static void load_elf(){
       }
     }
 
-    printf("####%s\n",func[0].str);
+    //printf("####%s\n",func[0].str);
   }
-  for(int i=0;i<func_num;i++)
-    printf("%d %s\n",i,func[i].str);
+  //for(int i=0;i<func_num;i++)
+  //  printf("%d %s\n",i,func[i].str);
 }
 void ftrace_add(int64_t addr,int64_t dnpc,int d){
   FILE *fp;

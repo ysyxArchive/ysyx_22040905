@@ -67,8 +67,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
       fb[(y+i)*max_w+x+j]=(*(pixels+cnt));
       cnt++;
   }
-  for(int i=0;i<w*h;i++) printf("%08x",fb[i]);
-  for(int i=0;i<w*h;i++) fprintf(fp,"%08x",fb[i]);
+  for(int i=0;i<max_w*max_h;i++) fprintf(fp,"%08x",fb[i]);
   fclose(fp);
 }
 

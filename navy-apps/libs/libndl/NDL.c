@@ -31,6 +31,7 @@ int NDL_PollEvent(char *buf, int len) {
   }
   return flag;
 }
+
 int max_w,max_h;
 void NDL_OpenCanvas(int *w, int *h) {
   FILE* fp=fopen("/proc/dispinfo","r");
@@ -40,6 +41,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
   assert((screen_w<=max_w)&&(screen_h<=max_h));
   if (getenv("NWM_APP")) {
+    printf("\n\n\n\n****************\n\n\n\n");
     int fbctl = 4;
     fbdev = 5;
     screen_w = *w; screen_h = *h;

@@ -49,6 +49,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   for(int i=0;i<len;i++){
     printf("%02x",*((uint8_t *)buf+i));
   }*/
+  printf("%d\n",offset);
   char pixels[1034];
   strncpy(pixels,buf,len);
   ctl.pixels=pixels;

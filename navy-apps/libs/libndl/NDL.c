@@ -58,16 +58,16 @@ void NDL_OpenCanvas(int *w, int *h) {
     close(fbctl);
   }
 }
-uint32_t fb[405*305];
+
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   FILE* fp=fopen("/dev/fb","w");
   int cnt=0;
-  for(int i=0;i<h;i++)
+  for(int i=0;i<h;i++){
+    fseek(fp,((y+i)*max_w+x)<<2, SEEK_SET);
     for(int j=0;j<w;j++){
-      fb[(y+i)*max_w+x+j]=(*(pixels+cnt));
-      cnt++;
+      fprintf(fp,"%08x",pixels[cnt++]);
+    }
   }
-  for(int i=0;i<max_w*max_h;i++) fprintf(fp,"%08x",fb[i]);
   fclose(fp);
 }
 

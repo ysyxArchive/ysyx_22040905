@@ -60,6 +60,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
   ctl.sync=0;
+  printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
   return (ctl.h-ctl.y)*(ctl.w-ctl.x);
 }
 

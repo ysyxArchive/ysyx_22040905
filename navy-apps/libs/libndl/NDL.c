@@ -41,7 +41,6 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
   assert((screen_w<=max_w)&&(screen_h<=max_h));
   if (getenv("NWM_APP")) {
-    printf("\n\n\n\n****************\n\n\n\n");
     int fbctl = 4;
     fbdev = 5;
     screen_w = *w; screen_h = *h;
@@ -61,6 +60,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 uint32_t fb[405*305];
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  printf("%d %d\n",max_h,max_w);
   FILE* fp=fopen("/dev/fb","w");
   int cnt=0;
   for(int i=0;i<h;i++)
@@ -69,6 +69,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
       cnt++;
   }
   fprintf(fp,"%s",(char *)fb);
+  fclose(fp);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

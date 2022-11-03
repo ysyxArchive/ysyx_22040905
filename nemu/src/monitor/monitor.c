@@ -59,7 +59,7 @@ int elf_num=0;
 static struct fun{
   uint64_t begin;
   uint64_t end;
-  char *str;
+  char str[40];
 }func[100000];
 int func_num=0;
 
@@ -103,7 +103,7 @@ static void load_elf(){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
-        func[func_num++].str=strtab+symtab[j].st_name;
+        strcpy(func[func_num++].str,strtab+symtab[j].st_name);
         //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }

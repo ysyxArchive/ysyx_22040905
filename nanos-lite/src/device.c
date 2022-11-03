@@ -50,9 +50,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     printf("%02x",*((uint8_t *)buf+i));
   }*/
   char pixels[1034];
-  printf("1\n");
   strncpy(pixels,buf,len);
-  printf("1\n");
   ctl.pixels=pixels;
   ctl.x=offset/cfg.width;
   ctl.y=offset%cfg.width;
@@ -60,6 +58,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.h=cfg.height;
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
+  ctl.sync=0;
   return len;
 }
 

@@ -50,7 +50,7 @@ void* BMP_Load(const char *filename, int *width, int *height) {
   if (width) *width = w;
   if (height) *height = h;
   for(int i=0;i<w*h*sizeof(uint32_t);i++)
-    printf("%d",pixels[i]);
+    printf("%c",pixels[i]);
   printf("**********\n");
   return pixels;
 }

@@ -62,7 +62,8 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 size_t fs_write(int fd, const void *buf, size_t len){
   if(fd==FD_FB){
-    return file_table[fd].write(buf,file_table[fd].open_offset,len);
+    file_table[fd].open_offset+=len;
+    return file_table[fd].write(buf,file_table[fd].open_offset-len,len);
   }
   if((file_table[fd].write!=NULL)){
   return file_table[fd].write(buf,0,len);

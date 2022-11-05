@@ -60,7 +60,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  FILE* fp=fopen("/share/pictures/projectn.bmp","w");
+  FILE* fp=fopen("/dev/fb","w");
   int cnt=0;
   /*for(int i=0;i<h*w;i++){
     printf("%08x\n",pixels[i]);

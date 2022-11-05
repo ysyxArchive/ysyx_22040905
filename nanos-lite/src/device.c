@@ -49,7 +49,7 @@ AM_GPU_FBDRAW_T ctl;
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //printf("%d\n",offset);
   for(int i=0;i<len;i++){
-      pixels[i]=0xffffff;//*((uint32_t *)buf+i);
+      pixels[i]=*((uint32_t *)buf+i);
   }
   //printf("%d:%d\n",++count,lenn);
   ctl.pixels=pixels;

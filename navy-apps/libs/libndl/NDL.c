@@ -76,7 +76,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     }
   }
   for(int i=0;i<canvas_h*canvas_w;i++)
-    fprintf(fp,"%08x",canvas[i]);
+    {fprintf(fp,"%08x",canvas[i]);printf("%d\n",i);}
   fclose(fp);
 }
 

@@ -52,13 +52,12 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   }
   printf("%d\n",offset);*/
   uint32_t pixels[1034];
-  size_t lenn=len;
+  size_t lenn=0;
   for(int i=0;i<len;i++){
-    /*if(*((uint32_t *)buf+i)!=0){
+    if(*((uint32_t *)buf+i)!=0){
       pixels[i]=*((uint32_t *)buf+i);
       lenn++;
-    }*/
-    pixels[i]=0x00000000;
+    }
   }
   //strncpy(pixels,buf,len);
   //printf("%d\n",lenn);
@@ -73,7 +72,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
-  return 0;//(ctl.h-ctl.y)*(ctl.w-ctl.x);
+  return lenn;//(ctl.h-ctl.y)*(ctl.w-ctl.x);
 }
 
 void init_device() {

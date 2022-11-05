@@ -65,10 +65,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   FILE* fp=fopen("/dev/fb","w");
   for(int i=0;i<h;i++){
     fseek(fp,((i+y)*canvas_w+x)*4,SEEK_SET);
-    for(int j=0;j<w;j++){
-    fprintf(fp,"%08x",pixels[i*w+j]);
-    fprintf(fp,"\0");
-    }
+    fwrite(pixels+i*w, sizeof(uint32_t) ,w, fp );
   }
   fclose(fp);
 }

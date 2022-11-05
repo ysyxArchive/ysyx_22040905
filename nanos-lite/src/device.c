@@ -51,13 +51,20 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     printf("%02x",*((uint8_t *)buf+i));
   }
   printf("%d\n",offset);*/
-  char pixels[1034];
-  strncpy(pixels,buf,len);
-  size_t lenn=sizeof(pixels);
-  //printf("%d\n",lenn);
+  uint32_t pixels[1034];
+  size_t lenn=len;
   for(int i=0;i<len;i++){
-    printf("%x\n",*((uint32_t *)buf+i));
+    /*if(*((uint32_t *)buf+i)!=0){
+      pixels[i]=*((uint32_t *)buf+i);
+      lenn++;
+    }*/
+    pixels[i]=0xdddddddd;
   }
+  //strncpy(pixels,buf,len);
+  //printf("%d\n",lenn);
+  /*for(int i=0;i<len;i++){
+    printf("%x\n",);
+  }*/
   ctl.pixels=pixels;
   ctl.x=offset/cfg.width;
   ctl.y=offset%cfg.width;
@@ -65,8 +72,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.h=(offset+lenn)%cfg.width;
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
-  printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
-  return (ctl.h-ctl.y)*(ctl.w-ctl.x);
+  //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
+  return 0;//(ctl.h-ctl.y)*(ctl.w-ctl.x);
 }
 
 void init_device() {

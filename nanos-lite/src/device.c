@@ -52,25 +52,24 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     printf("%02x",*((uint8_t *)buf+i));
   }*/
   //printf("%d\n",offset);
-  uint32_t pixels[1034];
-  size_t lenn=0;
+  uint32_t pixels[400*300*4+10000];
   for(int i=0;i<len;i++){
     //if(*((uint32_t *)buf+i)!=0x12c1){
       pixels[i]=*((uint32_t *)buf+i);
-      lenn++;
+    //  lenn++;
     //}
     //else break;
   }
   //strncpy(pixels,buf,len);
-  printf("%d:%d\n",++count,lenn);
+  //printf("%d:%d\n",++count,lenn);
   /*for(int i=0;i<len;i++){
     printf("%x\n",);
   }*/
   ctl.pixels=pixels;
   ctl.y=offset/cfg.width;
   ctl.x=offset%cfg.width;
-  ctl.h=(offset+lenn)/cfg.width;
-  ctl.w=(offset+lenn)%cfg.width;
+  ctl.h=(offset+len)/cfg.width;
+  ctl.w=(offset+len)%cfg.width;
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);

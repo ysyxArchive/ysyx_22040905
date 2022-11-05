@@ -73,7 +73,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
-  return lenn;//(ctl.h-ctl.y)*(ctl.w-ctl.x);
+  return 0;//lenn;//(ctl.h-ctl.y)*(ctl.w-ctl.x);
 }
 
 void init_device() {

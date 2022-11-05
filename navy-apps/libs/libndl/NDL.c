@@ -40,7 +40,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   if((*w)==0&&(*h)==0) {
     (*w) = canvas_w; (*h) = canvas_h;
   }
-  canvas=malloc(sizeof(uint32_t)*(*w)*(*h));
+  canvas=malloc(sizeof(uint32_t)*(canvas_w)*(canvas_h));
   assert((screen_w<=canvas_w)&&(screen_h<=canvas_h));
   if (getenv("NWM_APP")){ 
     int fbctl = 4;

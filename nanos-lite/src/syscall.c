@@ -73,7 +73,7 @@ void do_syscall(Context *c) {
     case 3: c->GPRx=sys_read(c->GPR2,c->GPR3,c->GPR4);break;
     case 4: c->GPRx=sys_write(c->GPR2,(void *)c->GPR3,c->GPR4);break;
     case 7: c->GPRx=sys_close(c->GPR2);break;
-    case 8: c->GPRx=sys_lseek(c->GPR2,c->GPR3,c->GPR4);break;
+    case 8: c->GPRx=sys_lseek(c->GPR2,c->GPR3,c->GPR4);printf("sys_lseek(%s,0x%lx,%s)\n",fd_name(c->GPR2),c->GPR3,ma[c->GPR4]);break;
     case 9: c->GPRx=sys_brk((void *)c->GPR2);break;
     case 19:c->GPRx=sys_gettimeofday(c->GPR2,c->GPR3);break;
     default: panic("Unhandled syscall ID = %d", a[0]);

@@ -50,8 +50,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   /*printf("%d\n\n",len);
   for(int i=0;i<len;i++){
     printf("%02x",*((uint8_t *)buf+i));
-  }
-  printf("%d\n",offset);*/
+  }*/
+  //printf("%d\n",offset);
   uint32_t pixels[1034];
   size_t lenn=0;
   for(int i=0;i<len;i++){

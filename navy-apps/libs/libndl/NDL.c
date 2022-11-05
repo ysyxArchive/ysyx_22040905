@@ -13,6 +13,7 @@ static int screen_w = 0, screen_h = 0;
 struct timeval tv;
 struct timezone tz;
 
+static uint32_t *canvas;
 uint32_t NDL_GetTicks() {//ms
   gettimeofday(&tv,&tz);
   return tv.tv_usec/1000;
@@ -32,15 +33,16 @@ int NDL_PollEvent(char *buf, int len) {
   return flag;
 }
 
-int max_w,max_h;
+int canvas_w,canvas_h;
 void NDL_OpenCanvas(int *w, int *h) {
   FILE* fp=fopen("/proc/dispinfo","r");
-  fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&max_w,&max_h);
+  fscanf(fp,"WIDTH : %d\nHEIGHT:%d",&canvas_w,&canvas_h);
   if((*w)==0&&(*h)==0) {
-    (*w) = max_w; (*h) = max_h;
+    (*w) = canvas_w; (*h) = canvas_h;
   }
-  assert((screen_w<=max_w)&&(screen_h<=max_h));
-  if (getenv("NWM_APP")) {
+  canvas=malloc(sizeof(uint32_t)*(*w)*(*h));
+  assert((screen_w<=canvas_w)&&(screen_h<=canvas_h));
+  if (getenv("NWM_APP")){ 
     int fbctl = 4;
     fbdev = 5;
     screen_w = *w; screen_h = *h;
@@ -61,27 +63,20 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   FILE* fp=fopen("/dev/fb","w");
-  int cnt=0;
   /*for(int i=0;i<h*w;i++){
     printf("%08x\n",pixels[i]);
   }*/
   for(int i=0;i<h;i++){
-    fseek(fp,((y+i)*max_w+x)*4, SEEK_SET);
-    printf("offset:%08x\n",((y+i)*max_w+x)<<2);
+    //fseek(fp,(i+y)*canvas_w+x)*4,SEEK_SET);
+    //printf("offset:%08x\n",((y+i)*max_w+x)<<2);
     for(int j=0;j<w;j++){
-      fprintf(fp,"%08x",0x00ffffff);//pixels[cnt++]);
+    canvas[(i+y)*canvas_w+j+x]=pixels[i*w+j];
+      //fprintf(fp,"%08x",pixels[cnt++]);
     //printf("%d %d\n",i,j);
     }
   }
-  /*printf("****************\n");
-  uint32_t p=0;
-  for(int i=0;i<h;i++){
-    fseek(fp,((y+i)*max_w+x)<<2, SEEK_SET);
-    for(int j=0;j<w;j++){
-      fscanf(fp,"%08x",&p);
-      printf("%08x\n",p);
-    }
-  }*/
+  for(int i=0;i<h*w;i++)
+    fprintf(fp,"%08x",pixels[i]);
   fclose(fp);
 }
 

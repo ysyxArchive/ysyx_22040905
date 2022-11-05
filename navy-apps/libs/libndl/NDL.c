@@ -69,14 +69,14 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   for(int i=0;i<h;i++){
     //fseek(fp,(i+y)*canvas_w+x)*4,SEEK_SET);
     //printf("offset:%08x\n",((y+i)*max_w+x)<<2);
-    for(int j=0;j<w;j++){
+    for(int j=w-1;j>=0;j--){
     canvas[(i+y)*canvas_w+j+x]=pixels[i*w+j];
       //fprintf(fp,"%08x",pixels[cnt++]);
     //printf("%d %d\n",i,j);
     }
   }
   for(int i=0;i<h*w;i++)
-    fprintf(fp,"%08x",pixels[i]);
+    fprintf(fp,"%08x",canvas[i]);
   fclose(fp);
 }
 

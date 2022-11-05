@@ -75,9 +75,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
   return len;
 }
 size_t fs_lseek(int fd, size_t offset, int whence){
-  if(fd==FD_FB){
-    printf("%x\n",file_table[fd].open_offset);
-  }
+
   if(whence==SEEK_SET){
     file_table[fd].open_offset=offset;
   }

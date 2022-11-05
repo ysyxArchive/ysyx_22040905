@@ -66,7 +66,6 @@ void do_syscall(Context *c) {
   }
 #endif
 
-  if(a[0]==8) printf("sys_lseek(%s,0x%lx,%s)\n",fd_name(c->GPR2),c->GPR3,ma[c->GPR4]);
   switch (a[0]) {
     case 0: c->GPRx=sys_exit(c->GPRx);break;
     case 1: c->GPRx=sys_yield();break;

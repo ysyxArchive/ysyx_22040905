@@ -55,8 +55,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.pixels=pixels;
   ctl.y=offset/cfg.width;
   ctl.x=offset%cfg.width;
-  ctl.h=(offset+len)/cfg.width;
-  ctl.w=(offset+len)%cfg.width;
+  ctl.h=(offset+len/4)/cfg.width;
+  ctl.w=(offset+len/4)%cfg.width;
   assert(ctl.h<300&&ctl.w<400);
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);

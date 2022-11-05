@@ -67,10 +67,10 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     printf("%x\n",);
   }*/
   ctl.pixels=pixels;
-  ctl.x=offset/cfg.width;
-  ctl.y=offset%cfg.width;
-  ctl.w=(offset+lenn)/cfg.width;
-  ctl.h=(offset+lenn)%cfg.width;
+  ctl.y=offset/cfg.width;
+  ctl.x=offset%cfg.width;
+  ctl.h=(offset+lenn)/cfg.width;
+  ctl.w=(offset+lenn)%cfg.width;
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);

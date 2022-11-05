@@ -54,7 +54,10 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   char pixels[1034];
   strncpy(pixels,buf,len);
   size_t lenn=sizeof(pixels);
-  printf("%d\n",lenn);
+  //printf("%d\n",lenn);
+  for(int i=0;i<len;i++){
+    printf("%x\n",*((uint32_t *)buf+i));
+  }
   ctl.pixels=pixels;
   ctl.x=offset/cfg.width;
   ctl.y=offset%cfg.width;

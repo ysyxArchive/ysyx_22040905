@@ -55,11 +55,11 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   uint32_t pixels[1034];
   size_t lenn=0;
   for(int i=0;i<len;i++){
-    if(*((uint32_t *)buf+i)!=0x12c1){
+    //if(*((uint32_t *)buf+i)!=0x12c1){
       pixels[i]=*((uint32_t *)buf+i);
       lenn++;
-    }
-    else break;
+    //}
+    //else break;
   }
   //strncpy(pixels,buf,len);
   printf("%d:%d\n",++count,lenn);

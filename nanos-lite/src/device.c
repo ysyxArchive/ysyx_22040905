@@ -44,6 +44,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   strcpy((char *)buf,buff);
   return lenn;
 }
+int count=0;
 AM_GPU_FBDRAW_T ctl;
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   /*printf("%d\n\n",len);
@@ -61,7 +62,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     else break;
   }
   //strncpy(pixels,buf,len);
-  printf("%d\n",lenn);
+  printf("%d:%d\n",++count,lenn);
   /*for(int i=0;i<len;i++){
     printf("%x\n",);
   }*/

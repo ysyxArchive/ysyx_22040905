@@ -13,6 +13,7 @@ static const char *keyname[256] __attribute__((used)) = {
   [AM_KEY_NONE] = "NONE",
   AM_KEYS(NAME)
 };
+
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   int i=0;
   char *buff=(char *)buf;
@@ -48,18 +49,19 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   /*printf("%d\n\n",len);
   for(int i=0;i<len;i++){
     printf("%02x",*((uint8_t *)buf+i));
-  }*/
-  printf("%d\n",offset);
+  }
+  printf("%d\n",offset);*/
   char pixels[1034];
   strncpy(pixels,buf,len);
+  size_t lenn=sizeof(pixels);
+  printf("%d\n",lenn);
   ctl.pixels=pixels;
   ctl.x=offset/cfg.width;
   ctl.y=offset%cfg.width;
-  ctl.w=(offset+len)/cfg.width;
-  ctl.h=(offset+len)%cfg.width;
+  ctl.w=(offset+lenn)/cfg.width;
+  ctl.h=(offset+lenn)%cfg.width;
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
-  ctl.sync=0;
   printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
   return (ctl.h-ctl.y)*(ctl.w-ctl.x);
 }

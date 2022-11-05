@@ -40,7 +40,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   if((*w)==0&&(*h)==0) {
     (*w) = canvas_w; (*h) = canvas_h;
   }
-  canvas=malloc(sizeof(uint32_t)*(canvas_w)*(canvas_h));
+  canvas=malloc(sizeof(uint32_t)*(*w)*(*h));
   assert((screen_w<=canvas_w)&&(screen_h<=canvas_h));
   if (getenv("NWM_APP")){ 
     int fbctl = 4;
@@ -75,9 +75,8 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     //printf("%d %d\n",i,j);
     }
   }
-  for(int i=0;i<h*w;i++){
+  for(int i=0;i<canvas_h*canvas_w;i++)
     fprintf(fp,"%08x",canvas[i]);
-    printf("%d\n",i);}
   fclose(fp);
 }
 

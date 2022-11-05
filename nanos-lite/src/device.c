@@ -61,7 +61,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     else break;
   }
   //strncpy(pixels,buf,len);
-  //printf("%d\n",lenn);
+  printf("%d\n",lenn);
   /*for(int i=0;i<len;i++){
     printf("%x\n",);
   }*/

@@ -1,6 +1,7 @@
 #ifndef _FIXEDPTC_H_
 #define _FIXEDPTC_H_
 
+#include <stdio.h>
 /*
  * fixedptc.h is a 32-bit or 64-bit fixed point numeric library.
  *
@@ -127,35 +128,42 @@ typedef	__uint128_t fixedptud;
 
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
-	return 0;
+	printf("muli:%d %d %d\n",A,B,A*B);
+	return A*B;
 }
 
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
-	return 0;
+	printf("divi:%d %d %d\n",A,B,A/B);
+	return A/B;
 }
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
-	return 0;
+	printf("mul:%d %d %d\n",A,B,(A*B)>>FIXEDPT_FBITS);
+	return (A*B)>>FIXEDPT_FBITS;
 }
 
 
 /* Divides two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
-	return 0;
+	printf("div:%d %d %d\n",A,B,(A/B)<<FIXEDPT_FBITS);
+	return (A/B)<<FIXEDPT_FBITS;
 }
 
 static inline fixedpt fixedpt_abs(fixedpt A) {
-	return 0;
+	printf("abs:%d %d\n",A,(A>>31==1)?(~A+1):A);
+	return (A>>31==1)?(~A+1):A;
 }
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
-	return 0;
+	printf("floor:%d %d\n",A,A/(1<<FIXEDPT_FBITS));
+	return A/(1<<FIXEDPT_FBITS);
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
-	return 0;
+	printf("ceil:%d %d\n",A,(A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS));
+	return (A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS);
 }
 
 /*

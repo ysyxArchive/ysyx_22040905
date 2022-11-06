@@ -126,9 +126,6 @@ typedef	__uint128_t fixedptud;
  * Putting them only in macros will effectively make them optional. */
 #define fixedpt_tofloat(T) ((float) ((T)*((float)(1)/(float)(1L << FIXEDPT_FBITS))))
 
-static void print(fixedpt A){
-	printf("%d.%d",A>>FIXEDPT_FBITS,A%(1<<FIXEDPT_FBITS));
-}
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
 	//printf("muli:%d %d %d\n",fixedpt_toint(A),B,fixedpt_toint(A*B));
@@ -143,7 +140,7 @@ static inline fixedpt fixedpt_divi(fixedpt A, int B) {
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
-	//printf("mul:%d %d %d %d\n",fixedpt_toint(A),fixedpt_toint(B),fixedpt_toint((A*B)>>FIXEDPT_FBITS),A*B);
+	printf("mul:%d %d %d\n",A,B,(A*B)>>FIXEDPT_FBITS);
 	return (A*B)>>FIXEDPT_FBITS;
 }
 

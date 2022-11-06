@@ -5,7 +5,9 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <assert.h>
-//#include <reent.h>
+#include <sys/types.h>    
+#include <sys/stat.h>    
+#include <fcntl.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -36,7 +38,7 @@ int NDL_PollEvent(char *buf, int len) {
 char buf[55];
 int canvas_w,canvas_h;
 void NDL_OpenCanvas(int *w, int *h) {
-  int fp=open("/proc/dispinfo","r");
+  int fp=open("/proc/dispinfo",O_RDONLY);
   assert(0!=read(fp,buf,50));
   sscanf(buf,"WIDTH : %d\nHEIGHT:%d",&canvas_w,&canvas_h);
   close(fp);
@@ -64,7 +66,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  int fp=open("/dev/fb","w");
+  int fp=open("/dev/fb",O_WRONLY);
   for(int i=0;i<h;i++){
     lseek(fp,((i+y)*canvas_w+x)*4,SEEK_SET);
     assert(0!=write(fp,pixels+i*w, sizeof(uint32_t)*w));

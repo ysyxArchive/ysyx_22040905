@@ -6,7 +6,8 @@
 int main() {
   fixedpt a = fixedpt_rconst(1.2);
   fixedpt b = fixedpt_fromint(10);
-  printf("a:%d b:%d\n",fixedpt_toint(a),fixedpt_toint(b));
+  print(a);
+  printf("%f",fixedpt_tofloat(a));
   int c = 0;
   if (b > fixedpt_rconst(7.9)) {
     c = fixedpt_toint(fixedpt_div(fixedpt_mul(a + FIXEDPT_ONE, b), fixedpt_rconst(2.3)));

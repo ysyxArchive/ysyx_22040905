@@ -1,4 +1,3 @@
-
 #define test 1
 #include <stdio.h>
 #include <assert.h>

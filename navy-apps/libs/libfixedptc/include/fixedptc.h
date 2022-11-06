@@ -1,7 +1,6 @@
 #ifndef _FIXEDPTC_H_
 #define _FIXEDPTC_H_
 
-//#define test 1
 #ifdef test
 #include <stdio.h>
 #endif

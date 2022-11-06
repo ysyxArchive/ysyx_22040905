@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <assert.h>
-#include <reent.h>
+//#include <reent.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -67,7 +67,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   int fp=open("/dev/fb","w");
   for(int i=0;i<h;i++){
     lseek(fp,((i+y)*canvas_w+x)*4,SEEK_SET);
-    write(fp,pixels+i*w, sizeof(uint32_t)*w);
+    assert(0!=write(fp,pixels+i*w, sizeof(uint32_t)*w));
   }
   close(fp);
 }

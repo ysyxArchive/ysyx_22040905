@@ -175,8 +175,8 @@ static inline fixedpt fixedpt_floor(fixedpt A) {
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
 	printf("ceil:%s ",fixedpt_cstr(A,-2));
-	printf("%s\n",fixedpt_cstr((A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS),-2));
-	return (A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS);
+	printf("%s\n",fixedpt_cstr(A+((1<<FIXEDPT_FBITS)-fixedpt_fracpart(A)),-2));
+	return A+((1<<FIXEDPT_FBITS)-fixedpt_fracpart(A));
 }
 
 /*

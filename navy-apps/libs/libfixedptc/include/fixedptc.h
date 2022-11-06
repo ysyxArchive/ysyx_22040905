@@ -140,7 +140,7 @@ static inline fixedpt fixedpt_divi(fixedpt A, int B) {
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
-	printf("mul:%d %d %d %d\n",fixedpt_toint(A),fixedpt_toint(B),fixedpt_toint((A*B)>>FIXEDPT_FBITS),A*B);
+	printf("mul:%d %d %d |%d %d %d\n",fixedpt_toint(A),fixedpt_toint(B),fixedpt_toint((A*B)>>FIXEDPT_FBITS),A,B,A*B);
 	return (A*B)>>FIXEDPT_FBITS;
 }
 

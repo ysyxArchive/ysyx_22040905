@@ -128,41 +128,41 @@ typedef	__uint128_t fixedptud;
 
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
-	printf("muli:%d %d %d\n",fixedpt_toint(A),B,fixedpt_toint(A*B));
+	printf("muli:%f %d %f\n",A/((double)(1<<8)),B,(A*B)/((double)(1<<8)));
 	return A*B;
 }
 
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
-	printf("divi:%d %d %d\n",fixedpt_toint(A),B,fixedpt_toint(A/B));
+	printf("divi:%f %d %f\n",(A)/((double)(1<<8)),B,(A/B)/((double)(1<<8)));
 	return A/B;
 }
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
-	printf("mul:%d %d %d |%d %d %d\n",fixedpt_toint(A),fixedpt_toint(B),fixedpt_toint((A*B)>>FIXEDPT_FBITS),A,B,A*B);
+	printf("mul:%f %f %f\n",A/((double)(1<<8)),B/((double)(1<<8)),((A*B)>>FIXEDPT_FBITS)/((double)(1<<8)));
 	return (A*B)>>FIXEDPT_FBITS;
 }
 
 
 /* Divides two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
-	printf("div:%d %d %d\n",fixedpt_toint(A),fixedpt_toint(B),fixedpt_toint((A/B)<<FIXEDPT_FBITS));
+	printf("div:%f %f %f\n",(A)/((double)(1<<8)),(B)/((double)(1<<8)),((A/B)<<FIXEDPT_FBITS)/((double)(1<<8)));
 	return (A/B)<<FIXEDPT_FBITS;
 }
 
 static inline fixedpt fixedpt_abs(fixedpt A) {
-	printf("abs:%d %d\n",fixedpt_toint(A),fixedpt_toint((A>>31==1)?(~A+1):A));
+	printf("abs:%f %f\n",(A)/((double)(1<<8)),((A>>31==1)?(~A+1):A)/((double)(1<<8)));
 	return (A>>31==1)?(~A+1):A;
 }
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
-	printf("floor:%d %d\n",fixedpt_toint(A),fixedpt_toint(A/(1<<FIXEDPT_FBITS)));
+	printf("floor:%f %f\n",(A)/((double)(1<<8)),(A/(1<<FIXEDPT_FBITS))/((double)(1<<8)));
 	return A/(1<<FIXEDPT_FBITS);
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
-	printf("ceil:%d %d\n",fixedpt_toint(A),fixedpt_toint((A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS)));
+	printf("ceil:%f %f\n",(A)/((double)(1<<8)),((A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS))/((double)(1<<8)));
 	return (A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS);
 }
 

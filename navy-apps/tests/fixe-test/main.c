@@ -33,6 +33,9 @@ int main() {
   fixedpt_floor(fixedpt_rconst(1.2));
   fixedpt_floor(fixedpt_rconst(-1.2));
   fixedpt_floor(fixedpt_rconst(0));
+  fixedpt_floor(fixedpt_rconst(1.6));
+  fixedpt_floor(fixedpt_rconst(2.8));
+  fixedpt_floor(fixedpt_rconst(-2.8));
   printf("\n");
   return 0;
 }

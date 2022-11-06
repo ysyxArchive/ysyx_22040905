@@ -131,7 +131,7 @@ static inline char* fixedpt_cstr(const fixedpt A, const int max_dec);
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
 	printf("muli:%s ",fixedpt_cstr(A,-2));
-	printf("%d \n",B);
+	printf("%d ",B);
 	printf("%s\n",fixedpt_cstr(A*B,-2));
 	return A*B;
 }
@@ -139,7 +139,7 @@ static inline fixedpt fixedpt_muli(fixedpt A, int B) {
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
 	printf("divi:%s ",fixedpt_cstr(A,-2));
-	printf("%d \n",B);
+	printf("%d ",B);
 	printf("%s\n",fixedpt_cstr(A/B,-2));
 	return A/B;
 }

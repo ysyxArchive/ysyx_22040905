@@ -169,8 +169,8 @@ static inline fixedpt fixedpt_abs(fixedpt A) {
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
 	printf("floor:%s ",fixedpt_cstr(A,-2));
-	printf("%s\n",fixedpt_cstr(A/(1<<FIXEDPT_FBITS),-2));
-	return A/(1<<FIXEDPT_FBITS);
+	printf("%s\n",fixedpt_cstr(A&(1<<FIXEDPT_FBITS),-2));
+	return A&(1<<FIXEDPT_FBITS);
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {

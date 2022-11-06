@@ -1,8 +1,9 @@
+
+#define test 1
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <fixedptc.h>
-#define test 1
 int main() {
   //fixedpt_muli();fixedpt_divi();fixedpt_mul();fixedpt_div();fixedpt_abs();fixedpt_floor();fixedpt_ceil();
   fixedpt_muli(fixedpt_rconst(1.2),10);

@@ -37,8 +37,8 @@ char buf[55];
 int canvas_w,canvas_h;
 void NDL_OpenCanvas(int *w, int *h) {
   int fp=open("/proc/dispinfo","r");
-  assert(0!=read(fp,buf,50);
-  sscanf(buf,"WIDTH : %d\nHEIGHT:%d",&canvas_w,&canvas_h));
+  assert(0!=read(fp,buf,50));
+  sscanf(buf,"WIDTH : %d\nHEIGHT:%d",&canvas_w,&canvas_h);
   close(fp);
   if((*w)==0&&(*h)==0) {
     (*w) = canvas_w; (*h) = canvas_h;

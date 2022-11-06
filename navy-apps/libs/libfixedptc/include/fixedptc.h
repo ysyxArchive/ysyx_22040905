@@ -130,13 +130,17 @@ static inline char* fixedpt_cstr(const fixedpt A, const int max_dec);
 
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
-	printf("muli:%s %d %s\n",fixedpt_cstr(A,-2),B,fixedpt_cstr(A*B,-2));
+	printf("muli:%s ",fixedpt_cstr(A,-2));
+	printf("%d \n",B);
+	printf("%s\n",fixedpt_cstr(A*B,-2));
 	return A*B;
 }
 
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
-	printf("divi:%s %d %s\n",fixedpt_cstr(A,-2),B,fixedpt_cstr(A/B,-2));
+	printf("divi:%s ",fixedpt_cstr(A,-2));
+	printf("%d \n",B);
+	printf("%s\n",fixedpt_cstr(A/B,-2));
 	return A/B;
 }
 
@@ -151,22 +155,27 @@ static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
 
 /* Divides two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
-	printf("div:%s %s %s\n",fixedpt_cstr(A,-2),fixedpt_cstr(B,-2),fixedpt_cstr((A/B)<<FIXEDPT_FBITS,-2));
+	printf("div:%s ",fixedpt_cstr(A,-2));
+	printf("%s ",fixedpt_cstr(B,-2));
+	printf("%s\n",fixedpt_cstr((A*B)<<FIXEDPT_FBITS,-2));
 	return (A/B)<<FIXEDPT_FBITS;
 }
 
 static inline fixedpt fixedpt_abs(fixedpt A) {
-	printf("abs:%s %s\n",fixedpt_cstr(A,-2),fixedpt_cstr((A>>31==1)?(~A+1):A,-2));
+	printf("abs:%s ",fixedpt_cstr(A,-2));
+	printf("%s\n",fixedpt_cstr((A>>31==1)?(~A+1):A,-2));
 	return (A>>31==1)?(~A+1):A;
 }
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
-	printf("floor:%s %s\n",fixedpt_cstr(A,-2),fixedpt_cstr(A/(1<<FIXEDPT_FBITS),-2));
+	printf("floor:%s ",fixedpt_cstr(A,-2));
+	printf("%s\n",fixedpt_cstr(A/(1<<FIXEDPT_FBITS),-2));
 	return A/(1<<FIXEDPT_FBITS);
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
-	printf("ceil:%s %s\n",fixedpt_cstr(A,-2),fixedpt_cstr((A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS),-2));
+	printf("ceil:%s ",fixedpt_cstr(A,-2));
+	printf("%s\n",fixedpt_cstr((A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS),-2));
 	return (A%(1<<FIXEDPT_FBITS)==0)?A:A/(1<<FIXEDPT_FBITS)+(1<<FIXEDPT_FBITS);
 }
 

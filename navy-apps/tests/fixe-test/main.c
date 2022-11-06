@@ -4,13 +4,9 @@
 #include <fixedptc.h>
 
 int main() {
-  fixedpt a = fixedpt_rconst(1.2);
-  fixedpt b = fixedpt_fromint(10);
-  //printf("%s\n",fixedpt_cstr(a,-1));
-  int c = 0;
-  if (b > fixedpt_rconst(7.9)) {
-    c = fixedpt_toint(fixedpt_div(fixedpt_mul(a + FIXEDPT_ONE, b), fixedpt_rconst(2.3)));
-  }
-  printf("c:%d\n",c);
+  //fixedpt_muli();fixedpt_divi();fixedpt_mul();fixedpt_div();fixedpt_abs();fixedpt_floor();fixedpt_ceil();
+  fixedpt_muli(fixedpt_rconst(1.2),10);
+  fixedpt_muli(fixedpt_rconst(-1.2),10);
+  fixedpt_muli(fixedpt_rconst(0),5);
   return 0;
 }

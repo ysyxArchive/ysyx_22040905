@@ -157,7 +157,7 @@ static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
 	printf("div:%s ",fixedpt_cstr(A,-2));
 	printf("%s ",fixedpt_cstr(B,-2));
-	printf("%s\n",fixedpt_cstr((A*B)<<FIXEDPT_FBITS,-2));
+	printf("%s\n",fixedpt_cstr((A/B)<<FIXEDPT_FBITS,-2));
 	return (A/B)<<FIXEDPT_FBITS;
 }
 

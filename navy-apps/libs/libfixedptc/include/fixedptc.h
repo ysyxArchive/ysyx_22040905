@@ -1,7 +1,10 @@
 #ifndef _FIXEDPTC_H_
 #define _FIXEDPTC_H_
 
+#define test 1
+#ifdef test
 #include <stdio.h>
+#endif
 /*
  * fixedptc.h is a 32-bit or 64-bit fixed point numeric library.
  *
@@ -130,52 +133,66 @@ static inline char* fixedpt_cstr(const fixedpt A, const int max_dec);
 
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
+#ifdef test
 	printf("muli:%s ",fixedpt_cstr(A,-2));
 	printf("%d ",B);
 	printf("%s\n",fixedpt_cstr(A*B,-2));
+#endif
 	return A*B;
 }
 
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
+#ifdef test
 	printf("divi:%s ",fixedpt_cstr(A,-2));
 	printf("%d ",B);
 	printf("%s\n",fixedpt_cstr(A/B,-2));
+#endif
 	return A/B;
 }
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
+#ifdef test
 	printf("mul:%s ",fixedpt_cstr(A,-2));
 	printf("%s ",fixedpt_cstr(B,-2));
 	printf("%s\n",fixedpt_cstr((A*B)>>FIXEDPT_FBITS,-2));
+#endif
 	return (A*B)>>FIXEDPT_FBITS;
 }
 
 
 /* Divides two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
+#ifdef test
 	printf("div:%s ",fixedpt_cstr(A,-2));
 	printf("%s ",fixedpt_cstr(B,-2));
 	printf("%s\n",fixedpt_cstr(((A<<FIXEDPT_FBITS)/B),-2));
+#endif
 	return (A<<FIXEDPT_FBITS)/B;
 }
 
 static inline fixedpt fixedpt_abs(fixedpt A) {
+#ifdef test
 	printf("abs:%s ",fixedpt_cstr(A,-2));
 	printf("%s\n",fixedpt_cstr((A>>31)?(~A+1):A,-2));
+#endif
 	return (A>>31==1)?(~A+1):A;
 }
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
+#ifdef test
 	printf("floor:%s ",fixedpt_cstr(A,-2));
 	printf("%s\n",fixedpt_cstr(A-fixedpt_fracpart(A),-2));
+#endif
 	return (A-fixedpt_fracpart(A));
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
+#ifdef test
 	printf("ceil:%s ",fixedpt_cstr(A,-2));
 	printf("%s\n",fixedpt_cstr(fixedpt_fracpart(A)==0?A:A+((1<<FIXEDPT_FBITS)-fixedpt_fracpart(A)),-2));
+#endif
 	return fixedpt_fracpart(A)==0?A:A+((1<<FIXEDPT_FBITS)-fixedpt_fracpart(A));
 }
 

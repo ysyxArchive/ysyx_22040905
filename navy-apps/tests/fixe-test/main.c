@@ -39,5 +39,14 @@ int main() {
   fixedpt_floor(fixedpt_rconst(1));
   fixedpt_floor(fixedpt_rconst(-1));
   printf("\n");
+  fixedpt_ceil(fixedpt_rconst(1.2));
+  fixedpt_ceil(fixedpt_rconst(-1.2));
+  fixedpt_ceil(fixedpt_rconst(0));
+  fixedpt_ceil(fixedpt_rconst(1.6));
+  fixedpt_ceil(fixedpt_rconst(2.8));
+  fixedpt_ceil(fixedpt_rconst(-2.8));
+  fixedpt_ceil(fixedpt_rconst(1));
+  fixedpt_ceil(fixedpt_rconst(-1));
+  printf("\n");
   return 0;
 }

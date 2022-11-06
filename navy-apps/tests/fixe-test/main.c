@@ -1,4 +1,4 @@
-#define test 1
+#define test 1//to open test in fixedptc.h
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>

@@ -164,7 +164,6 @@ static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
 static inline fixedpt fixedpt_abs(fixedpt A) {
 	printf("abs:%s ",fixedpt_cstr(A,-2));
 	printf("%s\n",fixedpt_cstr((A>>31)?(~A+1):A,-2));
-	printf("%d",A>>31);
 	return (A>>31==1)?(~A+1):A;
 }
 

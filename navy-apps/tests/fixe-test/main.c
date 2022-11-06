@@ -29,5 +29,10 @@ int main() {
   fixedpt_abs(fixedpt_rconst(1.2));
   fixedpt_abs(fixedpt_rconst(-1.2));
   fixedpt_abs(fixedpt_rconst(0));
+  printf("\n");
+  fixedpt_floor(fixedpt_rconst(1.2));
+  fixedpt_floor(fixedpt_rconst(-1.2));
+  fixedpt_floor(fixedpt_rconst(0));
+  printf("\n");
   return 0;
 }

@@ -26,6 +26,8 @@ int main() {
   fixedpt_div(fixedpt_rconst(-2),fixedpt_rconst(5));
   fixedpt_div(fixedpt_rconst(0),fixedpt_rconst(-2));
   printf("\n");
-
+  fixedpt_abs(fixedpt_rconst(1.2));
+  fixedpt_abs(fixedpt_rconst(-1.2));
+  fixedpt_abs(fixedpt_rconst(0));
   return 0;
 }

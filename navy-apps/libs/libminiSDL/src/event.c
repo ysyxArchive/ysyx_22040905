@@ -21,7 +21,7 @@ int SDL_PollEvent(SDL_Event *ev) {
     strcpy(buf2,buf1);
     ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
     ev->key.keysym.sym=(int)buf1[3];
-    //printf("%s",buf);
+    printf("%s\n",keyname[ev->key.keysym.sym]);
     return ev->key.type==SDL_KEYDOWN;
   }
   return 0;

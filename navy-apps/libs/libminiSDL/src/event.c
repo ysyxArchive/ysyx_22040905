@@ -33,7 +33,7 @@ int SDL_PushEvent(SDL_Event *ev) {
 int SDL_PollEvent(SDL_Event *ev) {
   static char buf[20];
   NDL_PollEvent(buf, 20);
-  ev->key.type=(buf[1]=='u'?SDL_KEYUP:SDL_KEYDOWN);
+  ev->key.type=(buf[1]=='d'?SDL_KEYDOWN:SDL_KEYUP);
   ev->key.keysym.sym=(int)buf[3];
   return !(ev->key.type);
 }

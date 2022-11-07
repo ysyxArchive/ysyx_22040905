@@ -20,7 +20,8 @@ int SDL_WaitEvent(SDL_Event *event) {
   static char buf[2];
   NDL_PollEvent(buf, 2);
   strcpy(event->key.type,buf[0]);
-  srrcpy(event->key.keysym.sym,buf[1]);
+  strcpy(event->key.keysym.sym,buf[1]);
+  printf("%d %d\n",event->key.type,event->key.keysym.sym);
   return 1;
 }
 

@@ -14,6 +14,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     w=src->w;
     x1=0;
     y1=0;
+    while(1)printf("1");
   }
   else {
     h=srcrect->h;

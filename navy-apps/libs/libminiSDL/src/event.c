@@ -35,14 +35,14 @@ int SDL_PollEvent(SDL_Event *ev) {
   NDL_PollEvent(buf, 20);
   ev->key.type=((buf[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
   ev->key.keysym.sym=(int)buf[3];
-  printf("%s",buf);
+  //printf("%s",buf);
   return ev->key.type==SDL_KEYDOWN;
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
   printf("Finish\n");
   while(!SDL_PollEvent(event));
-  //printf("Loading\n");
+  printf("Loading\n");
   //printf("%d %d\n",event->key.type,event->key.keysym.sym);
   return 1;
 }

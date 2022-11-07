@@ -58,7 +58,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.x=offset/4%cfg.width;
   ctl.h=(offset+len)/4/cfg.width-ctl.y;
   ctl.w=((offset+len)/4-1)%cfg.width+1 -ctl.x;
-  //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
+  printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
   if(!(ctl.y<300&&ctl.x<400&&(ctl.h+ctl.y)<=300&&(ctl.w+ctl.x)<=400)){
     printf("x:%d y:%d w:%d h:%d\n",ctl.x,ctl.y,ctl.w,ctl.h);
     assert(0);

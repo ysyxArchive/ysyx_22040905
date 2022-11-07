@@ -23,17 +23,10 @@ uint32_t NDL_GetTicks() {//ms
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  FILE* fp=fopen("/dev/events","r");
-  int flag=0;
-  for(int i=0;i<len;i++){
-    flag=1;
-    if(fscanf(fp,"%c",buf+i)==EOF)flag=0;
-    if(*(buf+i)=='\n'){
-      *(buf+i)='\0';
-      break;
-    }
-  }
-  return flag;
+  int fp=open("/dev/events",O_RDONLY);
+  int ret=read(fp,buf,len);
+  //printf("%s",buf);
+  return 1;
 }
 char buf[55];
 int canvas_w,canvas_h;

@@ -3,23 +3,6 @@
 #include <string.h>
 #define keyname(k) #k,
 
-/*
-#define ElemType SDL_Event
-#define MAXSIZE 2048
-typedef struct Queue
-{
-	ElemType *base; 
-	int       front; 
-	int       rear; 
-}Queue;
-
-void InitQueue(Queue *Q)
-{
-	Q->base = (ElemType *)malloc(sizeof(ElemType) * MAXSIZE);
-	assert(Q->base != NULL);
-	Q->front = Q->rear = 0;
-}
-*/
 
 static const char *keyname[] = {
   "NONE",
@@ -30,13 +13,18 @@ int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
 
+static char buf1[100],buf2[100];
 int SDL_PollEvent(SDL_Event *ev) {
-  static char buf[20];
-  NDL_PollEvent(buf, 20);
-  ev->key.type=((buf[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
-  ev->key.keysym.sym=(int)buf[3];
-  //printf("%s",buf);
-  return ev->key.type==SDL_KEYDOWN;
+  NDL_PollEvent(buf1, 100);
+  if(strcmp(buf1,buf2)==0)return 0;
+  else{
+    strcpy(buf2,buf1);
+    ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
+    ev->key.keysym.sym=(int)buf1[3];
+    //printf("%s",buf);
+    return ev->key.type==SDL_KEYDOWN;
+  }
+  return 0;
 }
 
 int SDL_WaitEvent(SDL_Event *event) {

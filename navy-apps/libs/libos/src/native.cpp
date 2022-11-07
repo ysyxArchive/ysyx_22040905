@@ -87,6 +87,7 @@ static int event_thread(void *args) {
         key_r = (key_r + 1) % KEY_QUEUE_LEN;
         assert(key_r != key_f);
         SDL_UnlockMutex(key_queue_lock);
+        //update_screen();
         break;
     }
   }

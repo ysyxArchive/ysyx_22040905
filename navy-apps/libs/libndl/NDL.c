@@ -62,6 +62,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     w=canvas_w;
     h=canvas_h;
   }
+  //printf("%d %d %d %d %d\n",pixels[0],x,y,w,h);
   int fp=open("/dev/fb",O_WRONLY);
   for(int i=0;i<h;i++){
     lseek(fp,((i+y)*canvas_w+x)*4,SEEK_SET);

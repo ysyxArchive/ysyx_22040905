@@ -31,10 +31,9 @@ int SDL_PushEvent(SDL_Event *ev) {
 }
 
 int SDL_PollEvent(SDL_Event *ev) {
-  printf("111\n");
   static char buf[20];
   NDL_PollEvent(buf, 20);
-  if(buf==NULL) return 0;
+  if(buf[0]!='k') return 0;
   ev->key.type=(buf[1]=='u'?1:0);
   ev->key.keysym.sym=(int)buf[3];
   return 1;

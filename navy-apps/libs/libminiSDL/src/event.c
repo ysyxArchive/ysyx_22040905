@@ -17,6 +17,10 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
+  static char buf[2];
+  NDL_PollEvent(buf, 2);
+  strcpy(event->key.type,buf[0]);
+  srrcpy(event->key.keysym.sym,buf[1]);
   return 1;
 }
 

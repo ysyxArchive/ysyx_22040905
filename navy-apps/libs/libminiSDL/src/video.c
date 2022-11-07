@@ -29,12 +29,13 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     x2=dstrect->x;
     y2=dstrect->y;
   }
-  printf("%d %d %d %d %d %d\n",h,w,x1,y1,x2,y2);
+
   for(int i=0;i<h;i++)
     for(int j=0;j<w;j++){
       ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
     }
-  SDL_UpdateRect(dst,x2,y2,w,h); 
+  SDL_UpdateRect(dst,x2,y2,w,h);
+  while(1); 
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {

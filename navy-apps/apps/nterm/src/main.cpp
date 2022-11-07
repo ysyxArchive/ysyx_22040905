@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
   term = new Terminal(W, H);
 
-  if (argc < 2) { builtin_sh_run(); }
+  if (argc < 2) {builtin_sh_run();}
   else { extern_app_run(argv[1]); }
 
   // should not reach here
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 
 static void draw_ch(int x, int y, char ch, uint32_t fg, uint32_t bg) {
   SDL_Surface *s = BDF_CreateSurface(font, ch, fg, bg);
-  SDL_Rect dstrect = { .x = x, .y = y };
+  SDL_Rect dstrect = { .x = (int16_t)x, .y = (int16_t)y };
   SDL_BlitSurface(s, NULL, screen, &dstrect);
   SDL_FreeSurface(s);
 }
@@ -40,6 +40,7 @@ void refresh_terminal() {
   for (int i = 0; i < W; i ++)
     for (int j = 0; j < H; j ++)
       if (term->is_dirty(i, j)) {
+        //printf("%c",term->getch(i,j));
         draw_ch(i * font->w, j * font->h, term->getch(i, j), term->foreground(i, j), term->background(i, j));
         needsync = 1;
       }

@@ -14,7 +14,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     w=src->w;
     x1=0;
     y1=0;
-    while(1)printf("1");
   }
   else {
     h=srcrect->h;
@@ -35,6 +34,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     for(int j=0;j<w;j++){
       ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
     }
+  printf("%d %d %d %d\n",x2,y2,w,h);while(1);
   SDL_UpdateRect(dst,x2,y2,w,h); 
 }
 

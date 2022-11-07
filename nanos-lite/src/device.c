@@ -59,7 +59,9 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.h=(offset+len)/4/cfg.width-ctl.y+1;
   ctl.w=(offset+len)/4%cfg.width-ctl.x;
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
-  assert(ctl.y<300&&ctl.x<400&&(ctl.h+ctl.y)<300&&(ctl.w+ctl.x)<400);
+  if(ctl.y<300&&ctl.x<400&&(ctl.h+ctl.y)<300&&(ctl.w+ctl.x)<400){
+    printf("x:%d y:%d w:%d h;%d\n",ctl.x,ctl.y,ctl.w,ctl.h);
+  }
   ctl.sync=1;
   ioe_read(AM_GPU_FBDRAW,&ctl);
   return len;

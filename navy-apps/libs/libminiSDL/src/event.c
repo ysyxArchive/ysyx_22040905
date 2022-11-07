@@ -40,7 +40,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 int SDL_WaitEvent(SDL_Event *event) {
   printf("Finish\n");
   while(!SDL_PollEvent(event));
-  //printf("%d %d\n",event->key.type,event->key.keysym.sym);
+  printf("%d %d\n",event->key.type,event->key.keysym.sym);
   return 1;
 }
 

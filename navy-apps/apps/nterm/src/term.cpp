@@ -249,8 +249,15 @@ void Terminal::write(const char *str, size_t count) {
             cursor.y --;
           }
           break;
-        case '\t':
-          // TODO: implement it.
+        case '\t'://TODO:do a real '\t'
+          putch(cursor.x,cursor.y,' ');
+          move_one();
+          putch(cursor.x,cursor.y,' ');
+          move_one();
+          putch(cursor.x,cursor.y,' ');
+          move_one();
+          putch(cursor.x,cursor.y,' ');
+          move_one();
           break;
         case '\r':
           cursor.x = 0;

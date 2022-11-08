@@ -11,6 +11,7 @@ static void sh_printf(const char *format, ...) {
   va_start(ap, format);
   int len = vsnprintf(buf, 256, format, ap);
   va_end(ap);
+  //for(int i=0;i<=len;i++){printf("%d|",buf[i]);}printf("\n");
   term->write(buf, len);
 }
 
@@ -26,12 +27,15 @@ static void sh_handle_cmd(const char *cmd) {
 }
 
 void builtin_sh_run() {
-  sh_banner();
-  sh_prompt();
-
+  //sh_banner();
+  //sh_prompt();
+  sh_printf("1");
+  refresh_terminal();
+  while(1);
   while (1) {
     SDL_Event ev;
     if (SDL_PollEvent(&ev)) {
+      //printf("%s\n",ev.type?"SDL_KEYUP":"SDL_KEYDOWN");
       if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
         const char *res = term->keypress(handle_key(&ev));
         if (res) {

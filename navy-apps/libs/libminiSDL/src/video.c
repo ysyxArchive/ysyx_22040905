@@ -13,10 +13,9 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   else {h=srcrect->h;w=srcrect->w;x1=srcrect->x;y1=srcrect->y;}
   if(dstrect==NULL){x2=0;y2=0;}
   else{x2=dstrect->x;y2=dstrect->y;}
-
   for(int i=0;i<h;i++)
     for(int j=0;j<w;j++){
-      ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
+      ((uint32_t *)dst->pixels)[(i+y2)*(400)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
     }
 }
 

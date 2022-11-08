@@ -30,20 +30,23 @@ int main(int argc, char *argv[]) {
 
 static void draw_ch(int x, int y, char ch, uint32_t fg, uint32_t bg) {
   SDL_Surface *s = BDF_CreateSurface(font, ch, fg, bg);
-  SDL_Rect dstrect = { .x = (int16_t)x, .y = (int16_t)y };
+  SDL_Rect dstrect = { .x = x, .y = y };
+  //printf("%d %d\n",x,y);
   SDL_BlitSurface(s, NULL, screen, &dstrect);
   SDL_FreeSurface(s);
 }
 
 void refresh_terminal() {
   int needsync = 0;
+  //printf("%d %d\n",font->w,font->h);
   for (int i = 0; i < W; i ++)
     for (int j = 0; j < H; j ++)
       if (term->is_dirty(i, j)) {
-        //printf("%c",term->getch(i,j));
-        draw_ch(i * font->w, j * font->h, term->getch(i, j), term->foreground(i, j), term->background(i, j));
+        //printf("%d %x %x\n",term->getch(i,j),term->foreground(i,j),term->background(i,j));
+        draw_ch(i * font->w, j * font->h, term->getch(i, j), term->foreground(i, j), 0x323232);//term->background(i, j));
         needsync = 1;
       }
+  
   term->clear();
 
   static uint32_t last = 0;

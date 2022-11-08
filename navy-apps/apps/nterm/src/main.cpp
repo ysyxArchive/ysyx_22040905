@@ -43,7 +43,8 @@ void refresh_terminal() {
     for (int j = 0; j < H; j ++)
       if (term->is_dirty(i, j)) {
         //printf("%d %x %x\n",term->getch(i,j),term->foreground(i,j),term->background(i,j));
-        draw_ch(i * font->w, j * font->h, term->getch(i, j), term->foreground(i, j), 0x323232);//term->background(i, j));
+        draw_ch(i * font->w, j * font->h, term->getch(i, j), term->foreground(i, j),term->background(i, j));
+
         needsync = 1;
       }
   

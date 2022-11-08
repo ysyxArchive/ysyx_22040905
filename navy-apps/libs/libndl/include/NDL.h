@@ -18,6 +18,7 @@ void NDL_CloseAudio();
 int NDL_PlayAudio(void *buf, int len);
 int NDL_QueryAudio();
 
+extern int canvas_w,canvas_h;
 #ifdef __cplusplus
 }
 #endif

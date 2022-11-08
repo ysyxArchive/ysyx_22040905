@@ -31,24 +31,24 @@ int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
 
-static char buf1[100],buf2[100];
+static char buf1[30],buf2[30];
 int SDL_PollEvent(SDL_Event *ev) {
-  NDL_PollEvent(buf1, 100);
+  NDL_PollEvent(buf1, 30);
   if(strcmp(buf1,buf2)==0)return 0;
   else{
     strcpy(buf2,buf1);
     ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
     ev->key.keysym.sym=findsdlk(buf1+3);
     printf("%s\n",keyname[ev->key.keysym.sym]);
-    return ev->key.type==SDL_KEYDOWN;
+    return 1;//ev->key.type==SDL_KEYDOWN;
   }
   return 0;
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
-  printf("Finish\n");
+  printf("\033[0;32mFinish\033[0m\n");
   while(!SDL_PollEvent(event));
-  printf("Loading\n");
+  printf("\033[0;33mLoading\033[0m\n");
   //printf("%d %d\n",event->key.type,event->key.keysym.sym);
   return 1;
 }

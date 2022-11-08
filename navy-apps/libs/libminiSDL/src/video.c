@@ -9,26 +9,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   int h,w,x1,y1,x2,y2;
-  if(srcrect==NULL){
-    h=src->h;
-    w=src->w;
-    x1=0;
-    y1=0;
-  }
-  else {
-    h=srcrect->h;
-    w=srcrect->w;
-    x1=srcrect->x;
-    y1=srcrect->y;
-  }
-  if(dstrect==NULL){
-    x2=0;
-    y2=0;
-  }
-  else{
-    x2=dstrect->x;
-    y2=dstrect->y;
-  }
+  if(srcrect==NULL){h=src->h;w=src->w;x1=0;y1=0;}
+  else {h=srcrect->h;w=srcrect->w;x1=srcrect->x;y1=srcrect->y;}
+  if(dstrect==NULL){x2=0;y2=0;}
+  else{x2=dstrect->x;y2=dstrect->y;}
 
   for(int i=0;i<h;i++)
     for(int j=0;j<w;j++){

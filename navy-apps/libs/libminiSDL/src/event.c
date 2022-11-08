@@ -9,6 +9,24 @@ static const char *keyname[] = {
   _KEYS(keyname)
 };
 
+static const char *code[]={
+  "NONE\n","ESCAPE\n", "F1\n", "F2\n", "F3\n", "F4\n", "F5\n", "F6\n", "F7\n", "F8\n", "F9\n", "F10\n", "F11\n", "F12\n", \
+  "GRAVE\n", "1\n", "2\n", "3\n", "4\n", "5\n", "6\n", "7\n", "8\n", "9\n", "0\n", "MINUS\n", "EQUALS\n", "BACKSPACE\n", \
+  "TAB\n", "Q\n", "W\n", "E\n", "R\n", "T\n", "Y\n", "U\n", "I\n", "O\n", "P\n", "LEFTBRACKET\n", "RIGHTBRACKET\n", "BACKSLASH\n", \
+  "CAPSLOCK\n", "A\n", "S\n", "D\n", "F\n", "G\n", "H\n", "J\n", "K\n", "L\n", "SEMICOLON\n", "APOSTROPHE\n", "RETURN\n", \
+  "LSHIFT\n", "Z\n", "X\n", "C\n", "V\n", "B\n", "N\n", "M\n", "COMMA\n", "PERIOD\n", "SLASH\n", "RSHIFT\n", \
+  "LCTRL\n", "APPLICATION\n", "LALT\n", "SPACE\n", "RALT\n", "RCTRL\n", \
+  "UP\n", "DOWN\n", "LEFT\n", "RIGHT\n", "INSERT\n", "DELETE\n", "HOME\n", "END\n", "PAGEUP\n", "PAGEDOWN\n"
+};
+
+int findsdlk(char* buf){
+  for(int i=0;i<64;i++)
+  if(strcmp(buf,code[i])==0){
+    return i;
+  }
+  assert(0);
+  return 0;
+}
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
@@ -20,8 +38,8 @@ int SDL_PollEvent(SDL_Event *ev) {
   else{
     strcpy(buf2,buf1);
     ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
-    ev->key.keysym.sym=(int)buf1[3];
-    printf("%d\n",enumdef(keyname[ev->key.keysym.sym]));
+    ev->key.keysym.sym=findsdlk(buf1+3);
+    printf("%d\n",ev->key.keysym.sym);
     return ev->key.type==SDL_KEYDOWN;
   }
   return 0;

@@ -395,7 +395,7 @@ int sprintf(char * buf, const char *fmt, ...)
 	va_end(args);
 	return i;
 }
-static char sprint_buf[32768];
+static char sprint_buf[32768*8];
 
 int printf(const char *fmt, ...)
 {

@@ -15,6 +15,8 @@
 #define SPECIAL	32		/* 0x /0*/
 #define LARGE	  64		/* 用 'ABCDEF'/'abcdef' */
 
+static char sprint_buf[32768*8];
+
 //统计字符串中字符个数(不包括\0)，如果个数大于count，则返回count，否则返回字符个数
 size_t strnlen(const char * s, size_t count)//size_t是unsigned long long的宏
 {
@@ -395,7 +397,6 @@ int sprintf(char * buf, const char *fmt, ...)
 	va_end(args);
 	return i;
 }
-static char sprint_buf[32768*8];
 
 int printf(const char *fmt, ...)
 {

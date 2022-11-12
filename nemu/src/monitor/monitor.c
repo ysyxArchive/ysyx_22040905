@@ -199,10 +199,10 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize the iringbuf. */
   init_iringbuf();
 
-  printf("**************\n");
   /* Initialize the ftrace. */ 
   load_elf();
 
+  printf("**************\n");
   IFDEF(CONFIG_ITRACE, init_disasm(
     MUXDEF(CONFIG_ISA_x86,     "i686",
     MUXDEF(CONFIG_ISA_mips32,  "mipsel",

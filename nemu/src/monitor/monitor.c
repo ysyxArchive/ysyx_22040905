@@ -87,7 +87,6 @@ static void load_elf(){
     assert(count<=shdr_num);
     fseek(fp, ehdr->e_shoff, SEEK_SET);
     ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
-    printf("%d\n",l);
     assert(ret!=0);
     int flag=0,num=0;
     for(int i = 0; i < count; ++i) {
@@ -106,6 +105,7 @@ static void load_elf(){
         assert(ret!=0); 
       }
     }
+    printf("%d\n",l);
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){

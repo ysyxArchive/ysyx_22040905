@@ -56,6 +56,10 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
+#define func_mnum 100000
+#define shdr_num 2048
+#define sym_num 32768
+#define str_num 32768
 static struct fun{
   uint64_t begin;
   uint64_t end;
@@ -80,6 +84,7 @@ static void load_elf(){
     assert(ret!=0);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量
+    assert(count<=shdr_num);
     fseek(fp, ehdr->e_shoff, SEEK_SET);
     ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
     assert(ret!=0);
@@ -87,6 +92,7 @@ static void load_elf(){
     for(int i = 0; i < count; ++i) {
       if(shdr[i].sh_type==SHT_STRTAB&&!flag){
         fseek(fp,shdr[i].sh_offset,SEEK_SET);
+        assert(shdr[i].sh_size<=str_num);
         ret=fread(strtab, 1, shdr[i].sh_size, fp);
         assert(ret!=0);
         flag=1;
@@ -94,6 +100,7 @@ static void load_elf(){
       else if(shdr[i].sh_type==SHT_SYMTAB){
         fseek(fp,shdr[i].sh_offset,SEEK_SET);
         num=shdr[i].sh_size/shdr[i].sh_entsize;
+        assert(num<=sym_num);
         ret=fread(symtab,shdr[i].sh_entsize,num, fp);
         assert(ret!=0); 
       }
@@ -104,6 +111,7 @@ static void load_elf(){
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
         strcpy(func[func_num++].str,strtab+symtab[j].st_name);
+        assert(func_num<=func_mnum);
         //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }
@@ -202,7 +210,6 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize the ftrace. */ 
   load_elf();
 
-  printf("**************\n");
   IFDEF(CONFIG_ITRACE, init_disasm(
     MUXDEF(CONFIG_ISA_x86,     "i686",
     MUXDEF(CONFIG_ISA_mips32,  "mipsel",

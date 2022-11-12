@@ -72,12 +72,11 @@ static void load_elf(){
     Log("No elf is given.");
     return;
   }
-  return;
   for(int l=0;l<elf_num;l++){
     Elf64_Ehdr ehdr[1];
-    Elf64_Shdr shdr[2048];
-    Elf64_Sym symtab[32768];
-    char strtab[32768];
+    Elf64_Shdr shdr[shdr_num];
+    Elf64_Sym symtab[sym_num];
+    char strtab[str_num];
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_SET);

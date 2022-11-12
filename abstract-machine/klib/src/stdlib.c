@@ -43,6 +43,7 @@ void *malloc(size_t size) {
   if(addr==NULL) addr=heap.start;
   addr+=size;
   return addr-size;
+
 #endif
   return NULL;
 }

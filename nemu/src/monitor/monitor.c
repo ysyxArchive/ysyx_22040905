@@ -108,14 +108,13 @@ static void load_elf(){
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
+        assert(func_num<=func_mnum);
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
         strcpy(func[func_num++].str,strtab+symtab[j].st_name);
-        assert(func_num<=func_mnum);
         //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }
-    printf("%d\n",l);
 
     //printf("####%s\n",func[0].str);
   }

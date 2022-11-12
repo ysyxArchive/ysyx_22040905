@@ -28,8 +28,6 @@ run: run-env
 	touch $(BUILD_DIR)/nemu-dtrace.txt
 	rm -rf $(BUILD_DIR)/nemu-etrace.txt
 	touch $(BUILD_DIR)/nemu-etrace.txt
-
-
 	$(NEMU_EXEC)
 
 gdb: run-env

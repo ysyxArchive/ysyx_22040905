@@ -56,11 +56,11 @@ static long load_img() {
 //elf
 int elf_num=0;
 #ifdef CONFIG_FTRACE
-#define func_mnum 100000
+#define func_mnum 131072
 #define shdr_num 2048
 #define sym_num 32768
 #define str_num 32768
-#define str_len 40
+#define str_len 256
 static struct fun{
   uint64_t begin;
   uint64_t end;
@@ -111,7 +111,6 @@ static void load_elf(){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
-        printf("%ld\n",strlen(strtab+symtab[j].st_name));
         assert(strlen(strtab+symtab[j].st_name)<=str_len);
         strcpy(func[func_num++].str,strtab+symtab[j].st_name);
         assert(func_num<=func_mnum);

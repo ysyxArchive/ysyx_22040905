@@ -24,7 +24,7 @@ int findsdlk(char* buf){
   if(strcmp(buf,code[i])==0){
     return i;
   }
-  assert(0);
+  //assert(0);
   return 0;
 }
 int SDL_PushEvent(SDL_Event *ev) {

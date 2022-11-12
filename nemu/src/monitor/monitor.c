@@ -72,6 +72,7 @@ static void load_elf(){
     Log("No elf is given.");
     return;
   }
+  return;
   for(int l=0;l<elf_num;l++){
     Elf64_Ehdr ehdr[1];
     Elf64_Shdr shdr[2048];

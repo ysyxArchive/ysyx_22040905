@@ -199,6 +199,7 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize the iringbuf. */
   init_iringbuf();
 
+  printf("**************\n");
   /* Initialize the ftrace. */ 
   load_elf();
 

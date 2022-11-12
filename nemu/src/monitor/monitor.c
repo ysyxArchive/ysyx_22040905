@@ -77,6 +77,7 @@ static void load_elf(){
     Elf64_Shdr shdr[shdr_num];
     Elf64_Sym symtab[sym_num];
     char strtab[str_num];
+    printf("%d\n",l);
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_SET);

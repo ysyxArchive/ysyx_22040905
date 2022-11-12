@@ -81,13 +81,13 @@ static void load_elf(){
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_SET);
     int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
-    printf("%d\n",l);
     assert(ret!=0);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量
     assert(count<=shdr_num);
     fseek(fp, ehdr->e_shoff, SEEK_SET);
     ret=fread(shdr, sizeof(Elf64_Shdr), count, fp);
+    printf("%d\n",l);
     assert(ret!=0);
     int flag=0,num=0;
     for(int i = 0; i < count; ++i) {

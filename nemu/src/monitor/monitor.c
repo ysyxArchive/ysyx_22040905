@@ -60,10 +60,11 @@ int elf_num=0;
 #define shdr_num 2048
 #define sym_num 32768
 #define str_num 32768
+#define str_len 40
 static struct fun{
   uint64_t begin;
   uint64_t end;
-  char str[40];
+  char str[str_len];
 }func[100000];
 int func_num=0;
 
@@ -108,11 +109,11 @@ static void load_elf(){
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
-        printf("%d\n",j);
-        assert(func_num<=func_mnum);
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;
+        assert(strlen(strtab+symtab[j].st_name)<=str_len);
         strcpy(func[func_num++].str,strtab+symtab[j].st_name);
+        assert(func_num<=func_mnum);
         //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }

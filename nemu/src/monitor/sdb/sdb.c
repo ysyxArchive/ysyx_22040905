@@ -191,7 +191,7 @@ void sdb_mainloop() {
 void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
-  printf("**************\n");
   /* Initialize the watchpoint pool. */
   init_wp_pool();
+  printf("**************\n");
 }

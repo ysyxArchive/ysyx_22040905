@@ -108,6 +108,7 @@ static void load_elf(){
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
+        printf("%d\n",j);
         assert(func_num<=func_mnum);
         func[func_num].begin=symtab[j].st_value;
         func[func_num].end=symtab[j].st_value+symtab[j].st_size;

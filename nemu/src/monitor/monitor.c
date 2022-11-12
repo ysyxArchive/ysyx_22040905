@@ -77,11 +77,11 @@ static void load_elf(){
     Elf64_Shdr shdr[shdr_num];
     Elf64_Sym symtab[sym_num];
     char strtab[str_num];
-    printf("%d\n",l);
     FILE *fp = fopen(elf[l], "rb");
     Assert(fp, "Can not open '%s'",elf[l]);
     fseek(fp,0,SEEK_SET);
     int ret=fread(ehdr, sizeof(Elf64_Ehdr), 1, fp);
+    printf("%d\n",l);
     assert(ret!=0);
     assert(*(uint32_t *)ehdr->e_ident == 0x464c457f);
     int count = ehdr->e_shnum;    //节头表数量

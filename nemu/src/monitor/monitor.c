@@ -105,7 +105,6 @@ static void load_elf(){
         assert(ret!=0); 
       }
     }
-    printf("%d\n",l);
     fclose(fp);
     for(int j=0;j<num;j++){
       if(ELF64_ST_TYPE(symtab[j].st_info)==STT_FUNC){
@@ -116,6 +115,7 @@ static void load_elf(){
         //printf("%d %s\n",func_num-1,func[func_num-1].str);
       }
     }
+    printf("%d\n",l);
 
     //printf("####%s\n",func[0].str);
   }

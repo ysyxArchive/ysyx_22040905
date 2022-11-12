@@ -34,9 +34,9 @@ size_t sys_lseek(uintptr_t fd, uintptr_t offset, uintptr_t whence){
 }
 
 int sys_gettimeofday(uintptr_t v,uintptr_t z){
-  printf("%x %x\n",v,z);
   struct timeval *tv=(struct timeval *)v;
   struct timezone *tz=(struct timezone *)z;
+  if(tz==NULL)printf("%x %x\n",v,z);
   ioe_read(AM_TIMER_UPTIME,&(tv->tv_usec));
   tv->tv_sec=tv->tv_usec/1000000;
   if(tz!=NULL){

@@ -1,6 +1,7 @@
 #include <NDL.h>
 #include <SDL.h>
 #include <string.h>
+#include <assert.h>
 #define keyname(k) #k,
 
 
@@ -28,6 +29,7 @@ int findsdlk(char* buf){
   return 0;
 }
 int SDL_PushEvent(SDL_Event *ev) {
+  assert(0);
   return 0;
 }
 
@@ -54,10 +56,12 @@ int SDL_WaitEvent(SDL_Event *event) {
 }
 
 int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
+  assert(0);
   return 0;
 }
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
+  assert(0);
 
   return NULL;
 }

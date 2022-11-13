@@ -39,6 +39,7 @@ int sys_gettimeofday(uintptr_t v,uintptr_t z){
   if(tv!=NULL){
     ioe_read(AM_TIMER_UPTIME,&(tv->tv_usec));
     tv->tv_sec=tv->tv_usec/1000000;
+    tv->tv_usec=tv->tv_usec%1000000;
   }
   if(tz!=NULL){
     tz->tz_minuteswest=0;

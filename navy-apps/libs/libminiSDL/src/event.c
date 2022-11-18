@@ -20,8 +20,10 @@ static const char *code[]={
   "UP\n", "DOWN\n", "LEFT\n", "RIGHT\n", "INSERT\n", "DELETE\n", "HOME\n", "END\n", "PAGEUP\n", "PAGEDOWN\n"
 };
 
+static uint8_t key_state[83];
+
 int findsdlk(char* buf){
-  for(int i=0;i<64;i++)
+  for(int i=0;i<83;i++)
   if(strcmp(buf,code[i])==0){
     return i;
   }
@@ -41,7 +43,13 @@ int SDL_PollEvent(SDL_Event *ev) {
     strcpy(buf2,buf1);
     ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
     ev->key.keysym.sym=findsdlk(buf1+3);
-    if(ev->key.type==SDL_KEYDOWN)printf("%s\n",keyname[ev->key.keysym.sym]);
+    if(ev->key.type==SDL_KEYDOWN){
+      key_state[ev->key.keysym.sym]=1;
+      printf("%s\n",keyname[ev->key.keysym.sym]);
+    }
+    else{
+      key_state[ev->key.keysym.sym]=0;
+    }
     return 1;//ev->key.type==SDL_KEYDOWN;
   }
   return 0;
@@ -59,9 +67,8 @@ int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
   assert(0);
   return 0;
 }
-
+static uint8_t keynum=83;
 uint8_t* SDL_GetKeyState(int *numkeys) {
-  assert(0);
-
-  return NULL;
+  if(numkeys!=NULL)return &keynum;
+  return key_state;
 }

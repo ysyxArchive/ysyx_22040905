@@ -14,15 +14,24 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   else {h=srcrect->h;w=srcrect->w;x1=srcrect->x;y1=srcrect->y;}
   if(dstrect==NULL){x2=0;y2=0;}
   else{x2=dstrect->x;y2=dstrect->y;}
-  for(int i=0;i<h;i++)
-    for(int j=0;j<w;j++){
-      ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
-    }
+  if (src->format->BitsPerPixel == 32){
+    for(int i=0;i<h;i++)
+      for(int j=0;j<w;j++){
+        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
+      }
+  }
+  else{
+    for(int i=0;i<h;i++)
+      for(int j=0;j<w;j++){
+        (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
+      }
+  }
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   if(dstrect==NULL){
-    for(int i=0;i<(dst->h)*(dst->w);i++)((uint32_t *)dst->pixels)[i]=color;
+      for(int i=0;i<(dst->h)*(dst->w);i++)
+        ((uint32_t *)dst->pixels)[i]=color;
     SDL_UpdateRect(dst,0,0,dst->w,dst->h);
   }
   else{
@@ -34,7 +43,21 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&&w==0&&h==0){w=s->w;h=s->h;}
-  NDL_DrawRect((uint32_t*)s->pixels,x,y,w,h);
+  //printf("%d %d %d %d\n",x,y,w,h);
+  if(s->format->BitsPerPixel==8){
+    uint32_t *pixels=malloc(400*300*sizeof(uint32_t));
+    for(int i=0;i<h;i++)
+      for(int j=0;j<w;j++){
+      uint32_t xy=(i+y)*w+j+x;
+      uint32_t r=(s->format->palette->colors)[s->pixels[xy]].r;
+      uint32_t g=(s->format->palette->colors)[s->pixels[xy]].g;
+      uint32_t b=(s->format->palette->colors)[s->pixels[xy]].b;
+      *(pixels+xy)=(r<<16)|(g<<8)|b;
+    }
+    NDL_DrawRect(pixels,x,y,w,h);
+    free(pixels);
+  }
+  else NDL_DrawRect((uint32_t*)s->pixels,x,y,w,h);
 }
 
 // APIs below are already implemented.
@@ -162,7 +185,7 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, int firstcolor
       uint8_t b = colors[i].b;
     }
     SDL_UpdateRect(s, 0, 0, 0, 0);
-  }
+  }  
 }
 
 static void ConvertPixelsARGB_ABGR(void *dst, void *src, int len) {
@@ -215,8 +238,10 @@ uint32_t SDL_MapRGBA(SDL_PixelFormat *fmt, uint8_t r, uint8_t g, uint8_t b, uint
 }
 
 int SDL_LockSurface(SDL_Surface *s) {
+  assert(0);
   return 0;
 }
 
 void SDL_UnlockSurface(SDL_Surface *s) {
+  assert(0);
 }

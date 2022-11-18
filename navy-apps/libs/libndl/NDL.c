@@ -18,9 +18,11 @@ struct timezone tz;
 
 static uint32_t *canvas;
 int fb=0;
+static uint32_t begin_msec;
+
 uint32_t NDL_GetTicks() {//ms
   gettimeofday(&tv,&tz);
-  return tv.tv_usec/1000;
+  return tv.tv_usec/1000+tv.tv_sec*1000-begin_msec;
 }
 
 int NDL_PollEvent(char *buf, int len) {
@@ -68,6 +70,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     lseek(fb,((i+y)*canvas_w+x)*4,SEEK_SET);
     assert(0!=write(fb,pixels+i*w, sizeof(uint32_t)*w));
   }
+
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
@@ -85,6 +88,8 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
+  gettimeofday(&tv,&tz);
+  begin_msec=tv.tv_sec*1000+tv.tv_usec/1000;
   fb=open("/dev/fb",O_WRONLY);
   if (getenv("NWM_APP")) {
     evtdev = 3;

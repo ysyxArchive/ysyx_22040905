@@ -38,6 +38,4 @@ void isa_difftest_attach(void *buf,int *len) {
   inst[13]=(0x737)|((num[3]/12)<<12); //lui   a4 num/12
   inst[14]=(0x713)|((num[3]%12)<<20); //addi  a4 a4 num%12
   inst[15]=0x34271073;                //csrrw $0 mcause  a4
-
-
 }

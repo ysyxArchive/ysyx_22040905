@@ -135,7 +135,7 @@ void difftest_attach(){
   //execute
   ref_difftest_exec(len/4);
   for(int i=0;i<len;i++){
-    printf("%x",*(((uint8_t *)buff)+i));
+    printf("%02x",*(((uint8_t *)buff)+i));
     if((i+1)%4==0)printf("\n");
   }
   //change gpr

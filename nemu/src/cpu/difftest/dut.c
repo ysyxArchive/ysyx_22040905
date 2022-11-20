@@ -127,10 +127,10 @@ void difftest_attach(){
   int len=0;
   //copy instruction
   isa_difftest_attach(buff,&len);
-  ref_difftest_memcpy(0x81000000,buff,len,DIFFTEST_TO_REF);
+  ref_difftest_memcpy(0x87000000,buff,len,DIFFTEST_TO_REF);
   //enter
   CPU_state cpuu;
-  cpuu.pc=0x81000000;
+  cpuu.pc=0x87000000;
   ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
   //execute
   ref_difftest_exec(len/4);

@@ -44,8 +44,7 @@ void init_mem() {
 }
 
 word_t paddr_read(paddr_t addr, int len) {
-  if (likely(in_pmem(addr))) return pmem_read(addr, len);
-  IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
+
 #ifdef CONFIG_MTRACE
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");
@@ -53,19 +52,23 @@ word_t paddr_read(paddr_t addr, int len) {
   fprintf(fp,"pc=0x%08lx:\tpaddr_read address=%08x\tlen=%d\n",cpu.pc,addr,len);
   fclose(fp); 
 #endif
+  if (likely(in_pmem(addr))) return pmem_read(addr, len);
+  IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
+
   out_of_bound(addr);
   return 0;
 }
 
 void paddr_write(paddr_t addr, int len, word_t data) {
-  if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
-  IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
+
 #ifdef CONFIG_MTRACE
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");
   assert(fp);
-  fprintf(fp,"pc=0x%08lx:\tpaddr_write address=%08x\tlen=%d\n",cpu.pc,addr,len);
+  fprintf(fp,"pc=0x%08lx:\tpaddr_write address=%08x\tlen=%d\tdata=%lx\n",cpu.pc,addr,len,data);
   fclose(fp); 
-#endif 
-  out_of_bound(addr);
+#endif  
+  if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
+  IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
+ out_of_bound(addr);
 }

@@ -134,9 +134,6 @@ void difftest_attach(){
   ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
   //execute
   ref_difftest_exec(len/4);
-  for(int i=0;i<len/4;i++){
-    printf("%08x\n",buff[i]);
-  }
   //change gpr
   ref_difftest_memcpy(RESET_VECTOR+0x100000, guest_to_host(RESET_VECTOR+0x100000), img_size_2-0x100000, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);

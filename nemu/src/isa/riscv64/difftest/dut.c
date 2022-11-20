@@ -1,6 +1,7 @@
 #include <isa.h>
 #include <cpu/difftest.h>
 #include "../local-include/reg.h"
+#include <macro.h>
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   //if(ref_r->pc!=pc)return false;
@@ -15,26 +16,55 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 
 void isa_difftest_attach(uint32_t *buf,int *len) {
   *len=16*4;
-  uint32_t num[4];
+  uint64_t num[8];
   num[0]=cpu.mstatus;
   num[1]=cpu.mtvec;
   num[2]=cpu.mepc;
   num[3]=cpu.mcause;
  
-  buf[0]=0x00000713;                 //addi  a4 $0  0
-  buf[1]=(0x737)|((num[0]/(1<<12))<<12);  //lui   a4 num/12
-  buf[2]=(0x713)|((num[0]%(1<<12))<<20);  //addi  a4 a4 num%12
-  buf[3]=0x30071073;                 //csrrw $0 mstatus a4
-  buf[4]=0x00000713;                 //addi  a4 $0  0
-  buf[5]=(0x737)|((num[1]/(1<<12))<<12);  //lui   a4 num/12
-  buf[6]=(0x713)|((num[1]%(1<<12))<<20);  //addi  a4 a4 num%12
-  buf[7]=0x30571073;                 //csrrw $0 mtvec a4
-  buf[8]=0x00000713;                 //addi  a4 $0  0
-  buf[9]=(0x737)|((num[2]/(1<<12))<<12);  //lui   a4 num/12
-  buf[10]=(0x713)|((num[2]%(1<<12))<<20); //addi  a4 a4 num%12
-  buf[11]=0x34171073;                //csrrw $0 mepc  a4
-  buf[12]=0x00000713;                //addi  a4 $0  0
-  buf[13]=(0x737)|((num[3]/(1<<12))<<12); //lui   a4 num/12
-  buf[14]=(0x713)|((num[3]%(1<<12))<<20); //addi  a4 a4 num%12
-  buf[15]=0x34271073;                //csrrw $0 mcause  a4
+  buf[0]=0x00000713;                        //addi  a4,$0,0
+  buf[1]=(0x737)|(BITS(num[0],63,44)<<12);  //lui   a4,num[63,44]
+  buf[2]=(0x713)|(BITS(num[0],43,32)<<20);  //addi  a4,a4,num[43,32]
+  buf[3]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[4]=(0x713)|(BITS(num[0],31,20)<<20);  //addi  a4,a4,num[31,20]
+  buf[5]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[6]=(0x713)|(BITS(num[0],19,8)<<20);   //addi  a4,a4,num[19,8]
+  buf[7]=0x0871713;                         //slli a4,a4,0x08
+  buf[8]=(0x713)|(BITS(num[0],7,0)<<20);    //addi  a4,a4,num[7,0]
+  buf[9]=0x30071073;                        //csrrw $0,mstatus,a4
+ 
+  buf[10]=0x00000713;                        //addi  a4,$0,0
+  buf[11]=(0x737)|(BITS(num[0],63,44)<<12);  //lui   a4,num[63,44]
+  buf[12]=(0x713)|(BITS(num[0],43,32)<<20);  //addi  a4,a4,num[43,32]
+  buf[13]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[14]=(0x713)|(BITS(num[0],31,20)<<20);  //addi  a4,a4,num[31,20]
+  buf[15]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[16]=(0x713)|(BITS(num[0],19,8)<<20);   //addi  a4,a4,num[19,8]
+  buf[17]=0x0871713;                         //slli a4,a4,0x08
+  buf[18]=(0x713)|(BITS(num[0],7,0)<<20);    //addi  a4,a4,num[7,0]
+  buf[19]=0x30571073;                        //csrrw $0,mtvec,a4
+
+  
+  buf[20]=0x00000713;                        //addi  a4,$0,0
+  buf[21]=(0x737)|(BITS(num[0],63,44)<<12);  //lui   a4,num[63,44]
+  buf[22]=(0x713)|(BITS(num[0],43,32)<<20);  //addi  a4,a4,num[43,32]
+  buf[23]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[24]=(0x713)|(BITS(num[0],31,20)<<20);  //addi  a4,a4,num[31,20]
+  buf[25]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[26]=(0x713)|(BITS(num[0],19,8)<<20);   //addi  a4,a4,num[19,8]
+  buf[27]=0x0871713;                         //slli a4,a4,0x08
+  buf[28]=(0x713)|(BITS(num[0],7,0)<<20);    //addi  a4,a4,num[7,0]
+  buf[29]=0x34171073;                        //csrrw $0,mepc,a4
+
+  
+  buf[30]=0x00000713;                        //addi  a4,$0,0
+  buf[31]=(0x737)|(BITS(num[0],63,44)<<12);  //lui   a4,num[63,44]
+  buf[32]=(0x713)|(BITS(num[0],43,32)<<20);  //addi  a4,a4,num[43,32]
+  buf[33]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[34]=(0x713)|(BITS(num[0],31,20)<<20);  //addi  a4,a4,num[31,20]
+  buf[35]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[36]=(0x713)|(BITS(num[0],19,8)<<20);   //addi  a4,a4,num[19,8]
+  buf[37]=0x0871713;                         //slli a4,a4,0x08
+  buf[38]=(0x713)|(BITS(num[0],7,0)<<20);    //addi  a4,a4,num[7,0]
+  buf[39]=0x34271073;                        //csrrw $0,mcause,a4
 }

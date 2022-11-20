@@ -9,7 +9,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   {
     if(!difftest_check_reg(reg_name(i,64),pc,ref_r->gpr[i],gpr(i)))flag=0;
   }
-  printf("%ld %ld\n",ref_r->pc,ref_r->mepc);
+  printf("%ld %ld %ld\n",ref_r->pc,ref_r->mepc,cpu.mepc);
   if(flag) return true;
   return false;
 }

@@ -132,8 +132,6 @@ void difftest_attach(){
   CPU_state cpuu;
   cpuu.pc=0x87000000;
   ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
-  ref_difftest_regcpy(&cpuu,DIFFTEST_TO_DUT);
-  printf("%lx\n",cpuu.pc);
   //execute
   ref_difftest_exec(len/4);
   //change gpr

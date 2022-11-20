@@ -132,8 +132,10 @@ void difftest_attach(){
   CPU_state cpuu;
   cpuu.pc=0x87000000;
   ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
+  ref_difftest_regcpy(&cpuu,DIFFTEST_TO_DUT);
+  printf("%lx\n",cpuu.pc);
   //execute
-  ref_difftest_exec(len/4+4);
+  ref_difftest_exec(len/4);
   //change gpr
   ref_difftest_memcpy(RESET_VECTOR+0x100000, guest_to_host(RESET_VECTOR+0x100000), img_size_2-0x100000, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);

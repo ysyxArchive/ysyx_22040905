@@ -121,8 +121,8 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 void difftest_detach(){
   is_difftest_mode = false;
 }
-uint32_t buff[32];
 void difftest_attach(){
+  uint32_t *buff=malloc(32*4);
   is_difftest_mode = true;
   int len=0;
   //copy instruction
@@ -141,7 +141,7 @@ void difftest_attach(){
   //change gpr
   ref_difftest_memcpy(RESET_VECTOR+0x100000, guest_to_host(RESET_VECTOR+0x100000), img_size_2-0x100000, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
-
+  free(buff);
 }
 #else
 void init_difftest(char *ref_so_file, long img_size, int port) { }

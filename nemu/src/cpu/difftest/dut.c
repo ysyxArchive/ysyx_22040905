@@ -129,8 +129,9 @@ void difftest_attach(){
   isa_difftest_attach(buff,&len);
   ref_difftest_memcpy(RESET_VECTOR+img_size_2,buff,len,DIFFTEST_TO_REF);
   //enter
-  cpu.pc=RESET_VECTOR+img_size_2;
-  ref_difftest_regcpy(&cpu,DIFFTEST_TO_REF);
+  CPU_state cpuu;
+  cpuu.pc=RESET_VECTOR+img_size_2;
+  ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
   //execute
   ref_difftest_exec(len/4);
   //change gpr

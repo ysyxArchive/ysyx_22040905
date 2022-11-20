@@ -122,7 +122,7 @@ void difftest_detach(){
   is_difftest_mode = false;
 }
 void difftest_attach(){
-  uint32_t *buff=malloc(32*4);
+  uint32_t *buff=malloc(80*4);
   is_difftest_mode = true;
   int len=0;
   //copy instruction

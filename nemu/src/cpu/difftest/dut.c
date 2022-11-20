@@ -127,14 +127,13 @@ void difftest_attach(){
   is_difftest_mode = true;
   //copy instruction
   isa_difftest_attach(buff,&len);
-  ref_difftest_memcpy(RESET_VECTOR+img_size_2,buff,len,DIFFTEST_TO_REF);
+  ref_difftest_memcpy(0x89000000,buff,len,DIFFTEST_TO_REF);
   //enter
   CPU_state cpuu;
-  cpuu.pc=RESET_VECTOR+img_size_2;
+  cpuu.pc=0x89000000;
   ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
   //execute
   ref_difftest_exec(len/4);
-  printf("%lx\n",RESET_VECTOR+img_size_2);
   //change gpr
   ref_difftest_memcpy(RESET_VECTOR+0x100000, guest_to_host(RESET_VECTOR+0x100000), img_size_2-0x100000, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);

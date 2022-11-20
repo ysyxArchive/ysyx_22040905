@@ -123,7 +123,7 @@ void difftest_detach(){
 }
 void difftest_attach(){
   is_difftest_mode = true;
-  /*uint32_t *buff=malloc(32*4);
+  uint32_t *buff=malloc(32*4);
   int len=0;
   //copy instruction
   isa_difftest_attach(buff,&len);
@@ -133,12 +133,12 @@ void difftest_attach(){
   cpuu.pc=0x87000000;
   ref_difftest_regcpy(&cpuu,DIFFTEST_TO_REF);
   //execute
-  ref_difftest_exec(len/4);*/
+  ref_difftest_exec(len/4);
   //change gpr
   ref_difftest_memcpy(RESET_VECTOR+0x100000, guest_to_host(RESET_VECTOR+0x100000), img_size_2-0x100000, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 
-  /*free(buff);*/
+  free(buff);
 }
 #else
 void init_difftest(char *ref_so_file, long img_size, int port) { }

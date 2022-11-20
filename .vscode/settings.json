@@ -37,6 +37,7 @@
         "newlib.h": "c",
         "stat.h": "c",
         "elf.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "isa-def.h": "c"
     }
 }

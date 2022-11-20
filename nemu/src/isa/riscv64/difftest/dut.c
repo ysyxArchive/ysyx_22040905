@@ -15,7 +15,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 }
 
 void isa_difftest_attach(uint32_t *buf,int *len) {
-  *len=30*4;
+  *len=33*4;
   
   buf[0]=0x00000713;                             //addi  a4,$0,0
   buf[1]=(0x737)|(BITS(cpu.mstatus,63,44)<<12);  //lui   a4,num[63,44]
@@ -54,10 +54,12 @@ void isa_difftest_attach(uint32_t *buf,int *len) {
   buf[28]=(0x713)|(BITS(cpu.mcause,7,0)<<20);    //addi  a4,a4,num[7,0]
   buf[29]=0x34271073;                        //csrrw $0,mcause,a4
 
+  
   // set mstatus.MPRV to pass difftest
   buf[30]=(0x737)|(20<<12);                  //lui a0, (1 << (17-12))
   buf[31]=0xa36333;                          //or t1, t1, a0
   buf[32]=0x30031073;                        //csrrw $0,mstatus, t1
+  
 
   /*
   buf[30]=0x00000713;                        //addi  a4,$0,0

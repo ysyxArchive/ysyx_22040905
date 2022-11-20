@@ -123,7 +123,7 @@ void difftest_detach(){
 }
 void difftest_attach(){
   is_difftest_mode = true;
-  uint32_t *buff=malloc(32*4);
+  uint8_t *buff=malloc(32*4);
   int len=0;
   //copy instruction
   isa_difftest_attach(buff,&len);
@@ -135,7 +135,7 @@ void difftest_attach(){
   //execute
   ref_difftest_exec(len/4);
   for(int i=0;i<len;i++){
-    printf("%02x",*(((uint8_t *)buff)+i));
+    printf("%02x",*(buff+i));
     if((i+1)%4==0)printf("\n");
   }
   //change gpr

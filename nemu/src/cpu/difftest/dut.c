@@ -142,7 +142,6 @@ void difftest_attach(){
   ref_difftest_memcpy(RESET_VECTOR+0x100000, guest_to_host(RESET_VECTOR+0x100000), img_size_2-0x100000, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 
-  free(buff);
 }
 #else
 void init_difftest(char *ref_so_file, long img_size, int port) { }

@@ -15,7 +15,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 }
 
 void isa_difftest_attach(uint32_t *buf,int *len) {
-  *len=33*4;
+  *len=43*4;
   
   buf[0]=0x00000713;                             //addi  a4,$0,0
   buf[1]=(0x737)|(BITS(cpu.mstatus,63,44)<<12);  //lui   a4,num[63,44]

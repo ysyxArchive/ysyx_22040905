@@ -49,7 +49,7 @@ word_t paddr_read(paddr_t addr, int len) {
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");
   assert(fp);
-  fprintf(fp,"pc=0x%08lx:\tpaddr_read address=%08x\tlen=%d\n",cpu.pc,addr,len);
+  fprintf(fp,"pc=0x%08lx:\tpaddr_read\taddress=%08x\tlen=%d\n",cpu.pc,addr,len);
   fclose(fp); 
 #endif
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
@@ -65,7 +65,7 @@ void paddr_write(paddr_t addr, int len, word_t data) {
   FILE *fp;
   fp=fopen("/home/agustin/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");
   assert(fp);
-  fprintf(fp,"pc=0x%08lx:\tpaddr_write address=%08x\tlen=%d\tdata=%lx\n",cpu.pc,addr,len,data);
+  fprintf(fp,"pc=0x%08lx:\tpaddr_write\taddress=%08x\tlen=%d\tdata=%lx\n",cpu.pc,addr,len,data);
   fclose(fp); 
 #endif  
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }

@@ -121,9 +121,9 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 void difftest_detach(){
   is_difftest_mode = false;
 }
+static uint32_t buff[32];
 void difftest_attach(){
   is_difftest_mode = true;
-  uint8_t *buff=malloc(32*4);
   int len=0;
   //copy instruction
   isa_difftest_attach(buff,&len);

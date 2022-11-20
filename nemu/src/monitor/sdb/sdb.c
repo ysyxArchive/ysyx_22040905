@@ -1,5 +1,6 @@
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <cpu/difftest.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
@@ -79,6 +80,7 @@ static int cmd_x(char *args){
   }
   return 0;
 }
+
 static int cmd_p(char *args){
   bool *success=(bool*)true;
   int val=expr(args,success);
@@ -87,6 +89,17 @@ static int cmd_p(char *args){
   else assert(0);
   return 0;
 }
+
+static int cmd_detach(char *args){
+  difftest_detach();
+  return 0; 
+}
+
+static int cmd_attach(char *args){
+  difftest_attach();
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -95,12 +108,14 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si","Step execute once",cmd_si},
-  { "info","Print program status",cmd_info},
-  { "x","Scan memory",cmd_x},
-  { "p","Expression evaluation",cmd_p},
-  { "w","Set watchpoint",cmd_w},
-  { "d","Delete watchpoint",cmd_d},
+  { "si","Step execute once", cmd_si },
+  { "info","Print program status", cmd_info },
+  { "x","Scan memory", cmd_x },
+  { "p","Expression evaluation", cmd_p} ,
+  { "w","Set watchpoint", cmd_w },
+  { "d","Delete watchpoint", cmd_d },
+  { "detach","Exit difftest", cmd_detach },
+  { "attach","Enter diftest", cmd_attach},
   /* TODO: Add more commands */
 
 };
@@ -133,6 +148,7 @@ static int cmd_help(char *args) {
 void sdb_set_batch_mode() {
   is_batch_mode = true;
 }
+
 char b[1000000];
 void sdb_mainloop() {
   if (is_batch_mode) {

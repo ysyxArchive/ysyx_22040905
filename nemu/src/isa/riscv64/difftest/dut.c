@@ -16,17 +16,17 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 
 void isa_difftest_attach(uint32_t *buf,int *len) {
   *len=40*4;
- 
-  buf[0]=0x00000713;                        //addi  a4,$0,0
+  
+  buf[0]=0x00000713;                             //addi  a4,$0,0
   buf[1]=(0x737)|(BITS(cpu.mstatus,63,44)<<12);  //lui   a4,num[63,44]
   buf[2]=(0x713)|(BITS(cpu.mstatus,43,32)<<20);  //addi  a4,a4,num[43,32]
-  buf[3]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[3]=0x0c71713;                              //slli a4,a4,0x0c
   buf[4]=(0x713)|(BITS(cpu.mstatus,31,20)<<20);  //addi  a4,a4,num[31,20]
-  buf[5]=0x0c71713;                         //slli a4,a4,0x0c
+  buf[5]=0x0c71713;                              //slli a4,a4,0x0c
   buf[6]=(0x713)|(BITS(cpu.mstatus,19,8)<<20);   //addi  a4,a4,num[19,8]
-  buf[7]=0x0871713;                         //slli a4,a4,0x08
+  buf[7]=0x0871713;                              //slli a4,a4,0x08
   buf[8]=(0x713)|(BITS(cpu.mstatus,7,0)<<20);    //addi  a4,a4,num[7,0]
-  buf[9]=0x30071073;                        //csrrw $0,mstatus,a4
+  buf[9]=0x30071073;                             //csrrw $0,mstatus,a4
  
   buf[10]=0x00000713;                        //addi  a4,$0,0
   buf[11]=(0x737)|(BITS(cpu.mtvec,63,44)<<12);  //lui   a4,num[63,44]

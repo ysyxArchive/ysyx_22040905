@@ -32,8 +32,9 @@ static void sh_handle_cmd(const char *cmd) {
     i++;
   }
   path[i]='\0';
-  printf("%s\n",path);
-  execve(path,NULL,NULL);
+  setenv("PATH","/bin",0);
+  execvp(path,NULL);
+  //execve(path,NULL,NULL);
 }
 
 void builtin_sh_run() {

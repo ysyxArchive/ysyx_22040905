@@ -54,21 +54,4 @@ void isa_difftest_attach(uint32_t *buf,int *len) {
   buf[28]=(0x713)|(BITS(cpu.mcause,7,0)<<20);    //addi  a4,a4,num[7,0]
   buf[29]=0x34271073;                        //csrrw $0,mcause,a4
 
-  
-  // set mstatus.MPRV to pass difftest
-  buf[30]=(0x737)|(20<<12);                  //lui a0, (1 << (17-12))
-  buf[31]=0xa36333;                          //or t1, t1, a0
-  buf[32]=0x30031073;                        //csrrw $0,mstatus, t1
-  
-
-  buf[33]=0x00000713;                        //addi  a4,$0,0
-  buf[34]=(0x737)|(BITS(cpu.mtvec,63,44)<<12);  //lui   a4,num[63,44]
-  buf[35]=(0x713)|(BITS(cpu.mtvec,43,32)<<20);  //addi  a4,a4,num[43,32]
-  buf[36]=0x0c71713;                         //slli a4,a4,0x0c
-  buf[37]=(0x713)|(BITS(cpu.mtvec,31,20)<<20);  //addi  a4,a4,num[31,20]
-  buf[38]=0x0c71713;                         //slli a4,a4,0x0c
-  buf[39]=(0x713)|(BITS(cpu.mtvec,19,8)<<20);   //addi  a4,a4,num[19,8]
-  buf[40]=0x0871713;                         //slli a4,a4,0x08
-  buf[41]=(0x713)|(BITS(cpu.mtvec,7,0)<<20);    //addi  a4,a4,num[7,0]
-  buf[42]=0x30571073;                        //csrrw $0,mtvec,a4
 }

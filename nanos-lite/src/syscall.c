@@ -2,6 +2,9 @@
 #include "syscall.h"
 #include <fs.h>
 #include "time.h"
+#include <proc.h>
+
+void naive_uload(PCB *pcb, const char *filename);
 
 size_t sys_exit(uintptr_t code){
   halt(code);
@@ -54,6 +57,12 @@ size_t sys_brk(void *addr){
   return 0;
 }
 
+size_t sys_execve(intptr_t p,intptr_t a,intptr_t e){
+  const char *pathname=(const char *)p;
+  naive_uload(NULL,pathname);
+  assert(0);
+  return -1;
+}
 char *ma[]={"SEEK_SET","SEEK_CUR","SEEK_END"};
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -80,6 +89,7 @@ void do_syscall(Context *c) {
     case 7: c->GPRx=sys_close(c->GPR2);break;
     case 8: c->GPRx=sys_lseek(c->GPR2,c->GPR3,c->GPR4);break;
     case 9: c->GPRx=sys_brk((void *)c->GPR2);break;
+    case 13:c->GPRx=sys_execve(c->GPR2,c->GPR3,c->GPR4);break;
     case 19:c->GPRx=sys_gettimeofday(c->GPR2,c->GPR3);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }

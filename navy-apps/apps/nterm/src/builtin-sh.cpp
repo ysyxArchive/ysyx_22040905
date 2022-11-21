@@ -23,8 +23,17 @@ static void sh_prompt() {
   sh_printf("sh> ");
 }
 
+char path[400];
 static void sh_handle_cmd(const char *cmd) {
-  execve(cmd,NULL,NULL);
+  int i=0;
+  if(cmd[0]=='\n')return;
+  while(cmd[i]!='\0'&&cmd[i]!='\n'){
+    path[i]=cmd[i];
+    i++;
+  }
+  path[i]='\0';
+  printf("%s\n",path);
+  execve(path,NULL,NULL);
 }
 
 void builtin_sh_run() {

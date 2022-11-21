@@ -7,7 +7,7 @@
 void naive_uload(PCB *pcb, const char *filename);
 
 size_t sys_exit(uintptr_t code){
-  naive_uload(NULL,"/bin/menu");
+  naive_uload(NULL,"/bin/nterm");
   //halt(code);
   return 0;
 }

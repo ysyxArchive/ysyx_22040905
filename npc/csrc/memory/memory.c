@@ -37,7 +37,7 @@ uint8_t* get_pmem(){
   return pmem;
 }
 void check_bound(uint32_t p){
-  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("%d\n",p);assert(0);}
+  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("0x%08x\n",p);assert(0);}
 }
 extern "C" void pmem_inst_read(long long pc,int *inst){
     uint32_t p=(uint32_t)pc;

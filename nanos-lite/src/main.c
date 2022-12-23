@@ -28,7 +28,7 @@ int main() {
   init_proc();
 
   Log("Finish initialization");
-printf("***\n");
+
 #ifdef HAS_CTE
   yield();
 #endif

@@ -9,10 +9,10 @@ class IDU extends Module{
         val rs2=Output(UInt(5.W))
         val rd=Output(UInt(5.W))
         val imm=Output(UInt(64.W))
-        val op=Output(UInt(64.W))
+        val op=Output(UInt(80.W))
         val typ=Output(UInt(6.W))
     })
-    val op=Wire(UInt(64.W))
+    val op=Wire(UInt(80.W))
     //RV64I
     op:=   Mux((io.inst(6,0)==="b0110011".U)&(io.inst(14,12)==="b000".U)&(io.inst(31,25)==="b0000000".U), Cat(Fill(63,0.U),1.U),                           //add,R
            Mux((io.inst(6,0)==="b0111011".U)&(io.inst(14,12)==="b000".U)&(io.inst(31,25)==="b0000000".U), Cat(Fill(62,0.U),Cat(1.U,Fill(1,0.U))),          //addw,R
@@ -83,14 +83,20 @@ class IDU extends Module{
            Mux((io.inst(6,0)==="b0111011".U)&(io.inst(14,12)==="b110".U)&(io.inst(31,25)==="b0000001".U), Cat(Fill(15,0.U),Cat(1.U,Fill(60,0.U))),          //remw,R
            Mux((io.inst(6,0)==="b0110011".U)&(io.inst(14,12)==="b111".U)&(io.inst(31,25)==="b0000001".U), Cat(Fill(15,0.U),Cat(1.U,Fill(61,0.U))),          //remu,R
            Mux((io.inst(6,0)==="b0111011".U)&(io.inst(14,12)==="b111".U)&(io.inst(31,25)==="b0000001".U), Cat(Fill(15,0.U),Cat(1.U,Fill(62,0.U))),          //remuw,R
-           0.U))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) 
+           
+        //CSR
+           Mux((io.inst(6,0)==="b1110011".U)&(io.inst(14,12)==="b001".U)                                 ,Cat(Fill(15,0.U),Cat(1.U,Fill(63,0.U))),          //csrrw,I
+           Mux((io.inst(6,0)==="b1110011".U)&(io.inst(14,12)==="b010".U)                                 ,Cat(Fill(15,0.U),Cat(1.U,Fill(64,0.U))),          //csrrs,I
+           Mux((io.inst==="b00000000000000000000000001110011".U)                                         ,Cat(Fill(15,0.U),Cat(1.U,Fill(65,0.U))),          //ecall,N
+           Mux((io.inst==="b00110000001000000000000001110011".U)                                         ,Cat(Fill(15,0.U),Cat(1.U,Fill(66,0.U))),          //mret,N
+           0.U)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))                                                                           //inv,N  
     io.op:=op
     io.rd:=io.inst(11,7) 
     io.rs1:=io.inst(19,15) 
     io.rs2:=io.inst(24,20)
 
     val typ=Wire(UInt(6.W))
-    typ:= Mux((op(2)|op(3)|op(7)|op(9)|op(11)|op(14)|op(15)|op(18)|op(19)|op(22)|op(23)|op(28)|op(29)|op(37)|op(38)|op(39)|op(40)|op(41)|op(46)|op(47)|op(48)),                                                           "b000001".U,    //I
+    typ:= Mux((op(2)|op(3)|op(7)|op(9)|op(11)|op(14)|op(15)|op(18)|op(19)|op(22)|op(23)|op(28)|op(29)|op(37)|op(38)|op(39)|op(40)|op(41)|op(46)|op(47)|op(48)|op(63)|op(64)),                                             "b000001".U,    //I
           Mux((op(24)|op(25)),                                                                                                                                                                                            "b000010".U,    //U
           Mux((op(42)|op(43)|op(44)|op(45)),                                                                                                                                                                              "b000100".U,    //S
           Mux((op(36)),                                                                                                                                                                                                   "b001000".U,    //J

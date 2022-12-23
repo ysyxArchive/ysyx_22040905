@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Nov 21 19:27:00 2022
+# Make data base, printed on Fri Dec 23 15:21:32 2022
 
 # Variables
 
@@ -18,8 +18,6 @@ LC_ALL = C
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
-# environment
-SNAP_INSTANCE_KEY = 
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
@@ -48,7 +46,7 @@ SNAP_INSTANCE_NAME = code
 # makefile (from 'Makefile', line 2)
 STUNAME = 程雨航
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/112/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/116/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -66,11 +64,11 @@ WORK_INDEX = $(YSYX_HOME)/.git/index.$(WORK_BRANCH)
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/agustin/.config/Code/CachedData/8fa188b2b301d36553cbc9ce1b0a146ccb93351f
+VSCODE_CODE_CACHE_PATH = /home/agustin/.config/Code/CachedData/e8a3071ea4344d9d48ef8a4df2c097372b0c5161
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.A3ZNV1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.88XWX1
 # default
 .LOADED := 
 # default
@@ -103,14 +101,12 @@ XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 XDG_SESSION_DESKTOP = ubuntu
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST := Makefile
-# environment
-SNAP_REEXEC = 
 # automatic
 @F = $(notdir $@)
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 2929
+VSCODE_PID = 2879
 # environment
 SDKMAN_DIR = /home/agustin/.sdkman
 # environment
@@ -120,7 +116,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1180,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1180
+SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1214,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1214
 # automatic
 *F = $(notdir $*)
 # environment
@@ -174,13 +170,13 @@ SNAP_USER_COMMON = /home/agustin/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/112
+SNAP = /snap/code/116
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = 9d17822a5add4c28b4af1211aa561e89
+INVOCATION_ID = 461b128489d54f868d6da71ab9eeaacb
 # environment
-SNAP_REVISION = 112
+SNAP_REVISION = 116
 # makefile (from 'Makefile', line 10)
 WORK_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 # environment
@@ -199,8 +195,6 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 GTK_IM_MODULE = fcitx
 # environment
 XDG_CURRENT_DESKTOP = Unity
-# environment
-LS_COLORS = 
 # automatic
 +F = $(notdir $+)
 # environment
@@ -222,7 +216,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 1205
+SYSTEMD_EXEC_PID = 1244
 # environment
 NAVY_HOME = /home/agustin/ysyx-workbench/navy-apps
 # environment
@@ -234,21 +228,21 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SNAP_DATA = /var/snap/code/112
+SNAP_DATA = /var/snap/code/116
 # environment
 SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1063
+MANAGERPID = 1075
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2877
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2830
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
-_ = /snap/code/112/usr/share/code/code
+_ = /snap/code/116/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -256,7 +250,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/agustin/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:39087
+JOURNAL_STREAM = 8:33328
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -268,26 +262,26 @@ QT_IM_MODULE = fcitx
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-917a263f-1.73.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-917a263f-1.74.2-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/112/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/116/usr/share/glib-2.0/schemas
 # environment
 IM_CONFIG_PHASE = 1
 # environment
 PAPERSIZE = letter
 # default
- 
-make: *** No rule to make target 'all'.  Stop.
-
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = 8fa188b2
+SNAP_VERSION = e8a3071e
 # environment
 AM_HOME = /home/agustin/ysyx-workbench/abstract-machine
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 # default
 SUFFIXES := 
 # environment
@@ -299,7 +293,7 @@ SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/agustin/snap/code/112
+SNAP_USER_DATA = /home/agustin/snap/code/116
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -309,7 +303,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=146/1024=14%, Rehash=0, Collisions=6/176=3%
+# Load=143/1024=14%, Rehash=0, Collisions=5/173=3%
 
 # Pattern-specific Variable Values
 
@@ -398,6 +392,6 @@ all:
 # strcache performance: lookups = 38 / hit rate = 28%
 # hash-table stats:
 # Load=27/8192=0%, Rehash=0, Collisions=0/38=0%
-# Finished Make data base on Mon Nov 21 19:27:00 2022
+# Finished Make data base on Fri Dec 23 15:21:32 2022
 
  

@@ -891,23 +891,23 @@ module ALU(
   wire [126:0] _GEN_1 = {{63'd0}, io_src1}; // @[ALU.scala 37:37]
   wire [126:0] _io_result_T_11 = _GEN_1 << io_src2[5:0]; // @[ALU.scala 37:37]
   wire [63:0] _io_result_T_15 = io_src1 >> io_src2[5:0]; // @[ALU.scala 38:36]
-  wire [63:0] _io_result_T_20 = $signed(io_src1) >>> io_src2[5:0]; // @[ALU.scala 39:64]
+  wire [63:0] _io_result_T_20 = $signed(io_src1) >>> io_src2[5:0]; // @[ALU.scala 39:62]
   wire [63:0] _io_result_T_25 = adder_result & 64'hfffffffffffffffe; // @[ALU.scala 42:42]
   wire [127:0] _io_result_T_28 = io_src1 * io_src2; // @[ALU.scala 44:37]
-  wire [127:0] _io_result_T_33 = $signed(io_src1) * $signed(io_src2); // @[ALU.scala 45:66]
-  wire [64:0] _io_result_T_36 = {1'b0,$signed(io_src2)}; // @[ALU.scala 46:47]
-  wire [128:0] _io_result_T_37 = $signed(io_src1) * $signed(_io_result_T_36); // @[ALU.scala 46:47]
-  wire [127:0] _io_result_T_40 = _io_result_T_37[127:0]; // @[ALU.scala 46:57]
-  wire [64:0] _io_result_T_44 = $signed(io_src1) / $signed(io_src2); // @[ALU.scala 47:48]
+  wire [127:0] _io_result_T_33 = $signed(io_src1) * $signed(io_src2); // @[ALU.scala 45:62]
+  wire [64:0] _io_result_T_36 = {1'b0,$signed(io_src2)}; // @[ALU.scala 46:45]
+  wire [128:0] _io_result_T_37 = $signed(io_src1) * $signed(_io_result_T_36); // @[ALU.scala 46:45]
+  wire [127:0] _io_result_T_40 = _io_result_T_37[127:0]; // @[ALU.scala 46:55]
+  wire [64:0] _io_result_T_45 = $signed(io_src1) / $signed(io_src2); // @[ALU.scala 47:62]
   wire [63:0] _io_result_T_47 = io_src1 / io_src2; // @[ALU.scala 48:37]
-  wire [63:0] _io_result_T_52 = $signed(io_src1) % $signed(io_src2); // @[ALU.scala 49:66]
+  wire [63:0] _io_result_T_52 = $signed(io_src1) % $signed(io_src2); // @[ALU.scala 49:62]
   wire [63:0] _GEN_2 = io_src1 % io_src2; // @[ALU.scala 50:37]
   wire [63:0] _io_result_T_54 = _GEN_2[63:0]; // @[ALU.scala 50:37]
   wire [63:0] _io_result_T_55 = io_op[18] ? _io_result_T_54 : 64'h0; // @[ALU.scala 50:19]
   wire [63:0] _io_result_T_56 = io_op[17] ? _io_result_T_52 : _io_result_T_55; // @[ALU.scala 49:19]
   wire [63:0] _io_result_T_57 = io_op[16] ? _io_result_T_47 : _io_result_T_56; // @[ALU.scala 48:19]
-  wire [63:0] _io_result_T_58 = io_op[15] ? _io_result_T_44[63:0] : _io_result_T_57; // @[ALU.scala 47:19]
-  wire [127:0] _io_result_T_59 = io_op[14] ? _io_result_T_40 : {{64'd0}, _io_result_T_58}; // @[ALU.scala 46:19]
+  wire [64:0] _io_result_T_58 = io_op[15] ? _io_result_T_45 : {{1'd0}, _io_result_T_57}; // @[ALU.scala 47:19]
+  wire [127:0] _io_result_T_59 = io_op[14] ? _io_result_T_40 : {{63'd0}, _io_result_T_58}; // @[ALU.scala 46:19]
   wire [127:0] _io_result_T_60 = io_op[13] ? _io_result_T_33 : _io_result_T_59; // @[ALU.scala 45:19]
   wire [127:0] _io_result_T_61 = io_op[12] ? _io_result_T_28 : _io_result_T_60; // @[ALU.scala 44:19]
   wire [127:0] _io_result_T_62 = io_op[11] ? {{64'd0}, eql_result} : _io_result_T_61; // @[ALU.scala 43:19]
@@ -941,6 +941,10 @@ module CSR(
   reg [63:0] _RAND_2;
   reg [63:0] _RAND_3;
 `endif // RANDOMIZE_REG_INIT
+  wire [63:0] p_rf_0; // @[CSR.scala 42:17]
+  wire [63:0] p_rf_1; // @[CSR.scala 42:17]
+  wire [63:0] p_rf_2; // @[CSR.scala 42:17]
+  wire [63:0] p_rf_3; // @[CSR.scala 42:17]
   reg [63:0] csr_0; // @[CSR.scala 16:20]
   reg [63:0] csr_1; // @[CSR.scala 16:20]
   reg [63:0] csr_2; // @[CSR.scala 16:20]
@@ -963,7 +967,17 @@ module CSR(
   wire [63:0] _io_val_r_T_4 = io_no == 64'h2 ? csr_2 : _io_val_r_T_3; // @[CSR.scala 35:18]
   wire [63:0] _GEN_5 = 2'h1 == map_w ? csr_1 : csr_0; // @[CSR.scala 38:20 CSR.scala 38:20]
   wire [63:0] _GEN_6 = 2'h2 == map_w ? csr_2 : _GEN_5; // @[CSR.scala 38:20 CSR.scala 38:20]
+  print_csr p ( // @[CSR.scala 42:17]
+    .rf_0(p_rf_0),
+    .rf_1(p_rf_1),
+    .rf_2(p_rf_2),
+    .rf_3(p_rf_3)
+  );
   assign io_val_r = _csr_2_T ? csr_1 : _io_val_r_T_4; // @[CSR.scala 34:18]
+  assign p_rf_0 = csr_0; // @[CSR.scala 43:12]
+  assign p_rf_1 = csr_1; // @[CSR.scala 43:12]
+  assign p_rf_2 = csr_2; // @[CSR.scala 43:12]
+  assign p_rf_3 = csr_3; // @[CSR.scala 43:12]
   always @(posedge clock) begin
     if (reset) begin // @[CSR.scala 16:20]
       csr_0 <= 64'h0; // @[CSR.scala 16:20]

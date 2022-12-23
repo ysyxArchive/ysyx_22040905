@@ -19,6 +19,7 @@ int state=0;
 uint64_t pc=0;
 int gdb=0;
 void dump_ftrace();
+void dump_csr();
 void cpp_break()
 {
   state=1;//break;
@@ -63,6 +64,7 @@ void exec_once(){
   step_and_dump_wave();
   //difftest_step(pc,top->io_pc);
   dump_ftrace();
+  dump_csr();
 //nvboard_update();
 }
 void execute(u_int64_t n){
@@ -88,9 +90,10 @@ void init(int argc,char *argv[]){
   reset();
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
 }
+//print gpr
 uint64_t *cpu_gpr = NULL;
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
-  cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dnpc,inst
+  cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
 void dump_gpr() {
   int i;
@@ -98,9 +101,28 @@ void dump_gpr() {
     printf("%s = 0x%lx\n",cpu_name[i], cpu_gpr[i]);
   }
 }
+//print csr
+uint64_t *cpu_csr = NULL;
+extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
+  cpu_csr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
+}
+const char *csr_name[4]={
+  "mstatus",
+  "mtvec",
+  "mepc",
+  "mcause"
+};
+
+void dump_csr() {
+  int i;
+  for (i = 0; i < 4; i++) {
+    if(cpu_csr[i]!=0) {printf("pc = %08lx %s = 0x%lx\n",pc,csr_name[i], cpu_csr[i]);}
+  }
+}
+//itrace
 uint64_t *cpu_itrace = NULL;
 extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
-  cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
+  cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dncp inst
 }
 char p[99];
 void dump_itrace() {

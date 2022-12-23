@@ -36,17 +36,17 @@ class ALU extends Module{
                Mux(io.op(4),io.src1^io.src2,                          //xor
                Mux(io.op(5),(io.src1<<io.src2(5,0))(63,0),            //sll
                Mux(io.op(6),io.src1>>(io.src2(5,0)),                  //srl
-               Mux(io.op(7),(io.src1.asSInt()>>(io.src2(5,0))).asUInt,//sra
+               Mux(io.op(7),(io.src1.asSInt>>(io.src2(5,0))).asUInt,//sra
                Mux(io.op(8),slt_result,                               //slt
                Mux(io.op(9),sltu_result,                              //sltu
                Mux(io.op(10),adder_result&(~(1.U(64.W))),             //jalr
                Mux(io.op(11),eql_result,      //eql
                Mux(io.op(12),io.src1*io.src2,                         //mul
-               Mux(io.op(13),(io.src1.asSInt()*io.src2.asSInt()).asUInt,
-               Mux(io.op(14),(io.src1.asSInt()*io.src2).asUInt,
-               Mux(io.op(15),((io.src1.asSInt()/io.src2.asSInt())(63,0)),        //div
+               Mux(io.op(13),(io.src1.asSInt*io.src2.asSInt).asUInt,
+               Mux(io.op(14),(io.src1.asSInt*io.src2).asUInt,
+               Mux(io.op(15),(io.src1.asSInt/io.src2.asSInt).asUInt,        //div
                Mux(io.op(16),io.src1/io.src2,
-               Mux(io.op(17),(io.src1.asSInt()%io.src2.asSInt()).asUInt,        //rem
+               Mux(io.op(17),(io.src1.asSInt%io.src2.asSInt).asUInt,        //rem
                Mux(io.op(18),io.src1%io.src2,                           
                 0.U))))))))))))))))))                  //reset
 

@@ -38,4 +38,7 @@ class CSR extends Module{
     csr(map_w):=Mux(io.en_w(0),io.val_w,csr(map_w))
 
     csr(0):=Mux(reset.asBool(),"xa00001800".U,csr(0));      //initialize mstatus
+
+    val p=Module(new print_csr);
+    p.io.rf:=csr 
 }

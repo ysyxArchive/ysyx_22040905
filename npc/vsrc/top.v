@@ -926,8 +926,8 @@ endmodule
 module CSR(
   input         clock,
   input         reset,
-  input  [4:0]  io_idx_w,
-  input  [4:0]  io_idx_r,
+  input  [11:0] io_idx_w,
+  input  [11:0] io_idx_r,
   input         io_en_w,
   input         io_en_r,
   input  [63:0] io_val_w,
@@ -941,24 +941,22 @@ module CSR(
   reg [63:0] _RAND_2;
   reg [63:0] _RAND_3;
 `endif // RANDOMIZE_REG_INIT
-  wire [63:0] p_rf_0; // @[CSR.scala 42:17]
-  wire [63:0] p_rf_1; // @[CSR.scala 42:17]
-  wire [63:0] p_rf_2; // @[CSR.scala 42:17]
-  wire [63:0] p_rf_3; // @[CSR.scala 42:17]
+  wire [63:0] p_rf_0; // @[CSR.scala 40:17]
+  wire [63:0] p_rf_1; // @[CSR.scala 40:17]
+  wire [63:0] p_rf_2; // @[CSR.scala 40:17]
+  wire [63:0] p_rf_3; // @[CSR.scala 40:17]
   reg [63:0] csr_0; // @[CSR.scala 16:20]
   reg [63:0] csr_1; // @[CSR.scala 16:20]
   reg [63:0] csr_2; // @[CSR.scala 16:20]
   reg [63:0] csr_3; // @[CSR.scala 16:20]
-  wire [9:0] _GEN_12 = {{5'd0}, io_idx_r}; // @[CSR.scala 20:25]
-  wire [1:0] _map_r_T_4 = _GEN_12 == 10'h342 ? 2'h3 : 2'h0; // @[CSR.scala 23:15]
-  wire [1:0] _map_r_T_5 = _GEN_12 == 10'h341 ? 2'h2 : _map_r_T_4; // @[CSR.scala 22:15]
-  wire [1:0] _map_r_T_6 = _GEN_12 == 10'h305 ? 2'h1 : _map_r_T_5; // @[CSR.scala 21:15]
-  wire [1:0] map_r = _GEN_12 == 10'h300 ? 2'h0 : _map_r_T_6; // @[CSR.scala 20:15]
-  wire [9:0] _GEN_16 = {{5'd0}, io_idx_w}; // @[CSR.scala 26:25]
-  wire [1:0] _map_w_T_4 = _GEN_16 == 10'h342 ? 2'h3 : 2'h0; // @[CSR.scala 29:15]
-  wire [1:0] _map_w_T_5 = _GEN_16 == 10'h341 ? 2'h2 : _map_w_T_4; // @[CSR.scala 28:15]
-  wire [1:0] _map_w_T_6 = _GEN_16 == 10'h305 ? 2'h1 : _map_w_T_5; // @[CSR.scala 27:15]
-  wire [1:0] map_w = _GEN_16 == 10'h300 ? 2'h0 : _map_w_T_6; // @[CSR.scala 26:15]
+  wire [1:0] _map_r_T_4 = io_idx_r == 12'h342 ? 2'h3 : 2'h0; // @[CSR.scala 23:15]
+  wire [1:0] _map_r_T_5 = io_idx_r == 12'h341 ? 2'h2 : _map_r_T_4; // @[CSR.scala 22:15]
+  wire [1:0] _map_r_T_6 = io_idx_r == 12'h305 ? 2'h1 : _map_r_T_5; // @[CSR.scala 21:15]
+  wire [1:0] map_r = io_idx_r == 12'h300 ? 2'h0 : _map_r_T_6; // @[CSR.scala 20:15]
+  wire [1:0] _map_w_T_4 = io_idx_w == 12'h342 ? 2'h3 : 2'h0; // @[CSR.scala 29:15]
+  wire [1:0] _map_w_T_5 = io_idx_w == 12'h341 ? 2'h2 : _map_w_T_4; // @[CSR.scala 28:15]
+  wire [1:0] _map_w_T_6 = io_idx_w == 12'h305 ? 2'h1 : _map_w_T_5; // @[CSR.scala 27:15]
+  wire [1:0] map_w = io_idx_w == 12'h300 ? 2'h0 : _map_w_T_6; // @[CSR.scala 26:15]
   wire  _csr_2_T = io_no == 64'h1; // @[CSR.scala 32:22]
   wire [63:0] _GEN_1 = 2'h1 == map_r ? csr_1 : csr_0; // @[CSR.scala 36:18 CSR.scala 36:18]
   wire [63:0] _GEN_2 = 2'h2 == map_r ? csr_2 : _GEN_1; // @[CSR.scala 36:18 CSR.scala 36:18]
@@ -967,22 +965,28 @@ module CSR(
   wire [63:0] _io_val_r_T_4 = io_no == 64'h2 ? csr_2 : _io_val_r_T_3; // @[CSR.scala 35:18]
   wire [63:0] _GEN_5 = 2'h1 == map_w ? csr_1 : csr_0; // @[CSR.scala 38:20 CSR.scala 38:20]
   wire [63:0] _GEN_6 = 2'h2 == map_w ? csr_2 : _GEN_5; // @[CSR.scala 38:20 CSR.scala 38:20]
-  print_csr p ( // @[CSR.scala 42:17]
+  print_csr p ( // @[CSR.scala 40:17]
     .rf_0(p_rf_0),
     .rf_1(p_rf_1),
     .rf_2(p_rf_2),
     .rf_3(p_rf_3)
   );
   assign io_val_r = _csr_2_T ? csr_1 : _io_val_r_T_4; // @[CSR.scala 34:18]
-  assign p_rf_0 = csr_0; // @[CSR.scala 43:12]
-  assign p_rf_1 = csr_1; // @[CSR.scala 43:12]
-  assign p_rf_2 = csr_2; // @[CSR.scala 43:12]
-  assign p_rf_3 = csr_3; // @[CSR.scala 43:12]
+  assign p_rf_0 = csr_0; // @[CSR.scala 41:12]
+  assign p_rf_1 = csr_1; // @[CSR.scala 41:12]
+  assign p_rf_2 = csr_2; // @[CSR.scala 41:12]
+  assign p_rf_3 = csr_3; // @[CSR.scala 41:12]
   always @(posedge clock) begin
     if (reset) begin // @[CSR.scala 16:20]
-      csr_0 <= 64'h0; // @[CSR.scala 16:20]
-    end else if (reset) begin // @[CSR.scala 40:16]
-      csr_0 <= 64'ha00001800;
+      csr_0 <= 64'ha00001800; // @[CSR.scala 16:20]
+    end else if (2'h0 == map_w) begin // @[CSR.scala 38:15]
+      if (io_en_w) begin // @[CSR.scala 38:20]
+        csr_0 <= io_val_w;
+      end else if (2'h3 == map_w) begin // @[CSR.scala 38:20]
+        csr_0 <= csr_3; // @[CSR.scala 38:20]
+      end else begin
+        csr_0 <= _GEN_6;
+      end
     end
     if (reset) begin // @[CSR.scala 16:20]
       csr_1 <= 64'h0; // @[CSR.scala 16:20]
@@ -1075,7 +1079,6 @@ endmodule
 module EXU(
   input         clock,
   input         reset,
-  input         io_reset,
   input  [4:0]  io_rs1,
   input  [4:0]  io_rs2,
   input  [4:0]  io_rd,
@@ -1085,135 +1088,135 @@ module EXU(
   input  [63:0] io_pc,
   output [63:0] io_pc_dnpc
 );
-  wire  ebreak1_en_break; // @[EXU.scala 18:27]
-  wire  ebreak1_clk; // @[EXU.scala 18:27]
-  wire  gpr_clock; // @[EXU.scala 27:23]
-  wire  gpr_reset; // @[EXU.scala 27:23]
-  wire [4:0] gpr_io_idx_r1; // @[EXU.scala 27:23]
-  wire [4:0] gpr_io_idx_r2; // @[EXU.scala 27:23]
-  wire [4:0] gpr_io_idx_w; // @[EXU.scala 27:23]
-  wire  gpr_io_en_w; // @[EXU.scala 27:23]
-  wire  gpr_io_en_r1; // @[EXU.scala 27:23]
-  wire  gpr_io_en_r2; // @[EXU.scala 27:23]
-  wire [63:0] gpr_io_val_w; // @[EXU.scala 27:23]
-  wire [63:0] gpr_io_val_r1; // @[EXU.scala 27:23]
-  wire [63:0] gpr_io_val_r2; // @[EXU.scala 27:23]
-  wire [63:0] alu_dest_io_src1; // @[EXU.scala 28:28]
-  wire [63:0] alu_dest_io_src2; // @[EXU.scala 28:28]
-  wire [18:0] alu_dest_io_op; // @[EXU.scala 28:28]
-  wire [63:0] alu_dest_io_result; // @[EXU.scala 28:28]
-  wire [63:0] alu_pc_io_src1; // @[EXU.scala 29:26]
-  wire [63:0] alu_pc_io_src2; // @[EXU.scala 29:26]
-  wire [18:0] alu_pc_io_op; // @[EXU.scala 29:26]
-  wire [63:0] alu_pc_io_result; // @[EXU.scala 29:26]
-  wire [63:0] pmem_raddr; // @[EXU.scala 30:24]
-  wire [63:0] pmem_rdata; // @[EXU.scala 30:24]
-  wire [63:0] pmem_waddr; // @[EXU.scala 30:24]
-  wire [63:0] pmem_wdata; // @[EXU.scala 30:24]
-  wire [7:0] pmem_wmask; // @[EXU.scala 30:24]
-  wire  csr_clock; // @[EXU.scala 31:23]
-  wire  csr_reset; // @[EXU.scala 31:23]
-  wire [4:0] csr_io_idx_w; // @[EXU.scala 31:23]
-  wire [4:0] csr_io_idx_r; // @[EXU.scala 31:23]
-  wire  csr_io_en_w; // @[EXU.scala 31:23]
-  wire  csr_io_en_r; // @[EXU.scala 31:23]
-  wire [63:0] csr_io_val_w; // @[EXU.scala 31:23]
-  wire [63:0] csr_io_val_r; // @[EXU.scala 31:23]
-  wire [63:0] csr_io_no; // @[EXU.scala 31:23]
-  wire [63:0] csr_io_epc; // @[EXU.scala 31:23]
-  wire  _gpr_io_en_r1_T_6 = io_typ[0] | io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 33:57]
-  wire  _gpr_io_en_r2_T_2 = io_typ[2] | io_typ[4]; // @[EXU.scala 34:37]
-  wire  _gpr_io_en_r2_T_4 = io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 34:47]
-  wire  _csr_io_en_r_T_2 = io_op[63] | io_op[64]; // @[EXU.scala 40:35]
-  wire [63:0] _src2_T_6 = io_typ[0] ? io_imm : 64'h0; // @[EXU.scala 55:16]
-  wire [63:0] src2 = _gpr_io_en_r2_T_4 ? gpr_io_val_r2 : _src2_T_6; // @[EXU.scala 54:18]
-  wire [63:0] _csr_io_idx_r_T_3 = _csr_io_en_r_T_2 ? src2 : 64'h0; // @[EXU.scala 42:26]
-  wire [1:0] _csr_io_no_T_2 = io_op[66] ? 2'h2 : 2'h0; // @[EXU.scala 45:23]
-  wire [1:0] _csr_io_no_T_3 = io_op[65] ? 2'h1 : _csr_io_no_T_2; // @[EXU.scala 44:23]
-  wire [63:0] _src1_T_10 = io_typ[1] | io_typ[3] ? io_imm : 64'h0; // @[EXU.scala 51:16]
-  wire [63:0] src1 = _gpr_io_en_r1_T_6 ? gpr_io_val_r1 : _src1_T_10; // @[EXU.scala 50:18]
-  wire [63:0] dest = _gpr_io_en_r2_T_2 ? io_imm : {{59'd0}, io_rd}; // @[EXU.scala 58:18]
-  wire  _pmem_io_waddr_T_6 = io_op[42] | io_op[43] | io_op[44] | io_op[45]; // @[EXU.scala 63:57]
-  wire [63:0] _pmem_io_wmask_T_8 = io_op[45] ? 64'hff : 64'h0; // @[EXU.scala 68:27]
-  wire [63:0] _pmem_io_wmask_T_9 = io_op[44] ? 64'hf : _pmem_io_wmask_T_8; // @[EXU.scala 67:27]
-  wire [63:0] _pmem_io_wmask_T_10 = io_op[43] ? 64'h3 : _pmem_io_wmask_T_9; // @[EXU.scala 66:27]
-  wire [63:0] _pmem_io_wmask_T_11 = io_op[42] ? 64'h1 : _pmem_io_wmask_T_10; // @[EXU.scala 65:27]
-  wire [31:0] alu_dest_io_src1_lo = src1[31:0]; // @[EXU.scala 71:122]
+  wire  ebreak1_en_break; // @[EXU.scala 17:27]
+  wire  ebreak1_clk; // @[EXU.scala 17:27]
+  wire  gpr_clock; // @[EXU.scala 26:23]
+  wire  gpr_reset; // @[EXU.scala 26:23]
+  wire [4:0] gpr_io_idx_r1; // @[EXU.scala 26:23]
+  wire [4:0] gpr_io_idx_r2; // @[EXU.scala 26:23]
+  wire [4:0] gpr_io_idx_w; // @[EXU.scala 26:23]
+  wire  gpr_io_en_w; // @[EXU.scala 26:23]
+  wire  gpr_io_en_r1; // @[EXU.scala 26:23]
+  wire  gpr_io_en_r2; // @[EXU.scala 26:23]
+  wire [63:0] gpr_io_val_w; // @[EXU.scala 26:23]
+  wire [63:0] gpr_io_val_r1; // @[EXU.scala 26:23]
+  wire [63:0] gpr_io_val_r2; // @[EXU.scala 26:23]
+  wire [63:0] alu_dest_io_src1; // @[EXU.scala 27:28]
+  wire [63:0] alu_dest_io_src2; // @[EXU.scala 27:28]
+  wire [18:0] alu_dest_io_op; // @[EXU.scala 27:28]
+  wire [63:0] alu_dest_io_result; // @[EXU.scala 27:28]
+  wire [63:0] alu_pc_io_src1; // @[EXU.scala 28:26]
+  wire [63:0] alu_pc_io_src2; // @[EXU.scala 28:26]
+  wire [18:0] alu_pc_io_op; // @[EXU.scala 28:26]
+  wire [63:0] alu_pc_io_result; // @[EXU.scala 28:26]
+  wire [63:0] pmem_raddr; // @[EXU.scala 29:24]
+  wire [63:0] pmem_rdata; // @[EXU.scala 29:24]
+  wire [63:0] pmem_waddr; // @[EXU.scala 29:24]
+  wire [63:0] pmem_wdata; // @[EXU.scala 29:24]
+  wire [7:0] pmem_wmask; // @[EXU.scala 29:24]
+  wire  csr_clock; // @[EXU.scala 30:23]
+  wire  csr_reset; // @[EXU.scala 30:23]
+  wire [11:0] csr_io_idx_w; // @[EXU.scala 30:23]
+  wire [11:0] csr_io_idx_r; // @[EXU.scala 30:23]
+  wire  csr_io_en_w; // @[EXU.scala 30:23]
+  wire  csr_io_en_r; // @[EXU.scala 30:23]
+  wire [63:0] csr_io_val_w; // @[EXU.scala 30:23]
+  wire [63:0] csr_io_val_r; // @[EXU.scala 30:23]
+  wire [63:0] csr_io_no; // @[EXU.scala 30:23]
+  wire [63:0] csr_io_epc; // @[EXU.scala 30:23]
+  wire  _gpr_io_en_r1_T_6 = io_typ[0] | io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 32:57]
+  wire  _gpr_io_en_r2_T_2 = io_typ[2] | io_typ[4]; // @[EXU.scala 33:37]
+  wire  _gpr_io_en_r2_T_4 = io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 33:47]
+  wire  _csr_io_en_r_T_2 = io_op[63] | io_op[64]; // @[EXU.scala 39:35]
+  wire [63:0] _src2_T_6 = io_typ[0] ? io_imm : 64'h0; // @[EXU.scala 54:16]
+  wire [63:0] src2 = _gpr_io_en_r2_T_4 ? gpr_io_val_r2 : _src2_T_6; // @[EXU.scala 53:18]
+  wire [63:0] _csr_io_idx_r_T_3 = _csr_io_en_r_T_2 ? src2 : 64'h0; // @[EXU.scala 41:26]
+  wire [1:0] _csr_io_no_T_2 = io_op[66] ? 2'h2 : 2'h0; // @[EXU.scala 44:23]
+  wire [1:0] _csr_io_no_T_3 = io_op[65] ? 2'h1 : _csr_io_no_T_2; // @[EXU.scala 43:23]
+  wire [63:0] _src1_T_10 = io_typ[1] | io_typ[3] ? io_imm : 64'h0; // @[EXU.scala 50:16]
+  wire [63:0] src1 = _gpr_io_en_r1_T_6 ? gpr_io_val_r1 : _src1_T_10; // @[EXU.scala 49:18]
+  wire [63:0] dest = _gpr_io_en_r2_T_2 ? io_imm : {{59'd0}, io_rd}; // @[EXU.scala 57:18]
+  wire  _pmem_io_waddr_T_6 = io_op[42] | io_op[43] | io_op[44] | io_op[45]; // @[EXU.scala 62:57]
+  wire [63:0] _pmem_io_wmask_T_8 = io_op[45] ? 64'hff : 64'h0; // @[EXU.scala 67:27]
+  wire [63:0] _pmem_io_wmask_T_9 = io_op[44] ? 64'hf : _pmem_io_wmask_T_8; // @[EXU.scala 66:27]
+  wire [63:0] _pmem_io_wmask_T_10 = io_op[43] ? 64'h3 : _pmem_io_wmask_T_9; // @[EXU.scala 65:27]
+  wire [63:0] _pmem_io_wmask_T_11 = io_op[42] ? 64'h1 : _pmem_io_wmask_T_10; // @[EXU.scala 64:27]
+  wire [31:0] alu_dest_io_src1_lo = src1[31:0]; // @[EXU.scala 70:122]
   wire [63:0] _alu_dest_io_src1_T_13 = {32'h0,alu_dest_io_src1_lo}; // @[Cat.scala 30:58]
   wire [31:0] alu_dest_io_src1_hi_1 = src1[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 72:12]
   wire [63:0] _alu_dest_io_src1_T_19 = {alu_dest_io_src1_hi_1,alu_dest_io_src1_lo}; // @[Cat.scala 30:58]
-  wire  _alu_dest_io_src1_T_22 = io_op[36] | io_op[37]; // @[EXU.scala 73:40]
-  wire [63:0] _alu_dest_io_src1_T_23 = io_op[36] | io_op[37] ? io_pc : src1; // @[EXU.scala 73:30]
-  wire [63:0] _alu_dest_io_src1_T_24 = io_op[17] | io_op[19] ? _alu_dest_io_src1_T_19 : _alu_dest_io_src1_T_23; // @[EXU.scala 72:30]
-  wire [4:0] alu_dest_io_src2_lo = src2[4:0]; // @[EXU.scala 75:82]
+  wire  _alu_dest_io_src1_T_22 = io_op[36] | io_op[37]; // @[EXU.scala 72:40]
+  wire [63:0] _alu_dest_io_src1_T_23 = io_op[36] | io_op[37] ? io_pc : src1; // @[EXU.scala 72:30]
+  wire [63:0] _alu_dest_io_src1_T_24 = io_op[17] | io_op[19] ? _alu_dest_io_src1_T_19 : _alu_dest_io_src1_T_23; // @[EXU.scala 71:30]
+  wire [4:0] alu_dest_io_src2_lo = src2[4:0]; // @[EXU.scala 74:82]
   wire [63:0] _alu_dest_io_src2_T_5 = {59'h0,alu_dest_io_src2_lo}; // @[Cat.scala 30:58]
-  wire [31:0] alu_dest_io_src2_lo_1 = src2[31:0]; // @[EXU.scala 79:92]
+  wire [31:0] alu_dest_io_src2_lo_1 = src2[31:0]; // @[EXU.scala 78:92]
   wire [63:0] _alu_dest_io_src2_T_24 = {32'h0,alu_dest_io_src2_lo_1}; // @[Cat.scala 30:58]
-  wire [63:0] _alu_dest_io_src2_T_26 = io_op[64] ? csr_io_val_r : src2; // @[EXU.scala 80:30]
+  wire [63:0] _alu_dest_io_src2_T_26 = io_op[64] ? csr_io_val_r : src2; // @[EXU.scala 79:30]
   wire [63:0] _alu_dest_io_src2_T_27 = io_op[56] | io_op[58] | io_op[60] | io_op[62] ? _alu_dest_io_src2_T_24 :
-    _alu_dest_io_src2_T_26; // @[EXU.scala 79:30]
-  wire [63:0] _alu_dest_io_src2_T_28 = _pmem_io_waddr_T_6 ? dest : _alu_dest_io_src2_T_27; // @[EXU.scala 78:30]
-  wire [63:0] _alu_dest_io_src2_T_29 = _alu_dest_io_src1_T_22 ? 64'h4 : _alu_dest_io_src2_T_28; // @[EXU.scala 77:30]
-  wire [63:0] _alu_dest_io_src2_T_30 = io_op[25] ? io_pc : _alu_dest_io_src2_T_29; // @[EXU.scala 76:30]
-  wire [18:0] _alu_dest_io_op_T_108 = io_op[61] | io_op[62] ? 19'h40000 : 19'h0; // @[EXU.scala 99:30]
-  wire [18:0] _alu_dest_io_op_T_109 = io_op[59] | io_op[60] ? 19'h20000 : _alu_dest_io_op_T_108; // @[EXU.scala 98:30]
-  wire [18:0] _alu_dest_io_op_T_110 = io_op[57] | io_op[58] ? 19'h10000 : _alu_dest_io_op_T_109; // @[EXU.scala 97:30]
-  wire [18:0] _alu_dest_io_op_T_111 = io_op[55] | io_op[56] ? 19'h8000 : _alu_dest_io_op_T_110; // @[EXU.scala 96:30]
-  wire [18:0] _alu_dest_io_op_T_112 = io_op[54] ? 19'h4000 : _alu_dest_io_op_T_111; // @[EXU.scala 95:30]
-  wire [18:0] _alu_dest_io_op_T_113 = io_op[52] ? 19'h2000 : _alu_dest_io_op_T_112; // @[EXU.scala 94:30]
-  wire [18:0] _alu_dest_io_op_T_114 = io_op[50] | io_op[51] | io_op[53] ? 19'h1000 : _alu_dest_io_op_T_113; // @[EXU.scala 93:30]
-  wire [18:0] _alu_dest_io_op_T_115 = io_op[30] | io_op[31] ? 19'h800 : _alu_dest_io_op_T_114; // @[EXU.scala 92:30]
-  wire [18:0] _alu_dest_io_op_T_116 = io_op[27] | io_op[29] | io_op[33] | io_op[35] ? 19'h200 : _alu_dest_io_op_T_115; // @[EXU.scala 91:30]
-  wire [18:0] _alu_dest_io_op_T_117 = io_op[26] | io_op[28] | io_op[32] | io_op[34] ? 19'h100 : _alu_dest_io_op_T_116; // @[EXU.scala 90:30]
-  wire [18:0] _alu_dest_io_op_T_118 = io_op[16] | io_op[17] | io_op[18] | io_op[19] ? 19'h80 : _alu_dest_io_op_T_117; // @[EXU.scala 89:30]
-  wire [18:0] _alu_dest_io_op_T_119 = io_op[20] | io_op[21] | io_op[22] | io_op[23] ? 19'h40 : _alu_dest_io_op_T_118; // @[EXU.scala 88:30]
-  wire [18:0] _alu_dest_io_op_T_120 = io_op[12] | io_op[13] | io_op[14] | io_op[15] ? 19'h20 : _alu_dest_io_op_T_119; // @[EXU.scala 87:30]
-  wire [18:0] _alu_dest_io_op_T_121 = io_op[10] | io_op[11] ? 19'h10 : _alu_dest_io_op_T_120; // @[EXU.scala 86:30]
-  wire [18:0] _alu_dest_io_op_T_122 = io_op[8] | io_op[9] | io_op[64] ? 19'h8 : _alu_dest_io_op_T_121; // @[EXU.scala 85:30]
-  wire [18:0] _alu_dest_io_op_T_123 = io_op[6] | io_op[7] ? 19'h4 : _alu_dest_io_op_T_122; // @[EXU.scala 84:30]
-  wire [18:0] _alu_dest_io_op_T_124 = io_op[4] | io_op[5] ? 19'h2 : _alu_dest_io_op_T_123; // @[EXU.scala 83:30]
+    _alu_dest_io_src2_T_26; // @[EXU.scala 78:30]
+  wire [63:0] _alu_dest_io_src2_T_28 = _pmem_io_waddr_T_6 ? dest : _alu_dest_io_src2_T_27; // @[EXU.scala 77:30]
+  wire [63:0] _alu_dest_io_src2_T_29 = _alu_dest_io_src1_T_22 ? 64'h4 : _alu_dest_io_src2_T_28; // @[EXU.scala 76:30]
+  wire [63:0] _alu_dest_io_src2_T_30 = io_op[25] ? io_pc : _alu_dest_io_src2_T_29; // @[EXU.scala 75:30]
+  wire [18:0] _alu_dest_io_op_T_108 = io_op[61] | io_op[62] ? 19'h40000 : 19'h0; // @[EXU.scala 98:30]
+  wire [18:0] _alu_dest_io_op_T_109 = io_op[59] | io_op[60] ? 19'h20000 : _alu_dest_io_op_T_108; // @[EXU.scala 97:30]
+  wire [18:0] _alu_dest_io_op_T_110 = io_op[57] | io_op[58] ? 19'h10000 : _alu_dest_io_op_T_109; // @[EXU.scala 96:30]
+  wire [18:0] _alu_dest_io_op_T_111 = io_op[55] | io_op[56] ? 19'h8000 : _alu_dest_io_op_T_110; // @[EXU.scala 95:30]
+  wire [18:0] _alu_dest_io_op_T_112 = io_op[54] ? 19'h4000 : _alu_dest_io_op_T_111; // @[EXU.scala 94:30]
+  wire [18:0] _alu_dest_io_op_T_113 = io_op[52] ? 19'h2000 : _alu_dest_io_op_T_112; // @[EXU.scala 93:30]
+  wire [18:0] _alu_dest_io_op_T_114 = io_op[50] | io_op[51] | io_op[53] ? 19'h1000 : _alu_dest_io_op_T_113; // @[EXU.scala 92:30]
+  wire [18:0] _alu_dest_io_op_T_115 = io_op[30] | io_op[31] ? 19'h800 : _alu_dest_io_op_T_114; // @[EXU.scala 91:30]
+  wire [18:0] _alu_dest_io_op_T_116 = io_op[27] | io_op[29] | io_op[33] | io_op[35] ? 19'h200 : _alu_dest_io_op_T_115; // @[EXU.scala 90:30]
+  wire [18:0] _alu_dest_io_op_T_117 = io_op[26] | io_op[28] | io_op[32] | io_op[34] ? 19'h100 : _alu_dest_io_op_T_116; // @[EXU.scala 89:30]
+  wire [18:0] _alu_dest_io_op_T_118 = io_op[16] | io_op[17] | io_op[18] | io_op[19] ? 19'h80 : _alu_dest_io_op_T_117; // @[EXU.scala 88:30]
+  wire [18:0] _alu_dest_io_op_T_119 = io_op[20] | io_op[21] | io_op[22] | io_op[23] ? 19'h40 : _alu_dest_io_op_T_118; // @[EXU.scala 87:30]
+  wire [18:0] _alu_dest_io_op_T_120 = io_op[12] | io_op[13] | io_op[14] | io_op[15] ? 19'h20 : _alu_dest_io_op_T_119; // @[EXU.scala 86:30]
+  wire [18:0] _alu_dest_io_op_T_121 = io_op[10] | io_op[11] ? 19'h10 : _alu_dest_io_op_T_120; // @[EXU.scala 85:30]
+  wire [18:0] _alu_dest_io_op_T_122 = io_op[8] | io_op[9] | io_op[64] ? 19'h8 : _alu_dest_io_op_T_121; // @[EXU.scala 84:30]
+  wire [18:0] _alu_dest_io_op_T_123 = io_op[6] | io_op[7] ? 19'h4 : _alu_dest_io_op_T_122; // @[EXU.scala 83:30]
+  wire [18:0] _alu_dest_io_op_T_124 = io_op[4] | io_op[5] ? 19'h2 : _alu_dest_io_op_T_123; // @[EXU.scala 82:30]
   wire [31:0] gpr_io_val_w_hi = alu_dest_io_result[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 72:12]
-  wire [31:0] gpr_io_val_w_lo = alu_dest_io_result[31:0]; // @[EXU.scala 106:198]
+  wire [31:0] gpr_io_val_w_lo = alu_dest_io_result[31:0]; // @[EXU.scala 105:198]
   wire [63:0] _gpr_io_val_w_T_25 = {gpr_io_val_w_hi,gpr_io_val_w_lo}; // @[Cat.scala 30:58]
   wire [55:0] gpr_io_val_w_hi_1 = pmem_rdata[7] ? 56'hffffffffffffff : 56'h0; // @[Bitwise.scala 72:12]
-  wire [7:0] gpr_io_val_w_lo_1 = pmem_rdata[7:0]; // @[EXU.scala 107:80]
+  wire [7:0] gpr_io_val_w_lo_1 = pmem_rdata[7:0]; // @[EXU.scala 106:80]
   wire [63:0] _gpr_io_val_w_T_29 = {gpr_io_val_w_hi_1,gpr_io_val_w_lo_1}; // @[Cat.scala 30:58]
   wire [47:0] gpr_io_val_w_hi_2 = pmem_rdata[15] ? 48'hffffffffffff : 48'h0; // @[Bitwise.scala 72:12]
-  wire [15:0] gpr_io_val_w_lo_2 = pmem_rdata[15:0]; // @[EXU.scala 108:81]
+  wire [15:0] gpr_io_val_w_lo_2 = pmem_rdata[15:0]; // @[EXU.scala 107:81]
   wire [63:0] _gpr_io_val_w_T_33 = {gpr_io_val_w_hi_2,gpr_io_val_w_lo_2}; // @[Cat.scala 30:58]
   wire [31:0] gpr_io_val_w_hi_3 = pmem_rdata[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 72:12]
-  wire [31:0] gpr_io_val_w_lo_3 = pmem_rdata[31:0]; // @[EXU.scala 109:81]
+  wire [31:0] gpr_io_val_w_lo_3 = pmem_rdata[31:0]; // @[EXU.scala 108:81]
   wire [63:0] _gpr_io_val_w_T_37 = {gpr_io_val_w_hi_3,gpr_io_val_w_lo_3}; // @[Cat.scala 30:58]
   wire [63:0] _gpr_io_val_w_T_39 = {56'h0,gpr_io_val_w_lo_1}; // @[Cat.scala 30:58]
   wire [63:0] _gpr_io_val_w_T_41 = {48'h0,gpr_io_val_w_lo_2}; // @[Cat.scala 30:58]
   wire [63:0] _gpr_io_val_w_T_43 = {32'h0,gpr_io_val_w_lo_3}; // @[Cat.scala 30:58]
-  wire [31:0] gpr_io_val_w_lo_7 = alu_dest_io_result[63:32]; // @[EXU.scala 113:92]
+  wire [31:0] gpr_io_val_w_lo_7 = alu_dest_io_result[63:32]; // @[EXU.scala 112:92]
   wire [63:0] _gpr_io_val_w_T_49 = {32'h0,gpr_io_val_w_lo_7}; // @[Cat.scala 30:58]
-  wire [63:0] _gpr_io_val_w_T_54 = _csr_io_en_r_T_2 ? csr_io_val_r : alu_dest_io_result; // @[EXU.scala 115:26]
-  wire [63:0] _gpr_io_val_w_T_55 = io_op[41] ? pmem_rdata : _gpr_io_val_w_T_54; // @[EXU.scala 114:26]
-  wire [63:0] _gpr_io_val_w_T_56 = io_op[52] | io_op[53] | io_op[54] ? _gpr_io_val_w_T_49 : _gpr_io_val_w_T_55; // @[EXU.scala 113:26]
-  wire [63:0] _gpr_io_val_w_T_57 = io_op[48] ? _gpr_io_val_w_T_43 : _gpr_io_val_w_T_56; // @[EXU.scala 112:26]
-  wire [63:0] _gpr_io_val_w_T_58 = io_op[47] ? _gpr_io_val_w_T_41 : _gpr_io_val_w_T_57; // @[EXU.scala 111:26]
-  wire [63:0] _gpr_io_val_w_T_59 = io_op[46] ? _gpr_io_val_w_T_39 : _gpr_io_val_w_T_58; // @[EXU.scala 110:26]
-  wire [63:0] _gpr_io_val_w_T_60 = io_op[40] ? _gpr_io_val_w_T_37 : _gpr_io_val_w_T_59; // @[EXU.scala 109:26]
-  wire [63:0] _gpr_io_val_w_T_61 = io_op[39] ? _gpr_io_val_w_T_33 : _gpr_io_val_w_T_60; // @[EXU.scala 108:26]
-  wire [63:0] _gpr_io_val_w_T_62 = io_op[38] ? _gpr_io_val_w_T_29 : _gpr_io_val_w_T_61; // @[EXU.scala 107:26]
-  wire [63:0] _csr_io_val_w_T_2 = io_op[64] ? alu_dest_io_result : 64'h0; // @[EXU.scala 119:26]
-  wire  _alu_pc_io_src2_T_5 = ~alu_dest_io_result[0]; // @[EXU.scala 125:40]
-  wire [63:0] _alu_pc_io_src2_T_23 = io_op[37] ? src2 : 64'h4; // @[EXU.scala 131:28]
-  wire [63:0] _alu_pc_io_src2_T_24 = io_op[36] ? src1 : _alu_pc_io_src2_T_23; // @[EXU.scala 130:28]
-  wire [63:0] _alu_pc_io_src2_T_25 = io_op[35] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_24; // @[EXU.scala 129:28]
-  wire [63:0] _alu_pc_io_src2_T_26 = io_op[34] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_25; // @[EXU.scala 128:28]
-  wire [63:0] _alu_pc_io_src2_T_27 = io_op[33] & _alu_pc_io_src2_T_5 ? dest : _alu_pc_io_src2_T_26; // @[EXU.scala 127:28]
-  wire [63:0] _alu_pc_io_src2_T_28 = io_op[32] & _alu_pc_io_src2_T_5 ? dest : _alu_pc_io_src2_T_27; // @[EXU.scala 126:28]
-  wire [63:0] _alu_pc_io_src2_T_29 = io_op[31] & ~alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_28; // @[EXU.scala 125:28]
-  wire [10:0] _alu_pc_io_op_T_1 = io_op[37] ? 11'h400 : 11'h1; // @[EXU.scala 133:28]
-  wire [63:0] _io_pc_dnpc_T_4 = io_op[65] | io_op[66] ? csr_io_val_r : alu_pc_io_result; // @[EXU.scala 136:25]
-  ebreak ebreak1 ( // @[EXU.scala 18:27]
+  wire [63:0] _gpr_io_val_w_T_54 = _csr_io_en_r_T_2 ? csr_io_val_r : alu_dest_io_result; // @[EXU.scala 114:26]
+  wire [63:0] _gpr_io_val_w_T_55 = io_op[41] ? pmem_rdata : _gpr_io_val_w_T_54; // @[EXU.scala 113:26]
+  wire [63:0] _gpr_io_val_w_T_56 = io_op[52] | io_op[53] | io_op[54] ? _gpr_io_val_w_T_49 : _gpr_io_val_w_T_55; // @[EXU.scala 112:26]
+  wire [63:0] _gpr_io_val_w_T_57 = io_op[48] ? _gpr_io_val_w_T_43 : _gpr_io_val_w_T_56; // @[EXU.scala 111:26]
+  wire [63:0] _gpr_io_val_w_T_58 = io_op[47] ? _gpr_io_val_w_T_41 : _gpr_io_val_w_T_57; // @[EXU.scala 110:26]
+  wire [63:0] _gpr_io_val_w_T_59 = io_op[46] ? _gpr_io_val_w_T_39 : _gpr_io_val_w_T_58; // @[EXU.scala 109:26]
+  wire [63:0] _gpr_io_val_w_T_60 = io_op[40] ? _gpr_io_val_w_T_37 : _gpr_io_val_w_T_59; // @[EXU.scala 108:26]
+  wire [63:0] _gpr_io_val_w_T_61 = io_op[39] ? _gpr_io_val_w_T_33 : _gpr_io_val_w_T_60; // @[EXU.scala 107:26]
+  wire [63:0] _gpr_io_val_w_T_62 = io_op[38] ? _gpr_io_val_w_T_29 : _gpr_io_val_w_T_61; // @[EXU.scala 106:26]
+  wire [63:0] _csr_io_val_w_T_2 = io_op[64] ? alu_dest_io_result : 64'h0; // @[EXU.scala 118:26]
+  wire  _alu_pc_io_src2_T_5 = ~alu_dest_io_result[0]; // @[EXU.scala 124:40]
+  wire [63:0] _alu_pc_io_src2_T_23 = io_op[37] ? src2 : 64'h4; // @[EXU.scala 130:28]
+  wire [63:0] _alu_pc_io_src2_T_24 = io_op[36] ? src1 : _alu_pc_io_src2_T_23; // @[EXU.scala 129:28]
+  wire [63:0] _alu_pc_io_src2_T_25 = io_op[35] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_24; // @[EXU.scala 128:28]
+  wire [63:0] _alu_pc_io_src2_T_26 = io_op[34] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_25; // @[EXU.scala 127:28]
+  wire [63:0] _alu_pc_io_src2_T_27 = io_op[33] & _alu_pc_io_src2_T_5 ? dest : _alu_pc_io_src2_T_26; // @[EXU.scala 126:28]
+  wire [63:0] _alu_pc_io_src2_T_28 = io_op[32] & _alu_pc_io_src2_T_5 ? dest : _alu_pc_io_src2_T_27; // @[EXU.scala 125:28]
+  wire [63:0] _alu_pc_io_src2_T_29 = io_op[31] & ~alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_28; // @[EXU.scala 124:28]
+  wire [10:0] _alu_pc_io_op_T_1 = io_op[37] ? 11'h400 : 11'h1; // @[EXU.scala 132:28]
+  wire [63:0] _io_pc_dnpc_T_4 = io_op[65] | io_op[66] ? csr_io_val_r : alu_pc_io_result; // @[EXU.scala 135:25]
+  ebreak ebreak1 ( // @[EXU.scala 17:27]
     .en_break(ebreak1_en_break),
     .clk(ebreak1_clk)
   );
-  GPR gpr ( // @[EXU.scala 27:23]
+  GPR gpr ( // @[EXU.scala 26:23]
     .clock(gpr_clock),
     .reset(gpr_reset),
     .io_idx_r1(gpr_io_idx_r1),
@@ -1226,26 +1229,26 @@ module EXU(
     .io_val_r1(gpr_io_val_r1),
     .io_val_r2(gpr_io_val_r2)
   );
-  ALU alu_dest ( // @[EXU.scala 28:28]
+  ALU alu_dest ( // @[EXU.scala 27:28]
     .io_src1(alu_dest_io_src1),
     .io_src2(alu_dest_io_src2),
     .io_op(alu_dest_io_op),
     .io_result(alu_dest_io_result)
   );
-  ALU alu_pc ( // @[EXU.scala 29:26]
+  ALU alu_pc ( // @[EXU.scala 28:26]
     .io_src1(alu_pc_io_src1),
     .io_src2(alu_pc_io_src2),
     .io_op(alu_pc_io_op),
     .io_result(alu_pc_io_result)
   );
-  memory pmem ( // @[EXU.scala 30:24]
+  memory pmem ( // @[EXU.scala 29:24]
     .raddr(pmem_raddr),
     .rdata(pmem_rdata),
     .waddr(pmem_waddr),
     .wdata(pmem_wdata),
     .wmask(pmem_wmask)
   );
-  CSR csr ( // @[EXU.scala 31:23]
+  CSR csr ( // @[EXU.scala 30:23]
     .clock(csr_clock),
     .reset(csr_reset),
     .io_idx_w(csr_io_idx_w),
@@ -1257,42 +1260,42 @@ module EXU(
     .io_no(csr_io_no),
     .io_epc(csr_io_epc)
   );
-  assign io_pc_dnpc = io_reset ? io_pc : _io_pc_dnpc_T_4; // @[EXU.scala 135:25]
-  assign ebreak1_en_break = io_op[49]; // @[EXU.scala 19:35]
-  assign ebreak1_clk = clock; // @[EXU.scala 20:23]
+  assign io_pc_dnpc = reset ? io_pc : _io_pc_dnpc_T_4; // @[EXU.scala 134:25]
+  assign ebreak1_en_break = io_op[49]; // @[EXU.scala 18:35]
+  assign ebreak1_clk = clock; // @[EXU.scala 19:23]
   assign gpr_clock = clock;
   assign gpr_reset = reset;
-  assign gpr_io_idx_r1 = io_rs1; // @[EXU.scala 36:22]
-  assign gpr_io_idx_r2 = io_rs2; // @[EXU.scala 37:22]
-  assign gpr_io_idx_w = dest[4:0]; // @[EXU.scala 38:21]
-  assign gpr_io_en_w = io_reset ? 1'h0 : io_typ[0] | io_typ[1] | io_typ[3] | io_typ[5]; // @[EXU.scala 35:25]
-  assign gpr_io_en_r1 = io_typ[0] | io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 33:57]
-  assign gpr_io_en_r2 = io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 34:47]
+  assign gpr_io_idx_r1 = io_rs1; // @[EXU.scala 35:22]
+  assign gpr_io_idx_r2 = io_rs2; // @[EXU.scala 36:22]
+  assign gpr_io_idx_w = dest[4:0]; // @[EXU.scala 37:21]
+  assign gpr_io_en_w = reset ? 1'h0 : io_typ[0] | io_typ[1] | io_typ[3] | io_typ[5]; // @[EXU.scala 34:25]
+  assign gpr_io_en_r1 = io_typ[0] | io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 32:57]
+  assign gpr_io_en_r2 = io_typ[2] | io_typ[4] | io_typ[5]; // @[EXU.scala 33:47]
   assign gpr_io_val_w = io_op[1] | io_op[3] | io_op[5] | io_op[13] | io_op[15] | io_op[17] | io_op[21] | io_op[23] |
-    io_op[51] | io_op[56] | io_op[60] | io_op[62] ? _gpr_io_val_w_T_25 : _gpr_io_val_w_T_62; // @[EXU.scala 106:26]
+    io_op[51] | io_op[56] | io_op[60] | io_op[62] ? _gpr_io_val_w_T_25 : _gpr_io_val_w_T_62; // @[EXU.scala 105:26]
   assign alu_dest_io_src1 = io_op[13] | io_op[21] | io_op[23] | io_op[56] | io_op[58] | io_op[60] | io_op[62] ?
-    _alu_dest_io_src1_T_13 : _alu_dest_io_src1_T_24; // @[EXU.scala 71:30]
-  assign alu_dest_io_src2 = io_op[13] | io_op[17] | io_op[21] ? _alu_dest_io_src2_T_5 : _alu_dest_io_src2_T_30; // @[EXU.scala 75:30]
+    _alu_dest_io_src1_T_13 : _alu_dest_io_src1_T_24; // @[EXU.scala 70:30]
+  assign alu_dest_io_src2 = io_op[13] | io_op[17] | io_op[21] ? _alu_dest_io_src2_T_5 : _alu_dest_io_src2_T_30; // @[EXU.scala 74:30]
   assign alu_dest_io_op = io_op[0] | io_op[1] | io_op[2] | io_op[3] | io_op[24] | io_op[25] | io_op[36] | io_op[37] |
     io_op[38] | io_op[39] | io_op[40] | io_op[41] | io_op[42] | io_op[43] | io_op[44] | io_op[45] | io_op[46] | io_op[47
-    ] | io_op[48] ? 19'h1 : _alu_dest_io_op_T_124; // @[EXU.scala 82:30]
-  assign alu_pc_io_src1 = io_op[37] ? src1 : io_pc; // @[EXU.scala 123:28]
-  assign alu_pc_io_src2 = io_op[30] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_29; // @[EXU.scala 124:28]
-  assign alu_pc_io_op = {{8'd0}, _alu_pc_io_op_T_1}; // @[EXU.scala 133:28]
+    ] | io_op[48] ? 19'h1 : _alu_dest_io_op_T_124; // @[EXU.scala 81:30]
+  assign alu_pc_io_src1 = io_op[37] ? src1 : io_pc; // @[EXU.scala 122:28]
+  assign alu_pc_io_src2 = io_op[30] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_29; // @[EXU.scala 123:28]
+  assign alu_pc_io_op = {{8'd0}, _alu_pc_io_op_T_1}; // @[EXU.scala 132:28]
   assign pmem_raddr = io_op[38] | io_op[39] | io_op[40] | io_op[41] | io_op[46] | io_op[47] | io_op[48] ?
-    alu_dest_io_result : 64'h0; // @[EXU.scala 61:27]
-  assign pmem_waddr = io_op[42] | io_op[43] | io_op[44] | io_op[45] ? alu_dest_io_result : 64'h0; // @[EXU.scala 63:27]
-  assign pmem_wdata = _pmem_io_waddr_T_6 ? src2 : 64'h0; // @[EXU.scala 64:27]
-  assign pmem_wmask = _pmem_io_wmask_T_11[7:0]; // @[EXU.scala 65:22]
+    alu_dest_io_result : 64'h0; // @[EXU.scala 60:27]
+  assign pmem_waddr = io_op[42] | io_op[43] | io_op[44] | io_op[45] ? alu_dest_io_result : 64'h0; // @[EXU.scala 62:27]
+  assign pmem_wdata = _pmem_io_waddr_T_6 ? src2 : 64'h0; // @[EXU.scala 63:27]
+  assign pmem_wmask = _pmem_io_wmask_T_11[7:0]; // @[EXU.scala 64:22]
   assign csr_clock = clock;
   assign csr_reset = reset;
-  assign csr_io_idx_w = _csr_io_idx_r_T_3[4:0]; // @[EXU.scala 43:21]
-  assign csr_io_idx_r = _csr_io_idx_r_T_3[4:0]; // @[EXU.scala 42:21]
-  assign csr_io_en_w = io_op[63] | io_op[64]; // @[EXU.scala 41:35]
-  assign csr_io_en_r = io_op[63] | io_op[64]; // @[EXU.scala 40:35]
-  assign csr_io_val_w = io_op[63] ? src1 : _csr_io_val_w_T_2; // @[EXU.scala 118:26]
-  assign csr_io_no = {{62'd0}, _csr_io_no_T_3}; // @[EXU.scala 44:23]
-  assign csr_io_epc = io_pc; // @[EXU.scala 47:19]
+  assign csr_io_idx_w = _csr_io_idx_r_T_3[11:0]; // @[EXU.scala 42:21]
+  assign csr_io_idx_r = _csr_io_idx_r_T_3[11:0]; // @[EXU.scala 41:21]
+  assign csr_io_en_w = io_op[63] | io_op[64]; // @[EXU.scala 40:35]
+  assign csr_io_en_r = io_op[63] | io_op[64]; // @[EXU.scala 39:35]
+  assign csr_io_val_w = io_op[63] ? src1 : _csr_io_val_w_T_2; // @[EXU.scala 117:26]
+  assign csr_io_no = {{62'd0}, _csr_io_no_T_3}; // @[EXU.scala 43:23]
+  assign csr_io_epc = io_pc; // @[EXU.scala 46:19]
 endmodule
 module top(
   input         clock,
@@ -1313,7 +1316,6 @@ module top(
   wire [5:0] idu_io_typ; // @[top.scala 11:19]
   wire  exu_clock; // @[top.scala 12:19]
   wire  exu_reset; // @[top.scala 12:19]
-  wire  exu_io_reset; // @[top.scala 12:19]
   wire [4:0] exu_io_rs1; // @[top.scala 12:19]
   wire [4:0] exu_io_rs2; // @[top.scala 12:19]
   wire [4:0] exu_io_rd; // @[top.scala 12:19]
@@ -1341,7 +1343,6 @@ module top(
   EXU exu ( // @[top.scala 12:19]
     .clock(exu_clock),
     .reset(exu_reset),
-    .io_reset(exu_io_reset),
     .io_rs1(exu_io_rs1),
     .io_rs2(exu_io_rs2),
     .io_rd(exu_io_rd),
@@ -1355,26 +1356,25 @@ module top(
     .pc(it_pc),
     .inst(it_inst)
   );
-  assign io_pc = pc; // @[top.scala 29:10]
+  assign io_pc = pc; // @[top.scala 28:10]
   assign ifu_pc = pc; // @[top.scala 15:14]
   assign idu_io_inst = ifu_inst; // @[top.scala 14:18 top.scala 16:9]
   assign exu_clock = clock;
   assign exu_reset = reset;
-  assign exu_io_reset = reset; // @[top.scala 20:17]
-  assign exu_io_rs1 = idu_io_rs1; // @[top.scala 21:15]
-  assign exu_io_rs2 = idu_io_rs2; // @[top.scala 22:15]
-  assign exu_io_rd = idu_io_rd; // @[top.scala 23:14]
-  assign exu_io_imm = idu_io_imm; // @[top.scala 24:15]
-  assign exu_io_op = idu_io_op; // @[top.scala 25:14]
-  assign exu_io_typ = idu_io_typ; // @[top.scala 26:15]
-  assign exu_io_pc = pc; // @[top.scala 27:14]
+  assign exu_io_rs1 = idu_io_rs1; // @[top.scala 20:15]
+  assign exu_io_rs2 = idu_io_rs2; // @[top.scala 21:15]
+  assign exu_io_rd = idu_io_rd; // @[top.scala 22:14]
+  assign exu_io_imm = idu_io_imm; // @[top.scala 23:15]
+  assign exu_io_op = idu_io_op; // @[top.scala 24:14]
+  assign exu_io_typ = idu_io_typ; // @[top.scala 25:15]
+  assign exu_io_pc = pc; // @[top.scala 26:14]
   assign it_pc = exu_io_pc_dnpc; // @[top.scala 17:13]
   assign it_inst = ifu_inst; // @[top.scala 14:18 top.scala 16:9]
   always @(posedge clock) begin
     if (reset) begin // @[top.scala 9:19]
       pc <= 64'h80000000; // @[top.scala 9:19]
     end else begin
-      pc <= exu_io_pc_dnpc; // @[top.scala 28:7]
+      pc <= exu_io_pc_dnpc; // @[top.scala 27:7]
     end
   end
 // Register and memory initialization

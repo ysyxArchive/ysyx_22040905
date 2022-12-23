@@ -4,7 +4,6 @@ import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
 class EXU extends Module{
     val io=IO(new Bundle{
-        val reset=Input(Reset())
         val rs1=Input(UInt(5.W))
         val rs2=Input(UInt(5.W))
         val rd=Input(UInt(5.W))
@@ -32,7 +31,7 @@ class EXU extends Module{
   
         gpr.io.en_r1:=Mux((io.typ(0)|io.typ(2)|io.typ(4)|io.typ(5)),1.U,0.U)
         gpr.io.en_r2:=Mux((io.typ(2)|io.typ(4)|io.typ(5)),1.U,0.U)
-        gpr.io.en_w:=Mux(io.reset.asBool,0.U,Mux((io.typ(0)|io.typ(1)|io.typ(3)|io.typ(5)),1.U,0.U))
+        gpr.io.en_w:=Mux(reset.asBool,0.U,Mux((io.typ(0)|io.typ(1)|io.typ(3)|io.typ(5)),1.U,0.U))
         gpr.io.idx_r1:=io.rs1
         gpr.io.idx_r2:=io.rs2
         gpr.io.idx_w:=dest
@@ -132,7 +131,7 @@ class EXU extends Module{
                         4.U))))))))
         alu_pc.io.op:=  Mux(io.op(37),1024.U,1.U)
   
-        io.pc_dnpc:= Mux(io.reset.asBool,io.pc,
+        io.pc_dnpc:= Mux(reset.asBool,io.pc,
                      Mux(io.op(65)|io.op(66),csr.io.val_r,
                      alu_pc.io.result))
 }

@@ -17,7 +17,6 @@ class top extends Module{
     it.io.pc:=exu.io.pc_dnpc
     it.io.inst:=inst
     idu.io.inst:=inst
-    exu.io.reset:=reset
     exu.io.rs1:=idu.io.rs1
     exu.io.rs2:=idu.io.rs2
     exu.io.rd:=idu.io.rd

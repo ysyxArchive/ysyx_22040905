@@ -62,9 +62,9 @@ void exec_once(){
   dump_itrace();
   if (gdb) print_itrace(top->io_pc);
   step_and_dump_wave();
-  //difftest_step(pc,top->io_pc);
+  difftest_step(pc,top->io_pc);
   dump_ftrace();
-  dump_csr();
+  //dump_csr();
 //nvboard_update();
 }
 void execute(u_int64_t n){
@@ -116,7 +116,7 @@ const char *csr_name[4]={
 void dump_csr() {
   int i;
   for (i = 0; i < 4; i++) {
-    if(cpu_csr[i]!=0) {printf("pc = %08lx %s = 0x%lx\n",pc,csr_name[i], cpu_csr[i]);}
+    printf("pc = %08lx %s = 0x%lx\n",pc,csr_name[i], cpu_csr[i]);
   }
 }
 //itrace

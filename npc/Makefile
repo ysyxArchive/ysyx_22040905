@@ -81,3 +81,6 @@ gdb: sim
 	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(REF)
 wave: runb
 	gtkwave wave.vcd	
+
+b: verilog
+	$(shell (echo '0a'; echo '/* verilator lint_off WIDTH */'; echo '.'; echo 'wq') | ed -s $(VSRC_DIR)/top.v )

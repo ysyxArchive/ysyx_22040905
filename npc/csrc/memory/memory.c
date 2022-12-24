@@ -104,10 +104,12 @@ void pmem_write(paddr_t addr, int len, uint64_t data) {
 //DPI-C
 extern "C" void pmem_read(long long raddr, long long *rdata) {
   if(raddr==RTC_ADDR){
+    difftest_skip_ref();
     *rdata=getMicrotime()%(1ll<<32);
     return;
   }
   if(raddr==RTC_ADDR+4){
+    difftest_skip_ref();
     *rdata=getMicrotime()/(1ll<<32);
     return;
   }
@@ -125,6 +127,7 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
   uint64_t data=wdata;
   uint8_t mask=wmask;
   if(addr==0x00a00003f8){
+    difftest_skip_ref();
     printf("%c",(char)data );
     return;
   }
@@ -141,3 +144,5 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
   fprintf(fp,"0x%08lx:\tpmem_write\taddr=0x%08lx\tlen=%08x\tdata=%016lx\n",top->io_pc,addr, len,data);
   fclose(fp);
 }
+
+

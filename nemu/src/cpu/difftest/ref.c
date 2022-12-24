@@ -23,6 +23,7 @@ void difftest_regcpy(void *dut,uint64_t *pc, bool direction) {
   else{
     for(int i=0;i<32;i++){
       gpr(i)= *(uint64_t  *)(dut+8*i);
+      change_pc(*pc);
       //printf("%d:%08lx %08lx\n",i,gpr(i),*(uint64_t  *)(dut+8*i));
     }
   }

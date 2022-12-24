@@ -15,6 +15,7 @@ typedef unsigned long  uint64_t;
 #define DIFFTEST_TO_REF 1
 void difftest_step(uint64_t pc,uint64_t pcc);
 void init_difftest(char *ref_so_file, long img_size, int port);
+void difftest_skip_ref();
 
 extern int state;
 extern uint64_t *cpu_gpr;

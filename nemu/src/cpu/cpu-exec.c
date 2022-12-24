@@ -73,6 +73,9 @@ static void execute(uint64_t n) {
 uint64_t get_pc(){
   return cpu.pc;
 }
+void change_pc(uint64_t pc){
+  cpu.pc=pc;
+}
 static void statistic() {
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")

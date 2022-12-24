@@ -12,4 +12,5 @@ void invalid_inst(vaddr_t thispc);
 #define INV(thispc) invalid_inst(thispc)
 
 uint64_t get_pc();
+void change_pc(uint64_t pc);
 #endif

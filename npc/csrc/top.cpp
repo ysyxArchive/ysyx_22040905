@@ -8,6 +8,7 @@
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
+#include "config.h"
 //#include<nvboard.h>
 
 VerilatedContext* contextp = NULL;
@@ -28,21 +29,27 @@ void sim_init(){
   contextp = new VerilatedContext;
   tfp = new VerilatedVcdC;
   top = new Vtop;
+#ifdef HAS_WAVE
   contextp->traceEverOn(true);
   top->trace(tfp, 99);
   tfp->open("wave.vcd");
+#endif
 }
 
 static void step_and_dump_wave(){
   top->clock=0;
   top->eval();
+#ifdef HAS_WAVE
   contextp->timeInc(1);
   tfp->dump(contextp->time());
+#endif
 
   top->clock=1;
   top->eval();
+#ifdef HAS_WAVE
   contextp->timeInc(1);
   tfp->dump(contextp->time());
+#endif
 }
 
 void sim_exit(){
@@ -60,13 +67,20 @@ void reset()
 }
 void exec_once(){
   pc=top->io_pc;
-  //dump_itrace();
-  //if (gdb) print_itrace(top->io_pc);
+#ifdef HAS_TRACE
+  dump_itrace();
+  if (gdb) print_itrace(top->io_pc);
+#endif
   step_and_dump_wave();
   device_update();
   //dump_csr();
-  //difftest_step(pc,top->io_pc);
-  //dump_ftrace();
+#ifdef HAS_DIFFTEST
+  difftest_step(pc,top->io_pc);
+#endif
+
+#ifdef HAS_TRACE
+  dump_ftrace();
+#endif
 //nvboard_update();
 }
 void execute(u_int64_t n){

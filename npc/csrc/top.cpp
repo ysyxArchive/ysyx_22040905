@@ -15,14 +15,14 @@ VerilatedVcdC* tfp = NULL;
 typedef unsigned long long ull;
 Vtop* top = NULL;
 //void nvboard_bind_all_pins(Vtop* top);
-int state=0;
+int state=NPC_QUIT;
 uint64_t pc=0;
 int gdb=0;
 void dump_ftrace();
 void dump_csr();
 void cpp_break()
 {
-  state=1;//break;
+  state=NPC_QUIT;//break;
 }
 void sim_init(){
   contextp = new VerilatedContext;
@@ -55,21 +55,23 @@ void reset()
   top->reset=1;
   step_and_dump_wave();
   top->reset=0;
+  pc=top->io_pc;
   //step_and_dump_wave();  
 }
 void exec_once(){
   pc=top->io_pc;
-  dump_itrace();
-  if (gdb) print_itrace(top->io_pc);
+  //dump_itrace();
+  //if (gdb) print_itrace(top->io_pc);
   step_and_dump_wave();
-  difftest_step(pc,top->io_pc);
-  dump_ftrace();
+  device_update();
   //dump_csr();
+  //difftest_step(pc,top->io_pc);
+  //dump_ftrace();
 //nvboard_update();
 }
 void execute(u_int64_t n){
   while(n--) {
-    if(state!=0)return;
+    if(state!=NPC_RUNNING)return;
     exec_once();
   }
 }
@@ -79,6 +81,7 @@ void exec(){
   execute(-1);
 }
 void init(int argc,char *argv[]){
+  state=NPC_RUNNING;
   sim_init();
   //nvboard_bind_all_pins(&dut);
   //nvboard_init();
@@ -89,6 +92,7 @@ void init(int argc,char *argv[]){
   //init_wp_pool();
   reset();
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
+  init_device();
 }
 //print gpr
 uint64_t *cpu_gpr = NULL;
@@ -151,7 +155,7 @@ int main(int argc, char *argv[])
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
-  if(state==1&&cpu_gpr[10]==0)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);
+  if(state==NPC_QUIT&&cpu_gpr[10]==0)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);
   else {printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);return -1;}
   sim_exit();
   //nvboard_quit();

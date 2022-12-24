@@ -34,13 +34,13 @@ static int cmd_help(char *args);
 static int cmd_c(char *args)
 {
   execute(-1);
-  if(state!=0)return -1;
+  if(state!=NPC_RUNNING)return -1;
   return 0;
 }
 
 static int cmd_q(char *args)
 {
-  state=1;
+  state=NPC_QUIT;
   return -1;
 }
 
@@ -51,7 +51,7 @@ static int cmd_si(char *args)
   {
     sscanf(args, "%ld", &num);
   }
-  if(state==1)return -1;
+  if(state!=NPC_RUNNING)return -1;
   for(int i=0;i<num;i++){
     execute(1);
   }

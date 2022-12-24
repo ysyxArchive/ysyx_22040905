@@ -63,7 +63,7 @@ run: $(BIN)
 
 REF=$(NEMU_HOME)/build/riscv64-nemu-interpreter-so
 CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14  -L$(REF) -fPIC -fsanitize=address -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE  
-LDFLAGS += $(shell llvm-config-13 --libs) -L$(REF) -fPIC -fsanitize=address
+LDFLAGS += $(shell llvm-config-13 --libs) -L$(REF) -fPIC -fsanitize=address -lSDL2 -lSDL2_image 
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!

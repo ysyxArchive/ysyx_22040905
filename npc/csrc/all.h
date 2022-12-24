@@ -17,6 +17,8 @@ void difftest_step(uint64_t pc,uint64_t pcc);
 void init_difftest(char *ref_so_file, long img_size, int port);
 void difftest_skip_ref();
 
+enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT };
+
 extern int state;
 extern uint64_t *cpu_gpr;
 extern const char *cpu_name[32];
@@ -49,4 +51,21 @@ void load_elf(char *s);
 
 extern "C" void init_disasm(const char *triple);
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+
+void init_device();
+void device_update();
+uint32_t screen_size();
+void write_vmem(uint32_t addr, int len, uint64_t data); 
+uint64_t get_vgactl_addr(uint32_t raddr);
+void write_vgactl_addr(uint32_t addr,int len,uint64_t data);
+
+uint64_t get_time();
+#define io_read(reg) \
+  ({ reg##_T __io_param; \
+    ioe_read(reg, &__io_param); \
+    __io_param; })
+
+#define io_write(reg, ...) \
+  ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \
+    ioe_write(reg, &__io_param); })
 #endif

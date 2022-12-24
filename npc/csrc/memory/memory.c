@@ -3,12 +3,7 @@
 #include<assert.h>
 #include"../all.h"
 #include <sys/time.h>
- 
-long getMicrotime(){
-	struct timeval currentTime;
-	gettimeofday(&currentTime, NULL);
-	return currentTime.tv_sec * (int)1e6 + currentTime.tv_usec;
-}
+
 
 #define CONFIG_MSIZE 0x8000000
 #define CONFIG_MBASE 0x80000000
@@ -37,7 +32,7 @@ uint8_t* get_pmem(){
   return pmem;
 }
 void check_bound(uint32_t p){
-  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("0x%08x\n",p);assert(0);}
+  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("addr:0x%08x\n",p);assert(0);}
 }
 extern "C" void pmem_inst_read(long long pc,int *inst){
     uint32_t p=(uint32_t)pc;
@@ -105,15 +100,19 @@ void pmem_write(paddr_t addr, int len, uint64_t data) {
 extern "C" void pmem_read(long long raddr, long long *rdata) {
   if(raddr==RTC_ADDR){
     difftest_skip_ref();
-    *rdata=getMicrotime()%(1ll<<32);
+    *rdata=get_time()%(1ll<<32);
     return;
   }
   if(raddr==RTC_ADDR+4){
     difftest_skip_ref();
-    *rdata=getMicrotime()/(1ll<<32);
+    *rdata=get_time()/(1ll<<32);
     return;
   }
-  
+  if(raddr>=VGACTL_ADDR&&raddr<VGACTL_ADDR+8){
+    difftest_skip_ref();
+    *rdata=get_vgactl_addr(raddr);
+    return;
+  }
   if(raddr==0) { *rdata=0;return; }
   *rdata=(long long)pmem_read((((uint64_t)raddr)), 8);
   FILE *fp;
@@ -126,17 +125,27 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
   uint64_t addr=waddr;
   uint64_t data=wdata;
   uint8_t mask=wmask;
-  if(addr==0x00a00003f8){
+  if(addr==SERIAL_PORT){
     difftest_skip_ref();
-    printf("%c",(char)data );
+    putchar((char)data);
     return;
-  }
+  }  
   if(mask==0)return;
   int len=0;
   while(mask&1){
     len++;
     mask>>=1;
     if(len>8){printf("wmask:%d\nlen:%d\n",mask,len); assert(0);}
+  }
+  if(addr>=FB_ADDR&&addr<FB_ADDR+screen_size()){
+    difftest_skip_ref();
+    write_vmem(addr,len,data);
+    return;
+  } 
+  if(addr>=VGACTL_ADDR&&addr<VGACTL_ADDR+8){
+    difftest_skip_ref();
+    write_vgactl_addr(addr,len,data);
+    return;
   }
   pmem_write(addr, len,data);
   FILE *fp;

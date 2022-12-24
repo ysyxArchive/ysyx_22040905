@@ -8,7 +8,7 @@ void (*ref_difftest_regcpy)(void *dut,uint64_t *pc, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
 void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
-static bool is_skip_ref = false;
+static int is_skip_ref = 0;
 
 const char *cpu_name[32]={
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -64,7 +64,7 @@ bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc,uint64
 }
 void checkregs(uint64_t *ref_gpr,uint64_t ref_pc, uint64_t pc,uint64_t pcc) {
   if (!isa_difftest_checkregs(ref_gpr, ref_pc,pc,pcc)) {
-    state=2;
+    state=NPC_ABORT;
   }
 }
 uint64_t ref_gpr[32];
@@ -73,15 +73,14 @@ void difftest_step(uint64_t pc,uint64_t pcc) {
   if (is_skip_ref) {
     // to skip the checking of an instruction, just copy the reg state to reference design
     ref_difftest_regcpy(cpu_gpr,&pcc, DIFFTEST_TO_REF);
-    is_skip_ref = false;
+    is_skip_ref --;
     return;
   }
-
   ref_difftest_exec(1);
   ref_difftest_regcpy(ref_gpr,&ref_pc, DIFFTEST_TO_DUT);
   checkregs(ref_gpr,ref_pc,pc, pcc);
 }
 
 void difftest_skip_ref() {
-  is_skip_ref = true;
+  is_skip_ref = 2;
 }

@@ -1,5 +1,5 @@
 #include <am.h>
-#include "include/npc.h"
+#include "../include/npc.h"
 #include <riscv/riscv.h>
 #include <klib.h>
 static uint64_t boot_time = 0;

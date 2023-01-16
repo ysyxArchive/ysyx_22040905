@@ -2,17 +2,19 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
+
+class CSRio extends Bundle{
+    val idx_w=Input(UInt(12.W))
+    val idx_r=Input(UInt(12.W))
+    val en_w=Input(UInt(1.W))
+    val en_r=Input(UInt(1.W))
+    val val_w=Input(UInt(64.W))
+    val val_r=Output(UInt(64.W))
+    val no=Input(UInt(64.W))
+    val epc=Input(UInt(64.W))
+}
 class CSR extends Module{
-    val io=IO(new Bundle{
-        val idx_w=Input(UInt(12.W))
-        val idx_r=Input(UInt(12.W))
-        val en_w=Input(UInt(1.W))
-        val en_r=Input(UInt(1.W))
-        val val_w=Input(UInt(64.W))
-        val val_r=Output(UInt(64.W))
-        val no=Input(UInt(64.W))
-        val epc=Input(UInt(64.W))
-    })
+    val io=IO(new CSRio)
     val csr=RegInit(VecInit(Seq("xa00001800".U(64.W),0.U(64.W),0.U(64.W),0.U(64.W))))
     val map_r=Wire(UInt(2.W))
     val map_w=Wire(UInt(2.W))

@@ -7,23 +7,32 @@ class top extends Module{
         val pc=Output(UInt(64.W))
     })
     val pc=RegInit("x80000000".U(64.W))
+    val sram=Module(new AXILiteSRAM)
+    val sram2=Module(new AXILiteSRAM)
+    //val arbiter=Module(new Arbiter)
     val ifu=Module(new IFU)
     val idu=Module(new IDU)
     val exu=Module(new EXU)
+    val lsu=Module(new LSU)
     val it=Module(new itrace)
-    val inst=Wire(UInt(32.W))
+    val gpr=Module(new GPR)
+    val csr=Module(new CSR)
+
     ifu.io.pc:=pc
-    inst:=ifu.io.inst
-    it.io.pc:=exu.io.pc_dnpc
-    it.io.inst:=inst
-    idu.io.inst:=inst
-    exu.io.rs1:=idu.io.rs1
-    exu.io.rs2:=idu.io.rs2
-    exu.io.rd:=idu.io.rd
-    exu.io.imm:=idu.io.imm
-    exu.io.op:=idu.io.op
-    exu.io.typ:=idu.io.typ
+    it.io.pc:=pc
+    ifu.io.lm<>sram.io//arbiter.io.ifu
+    it.io.in<>ifu.io.out
+    idu.io.in<>ifu.io.out
+    exu.io.in<>idu.io.out
+    exu.io.gpr<>gpr.io.r
+    exu.io.csr<>csr.io
+    lsu.io.in<>exu.io.out
+    lsu.io.lm<>sram2.io//arbiter.io.lsu
+    lsu.io.gpr<>gpr.io.w
+    //sram.io<>arbiter.io.out
     exu.io.pc:=pc
-    pc:=exu.io.pc_dnpc
+    lsu.io.out.ready:=1.U
+    pc:=Mux(reset.asBool,"x80000000".U,exu.io.pc_dnpc,
+        )
     io.pc:=pc
 }

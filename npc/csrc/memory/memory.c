@@ -4,7 +4,6 @@
 #include"../all.h"
 #include <sys/time.h>
 
-
 #define CONFIG_MSIZE 0x8000000
 #define CONFIG_MBASE 0x80000000
 
@@ -34,12 +33,7 @@ uint8_t* get_pmem(){
 void check_bound(uint32_t p){
   if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("addr:0x%08x\n",p);assert(0);}
 }
-extern "C" void pmem_inst_read(long long pc,int *inst){
-    uint32_t p=(uint32_t)pc;
-    if(p==0){*inst=0;return;}
-    check_bound(p);
-    *inst=(int)pmem_read(pc,4);
-}
+
 void pmem_init(char *s){ 
   uint32_t *p = (uint32_t *)pmem;
   int i;
@@ -97,40 +91,44 @@ void pmem_write(paddr_t addr, int len, uint64_t data) {
 }
 
 //DPI-C
-extern "C" void pmem_read(long long raddr, long long *rdata) {
-  if(raddr==RTC_ADDR){
+extern "C" void pmem_read(int raddr, long long *rdata) {
+  uint64_t addr=((uint64_t)raddr)&((1ull<<32)-1);
+  if(addr==0) { *rdata=0;return; }
+  if(addr==RTC_ADDR){
     difftest_skip_ref();
     *rdata=get_time()%(1ll<<32);
     return;
   }
-  if(raddr==RTC_ADDR+4){
+  if(addr==RTC_ADDR+4){
     difftest_skip_ref();
     *rdata=get_time()/(1ll<<32);
     return;
   }
-  if(raddr>=VGACTL_ADDR&&raddr<VGACTL_ADDR+8){
+  if(addr>=VGACTL_ADDR&&addr<VGACTL_ADDR+8){
     difftest_skip_ref();
-    *rdata=get_vgactl_addr(raddr);
+    *rdata=get_vgactl_addr(addr);
     return;
   }
-  if(raddr==0) { *rdata=0;return; }
-  *rdata=(long long)pmem_read((((uint64_t)raddr)), 8);
+  *rdata=(long long)pmem_read((((uint64_t)addr)), 8);
+#ifdef HAS_TRACE
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
-  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08llx\tdata=%016llx\n",top->io_pc,raddr,*rdata);
-  fclose(fp); 
+  fprintf(fp,"0x%08lx:\tpmem_read\taddr=0x%08x\tdata=%016llx\n",top->io_pc,raddr,*rdata);
+  fclose(fp);
+#endif 
 }
-extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
+extern "C" void pmem_write(int waddr, long long wdata, char wmask) {
   //printf("%lld %lld %d\n",waddr,wdata,wmask);
-  uint64_t addr=waddr;
-  uint64_t data=wdata;
-  uint8_t mask=wmask;
+  uint64_t addr=((uint64_t) waddr)&((1ull<<32)-1);
+  uint64_t data=(uint64_t) wdata;
+  uint8_t mask=(uint8_t) wmask;
+  if(mask==0)return;
   if(addr==SERIAL_PORT){
     difftest_skip_ref();
     putchar((char)data);
     return;
   }  
-  if(mask==0)return;
+
   int len=0;
   while(mask&1){
     len++;
@@ -148,10 +146,12 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask) {
     return;
   }
   pmem_write(addr, len,data);
+#ifdef HAS_TRACE
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
   fprintf(fp,"0x%08lx:\tpmem_write\taddr=0x%08lx\tlen=%08x\tdata=%016lx\n",top->io_pc,addr, len,data);
   fclose(fp);
+#endif
 }
 
 

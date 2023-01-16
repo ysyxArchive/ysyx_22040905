@@ -8,24 +8,24 @@
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
-#include "config.h"
-//#include<nvboard.h>
+// #include<nvboard.h>
 
-VerilatedContext* contextp = NULL;
-VerilatedVcdC* tfp = NULL;
+VerilatedContext *contextp = NULL;
+VerilatedVcdC *tfp = NULL;
 typedef unsigned long long ull;
-Vtop* top = NULL;
-//void nvboard_bind_all_pins(Vtop* top);
-int state=NPC_QUIT;
-uint64_t pc=0;
-int gdb=0;
+Vtop *top = NULL;
+// void nvboard_bind_all_pins(Vtop* top);
+int state = NPC_QUIT;
+uint64_t pc = 0;
+int gdb = 0;
 void dump_ftrace();
 void dump_csr();
 void cpp_break()
 {
-  state=NPC_QUIT;//break;
+  state = NPC_QUIT; // break;
 }
-void sim_init(){
+void sim_init()
+{
   contextp = new VerilatedContext;
   tfp = new VerilatedVcdC;
   top = new Vtop;
@@ -36,15 +36,16 @@ void sim_init(){
 #endif
 }
 
-static void step_and_dump_wave(){
-  top->clock=0;
+static void step_and_dump_wave()
+{
+  top->clock = 0;
   top->eval();
 #ifdef HAS_WAVE
   contextp->timeInc(1);
   tfp->dump(contextp->time());
 #endif
 
-  top->clock=1;
+  top->clock = 1;
   top->eval();
 #ifdef HAS_WAVE
   contextp->timeInc(1);
@@ -52,53 +53,61 @@ static void step_and_dump_wave(){
 #endif
 }
 
-void sim_exit(){
-  //step_and_dump_wave();
+void sim_exit()
+{
+  // step_and_dump_wave();
   tfp->close();
 }
 
 void reset()
 {
-  top->reset=1;
+  top->reset = 1;
   step_and_dump_wave();
-  top->reset=0;
-  pc=top->io_pc;
-  //step_and_dump_wave();  
+  top->reset = 0;
+  pc = top->io_pc;
+  // step_and_dump_wave();
 }
-void exec_once(){
-  pc=top->io_pc;
+void exec_once()
+{
+  pc = top->io_pc;
 #ifdef HAS_TRACE
   dump_itrace();
-  if (gdb) print_itrace(top->io_pc);
+  if (gdb)
+    print_itrace(top->io_pc);
 #endif
   step_and_dump_wave();
   device_update();
-  //dump_csr();
+  // dump_csr();
 #ifdef HAS_DIFFTEST
-  difftest_step(pc,top->io_pc);
+  difftest_step(pc, top->io_pc);
 #endif
 
 #ifdef HAS_TRACE
   dump_ftrace();
 #endif
-//nvboard_update();
+  // nvboard_update();
 }
-void execute(u_int64_t n){
-  while(n--) {
-    if(state!=NPC_RUNNING)return;
+void execute(u_int64_t n)
+{
+  while (n--)
+  {
+    if (state != NPC_RUNNING)
+      return;
     exec_once();
   }
 }
 
-void exec(){
-  //printf("\n\n\n\n");
+void exec()
+{
+  // printf("\n\n\n\n");
   execute(-1);
 }
-void init(int argc,char *argv[]){
-  state=NPC_RUNNING;
+void init(int argc, char *argv[])
+{
+  state = NPC_RUNNING;
   sim_init();
-  //nvboard_bind_all_pins(&dut);
-  //nvboard_init();
+  // nvboard_bind_all_pins(&dut);
+  // nvboard_init();
   pmem_init(argv[1]);
   init_sdb();
   init_disasm("riscv64-pc-linux-gnu");
@@ -140,20 +149,21 @@ void dump_csr() {
 //itrace
 uint64_t *cpu_itrace = NULL;
 extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
-  cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dncp inst
+  cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dncp inst valid
 }
 char p[99];
 void dump_itrace() {
   disassemble(p,99,pc, (uint8_t *)&(cpu_itrace[1]), 4);
   FILE *fp;
   fp=fopen("build/itrace.txt","a");
-  fprintf(fp,"0x%08lx:\t%08lx\t%s\n",pc,cpu_itrace[1],p);
+  if(cpu_itrace[2]==1) fprintf(fp,"0x%08lx:\t%08lx\t%s\n",cpu_itrace[0],cpu_itrace[1],p);
   fclose(fp);
 }
 void print_itrace(uint64_t pcc){
-  printf("0x%08lx:\t%08lx\t%s\n",pcc,cpu_itrace[1],p);
+  if(cpu_itrace[2])printf("0x%08lx:\t%08lx\t%s\n",pcc,cpu_itrace[1],p);
 }
 void dump_ftrace(){
+  if(!cpu_itrace[2])return;
   if(BITS(cpu_itrace[1],6,0)==0b1101111){
     ftrace_add(pc,cpu_itrace[0],1);
   }

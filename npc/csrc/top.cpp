@@ -67,6 +67,7 @@ void reset()
   pc = top->io_pc;
   // step_and_dump_wave();
 }
+uint64_t skip=0;
 void exec_once()
 {
   pc = top->io_pc;
@@ -76,10 +77,20 @@ void exec_once()
     print_itrace(top->io_pc);
 #endif
   step_and_dump_wave();
+  //printf("%x\n",top->io_valid);
+  printf("test:%lx\n",top->io_test);
   device_update();
   // dump_csr();
 #ifdef HAS_DIFFTEST
-  difftest_step(pc, top->io_pc);
+  int t=0;
+  if(t){
+
+    difftest_step(pc, top->io_pc);
+    t=0;
+  }
+  if(top->io_valid){
+    t=1;
+  }
 #endif
 
 #ifdef HAS_TRACE
@@ -87,7 +98,7 @@ void exec_once()
 #endif
   // nvboard_update();
 }
-void execute(u_int64_t n)
+void execute(uint64_t n)
 {
   while (n--)
   {

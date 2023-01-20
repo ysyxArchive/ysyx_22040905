@@ -118,11 +118,11 @@ extern "C" void pmem_read(int raddr, long long *rdata) {
 #endif 
 }
 extern "C" void pmem_write(int waddr, long long wdata, char wmask) {
-  //printf("%lld %lld %d\n",waddr,wdata,wmask);
   uint64_t addr=((uint64_t) waddr)&((1ull<<32)-1);
   uint64_t data=(uint64_t) wdata;
   uint8_t mask=(uint8_t) wmask;
   if(mask==0)return;
+  printf("%x %llx %x\n",waddr,wdata,wmask);
   if(addr==SERIAL_PORT){
     difftest_skip_ref();
     putchar((char)data);

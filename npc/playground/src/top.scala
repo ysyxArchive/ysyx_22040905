@@ -5,6 +5,8 @@ import chisel3.util.experimental.loadMemoryFromFileInline
 class top extends Module{
     val io=IO(new Bundle{
         val pc=Output(UInt(64.W))
+        val valid=Output(UInt(1.W))
+        val test=Output(UInt(64.W))
     })
     val pc=RegInit("x80000000".U(64.W))
     val sram=Module(new AXILiteSRAM)
@@ -25,14 +27,20 @@ class top extends Module{
     idu.io.in<>ifu.io.out
     exu.io.in<>idu.io.out
     exu.io.gpr<>gpr.io.r
-    exu.io.csr<>csr.io
+    exu.io.csr<>csr.io.r
     lsu.io.in<>exu.io.out
     lsu.io.lm<>sram2.io//arbiter.io.lsu
     lsu.io.gpr<>gpr.io.w
+    lsu.io.csr<>csr.io.w
     //sram.io<>arbiter.io.out
     exu.io.pc:=pc
     lsu.io.out.ready:=1.U
-    pc:=Mux(reset.asBool,"x80000000".U,exu.io.pc_dnpc,
-        )
-    io.pc:=pc
+    io.valid:=lsu.io.out.valid;
+    pc:=Mux(reset.asBool,"x80000000".U,
+        Mux(lsu.io.out.valid,lsu.io.out.bits.pc_dnpc,
+        pc))
+    io.pc:=Mux(reset.asBool,"x80000000".U,
+        Mux(lsu.io.out.valid,lsu.io.out.bits.pc_dnpc,
+        pc))
+    io.test:=exu.io.test//lsu.io.out.bits.pc_dnpc//exu.io.in.bits.op(63,0)//io.in.bits.inst
 }

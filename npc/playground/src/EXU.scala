@@ -9,14 +9,12 @@ class pc_now extends Bundle{
 class pc_next extends Bundle{
     val pc_dnpc=Output(UInt(64.W))
 }
-
 class EXU_out extends Bundle{
     val pin=(new pmemin)
-    val idx_w=Output(UInt(5.W))
-    val en_w=Output(UInt(1.W))
     val op=Output(UInt(80.W))
-    val val_w=Output(UInt(64.W))
     val pc_dnpc=Output(UInt(64.W))
+    val gpr=Flipped(new GPR_w)
+    val csr=Flipped(new CSR_w)
 }
 class EXU extends Module{
     val io=IO(new Bundle{
@@ -24,11 +22,11 @@ class EXU extends Module{
         val out=Decoupled(new EXU_out)
         val gpr=Flipped(new GPR_r)
         val pc=Input(UInt(64.W))
-        val csr=Flipped(new CSRio)
-        val pc_dnpc=Output(UInt(64.W))
+        val csr=Flipped(new CSR_r)
+        val test=Output(UInt(64.W))
     })
         io.in.ready:=io.out.ready
-        io.out.valid:=io.in.fire
+        io.out.valid:=io.in.valid
 
 
         val ebreak1=Module(new ebreak)
@@ -47,17 +45,17 @@ class EXU extends Module{
         io.gpr.en_r2:=Mux((io.in.bits.typ(2)|io.in.bits.typ(4)|io.in.bits.typ(5)),1.U,0.U)
         io.gpr.idx_r1:=io.in.bits.rs1
         io.gpr.idx_r2:=io.in.bits.rs2
-        io.out.bits.en_w:=Mux(reset.asBool&(~io.in.fire),0.U,Mux((io.in.bits.typ(0)|io.in.bits.typ(1)|io.in.bits.typ(3)|io.in.bits.typ(5)),1.U,0.U))
-        io.out.bits.idx_w:=dest
+        io.out.bits.gpr.en_w:=Mux((io.in.bits.typ(0)|io.in.bits.typ(1)|io.in.bits.typ(3)|io.in.bits.typ(5)),1.U,0.U)
+        io.out.bits.gpr.idx_w:=dest
   
         io.csr.en_r:=Mux(io.in.bits.op(63)|io.in.bits.op(64),1.U,0.U)
-        io.csr.en_w:=Mux(io.in.fire&(io.in.bits.op(63)|io.in.bits.op(64)),1.U,0.U)
         io.csr.idx_r:=Mux(io.in.bits.op(63)|io.in.bits.op(64),src2,0.U)
-        io.csr.idx_w:=Mux(io.in.bits.op(63)|io.in.bits.op(64),src2,0.U)
-        io.csr.no:=Mux(io.in.bits.op(65),1.U,
-                   Mux(io.in.bits.op(66),2.U,
-                   0.U))
-        io.csr.epc:=io.pc
+        io.out.bits.csr.en_w:=Mux((io.in.bits.op(63)|io.in.bits.op(64)),1.U,0.U)
+        io.out.bits.csr.idx_w:=Mux(io.in.bits.op(63)|io.in.bits.op(64),src2,0.U)
+        io.out.bits.csr.no:=Mux(io.in.bits.op(65),1.U,
+                            Mux(io.in.bits.op(66),2.U,
+                            0.U))
+        io.out.bits.csr.epc:=io.pc
          
   
         src1:=Mux((io.in.bits.typ(0)|io.in.bits.typ(2)|io.in.bits.typ(4)|io.in.bits.typ(5)),io.gpr.val_r1,
@@ -71,10 +69,12 @@ class EXU extends Module{
         dest:=Mux((io.in.bits.typ(2)|io.in.bits.typ(4)),io.in.bits.imm,
             io.in.bits.rd)
   
+        io.test:=alu_dest.io.src1
+
         io.out.bits.pin.raddr:=Mux(io.in.bits.op(38)|io.in.bits.op(39)|io.in.bits.op(40)|io.in.bits.op(41)|io.in.bits.op(46)|io.in.bits.op(47)|io.in.bits.op(48),alu_dest.io.result,
                        0.U)
         io.out.bits.pin.waddr:=Mux(io.in.bits.op(42)|io.in.bits.op(43)|io.in.bits.op(44)|io.in.bits.op(45),alu_dest.io.result,0.U)
-        io.out.bits.pin.wdata:=Mux(io.in.bits.op(42)|io.in.bits.op(43)|io.in.bits.op(44)|io.in.bits.op(45),src2,0.U)
+        io.out.bits.pin.wdata:=Mux(io.in.bits.op(42)|io.in.bits.op(43)|io.in.bits.op(44)|io.in.bits.op(45),io.gpr.val_r1,0.U)
         io.out.bits.pin.wmask:=Mux(~io.in.fire,0.U,
                        Mux(io.in.bits.op(42),Cat(Fill(63,0.U),Fill(1,1.U)),
                        Mux(io.in.bits.op(43),Cat(Fill(62,0.U),Fill(2,1.U)),
@@ -117,12 +117,12 @@ class EXU extends Module{
   
                           
                           
-        io.out.bits.val_w:=Mux(io.in.bits.op(1)|io.in.bits.op(3)|io.in.bits.op(5)|io.in.bits.op(13)|io.in.bits.op(15)|io.in.bits.op(17)|io.in.bits.op(21)|io.in.bits.op(23)|io.in.bits.op(51)|io.in.bits.op(56)|io.in.bits.op(60)|io.in.bits.op(62),Cat(Fill(32,alu_dest.io.result(31)),alu_dest.io.result(31,0)), 
+        io.out.bits.gpr.val_w:=Mux(io.in.bits.op(1)|io.in.bits.op(3)|io.in.bits.op(5)|io.in.bits.op(13)|io.in.bits.op(15)|io.in.bits.op(17)|io.in.bits.op(21)|io.in.bits.op(23)|io.in.bits.op(51)|io.in.bits.op(56)|io.in.bits.op(60)|io.in.bits.op(62),Cat(Fill(32,alu_dest.io.result(31)),alu_dest.io.result(31,0)), 
                       Mux(io.in.bits.op(52)|io.in.bits.op(53)|io.in.bits.op(54),Cat(Fill(32,0.U),alu_dest.io.result(63,32)),
                       Mux(io.in.bits.op(63)|io.in.bits.op(64),io.csr.val_r,
                       alu_dest.io.result)))
       
-        io.csr.val_w:=Mux(io.in.bits.op(63),src1,
+        io.out.bits.csr.val_w:=Mux(io.in.bits.op(63),src1,
                       Mux(io.in.bits.op(64),alu_dest.io.result,
                       0.U))
 
@@ -140,11 +140,7 @@ class EXU extends Module{
                         4.U))))))))
         alu_pc.io.op:=  Mux(io.in.bits.op(37),1024.U,1.U)
   
-        io.out.bits.pc_dnpc:= Mux(reset.asBool|(~io.in.fire),io.pc,
-                     Mux(io.in.bits.op(65)|io.in.bits.op(66),io.csr.val_r,
-                     alu_pc.io.result))
-        io.pc_dnpc:=Mux(reset.asBool|(~io.in.fire),io.pc,
-                     Mux(io.in.bits.op(65)|io.in.bits.op(66),io.csr.val_r,
-                     alu_pc.io.result))
+        io.out.bits.pc_dnpc:=Mux(io.in.bits.op(65)|io.in.bits.op(66),io.csr.val_r,
+                             alu_pc.io.result)
         io.out.bits.op:=io.in.bits.op
 }

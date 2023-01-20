@@ -31,7 +31,9 @@ class IFU extends Module{
   io.lm.w.bits.data:=0.U
   io.lm.w.bits.strb:=0.U
 
-  io.out.bits.inst:=io.lm.r.bits.data(31,0)
+  val inst=RegInit(0.U(32.W))
+  inst:=Mux(io.lm.r.fire,io.lm.r.bits.data(31,0),inst)
+  io.out.bits.inst:=Mux(io.lm.r.fire,io.lm.r.bits.data(31,0),inst)
   io.out.valid:=io.lm.r.fire
 }
 

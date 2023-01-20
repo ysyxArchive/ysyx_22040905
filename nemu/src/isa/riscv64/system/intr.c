@@ -13,6 +13,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   assert(fp);
   fprintf(fp,"pc:0x%lx\tmcause:0x%lx\tcpu.mtvec:0x%lx\n",cpu.mepc,cpu.mcause,cpu.mtvec);
   fclose(fp); 
+  }
 #endif
 
   if(NO==1){

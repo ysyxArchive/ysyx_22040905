@@ -67,7 +67,13 @@ void reset()
   pc = top->io_pc;
   // step_and_dump_wave();
 }
+int64_t map[]={
+  0,1,10,11,100,101,110,111,1000,1001,1010,1011,1100,1101,1110,1111,
+  10000,10001,10010,10011,10100,10101,10110,10111,11000,11001,11010,11011,11100,11101,11110,11111,
+  
+};
 uint64_t skip=0;
+int t=0;
 void exec_once()
 {
   pc = top->io_pc;
@@ -78,11 +84,11 @@ void exec_once()
 #endif
   step_and_dump_wave();
   //printf("%x\n",top->io_valid);
-  printf("test:%lx\n",top->io_test);
+  //printf("test:%04d %04d %04d\n",map[top->io_test/16/16],map[top->io_test/16%16],map[top->io_test%16]);
+  //if(top->io_test!=0)printf("test: %08lx\n",top->io_test);
   device_update();
   // dump_csr();
 #ifdef HAS_DIFFTEST
-  int t=0;
   if(t){
 
     difftest_step(pc, top->io_pc);

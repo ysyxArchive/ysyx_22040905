@@ -34,11 +34,11 @@ class LSU extends Module{
   io.lm.aw.valid:=(wstate === s_idle & ~reset.asBool & io.in.valid)
   io.lm.w.bits.data:=io.in.bits.pin.wdata
   io.lm.w.bits.strb:=io.in.bits.pin.wmask
-  io.lm.w.valid:=io.in.valid
+  io.lm.w.valid:=(wstate === s_wait & ~reset.asBool)
   io.lm.b.ready:=1.U
 
   val en_w=Wire(UInt(1.W))
-  io.in.ready:=(rstate===s_idle)&(wstate===s_idle) 
+  io.in.ready:=(rstate===s_idle)&(wstate===s_idle)&io.lm.b.fire
   en_w:=io.lm.r.fire
 
   io.gpr.en_w:=io.in.bits.gpr.en_w&en_w

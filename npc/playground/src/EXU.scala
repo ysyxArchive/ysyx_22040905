@@ -69,18 +69,17 @@ class EXU extends Module{
         dest:=Mux((io.in.bits.typ(2)|io.in.bits.typ(4)),io.in.bits.imm,
             io.in.bits.rd)
   
-        io.test:=alu_dest.io.src1
+        io.test:=io.gpr.idx_r1
 
         io.out.bits.pin.raddr:=Mux(io.in.bits.op(38)|io.in.bits.op(39)|io.in.bits.op(40)|io.in.bits.op(41)|io.in.bits.op(46)|io.in.bits.op(47)|io.in.bits.op(48),alu_dest.io.result,
                        0.U)
         io.out.bits.pin.waddr:=Mux(io.in.bits.op(42)|io.in.bits.op(43)|io.in.bits.op(44)|io.in.bits.op(45),alu_dest.io.result,0.U)
-        io.out.bits.pin.wdata:=Mux(io.in.bits.op(42)|io.in.bits.op(43)|io.in.bits.op(44)|io.in.bits.op(45),io.gpr.val_r1,0.U)
-        io.out.bits.pin.wmask:=Mux(~io.in.fire,0.U,
-                       Mux(io.in.bits.op(42),Cat(Fill(63,0.U),Fill(1,1.U)),
-                       Mux(io.in.bits.op(43),Cat(Fill(62,0.U),Fill(2,1.U)),
-                       Mux(io.in.bits.op(44),Cat(Fill(60,0.U),Fill(4,1.U)),
-                       Mux(io.in.bits.op(45),Cat(Fill(56,0.U),Fill(8,1.U)),
-                       0.U)))))
+        io.out.bits.pin.wdata:=Mux(io.in.bits.op(42)|io.in.bits.op(43)|io.in.bits.op(44)|io.in.bits.op(45),io.gpr.val_r2,0.U)
+        io.out.bits.pin.wmask:=Mux(io.in.bits.op(42),Cat(Fill(63,0.U),Fill(1,1.U)),
+                               Mux(io.in.bits.op(43),Cat(Fill(62,0.U),Fill(2,1.U)),
+                               Mux(io.in.bits.op(44),Cat(Fill(60,0.U),Fill(4,1.U)),
+                               Mux(io.in.bits.op(45),Cat(Fill(56,0.U),Fill(8,1.U)),
+                               0.U))))
   
         alu_dest.io.src1:=Mux(io.in.bits.op(13)|io.in.bits.op(21)|io.in.bits.op(23)|io.in.bits.op(56)|io.in.bits.op(58)|io.in.bits.op(60)|io.in.bits.op(62),Cat(Fill(32,0.U),src1(31,0)),
                           Mux(io.in.bits.op(17)|io.in.bits.op(19),Cat(Fill(32,src1(31)),src1(31,0)),

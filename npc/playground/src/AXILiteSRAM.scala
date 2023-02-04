@@ -52,27 +52,21 @@ class AXILiteSRAM extends Module{
     s_wait_ready  -> Mux(io.w.fire, s_idle, s_wait_ready)
   ))
 
-  val rdelay = RegInit(0.U(2.W))
-  rdelay:=Mux(io.ar.fire|rdelay(0),rdelay+1.U,0.U)
-
   io.ar.ready := (rstate === s_idle)
-  io.r.valid  := (rstate === s_wait_ready && rdelay===2.U)
-
-  val wdelay = RegInit(0.U(2.W))
-  wdelay:=Mux(io.aw.fire|wdelay(0),wdelay+1.U,0.U)
+  io.r.valid  := (rstate === s_wait_ready)
 
   io.aw.ready := (wstate === s_idle)
-  io.w.ready  := (wstate === s_wait_ready && wdelay===2.U)
+  io.w.ready  := (wstate === s_wait_ready)
 
   val pmem =Module(new memory)
-  pmem.io.raddr:= Mux(io.r.fire,io.ar.bits.addr,0.U)
+  pmem.io.raddr:= Mux(io.ar.fire,io.ar.bits.addr,0.U)
   pmem.io.waddr:= io.aw.bits.addr
   pmem.io.wdata:= io.w.bits.data
-  pmem.io.wmask:= io.w.bits.strb
+  pmem.io.wmask:= Mux(io.aw.fire,io.w.bits.strb,0.U)
 
-  io.r.bits.data := pmem.io.rdata 
+  io.r.bits.data := RegEnable(pmem.io.rdata,io.ar.fire) 
   io.r.bits.resp := 0.U//OKAY
   io.b.bits.resp := 0.U
-  io.b.valid :=1.U
+  io.b.valid := RegEnable(1.U,io.w.fire)
 }
 

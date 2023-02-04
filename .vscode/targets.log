@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jan 17 02:12:44 2023
+# Make data base, printed on Tue Jan 31 18:34:38 2023
 
 # Variables
 
@@ -48,7 +48,7 @@ SNAP_INSTANCE_NAME = code
 # makefile (from 'Makefile', line 2)
 STUNAME = 程雨航
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/116/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/117/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -66,11 +66,11 @@ WORK_INDEX = $(YSYX_HOME)/.git/index.$(WORK_BRANCH)
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/agustin/.config/Code/CachedData/e8a3071ea4344d9d48ef8a4df2c097372b0c5161
+VSCODE_CODE_CACHE_PATH = /home/agustin/.config/Code/CachedData/97dec172d3256f8ca4bfb2143f3f76b503ca0534
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.20WNY1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.UVZSZ1
 # default
 .LOADED := 
 # default
@@ -108,7 +108,7 @@ MAKEFILE_LIST := Makefile
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 2755
+VSCODE_PID = 4565
 # environment
 SDKMAN_DIR = /home/agustin/.sdkman
 # environment
@@ -118,7 +118,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1221,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1221
+SESSION_MANAGER = local/agustin-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1244,unix/agustin-RedmiBook-Pro-14S:/tmp/.ICE-unix/1244
 # automatic
 *F = $(notdir $*)
 # environment
@@ -172,13 +172,13 @@ SNAP_USER_COMMON = /home/agustin/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/116
+SNAP = /snap/code/117
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = 83c3e07582ab46b4b6e0150ebbbb9a03
+INVOCATION_ID = b4bb32eab3f04941a134a0bdc2bc3cbe
 # environment
-SNAP_REVISION = 116
+SNAP_REVISION = 117
 # makefile (from 'Makefile', line 10)
 WORK_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 # environment
@@ -218,7 +218,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 1244
+SYSTEMD_EXEC_PID = 1269
 # environment
 NAVY_HOME = /home/agustin/ysyx-workbench/navy-apps
 # environment
@@ -230,21 +230,21 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SNAP_DATA = /var/snap/code/116
+SNAP_DATA = /var/snap/code/117
 # environment
 SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1075
+MANAGERPID = 1114
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2707
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4440
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
-_ = /snap/code/116/usr/share/code/code
+_ = /snap/code/117/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -252,7 +252,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/agustin/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:34945
+JOURNAL_STREAM = 8:24420
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -264,11 +264,11 @@ QT_IM_MODULE = fcitx
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-917a263f-1.74.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-917a263f-1.74.3-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/116/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/117/usr/share/glib-2.0/schemas
 # environment
 IM_CONFIG_PHASE = 1
 # environment
@@ -278,10 +278,10 @@ PAPERSIZE = letter
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = e8a3071e
+SNAP_VERSION = 97dec172
 # environment
- 
 AM_HOME = /home/agustin/ysyx-workbench/abstract-machine
+ 
 # default
 SUFFIXES := 
 # environment
@@ -293,7 +293,7 @@ SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/agustin/snap/code/116
+SNAP_USER_DATA = /home/agustin/snap/code/117
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -392,6 +392,6 @@ all:
 # strcache performance: lookups = 38 / hit rate = 28%
 # hash-table stats:
 # Load=27/8192=0%, Rehash=0, Collisions=0/38=0%
-# Finished Make data base on Tue Jan 17 02:12:44 2023
+# Finished Make data base on Tue Jan 31 18:34:38 2023
 
  

@@ -6,7 +6,7 @@ import chisel3.util.experimental.loadMemoryFromFileInline
 class itrace extends BlackBox with HasBlackBoxInline{
   val io = IO(new Bundle{
     val pc = Input(UInt(64.W))
-    val in = Flipped(Decoupled(new Inst))
+    val in = Flipped(new It)
   })
 
   setInline("itrace.v",
@@ -14,15 +14,13 @@ class itrace extends BlackBox with HasBlackBoxInline{
           |
           |module itrace(
           | input [63:0] pc,
-          | input [31:0] in_bits_inst,
-          | input in_valid,
-          | output in_ready
+          | input [31:0] in_inst,
+          | input in_en
           |);
-          |assign in_ready = 1;
           |logic [63:0] rf[2:0];
           |assign rf[0]=pc;
-          |assign rf[1]={32'h0,in_bits_inst};
-          |assign rf[2]={63'h0,in_valid};
+          |assign rf[1]={32'h0,in_inst};
+          |assign rf[2]={63'h0,in_en};
           |initial set_itrace_ptr(rf);  // rf为通用寄存器的二维数组变量
           |
           |endmodule

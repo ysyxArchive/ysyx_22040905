@@ -3,6 +3,7 @@ import chisel3.util._
 import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
 
+//AXI-lite
 class AXILiteA extends Bundle{
   val addr = Output(UInt(32.W))
 }
@@ -29,3 +30,27 @@ class AXILite extends Bundle{
   val b = Flipped(Decoupled(new AXILiteB))
 }
 
+//AXI4
+class AXI4A extends AXILiteA{
+  val len = Output(UInt(8.W))  //beats -1
+  val size = Output(UInt(3.W)) //2^size Byte
+  val burst= Output(UInt(2.W))
+}
+
+class AXI4R extends AXILiteR{
+  val last = Output(UInt(1.W))
+}
+
+class AXI4W extends AXILiteW{
+  val last = Output(UInt(1.W))
+}
+
+class AXI4B extends AXI4LiteB{}
+
+class AXI4 extends Bundle{
+  val ar = Decoupled(new AXI4A)
+  val r = Flipped(Decoupled(new AXI4R))
+  val aw = Decoupled(new AXI4A)
+  val w = Decoupled(new AXI4W)
+  val b = Flipped(Decoupled(new AXI4B))
+}

@@ -5,6 +5,17 @@ import chisel3.util.experimental.loadMemoryFromFileInline
 
 class Arbiter extends Module{
     val io=IO(new Bundle{
+        val icache=Flipped(new AXI4)
+        val dcache=Flipped(new AXI4)
+        val out=(new AXI) 
+    })
+    val arb = Module(new Arbiter(UInt(), 2))
+    arb.io.in(0) <> io.icache.io.out
+    arb.io.in(1) <> io.dcache.io.out
+    io.out.io.in <> arb.io.out
+}
+/*class Arbiter extends Module{
+    val io=IO(new Bundle{
         val ifu=Flipped(new AXILite)
         val lsu=Flipped(new AXILite)
         val out=(new AXILite)
@@ -171,4 +182,4 @@ class Arbiter extends Module{
                         a_ifu   ->  0.U ,
                         a_lsu   ->  io.out.b.valid 
                         ))
-}
+}*/

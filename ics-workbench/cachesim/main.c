@@ -31,7 +31,7 @@ struct trace {
   struct _trace t;
   uint32_t data;
 };
-
+int cnt=0;
 static void trace_exec(struct trace *t, bool is_check) {
   if (t->t.is_write) {
     cpu_write(t->t.addr, t->t.len, t->data);
@@ -43,6 +43,9 @@ static void trace_exec(struct trace *t, bool is_check) {
     uint32_t ret = cpu_read(t->t.addr, t->t.len);
     if (is_check) {
       uint32_t ret_uncache = cpu_uncache_read(t->t.addr, t->t.len);
+      if(ret!=ret_uncache){
+        printf("%d\t%x\t%x\n",cnt,ret,ret_uncache);
+      }
       assert(ret == ret_uncache);
     }
   }
@@ -54,6 +57,7 @@ static void random_trace(void) {
 
   int i;
   for (i = 0; i < 1000000; i ++) {
+    cnt++;
     t.t.len = choose_len[ choose(sizeof(choose_len) / sizeof(choose_len[0])) ] ;
     t.t.addr = choose(MEM_SIZE) & ~(t.t.len - 1);
     t.t.is_write = choose(2);
@@ -68,6 +72,9 @@ static void check_diff(void) {
   for (addr = 0; addr < MEM_SIZE; addr += 4) {
     uint32_t ret = cpu_read(addr, 4);
     uint32_t ret_uncache = cpu_uncache_read(addr, 4);
+    //if(ret!=ret_uncache){
+    //  printf("%xlt%x\n",ret,ret_uncache);
+    //}
     assert(ret == ret_uncache);
   }
 }
@@ -129,7 +136,7 @@ int main(int argc, char *argv[]) {
   init_rand(seed);
   init_mem();
 
-  init_cache(13, 1);
+  init_cache(12, 1);//将初始化一个 4KB，2 路组相联的cache
 
   replay_trace();
 

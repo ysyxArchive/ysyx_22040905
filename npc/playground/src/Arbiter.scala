@@ -3,6 +3,28 @@ import chisel3.util._
 import chisel3.stage._
 import chisel3.util.experimental.loadMemoryFromFileInline
 
+class Arbiter(num: Int) extends Module {
+  val io = IO(new Bundle {
+    val masters = Vec(num, Flipped(new AXILite))
+    val slave = (new AXILite)
+  })
+
+  val idx = RegInit(0.U(log2Ceil(num).W))
+  idx := Mux(io.slave.ar.valid || io.slave.aw.valid, idx + 1.U, idx)
+
+  for (i <- 0 until num) {
+    io.masters(i).r.valid := io.slave.r.valid && idx === i.U
+    io.masters(i).r.bits := io.slave.r.bits
+    
+    io.masters(i).b.valid := io.slave.b.valid && idx === i.U
+    io.masters(i).b.bits := io.slave.b.bits
+  }
+
+  io.slave.ar <> io.masters(idx).ar
+  io.slave.aw <> io.masters(idx).aw
+  io.slave.w <> io.masters(idx).w
+}
+/*
 class Arbiter extends Module{
     val io=IO(new Bundle{
         val ifu=Flipped(new AXILite)
@@ -171,4 +193,4 @@ class Arbiter extends Module{
                         a_ifu   ->  0.U ,
                         a_lsu   ->  io.out.b.valid 
                         ))
-}
+}*/

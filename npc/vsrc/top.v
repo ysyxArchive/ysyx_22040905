@@ -21,39 +21,39 @@ module AXILiteSRAM(
   reg [31:0] _RAND_1;
   reg [63:0] _RAND_2;
 `endif // RANDOMIZE_REG_INIT
-  wire [31:0] pmem_raddr; // @[AXILiteSRAM.scala 61:19]
-  wire [63:0] pmem_rdata; // @[AXILiteSRAM.scala 61:19]
-  wire [31:0] pmem_waddr; // @[AXILiteSRAM.scala 61:19]
-  wire [63:0] pmem_wdata; // @[AXILiteSRAM.scala 61:19]
-  wire [7:0] pmem_wmask; // @[AXILiteSRAM.scala 61:19]
-  reg  rstate; // @[AXILiteSRAM.scala 44:23]
+  wire [31:0] pmem_raddr; // @[SRAM.scala 61:19]
+  wire [63:0] pmem_rdata; // @[SRAM.scala 61:19]
+  wire [31:0] pmem_waddr; // @[SRAM.scala 61:19]
+  wire [63:0] pmem_wdata; // @[SRAM.scala 61:19]
+  wire [7:0] pmem_wmask; // @[SRAM.scala 61:19]
+  reg  rstate; // @[SRAM.scala 44:23]
   wire  _rstate_T = io_ar_ready & io_ar_valid; // @[Decoupled.scala 40:37]
   wire  _rstate_T_2 = io_r_ready & io_r_valid; // @[Decoupled.scala 40:37]
-  reg  wstate; // @[AXILiteSRAM.scala 49:23]
+  reg  wstate; // @[SRAM.scala 49:23]
   wire  _wstate_T = io_aw_ready & io_aw_valid; // @[Decoupled.scala 40:37]
   wire  _wstate_T_2 = io_w_ready & io_w_valid; // @[Decoupled.scala 40:37]
   reg [63:0] io_r_bits_data_r; // @[Reg.scala 15:16]
-  memory pmem ( // @[AXILiteSRAM.scala 61:19]
+  memory pmem ( // @[SRAM.scala 61:19]
     .raddr(pmem_raddr),
     .rdata(pmem_rdata),
     .waddr(pmem_waddr),
     .wdata(pmem_wdata),
     .wmask(pmem_wmask)
   );
-  assign io_ar_ready = ~rstate; // @[AXILiteSRAM.scala 55:26]
-  assign io_r_valid = rstate; // @[AXILiteSRAM.scala 56:26]
-  assign io_r_bits_data = io_r_bits_data_r; // @[AXILiteSRAM.scala 67:18]
-  assign io_aw_ready = ~wstate; // @[AXILiteSRAM.scala 58:26]
-  assign io_w_ready = wstate; // @[AXILiteSRAM.scala 59:26]
-  assign pmem_raddr = _rstate_T ? io_ar_bits_addr : 32'h0; // @[AXILiteSRAM.scala 62:22]
-  assign pmem_waddr = io_aw_bits_addr; // @[AXILiteSRAM.scala 63:16]
-  assign pmem_wdata = io_w_bits_data; // @[AXILiteSRAM.scala 64:16]
-  assign pmem_wmask = _wstate_T ? io_w_bits_strb : 8'h0; // @[AXILiteSRAM.scala 65:22]
+  assign io_ar_ready = ~rstate; // @[SRAM.scala 55:26]
+  assign io_r_valid = rstate; // @[SRAM.scala 56:26]
+  assign io_r_bits_data = io_r_bits_data_r; // @[SRAM.scala 67:18]
+  assign io_aw_ready = ~wstate; // @[SRAM.scala 58:26]
+  assign io_w_ready = wstate; // @[SRAM.scala 59:26]
+  assign pmem_raddr = _rstate_T ? io_ar_bits_addr : 32'h0; // @[SRAM.scala 62:22]
+  assign pmem_waddr = io_aw_bits_addr; // @[SRAM.scala 63:16]
+  assign pmem_wdata = io_w_bits_data; // @[SRAM.scala 64:16]
+  assign pmem_wmask = _wstate_T ? io_w_bits_strb : 8'h0; // @[SRAM.scala 65:22]
   always @(posedge clock) begin
-    if (reset) begin // @[AXILiteSRAM.scala 44:23]
-      rstate <= 1'h0; // @[AXILiteSRAM.scala 44:23]
+    if (reset) begin // @[SRAM.scala 44:23]
+      rstate <= 1'h0; // @[SRAM.scala 44:23]
     end else if (rstate) begin // @[Mux.scala 80:57]
-      if (_rstate_T_2) begin // @[AXILiteSRAM.scala 47:25]
+      if (_rstate_T_2) begin // @[SRAM.scala 47:25]
         rstate <= 1'h0;
       end else begin
         rstate <= 1'h1;
@@ -61,10 +61,10 @@ module AXILiteSRAM(
     end else begin
       rstate <= _rstate_T;
     end
-    if (reset) begin // @[AXILiteSRAM.scala 49:23]
-      wstate <= 1'h0; // @[AXILiteSRAM.scala 49:23]
+    if (reset) begin // @[SRAM.scala 49:23]
+      wstate <= 1'h0; // @[SRAM.scala 49:23]
     end else if (wstate) begin // @[Mux.scala 80:57]
-      if (_wstate_T_2) begin // @[AXILiteSRAM.scala 52:25]
+      if (_wstate_T_2) begin // @[SRAM.scala 52:25]
         wstate <= 1'h0;
       end else begin
         wstate <= 1'h1;
@@ -184,54 +184,54 @@ module Arbiter(
   reg [31:0] _RAND_16;
   reg [31:0] _RAND_17;
 `endif // RANDOMIZE_REG_INIT
-  reg  state; // @[Arbiter.scala 14:24]
+  reg  state; // @[Arbiter.scala 36:24]
   wire  _state_T = io_ifu_r_ready & io_ifu_r_valid; // @[Decoupled.scala 40:37]
   wire  _state_T_2 = io_lsu_r_ready & io_lsu_r_valid; // @[Decoupled.scala 40:37]
-  reg [31:0] araddr; // @[Arbiter.scala 20:23]
-  reg  arvalid; // @[Arbiter.scala 21:24]
-  reg  ifu_arready; // @[Arbiter.scala 22:28]
-  reg  lsu_arready; // @[Arbiter.scala 23:28]
-  reg [63:0] ifu_rdata; // @[Arbiter.scala 24:26]
-  reg [63:0] lsu_rdata; // @[Arbiter.scala 25:26]
-  reg  ifu_rvalid; // @[Arbiter.scala 28:27]
-  reg  lsu_rvalid; // @[Arbiter.scala 29:27]
-  reg  rready; // @[Arbiter.scala 30:23]
-  reg [31:0] awaddr; // @[Arbiter.scala 31:23]
-  reg  awvalid; // @[Arbiter.scala 32:24]
-  reg  lsu_awready; // @[Arbiter.scala 34:28]
-  reg [63:0] wdata; // @[Arbiter.scala 35:22]
-  reg [7:0] wstrb; // @[Arbiter.scala 36:22]
-  reg  wvalid; // @[Arbiter.scala 37:23]
-  reg  lsu_wready; // @[Arbiter.scala 39:27]
-  reg  lsu_bvalid; // @[Arbiter.scala 43:27]
+  reg [31:0] araddr; // @[Arbiter.scala 42:23]
+  reg  arvalid; // @[Arbiter.scala 43:24]
+  reg  ifu_arready; // @[Arbiter.scala 44:28]
+  reg  lsu_arready; // @[Arbiter.scala 45:28]
+  reg [63:0] ifu_rdata; // @[Arbiter.scala 46:26]
+  reg [63:0] lsu_rdata; // @[Arbiter.scala 47:26]
+  reg  ifu_rvalid; // @[Arbiter.scala 50:27]
+  reg  lsu_rvalid; // @[Arbiter.scala 51:27]
+  reg  rready; // @[Arbiter.scala 52:23]
+  reg [31:0] awaddr; // @[Arbiter.scala 53:23]
+  reg  awvalid; // @[Arbiter.scala 54:24]
+  reg  lsu_awready; // @[Arbiter.scala 56:28]
+  reg [63:0] wdata; // @[Arbiter.scala 57:22]
+  reg [7:0] wstrb; // @[Arbiter.scala 58:22]
+  reg  wvalid; // @[Arbiter.scala 59:23]
+  reg  lsu_wready; // @[Arbiter.scala 61:27]
+  reg  lsu_bvalid; // @[Arbiter.scala 65:27]
   wire  _awvalid_T_1 = state & io_lsu_aw_valid; // @[Mux.scala 80:57]
   wire  _wvalid_T_1 = state & io_lsu_w_valid; // @[Mux.scala 80:57]
   wire  _lsu_arready_T_1 = state & io_out_ar_ready; // @[Mux.scala 80:57]
   wire  _lsu_rvalid_T_1 = state & io_out_r_valid; // @[Mux.scala 80:57]
   wire  _lsu_awready_T_1 = state & io_out_aw_ready; // @[Mux.scala 80:57]
   wire  _lsu_wready_T_1 = state & io_out_w_ready; // @[Mux.scala 80:57]
-  assign io_ifu_ar_ready = ifu_arready; // @[Arbiter.scala 92:20]
-  assign io_ifu_r_valid = ifu_rvalid; // @[Arbiter.scala 107:19]
-  assign io_ifu_r_bits_data = ifu_rdata; // @[Arbiter.scala 97:23]
-  assign io_lsu_ar_ready = lsu_arready; // @[Arbiter.scala 134:20]
-  assign io_lsu_r_valid = lsu_rvalid; // @[Arbiter.scala 149:19]
-  assign io_lsu_r_bits_data = lsu_rdata; // @[Arbiter.scala 139:23]
-  assign io_lsu_aw_ready = lsu_awready; // @[Arbiter.scala 154:20]
-  assign io_lsu_w_ready = lsu_wready; // @[Arbiter.scala 159:19]
-  assign io_lsu_b_valid = lsu_bvalid; // @[Arbiter.scala 169:19]
-  assign io_out_ar_valid = arvalid; // @[Arbiter.scala 51:20]
-  assign io_out_ar_bits_addr = araddr; // @[Arbiter.scala 46:24]
-  assign io_out_r_ready = rready; // @[Arbiter.scala 56:19]
-  assign io_out_aw_valid = awvalid; // @[Arbiter.scala 66:20]
-  assign io_out_aw_bits_addr = awaddr; // @[Arbiter.scala 61:24]
-  assign io_out_w_valid = wvalid; // @[Arbiter.scala 81:19]
-  assign io_out_w_bits_data = wdata; // @[Arbiter.scala 71:23]
-  assign io_out_w_bits_strb = wstrb; // @[Arbiter.scala 76:23]
+  assign io_ifu_ar_ready = ifu_arready; // @[Arbiter.scala 114:20]
+  assign io_ifu_r_valid = ifu_rvalid; // @[Arbiter.scala 129:19]
+  assign io_ifu_r_bits_data = ifu_rdata; // @[Arbiter.scala 119:23]
+  assign io_lsu_ar_ready = lsu_arready; // @[Arbiter.scala 156:20]
+  assign io_lsu_r_valid = lsu_rvalid; // @[Arbiter.scala 171:19]
+  assign io_lsu_r_bits_data = lsu_rdata; // @[Arbiter.scala 161:23]
+  assign io_lsu_aw_ready = lsu_awready; // @[Arbiter.scala 176:20]
+  assign io_lsu_w_ready = lsu_wready; // @[Arbiter.scala 181:19]
+  assign io_lsu_b_valid = lsu_bvalid; // @[Arbiter.scala 191:19]
+  assign io_out_ar_valid = arvalid; // @[Arbiter.scala 73:20]
+  assign io_out_ar_bits_addr = araddr; // @[Arbiter.scala 68:24]
+  assign io_out_r_ready = rready; // @[Arbiter.scala 78:19]
+  assign io_out_aw_valid = awvalid; // @[Arbiter.scala 88:20]
+  assign io_out_aw_bits_addr = awaddr; // @[Arbiter.scala 83:24]
+  assign io_out_w_valid = wvalid; // @[Arbiter.scala 103:19]
+  assign io_out_w_bits_data = wdata; // @[Arbiter.scala 93:23]
+  assign io_out_w_bits_strb = wstrb; // @[Arbiter.scala 98:23]
   always @(posedge clock) begin
-    if (reset) begin // @[Arbiter.scala 14:24]
-      state <= 1'h0; // @[Arbiter.scala 14:24]
+    if (reset) begin // @[Arbiter.scala 36:24]
+      state <= 1'h0; // @[Arbiter.scala 36:24]
     end else if (state) begin // @[Mux.scala 80:57]
-      if (_state_T_2) begin // @[Arbiter.scala 18:20]
+      if (_state_T_2) begin // @[Arbiter.scala 40:20]
         state <= 1'h0;
       end else begin
         state <= 1'h1;
@@ -239,110 +239,110 @@ module Arbiter(
     end else begin
       state <= _state_T;
     end
-    if (reset) begin // @[Arbiter.scala 20:23]
-      araddr <= 32'h0; // @[Arbiter.scala 20:23]
+    if (reset) begin // @[Arbiter.scala 42:23]
+      araddr <= 32'h0; // @[Arbiter.scala 42:23]
     end else if (state) begin // @[Mux.scala 80:57]
       araddr <= io_lsu_ar_bits_addr;
     end else begin
       araddr <= io_ifu_ar_bits_addr;
     end
-    if (reset) begin // @[Arbiter.scala 21:24]
-      arvalid <= 1'h0; // @[Arbiter.scala 21:24]
+    if (reset) begin // @[Arbiter.scala 43:24]
+      arvalid <= 1'h0; // @[Arbiter.scala 43:24]
     end else if (state) begin // @[Mux.scala 80:57]
       arvalid <= io_lsu_ar_valid;
     end else begin
       arvalid <= io_ifu_ar_valid;
     end
-    if (reset) begin // @[Arbiter.scala 22:28]
-      ifu_arready <= 1'h0; // @[Arbiter.scala 22:28]
+    if (reset) begin // @[Arbiter.scala 44:28]
+      ifu_arready <= 1'h0; // @[Arbiter.scala 44:28]
     end else if (state) begin // @[Mux.scala 80:57]
       ifu_arready <= 1'h0;
     end else begin
       ifu_arready <= io_out_ar_ready;
     end
-    if (reset) begin // @[Arbiter.scala 23:28]
-      lsu_arready <= 1'h0; // @[Arbiter.scala 23:28]
+    if (reset) begin // @[Arbiter.scala 45:28]
+      lsu_arready <= 1'h0; // @[Arbiter.scala 45:28]
     end else begin
-      lsu_arready <= _lsu_arready_T_1; // @[Arbiter.scala 135:16]
+      lsu_arready <= _lsu_arready_T_1; // @[Arbiter.scala 157:16]
     end
-    if (reset) begin // @[Arbiter.scala 24:26]
-      ifu_rdata <= 64'h0; // @[Arbiter.scala 24:26]
+    if (reset) begin // @[Arbiter.scala 46:26]
+      ifu_rdata <= 64'h0; // @[Arbiter.scala 46:26]
     end else if (state) begin // @[Mux.scala 80:57]
       ifu_rdata <= 64'h0;
     end else begin
       ifu_rdata <= io_out_r_bits_data;
     end
-    if (reset) begin // @[Arbiter.scala 25:26]
-      lsu_rdata <= 64'h0; // @[Arbiter.scala 25:26]
+    if (reset) begin // @[Arbiter.scala 47:26]
+      lsu_rdata <= 64'h0; // @[Arbiter.scala 47:26]
     end else if (state) begin // @[Mux.scala 80:57]
       lsu_rdata <= io_out_r_bits_data;
     end else begin
       lsu_rdata <= 64'h0;
     end
-    if (reset) begin // @[Arbiter.scala 28:27]
-      ifu_rvalid <= 1'h0; // @[Arbiter.scala 28:27]
+    if (reset) begin // @[Arbiter.scala 50:27]
+      ifu_rvalid <= 1'h0; // @[Arbiter.scala 50:27]
     end else if (state) begin // @[Mux.scala 80:57]
       ifu_rvalid <= 1'h0;
     end else begin
       ifu_rvalid <= io_out_r_valid;
     end
-    if (reset) begin // @[Arbiter.scala 29:27]
-      lsu_rvalid <= 1'h0; // @[Arbiter.scala 29:27]
+    if (reset) begin // @[Arbiter.scala 51:27]
+      lsu_rvalid <= 1'h0; // @[Arbiter.scala 51:27]
     end else begin
-      lsu_rvalid <= _lsu_rvalid_T_1; // @[Arbiter.scala 150:15]
+      lsu_rvalid <= _lsu_rvalid_T_1; // @[Arbiter.scala 172:15]
     end
-    if (reset) begin // @[Arbiter.scala 30:23]
-      rready <= 1'h0; // @[Arbiter.scala 30:23]
+    if (reset) begin // @[Arbiter.scala 52:23]
+      rready <= 1'h0; // @[Arbiter.scala 52:23]
     end else if (state) begin // @[Mux.scala 80:57]
       rready <= io_lsu_r_ready;
     end else begin
       rready <= io_ifu_r_ready;
     end
-    if (reset) begin // @[Arbiter.scala 31:23]
-      awaddr <= 32'h0; // @[Arbiter.scala 31:23]
+    if (reset) begin // @[Arbiter.scala 53:23]
+      awaddr <= 32'h0; // @[Arbiter.scala 53:23]
     end else if (state) begin // @[Mux.scala 80:57]
       awaddr <= io_lsu_aw_bits_addr;
     end else begin
       awaddr <= 32'h0;
     end
-    if (reset) begin // @[Arbiter.scala 32:24]
-      awvalid <= 1'h0; // @[Arbiter.scala 32:24]
+    if (reset) begin // @[Arbiter.scala 54:24]
+      awvalid <= 1'h0; // @[Arbiter.scala 54:24]
     end else begin
-      awvalid <= _awvalid_T_1; // @[Arbiter.scala 67:12]
+      awvalid <= _awvalid_T_1; // @[Arbiter.scala 89:12]
     end
-    if (reset) begin // @[Arbiter.scala 34:28]
-      lsu_awready <= 1'h0; // @[Arbiter.scala 34:28]
+    if (reset) begin // @[Arbiter.scala 56:28]
+      lsu_awready <= 1'h0; // @[Arbiter.scala 56:28]
     end else begin
-      lsu_awready <= _lsu_awready_T_1; // @[Arbiter.scala 155:16]
+      lsu_awready <= _lsu_awready_T_1; // @[Arbiter.scala 177:16]
     end
-    if (reset) begin // @[Arbiter.scala 35:22]
-      wdata <= 64'h0; // @[Arbiter.scala 35:22]
+    if (reset) begin // @[Arbiter.scala 57:22]
+      wdata <= 64'h0; // @[Arbiter.scala 57:22]
     end else if (state) begin // @[Mux.scala 80:57]
       wdata <= io_lsu_w_bits_data;
     end else begin
       wdata <= 64'h0;
     end
-    if (reset) begin // @[Arbiter.scala 36:22]
-      wstrb <= 8'h0; // @[Arbiter.scala 36:22]
+    if (reset) begin // @[Arbiter.scala 58:22]
+      wstrb <= 8'h0; // @[Arbiter.scala 58:22]
     end else if (state) begin // @[Mux.scala 80:57]
       wstrb <= io_lsu_w_bits_strb;
     end else begin
       wstrb <= 8'h0;
     end
-    if (reset) begin // @[Arbiter.scala 37:23]
-      wvalid <= 1'h0; // @[Arbiter.scala 37:23]
+    if (reset) begin // @[Arbiter.scala 59:23]
+      wvalid <= 1'h0; // @[Arbiter.scala 59:23]
     end else begin
-      wvalid <= _wvalid_T_1; // @[Arbiter.scala 82:11]
+      wvalid <= _wvalid_T_1; // @[Arbiter.scala 104:11]
     end
-    if (reset) begin // @[Arbiter.scala 39:27]
-      lsu_wready <= 1'h0; // @[Arbiter.scala 39:27]
+    if (reset) begin // @[Arbiter.scala 61:27]
+      lsu_wready <= 1'h0; // @[Arbiter.scala 61:27]
     end else begin
-      lsu_wready <= _lsu_wready_T_1; // @[Arbiter.scala 160:15]
+      lsu_wready <= _lsu_wready_T_1; // @[Arbiter.scala 182:15]
     end
-    if (reset) begin // @[Arbiter.scala 43:27]
-      lsu_bvalid <= 1'h0; // @[Arbiter.scala 43:27]
+    if (reset) begin // @[Arbiter.scala 65:27]
+      lsu_bvalid <= 1'h0; // @[Arbiter.scala 65:27]
     end else begin
-      lsu_bvalid <= state; // @[Arbiter.scala 170:15]
+      lsu_bvalid <= state; // @[Arbiter.scala 192:15]
     end
   end
 // Register and memory initialization

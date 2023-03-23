@@ -31,7 +31,7 @@ void sim_init()
   top = new Vtop;
 #ifdef HAS_WAVE
   contextp->traceEverOn(true);
-  top->trace(tfp, 99);
+  top->trace(tfp, 0);
   tfp->open("wave.vcd");
 #endif
 }
@@ -67,11 +67,6 @@ void reset()
   pc = top->io_pc;
   // step_and_dump_wave();
 }
-int64_t map[]={
-  0,1,10,11,100,101,110,111,1000,1001,1010,1011,1100,1101,1110,1111,
-  10000,10001,10010,10011,10100,10101,10110,10111,11000,11001,11010,11011,11100,11101,11110,11111,
-  
-};
 uint64_t skip=0;
 int t=0;
 void exec_once()
@@ -83,11 +78,7 @@ void exec_once()
     print_itrace(top->io_pc);
 #endif
   step_and_dump_wave();
-  //printf("%x\n",top->io_valid);
-  //printf("test:%04d %04d %04d\n",map[top->io_test/16/16],map[top->io_test/16%16],map[top->io_test%16]);
-  //if(top->io_test!=0)printf("test: %08lx\n",top->io_test);
   device_update();
-  // dump_csr();
 #ifdef HAS_DIFFTEST
   if(t){
 
@@ -196,6 +187,7 @@ int main(int argc, char *argv[])
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
+  exec_once();
   if(state==NPC_QUIT&&cpu_gpr[10]==0)printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);
   else {printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);return -1;}
   sim_exit();

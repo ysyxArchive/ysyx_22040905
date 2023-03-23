@@ -2,92 +2,194 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage._
 
-class Cache(val block_width: Int =128, val total_size_width: Int, val assassociativity_width: Int ) extends Bundle{
-  val IO=(new Bundle{
-    val lsu = (new AXILite)
+class Cache extends Module{
+  val io=IO(new Bundle{
+    val in = Flipped(new AXILite)
     val mem = (new AXI4)
+    val ram = Flipped(new CacheRAM_Bundle)
   })
-  def exp2(x) : 1 << (x) 
+  def exp2(x: Int) = 1 << x 
+  val total_size_width: Int = 12
+  val assassociativity_width: Int = 1
+  val block_width: Int = 7 
+  val offset_width = block_width - 3 // 4, 2^4 B
+  val idx_width = total_size_width - assassociativity_width -offset_width // 7
+  val tag_width = 32 - offset_width -idx_width // 21
+  val way = exp2(assassociativity_width) //2
+  val line = exp2(idx_width)// 128
+  val line_size = exp2(block_width)// 128
+  val cache_data = io.ram.bits
 
-  val offest_width = block_width
-  val idx_width = total_size_width - assassociativity_width -offest_width
-  val tag_width = 32 - total_size_width +assassociativity_width
-  val way = exp2(assassociativity_width)
-  val line = exp2(idx_width)
-  val line_size = exp2(offest_width)
+  val cache_tag  = SyncReadMem(line, UInt((tag_width*way).W))
+  val valid = RegInit(VecInit(Seq.fill(line)(VecInit(Seq.fill(way)(0.U(1.W))))))
+  val dirty = RegInit(VecInit(Seq.fill(line)(VecInit(Seq.fill(way)(0.U(1.W))))))
+  val buf=RegInit(0.U(128.W))
 
-  //val numSets = exp2(total_size_width - offest_width)
-  val cache_data = Mem(way,Vec(line,UInt(line_size.W)))
-  val cache_tag = Reg(Vec(way,UInt(line.W)))
-  val valid = RegInit(VecInit(Seq.fill(way)(0.U(line.W))))
-  val dirty = RegInit(VecInit(Seq.fill(way)(0.U(line.W))))
-
-  val s_idle :: s_tag :: s_hit :: s_miss :: s_reload :: s_wait_ready :: s_fire :: s_over :: Nil = Enum(4)
-  val state = RegInit(s_idle)
-  state := MuxLookup(state, s_idle, List(
-    s_idle   -> Mux(io.lsu.ar.fire, s_tag, s_idle),
-    s_tag    -> Mux(hit_way === ff.U, s_miss, s_hit),
-    s_hit    -> s_idle,
-    s_miss   -> Mux(state_r === wait && (( dirty(way2)(idx)&&state_w === wait)|(~dirty(way2)(idx))),s_reload,s_miss),
-    s_reload -> s_idle
-  ))
-  val addr = Regenable(io.lsu.ar.bits.data,io.lsu.ar.fire)
-  val offset = addr(offest_width - 1,0)
+  val addr = RegInit(0.U(32.W))
+  val offset = addr(offset_width - 1,0) << 3
   val idx = addr(idx_width + offset_width -1,offset_width)
-  val tag = addr(31, offest_width + idx_width)
+  val tag = addr(31, offset_width + idx_width)
 
+  val hit_way=Wire(UInt(8.W))
+  val way2 =Wire(UInt(8.W))
 
-  val x = for(i <- 0 until way ) yield cache_tag(i)(idx) === tag && valid(i)(idx)
-  val y = for(i <- 0 until way ) yield i.U
-  val hit_way := MuxCase(ff.U, x zip y)
-
-  io.lsu.r.bits.data:=Mux(io.ar.fire & hit_way =/= ff.U,cache_data(hit_way)(idx)(offest,offest+63),
-                      todo)
-
-  io.lsu.ar.ready:= (state === s_idle)
-  io.lsu.r.valid:= (state === s_hit)
-
-  //miss
-  val way2 = LFSR16()%way
-
-
+  val s_idle :: s_tag0 :: s_tag :: s_hit :: s_miss :: s_reload :: s_wait_ready :: s_fire :: s_over :: s_wait :: Nil = Enum(10)
+  val state  = RegInit(s_idle)
   val state_r = RegInit(s_idle)
   val state_w = RegInit(s_idle)
+
+  val idxh= idx << 1.U | hit_way
+  val idxw= idx << 1.U | way2
+  val t0l= tag_width -1
+  val t0r= 0
+  val t1l= (tag_width << 1) - 1
+  val t1r= tag_width
+
+  val rmode=RegInit(0.U(1.W))
+  val wmode=RegInit(0.U(1.W))
+  rmode:=Mux((state===s_idle) & io.in.ar.fire,1.U,
+         Mux((state===s_idle),0.U,rmode))
+  wmode:=Mux((state===s_idle) & io.in.aw.fire,1.U,
+         Mux((state===s_idle),0.U,wmode))
+  
+  val tag_read = Wire(UInt((tag_width * way).W))
+  tag_read:= cache_tag.read(idx,state =/= s_reload)
+  hit_way:=Mux(((tag_read(t0l,t0r) === tag) && valid(idx)(0).asBool ),0.U,
+           Mux(((tag_read(t1l,t1r) === tag) && valid(idx)(1).asBool ),1.U,
+           "xff".U))
+
+  val lfsr8=Module(new LFSR_8)
+  way2:=lfsr8.io.out(assassociativity_width - 1, 0)
+
+  val tag_way = Wire(UInt((tag_width).W))
+  tag_way:=Mux(way2===0.U,tag_read(t0l,t0r),tag_read(t1l,t1r))
+  //when(state === s_hit) {printf("hit:%x\n",tag)}
+  state := MuxLookup(state, s_idle, List(
+    s_idle   -> Mux(io.in.aw.fire|io.in.ar.fire, s_tag0, s_idle),
+    s_tag0   -> s_tag,
+    s_tag    -> Mux(hit_way === "xff".U, s_miss, s_hit),
+    s_hit    -> s_idle,
+    s_miss   -> Mux(((state_r === s_wait) & (( dirty(idx)(way2) & (state_w === s_wait)) | (~dirty(idx)(way2)))).asBool,s_reload,s_miss),
+    s_reload -> s_idle
+  ))
+  addr :=Mux(io.in.ar.fire,io.in.ar.bits.addr,
+         Mux(io.in.aw.fire,io.in.aw.bits.addr,addr))
+
+  io.in.r.bits.data:=Mux(state === s_hit ,(cache_data.Q>>offset)(63,0),
+                      Mux(state === s_reload, buf>>offset,0.U))
+  io.in.ar.ready:= (state === s_idle)
+  io.in.r.valid:= ((state === s_hit) || (state === s_reload))&rmode
+  io.in.r.bits.resp:=0.U
+  io.in.b.bits.resp:=0.U
+  io.in.b.valid:=0.U
+  io.in.aw.ready:=0.U
+  io.in.w.ready:=0.U
+
+  //miss
+
   state_r := MuxLookup(state_r, s_idle, List(
-    s_idle        -> Mux(state === miss && io.mem.io.ar.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(io.mem.io.r.fire,s_fire,s_wait_ready)
-    s_fire        -> Mux(io.mem.io.r.fire,s_wait,s_fire)
-    s_wait        -> Mux(state =/= miss, s_idle, s_wait)
+    s_idle        -> Mux(state === s_miss && io.mem.ar.fire, s_wait_ready, s_idle),
+    s_wait_ready  -> Mux(io.mem.r.fire,s_fire,s_wait_ready),
+    s_fire        -> Mux(io.mem.r.fire,s_wait,s_fire),
+    s_wait        -> Mux(state =/= s_miss, s_idle, s_wait)
   ))
   state_w := MuxLookup(state_w, s_idle, List(
-    s_idle        -> Mux(state === miss && io.mem.io.aw.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(io.mem.io.w.fire,s_fire,s_wait_ready)
-    s_fire        -> Mux(io.mem.io.w.fire,s_over,s_fire)
-    s_over        -> Mux(io.mem.io.b.fire,s_wait,s_over)
-    s_wait        -> Mux(state =/= miss, s_idle, s_wait)
+    s_idle        -> Mux(state === s_miss && io.mem.aw.fire, s_wait_ready, s_idle),
+    s_wait_ready  -> Mux(io.mem.w.fire,s_fire,s_wait_ready),
+    s_fire        -> Mux(io.mem.w.fire,s_over,s_fire),
+    s_over        -> Mux(io.mem.b.fire,s_wait,s_over),
+    s_wait        -> Mux(state =/= s_miss, s_idle, s_wait)
   ))
-  io.mem.io.aw.bits.data:= (cache_tag(way2)(idx)<<idx_width | idx) << offest_width
-  io.mem.io.aw.bits.len:= 1.U
-  io.mem.io.aw.bits.size:= 6.U // 2^6 === 64b
-  io.mem.io.aw.valid:= state === s_miss && dirty(way2)(idx) 
-  io.mem.io.w.bits.data:= Mux(counterw === 1.U, cache_data(way2)(idx)(127,64), cache_data(63,0))
-  io.mem.io.w.bits.resp:= ~(0.U)
-  io.mem.io.w.bits.last:= counterw ===  1.U
-  io.mem.io.w.valid:= state === s_miss
-  io.mem.io.b.ready:= 1.U
+  io.mem.aw.bits.addr:= (tag_way<<idx_width | idx) << offset_width
+  io.mem.aw.bits.len:= 1.U
+  io.mem.aw.bits.size:= 3.U // 2^3 === 8B
+  io.mem.aw.valid:= state_w === s_idle && dirty(idx)(way2).asBool 
+  io.mem.aw.bits.burst:=0.U
+  io.mem.w.bits.data:= Mux(state_w === s_over, cache_data.Q(127,64), cache_data.Q(63,0))
+  io.mem.w.bits.strb:= ~(0.U)
+  io.mem.w.bits.last:= state_w === s_over
+  io.mem.w.valid:= (state_w === s_fire |state_w === s_over) //&(io.ram.fire)
+  io.mem.b.ready:= 1.U
 
-  io.mem.io.ar.bits.data:= addr >> block_width
-  io.mem.io.ar.valid:= state === s_read
-  io.mem.io.ar.bits.len:= 1.U
-  io.mem.io.ar.bits.size:= 6.U
-  io.mem.io.ar.burst:= "b10".U //WRAP
+  io.mem.ar.bits.addr:= addr & ((~0.U(32.W))<<3.U) 
+  io.mem.ar.valid:= state_r === s_idle && state === s_miss
+  io.mem.ar.bits.len:= 1.U
+  io.mem.ar.bits.size:= 3.U
+  io.mem.ar.bits.burst:= "b10".U //WRAP
+  io.mem.r.ready:=1.U
+
+  val rcnt=RegInit(0.U(1.W))
+  rcnt:=Mux(state_r === s_idle,0.U,
+        Mux(io.mem.r.fire,rcnt+1.U,rcnt))
+  buf:= Mux(~io.mem.r.fire,buf,
+        Mux(rcnt === addr(3),Cat(buf(127,64),io.mem.r.bits.data),
+        Cat(io.mem.r.bits.data,buf(63,0))))
+ 
+  //reload
+  val taggg = RegInit(0.U((tag_width*way).W))
+  taggg:=tag_read
+  val tagg  = Mux(way2 === 0.U, Cat(taggg(t1l,t1r),tag),Cat(tag,taggg(t0l,t0r)))
+  when(state === s_reload){cache_tag.write(idx,tagg)}
+  valid(idx)(way2) := Mux(state === s_reload, 1.U, valid(idx)(way2))
+
+  io.ram.ready:=1.U
   
+  cache_data.CEN:= (state === s_tag) | (state_w === s_over) | (state_w === s_fire) | (state === s_reload)
+  cache_data.WEN:= (state === s_reload)
+  cache_data.BWEN:= ~(0.U(128.W)) 
+  cache_data.A:= Mux(state === s_tag,idxh,
+                 Mux((state_w === s_over) | (state_w === s_fire) | (state === s_reload),idxw,0.U))
+  cache_data.D:= buf
+  //printf("%x\t%x\t%x\n",state,state_r,state_w)
+}
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+class AXILite2AXI4 extends Module{
+  val io=IO(new Bundle{
+    val in = Flipped(new AXILite)
+    val mem = (new AXI4)
+  })
+  io.in.ar.bits.addr<>io.mem.ar.bits.addr 
+  io.in.ar.valid<>io.mem.ar.valid
+  io.in.ar.ready<>io.mem.ar.ready
+  io.in.r.bits.data<>io.mem.r.bits.data
+  io.in.r.bits.resp<>io.mem.r.bits.resp
+  io.in.r.valid<>io.mem.r.valid
+  io.in.r.ready<>io.mem.r.ready
+  io.in.aw.bits.addr<>io.mem.aw.bits.addr
+  io.in.aw.valid<>io.mem.aw.valid
+  io.in.aw.ready<>io.mem.aw.ready
+  io.in.w.bits.data<>io.mem.w.bits.data
+  io.in.w.bits.strb<>io.mem.w.bits.strb
+  io.in.w.valid<>io.mem.w.valid
+  io.in.w.ready<>io.mem.w.ready
+  io.in.b.bits.resp<>io.mem.b.bits.resp
+  io.in.b.valid<>io.mem.b.valid
+  io.in.b.ready<>io.mem.b.ready
+
+  io.mem.ar.bits.len:=0.U
+  io.mem.ar.bits.size:=3.U
+  io.mem.ar.bits.burst:="b10".U
   
-
-
+  io.mem.aw.bits.len:=0.U
+  io.mem.aw.bits.size:=3.U
+  io.mem.aw.bits.burst:=0.U
+   
+  io.mem.w.bits.last:=1.U
+  
 }

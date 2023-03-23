@@ -36,9 +36,9 @@ class LSU extends Module{
   io.lm.w.bits.strb:=io.in.bits.pin.wmask
   io.lm.w.valid:=(wstate === s_wait & ~reset.asBool)
   io.lm.b.ready:=1.U
-
+  //printf("lsu:valid:%x\tready:%x\trstate:%x\n",io.lm.ar.valid,io.lm.ar.ready,rstate)
   val en_w=Wire(UInt(1.W))
-  io.in.ready:=(rstate===s_idle)&(wstate===s_idle)&io.lm.b.fire
+  io.in.ready:=(rstate===s_idle)&(wstate===s_idle)//&io.lm.b.fire
   en_w:=io.lm.r.fire
 
   io.gpr.en_w:=io.in.bits.gpr.en_w&en_w

@@ -30,8 +30,8 @@ uint64_t get_pmem_size(){
 uint8_t* get_pmem(){
   return pmem;
 }
-void check_bound(uint32_t p){
-  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("addr:0x%08x\n",p);assert(0);}
+int check_bound(uint32_t p){
+  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("\033[1;31mError at addr:0x%08x\n\033[0m",p);state=NPC_ABORT;return 0;}return 1;
 }
 
 void pmem_init(char *s){ 
@@ -80,20 +80,21 @@ uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 uint64_t pmem_read(paddr_t addr,int len){
-  check_bound(addr);
-  uint64_t ret=host_read(guest_to_host(addr), len);
+  uint64_t ret=0;
+  if(check_bound(addr))
+    ret=host_read(guest_to_host(addr), len);
   return ret;
 }
 
 void pmem_write(paddr_t addr, int len, uint64_t data) {
-  check_bound(addr);
-  host_write(guest_to_host(addr), len, data);
+  if(check_bound(addr))
+    host_write(guest_to_host(addr), len, data);
 }
 
 //DPI-C
 extern "C" void pmem_read(int raddr, long long *rdata) {
   uint64_t addr=((uint64_t)raddr)&((1ull<<32)-1);
-  if(addr==0) { *rdata=0;return; }
+  if(addr< 0x80000000) { *rdata=0;return; }
   if(addr==RTC_ADDR){
     difftest_skip_ref();
     *rdata=get_time()%(1ll<<32);

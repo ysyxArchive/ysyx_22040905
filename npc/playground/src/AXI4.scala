@@ -45,7 +45,7 @@ class AXI4W extends AXILiteW{
   val last = Output(UInt(1.W))
 }
 
-class AXI4B extends AXI4LiteB{}
+class AXI4B extends AXILiteB{}
 
 class AXI4 extends Bundle{
   val ar = Decoupled(new AXI4A)
@@ -54,3 +54,4 @@ class AXI4 extends Bundle{
   val w = Decoupled(new AXI4W)
   val b = Flipped(Decoupled(new AXI4B))
 }
+

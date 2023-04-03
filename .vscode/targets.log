@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Mar  4 13:58:01 2023
+# Make data base, printed on Mon Apr  3 21:33:03 2023
 
 # Variables
 
@@ -22,6 +22,8 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 GJS_DEBUG_OUTPUT = stderr
 # environment
 NEMU_HOME = /home/cyh/ysyx-workbench/nemu
+# environment
+SNAP_LAUNCHER_ARCH_TRIPLET = x86_64-linux-gnu
 # environment
 LC_NAME = en_US.UTF-8
 # environment
@@ -50,7 +52,7 @@ SNAP_INSTANCE_NAME = code
 # makefile (from 'Makefile', line 2)
 STUNAME = 程雨航
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/120/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/123/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -60,7 +62,7 @@ PWD = /home/cyh/ysyx-workbench
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
-XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /home/cyh/snap/code/123/.local/share:/home/cyh/snap/code/123:/snap/code/123/usr/share:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # makefile (from 'Makefile', line 11)
@@ -68,7 +70,7 @@ WORK_INDEX = $(YSYX_HOME)/.git/index.$(WORK_BRANCH)
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/cyh/.config/Code/CachedData/92da9481c0904c6adfe372c12da3b7748d74bdcb
+VSCODE_CODE_CACHE_PATH = /home/cyh/.config/Code/CachedData/7f329fe6c66b0f86ae1574c2911b681ad5a45d63
 # environment
 LANG = C
 # environment
@@ -79,6 +81,8 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
+# environment
+GTK_USE_PORTAL = 1
 # makefile
 CURDIR := /home/cyh/ysyx-workbench
 # environment
@@ -110,7 +114,7 @@ MAKEFILE_LIST := Makefile
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 35622
+VSCODE_PID = 2883
 # environment
 SDKMAN_DIR = /home/cyh/.sdkman
 # environment
@@ -120,7 +124,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/2039,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/2039
+SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/2029,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/2029
 # automatic
 *F = $(notdir $*)
 # environment
@@ -134,9 +138,11 @@ LOCK_DIR = $(YSYX_HOME)/.git/
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en","availableLanguages":{},"_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+GTK_PATH = /snap/code/123/usr/lib/x86_64-linux-gnu/gtk-3.0
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # makefile
@@ -158,7 +164,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # environment
-PATH = /home/cyh/bin:/usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/home/cyh/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/cyh/ZSP/ZView5.19.0:/home/cyh/bin:/home/cyh/ZSP/ZView5.19.0:/usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/home/cyh/ZSP/ZView5.19.0:/home/cyh/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -172,13 +178,13 @@ SNAP_USER_COMMON = /home/cyh/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/120
+SNAP = /snap/code/123
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = d3150f5929bc4b8082aa55bbd5d43816
+INVOCATION_ID = 9fb40041a32b4700b2a77d6b27e79a18
 # environment
-SNAP_REVISION = 120
+SNAP_REVISION = 123
 # makefile (from 'Makefile', line 10)
 WORK_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 # environment
@@ -192,6 +198,8 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # automatic
 ?F = $(notdir $?)
 # environment
+GTK_IM_MODULE_FILE = /home/cyh/snap/code/common/.cache/immodules/immodules.cache
+# environment
 GTK_IM_MODULE = fcitx
 # environment
 XDG_CURRENT_DESKTOP = Unity
@@ -203,6 +211,8 @@ DESKTOP_SESSION = ubuntu
 TRACER = tracer-ysyx2204
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+# environment
+LOCPATH = /snap/code/123/usr/lib/locale
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -216,7 +226,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 2084
+SYSTEMD_EXEC_PID = 2074
 # environment
 NAVY_HOME = /home/cyh/ysyx-workbench/navy-apps
 # environment
@@ -228,21 +238,21 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SNAP_DATA = /var/snap/code/120
+SNAP_DATA = /var/snap/code/123
 # environment
 SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1672
+MANAGERPID = 1653
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 35573
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2831
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
-_ = /snap/code/120/usr/share/code/code
+_ = /snap/code/123/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -252,7 +262,9 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/cyh/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:36559
+GIO_MODULE_DIR = /home/cyh/snap/code/common/.cache/gio-modules
+# environment
+JOURNAL_STREAM = 8:22285
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -264,11 +276,14 @@ QT_IM_MODULE = fcitx
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-40045b5f-1.76-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-40045b5f-1.77-main.sock
+# environment
+GTK_EXE_PREFIX = /snap/code/123/usr
 # environment
 SNAP_NAME = code
-# environment
-GSETTINGS_SCHEMA_DIR = /snap/code/120/usr/share/glib-2.0/schemas
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 # environment
 IM_CONFIG_PHASE = 1
 # environment
@@ -278,10 +293,7 @@ PAPERSIZE = letter
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = 92da9481
- 
-make: *** No rule to make target 'all'.  Stop.
-
+SNAP_VERSION = 7f329fe6
 # environment
 VSCODE_CRASH_REPORTER_SANDBOXED_HINT = 1
 # environment
@@ -297,7 +309,7 @@ SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/cyh/snap/code/120
+SNAP_USER_DATA = /home/cyh/snap/code/123
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -307,7 +319,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=145/1024=14%, Rehash=0, Collisions=6/175=3%
+# Load=151/1024=15%, Rehash=0, Collisions=7/181=4%
 
 # Pattern-specific Variable Values
 
@@ -315,9 +327,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66311, inode 1704005): 19 files, no impossibilities.
+# . (device 66311, inode 1704005): 21 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -390,12 +402,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 266 B / avg = 9 B
-# current buf: size = 8162 B / used = 266 B / count = 28 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 30 / storage = 289 B / avg = 9 B
+# current buf: size = 8162 B / used = 289 B / count = 30 / avg = 9 B
 
-# strcache performance: lookups = 39 / hit rate = 28%
+# strcache performance: lookups = 41 / hit rate = 26%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Sat Mar  4 13:58:01 2023
+# Load=30/8192=0%, Rehash=0, Collisions=0/41=0%
+# Finished Make data base on Mon Apr  3 21:33:03 2023
 
  

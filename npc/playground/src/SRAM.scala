@@ -99,7 +99,7 @@ class AXI4SRAM extends Module{
 
   lower_bound_addr:=Mux(io.ar.fire,io.ar.bits.addr & (((~io.ar.bits.len.asTypeOf(UInt(32.W))) << io.ar.bits.size )),lower_bound_addr)
   //printf("%x\n",raddr)
-  raddr := Mux(io.ar.fire,io.ar.bits.addr, //& ((~(0.U(32.W))) << io.ar.bits.size),
+  raddr := Mux(io.ar.fire && rstate === s_idle,io.ar.bits.addr,
            Mux(rlast.asBool,0.U,
            Mux(io.r.fire & (beatcnt === 255.U | beatcnt === rlen),lower_bound_addr,
            Mux(io.r.fire ,raddr + (1.U(32.W)<< rsize),raddr))))
@@ -126,28 +126,36 @@ class AXI4SRAM extends Module{
   wlen:=Mux(io.aw.fire,io.aw.bits.len,wlen)
   wsize:=Mux(io.aw.fire,io.aw.bits.size,wsize)
   waddr:=Mux(io.aw.fire && wstate === s_idle,io.aw.bits.addr,
-         Mux(io.w.fire,waddr +1.U(32.W)<<wsize,waddr))
-
-  wcnt:=Mux(wcnt === 255.U|| wlast.asBool || wlast.asBool,0.U,wcnt + 1.U)
+         Mux(wlast.asBool,0.U,
+         Mux(io.w.fire,waddr +(1.U(32.W)<<wsize),waddr)))
+  wcnt:=Mux(wcnt === 255.U|| wlast.asBool || io.aw.fire,0.U,
+        Mux(io.w.fire,rcnt + 1.U,rcnt))
 
   val pmem =Module(new memory)
   pmem.io.raddr:= raddr
   pmem.io.waddr:= waddr//io.aw.bits.addr
   pmem.io.wdata:= io.w.bits.data
-  pmem.io.wmask:= Mux(wstate =/= s_idle,io.w.bits.strb,0.U)
+  pmem.io.wmask:= Mux(io.w.fire,io.w.bits.strb,0.U)
 
   io.ar.ready := (rstate === s_idle)
   io.r.valid  := (rstate =/= s_idle)
 
   io.aw.ready := (wstate === s_idle)
   io.w.ready  := (wstate =/= s_idle)
-
   io.r.bits.data := pmem.io.rdata//RegEnable(pmem.io.rdata,io.r.fire)  
   io.r.bits.resp := 0.U//OKAY
   io.b.bits.resp := 0.U
-  io.b.valid := RegEnable(1.U,rcnt === rlen)
-
-  //printf("ram:rstate:%x\tio.ar.valid:%x\tio.ar.ready:%x\tio.r.valid:%x\tio.r.ready:%x\n",rstate,io.r.valid,io.r.ready,io.r.valid,io.r.ready)
+  val b=RegInit(0.U(1.W))
+  b:= wlast
+  io.b.valid := b
+  //printf("b:%x\t%x\t%x\n",io.b.valid,wcnt,wlen)
+  //printf("%x\t%x\t%x\n",pmem.io.wmask,io.w.bits.last,io.w.valid)
+  //printf("ram:state %x\n",wstate)
+  //printf("ram:wstate:%x\tio.aw.valid:%x\tio.aw.ready:%x\tio.w.valid:%x\tio.w.ready:%x\n",wstate,io.aw.valid,io.aw.ready,io.w.valid,io.w.ready)
   
   assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))
+  //printf("sram:%x\t%x\t%x\n",waddr,wsize,waddr +(1.U(32.W)<<wsize))
+  //printf("sram: %x\t%x\t%x\t%x\t%x\t",io.aw.valid,io.aw.ready,io.w.valid,io.w.ready,io.w.bits.last)
+  //printf("sram: %x\t%x\t%x\t%x\t",io.ar.valid,io.ar.ready,io.r.valid,io.r.ready)
+  //assert(((waddr+(wlen+1.U)*(1.U<<wsize)<="x88000000".U)&&(waddr>="x80000000".U))||(waddr===0.U))
 }

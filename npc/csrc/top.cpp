@@ -81,7 +81,6 @@ void exec_once()
   device_update();
 #ifdef HAS_DIFFTEST
   if(t){
-
     difftest_step(pc, top->io_pc);
     t=0;
   }

@@ -31,7 +31,7 @@ uint8_t* get_pmem(){
   return pmem;
 }
 int check_bound(uint32_t p){
-  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("\033[1;31mError at addr:0x%08x\n\033[0m",p);state=NPC_ABORT;return 0;}return 1;
+  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("\033[1;31mCheck bound fail,Error at addr:0x%08x\n\033[0m",p);state=NPC_ABORT;return 0;}return 1;
 }
 
 void pmem_init(char *s){ 

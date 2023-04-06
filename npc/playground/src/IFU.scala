@@ -14,7 +14,6 @@ class IFUBundle extends Bundle{
   val pc=Input(UInt(64.W))
   val lm=(new AXILite)
   val out=Decoupled(new Inst)
-  val next=Input(UInt(1.W))
 }
 class IFU extends Module{
   val io = IO(new IFUBundle)
@@ -24,8 +23,7 @@ class IFU extends Module{
   state := MuxLookup(state, s_idle, List(
     s_idle        -> Mux(io.lm.ar.fire, s_wait_rvalid, s_idle),
     s_wait_rvalid -> Mux(io.lm.r.fire, s_wait_next, s_wait_rvalid),
-    s_wait_next   -> Mux(io.out.fire, s_wait2, s_wait_next),
-    s_wait2       -> Mux(io.next.asBool, s_idle, s_wait2)
+    s_wait_next   -> Mux(io.out.fire, s_idle, s_wait_next)
   ))
 
   io.lm.ar.bits.addr:=io.pc(31,0)
@@ -34,7 +32,7 @@ class IFU extends Module{
   io.lm.aw.bits.addr:=0.U
   io.lm.aw.valid:=0.U
   io.lm.w.valid:=0.U
-  io.lm.b.ready:=1.U
+  io.lm.b.ready:=0.U
   io.lm.w.bits.data:=0.U
   io.lm.w.bits.strb:=0.U
 
@@ -42,12 +40,13 @@ class IFU extends Module{
   val inst=RegInit(0.U(32.W))
   inst:=Mux(io.lm.r.fire,io.lm.r.bits.data(31,0),inst)
   io.out.bits.inst:=Mux(io.lm.r.fire,io.lm.r.bits.data(31,0),inst)
-  io.out.valid:=Mux(state===s_wait_next || state === s_wait2 ,1.U,0.U)
+  io.out.valid:=Mux(state===s_wait_next,1.U,0.U)
 
   it.io.en:=io.lm.r.fire
   it.io.inst:=Mux(io.lm.r.fire,io.lm.r.bits.data(31,0),inst) 
   it.io.pc:=io.lm.ar.bits.addr
-  //printf("%x\mem.t%x\t%x\n",io.it.en,io.lm.r.bits.data,io.lm.r.fire)
+  //printf("%x\n",state)
+  //printf("%x\t%x\t%x\n",it.io.en,io.lm.r.bits.data,io.lm.r.fire)
   //printf("ifu:addr:%x\tstate:%x\tout.valid:%x\tout.ready:%x\tinst:%x\tnext:%x\n",io.lm.ar.bits.addr,state,io.out.valid,io.out.ready,io.out.bits.inst,io.next)
 }
 

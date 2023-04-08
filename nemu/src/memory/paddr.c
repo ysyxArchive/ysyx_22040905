@@ -59,7 +59,9 @@ word_t paddr_read(paddr_t addr, int len) {
 #endif
   if (likely(in_pmem(addr))){ 
 #ifdef CONFIG_CACHE_ENABLED
-   return cache_read(addr,len);
+  word_t i=cache_read(addr,len);
+   printf("i:%lx\n",i);
+   return i;
 #else
     return pmem_read(addr, len);
 #endif

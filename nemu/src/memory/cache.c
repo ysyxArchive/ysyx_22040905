@@ -76,6 +76,7 @@ word_t cache_read(uintptr_t addr,size_t len)
   V[way2][idx] = 1;
     printf("addr:%lx len:%lx addr:%lx %lx addr:%lx %lx\n",addr,len,(addr>> BLOCK_WIDTH)<< BLOCK_WIDTH,pmem_read( ((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH),8),((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH )|8,pmem_read( ((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH) | 8,8));
     printf("%lx %lx\n",*(word_t *)(cache_data[way2][idx]),*(word_t *)(cache_data[way2][idx] + 8));
+    printf("%lx\n",host_read(cache_data[way2][idx] + offset,len));
   return host_read(cache_data[way2][idx] + offset,len);
 }
 

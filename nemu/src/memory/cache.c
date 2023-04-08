@@ -122,10 +122,15 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     for(int i=0;i<line_size;i++){
         printf("%x",buf[i]);
     }
+    printf("\n");
+    host_write(buf+offset,len,data);
+    printf("%ld %ld\n",offset,len);
     host_write(buf+offset,len,data);
     for(int i=0;i<line_size;i++){
         printf("%x",buf[i]);
     }
+    printf("\n");
+    host_write(buf+offset,len,data);
   for (int i = 0; i < line_size; i++){
     cache_data[way2][idx][i] = buf[i];
   }

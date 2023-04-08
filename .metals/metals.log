@@ -1235,3 +1235,5 @@ INFO: Unsupported notification method: $/setTrace
 Apr 08, 2023 5:18:04 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 INFO: Unsupported notification method: $/setTrace
 2023.04.08 17:57:19 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache.scala
+Apr 08, 2023 8:38:05 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

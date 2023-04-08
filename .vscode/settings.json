@@ -20,6 +20,7 @@
         "nemu.h": "c",
         "am.h": "c",
         "isa.h": "c",
-        "sdl.h": "c"
+        "sdl.h": "c",
+        "host.h": "c"
     }
 }

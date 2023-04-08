@@ -3,7 +3,7 @@
 #include <device/mmio.h>
 #include <isa.h>
 #include <errno.h>
-#include <memory/cache.h>
+//#include <memory/cache.h>
 
 #if   defined(CONFIG_PMEM_MALLOC)
 static uint8_t *pmem = NULL;

@@ -42,7 +42,7 @@ word_t cache_read(uintptr_t addr,size_t len)
     if (cache_tag[i][idx] == tag && V[i][idx])
     { // hit
       hit_cnt++;
-      printf("hit_cnt:%ld\n",hit_cnt);
+      //printf("hit_cnt:%ld\n",hit_cnt);
       assert(offset+len<=BLOCK_SIZE);
       return host_read(cache_data[i][idx] + offset,len);
     }
@@ -56,18 +56,15 @@ word_t cache_read(uintptr_t addr,size_t len)
   {
     printf("d\n");
     for(int i=0;i<BLOCK_SIZE/8;i++)
-        pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
+        pmem_write((((cache_tag[way2][idx]<<idx_width) |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
     D[way2][idx] = 0;
   }else printf("ud\n");
 
   for(int i=0;i<BLOCK_SIZE/8;i++){
     host_write(buf+(i*8),8,pmem_read( ((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH) | (i*8),8));
   }
-  if(BLOCK_SIZE%8!=0) 
-      host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
 
-  for (int i = 0; i < line_size; i++)
-  {
+  for (int i = 0; i < line_size; i++){
     cache_data[way2][idx][i] = buf[i];
   }
   cache_tag[way2][idx] = tag;

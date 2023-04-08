@@ -75,7 +75,7 @@ word_t cache_read(uintptr_t addr,size_t len)
   cache_tag[way2][idx] = tag;
   V[way2][idx] = 1;
   printf("%lx %lx\n",*(word_t *)(cache_data[way2][idx]),*(word_t *)(cache_data[way2][idx] + 8));
-  return *(word_t *)(cache_data[way2][idx] + offset);
+  return host_read(cache_data[way2][idx] + offset,len);
 }
 
 void cache_write(uintptr_t addr, size_t len, word_t data)

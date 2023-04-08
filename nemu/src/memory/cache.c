@@ -113,7 +113,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     if(BLOCK_SIZE%8!=0) 
         host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
 
-    assert(offset+len<=BLOCK_SIZE/8);
+    assert(offset+len<=BLOCK_SIZE);
     host_write(buf+offset,len,data);
     for (int i = 0; i < line_size; i++){
         cache_data[way2][idx][i] = buf[i];

@@ -91,7 +91,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     if (cache_tag[i][idx] == tag && V[i][idx])
     { // hit
       hit_cnt++;
-      //printf("hit\n");
+      printf("hit\n");
       assert(offset+len<=BLOCK_SIZE);
       host_write(cache_data[i][idx] + offset,len,data);
       return;
@@ -103,13 +103,13 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
   int way2 = rand() % way;
   // dirty
   if (D[way2][idx]){
-    //printf("dirty\n");
+    printf("dirty\n");
     for(int i=0;i<BLOCK_SIZE/8;i++)
         pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
     if(BLOCK_SIZE%8!=0) 
         pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8,*(cache_data[way2][idx]+(BLOCK_SIZE/8*8)));
     D[way2][idx] = 0;
-   }
+   }else printf("ud\n");
 
     for(int i=0;i<BLOCK_SIZE/8;i++)
         host_write(buf+(i*8),8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (i*8),8));

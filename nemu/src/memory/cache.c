@@ -124,6 +124,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     for (int i = 0; i < line_size; i++){
         cache_data[way2][idx][i] = buf[i];
     }
+    printf("%lx %lx\n",*(word_t *)(cache_data[way2][idx]),*(word_t *)(cache_data[way2][idx]+ 8));
 
     cache_tag[way2][idx] = tag;
 

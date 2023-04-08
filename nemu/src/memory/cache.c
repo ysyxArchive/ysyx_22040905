@@ -42,7 +42,7 @@ word_t cache_read(uintptr_t addr,size_t len)
     if (cache_tag[i][idx] == tag && V[i][idx])
     { // hit
       hit_cnt++;
-      printf("hit_cnt:%ld\t",hit_cnt);
+      //printf("hit_cnt:%ld\t",hit_cnt);
       assert(offset+len<=BLOCK_SIZE);
       return host_read(cache_data[i][idx] + offset,len);
     }
@@ -54,7 +54,7 @@ word_t cache_read(uintptr_t addr,size_t len)
   // dirty
   if (D[way2][idx])
   {
-    printf("d\n");
+    //printf("d\n");
     for(int i=0;i<BLOCK_SIZE/8;i++)
         pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
     if(BLOCK_SIZE%8!=0) 
@@ -74,6 +74,7 @@ word_t cache_read(uintptr_t addr,size_t len)
   }
   cache_tag[way2][idx] = tag;
   V[way2][idx] = 1;
+  printf("miss\n");
   //printf("%lx %lx\n",*(word_t *)(cache_data[way2][idx]),*(word_t *)(cache_data[way2][idx] + 8));
   return *(word_t *)(cache_data[way2][idx] + offset);
 }

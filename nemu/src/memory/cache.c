@@ -43,8 +43,7 @@ word_t cache_read(uintptr_t addr,size_t len)
     { // hit
       hit_cnt++;
       //printf("hit_cnt:%ld\t",hit_cnt);
-      printf("%lx %x\n",offset+len,BLOCK_SIZE/8);
-      assert(offset+len<=BLOCK_SIZE/8);
+      assert(offset+len<=BLOCK_SIZE);
       return host_read(cache_data[i][idx] + offset,len);
     }
   }

@@ -89,7 +89,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     { // hit
       hit_cnt++;
       //printf("hit\n");
-      assert(offset+len<=BLOCK_SIZE/8);
+      assert(offset+len<=BLOCK_SIZE);
       host_write(cache_data[i][idx] + offset,len,data);
       return;
     }

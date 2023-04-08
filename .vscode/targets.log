@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Apr  8 23:07:10 2023
+# Make data base, printed on Sat Apr  8 23:18:03 2023
 
 # Variables
 
@@ -282,6 +280,8 @@ VSCODE_IPC_HOOK = /run/user/1000/vscode-40045b5f-1.77-main.sock
 # environment
 GTK_EXE_PREFIX = /snap/code/123/usr
  
+make: *** No rule to make target 'all'.  Stop.
+
 # environment
 SNAP_NAME = code
 # environment
@@ -408,6 +408,6 @@ all:
 # strcache performance: lookups = 41 / hit rate = 26%
 # hash-table stats:
 # Load=30/8192=0%, Rehash=0, Collisions=0/41=0%
-# Finished Make data base on Sat Apr  8 23:07:10 2023
+# Finished Make data base on Sat Apr  8 23:18:03 2023
 
  

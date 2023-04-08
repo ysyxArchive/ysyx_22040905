@@ -63,7 +63,7 @@ word_t cache_read(uintptr_t addr,size_t len)
   }
   for(int i=0;i<BLOCK_SIZE/8;i++){
     printf("%lx\n",cache_tag[way2][idx]);
-    host_write(buf+(i*8),8,pmem_read(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8));
+    host_write(buf+(i*8),8,pmem_read( ((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH) | (i*8),8));
   }
   if(BLOCK_SIZE%8!=0) 
       host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8));

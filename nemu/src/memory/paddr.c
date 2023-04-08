@@ -15,7 +15,6 @@ uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 /*static*/ word_t pmem_read(paddr_t addr, int len) {
-  printf("%lx %d\n",guest_to_host(addr)-pmem,len);
   word_t ret = host_read(guest_to_host(addr), len);
   return ret;
 }
@@ -60,7 +59,7 @@ word_t paddr_read(paddr_t addr, int len) {
 #endif
   if (likely(in_pmem(addr))){ 
 #ifdef CONFIG_CACHE_ENABLED
-  cache_read(addr,len);
+   return cache_read(addr,len);
 #else
     return pmem_read(addr, len);
 #endif

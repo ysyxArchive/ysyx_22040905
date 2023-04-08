@@ -36,13 +36,13 @@ word_t cache_read(uintptr_t addr,size_t len)
   word_t offset = BITS(addr, offset_width - 1, 0);
   word_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
   word_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
-  printf("%lx %lx %lx %lx\n",addr,tag,idx,offset);
+  //printf("%lx %lx %lx %lx\n",addr,tag,idx,offset);
   for (int i = 0; i < way; i++)
   {
     if (cache_tag[i][idx] == tag && V[i][idx])
     { // hit
       hit_cnt++;
-      //printf("hit_cnt:%ld\t",hit_cnt);
+      printf("hit_cnt:%ld\t",hit_cnt);
       //printf("%lx\t%08x\n",addr & ~0x3,(*(uint32_t *)(cache_data[i][idx] + offset)));
       return host_read(cache_data[i][idx] + offset,len);
     }

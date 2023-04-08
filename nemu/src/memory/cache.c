@@ -73,6 +73,7 @@ word_t cache_read(uintptr_t addr,size_t len)
     cache_data[way2][idx][i] = buf[i];
   }
   cache_tag[way2][idx] = tag;
+  printf("%lx\n",tag);
   V[way2][idx] = 1;
   return *(word_t *)(cache_data[way2][idx] + offset);
 }

@@ -43,9 +43,9 @@ class LSU extends Module{
   io.lm.b.ready:=1.U
   //printf("lsu:valid:%x\tready:%x\tstate:%x\n",io.lm.aw.valid,io.lm.aw.ready,wstate)
   val en_w=Wire(UInt(1.W))
-  io.in.ready:=(io.lm.r.fire)|(io.lm.b.fire)|((~op_r)&(~op_w)&(io.in.valid))
+  io.in.ready:=(io.lm.r.fire)|(io.lm.b.fire&(wstate === s_wait_b))|((~op_r)&(~op_w)&(io.in.valid))
   en_w:=(io.lm.r.fire)|(io.in.valid & (~op_r))
-
+//  printf("%x\n\t%x\n",en_w,io.lm.r.bits.data)
   io.gpr.en_w:=io.in.bits.gpr.en_w&en_w
   io.gpr.idx_w:=io.in.bits.gpr.idx_w
   io.gpr.val_w:=      Mux(io.in.bits.op(38),Cat(Fill(56,io.lm.r.bits.data(7)),io.lm.r.bits.data(7,0)),
@@ -64,6 +64,6 @@ class LSU extends Module{
   io.csr.epc:=io.in.bits.csr.epc
 
   io.out.bits.pc_dnpc:=io.in.bits.pc_dnpc
-  io.out.valid:=(io.lm.r.fire)|(io.lm.b.fire)|((~op_r)&(~op_w)&(io.in.valid))
-  //printf("%x\t%x\n",io.out.valid,io.in.valid)
+  io.out.valid:=((io.lm.r.fire)|(io.lm.b.fire&(wstate === s_wait_b))|((~op_r)&(~op_w)&(io.in.valid)))
+  //when(io.out.valid === 1.U){printf("next\n")}
 }

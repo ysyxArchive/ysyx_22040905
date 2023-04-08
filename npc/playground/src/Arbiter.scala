@@ -45,14 +45,26 @@ class AXI4Arbiter extends Module{
     val out = (new AXI4)
   })
   val a_idle :: a_ifu :: a_lsu :: Nil = Enum(3)
-  val state = RegInit(a_idle)
-  state := MuxLookup(state, a_ifu, List(
+  val rstate = RegInit(a_idle)
+  val wstate = RegInit(a_idle)
+
+  rstate := MuxLookup(rstate, a_ifu, List(
   a_idle  ->  Mux(io.ifu.ar.valid,a_ifu,
-              Mux(io.lsu.ar.valid | io.lsu.aw.valid,a_lsu,a_idle)),
+              Mux(io.lsu.ar.valid,a_lsu,a_idle)),
   a_ifu   ->  Mux(io.ifu.r.fire, a_idle, a_ifu),
-  a_lsu   ->  Mux(io.lsu.r.fire | io.lsu.w.fire, a_idle, a_lsu)
+  a_lsu   ->  Mux(io.lsu.r.fire, a_idle, a_lsu)
   ))
-  //printf("arb:%x\tifu:%x\t%x\tlsu:%x\t%x\n",state,io.ifu.ar.valid,io.ifu.r.fire,io.lsu.ar.valid,io.lsu.r.fire)
+  wstate := MuxLookup(wstate, a_idle, List(
+  a_idle  ->  Mux(io.ifu.aw.valid,a_ifu,
+              Mux(io.lsu.aw.valid,a_lsu,a_idle)),
+  a_ifu   ->  Mux(io.ifu.b.fire, a_idle, a_ifu),
+  a_lsu   ->  Mux(io.lsu.b.fire, a_idle, a_lsu)
+  ))
+  assert(wstate =/= a_ifu)
+ 
+  //printf("arb:%x\t%x\t%x\t%x\n",rstate,wstate,io.lsu.ar.fire,io.lsu.r.fire)
+  //printf("wstate:%x\t%x\t%x\n",wstate,io.lsu.r.fire,io.lsu.b.fire)
+  //printf("arb:%x\tifu:%x\t%x\tlsu:%x\t%x\n",wstate,io.out.aw.valid,io.out.w.ready,io.lsu.w.valid,io.lsu.w.ready)
   val araddr=RegInit(0.U(32.W))
   val arvalid=RegInit(0.U(1.W)) 
   val ifu_arready=RegInit(0.U(1.W)) 
@@ -92,152 +104,152 @@ class AXI4Arbiter extends Module{
 
   //out
   io.out.ar.bits.addr:=araddr
-  araddr:=MuxLookup(state, a_ifu, List(
+  araddr:=MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.ar.bits.addr ,
                       a_lsu   ->  io.lsu.ar.bits.addr
                       ))
   io.out.ar.valid:=arvalid
-  arvalid:=    MuxLookup(state, a_ifu, List(
+  arvalid:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.ar.valid ,
                       a_lsu   ->  io.lsu.ar.valid 
                       ))
   io.out.r.ready:=rready
-  rready:=    MuxLookup(state, a_ifu, List(
+  rready:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.r.ready ,
                       a_lsu   ->  io.lsu.r.ready 
                       ))
   io.out.aw.bits.addr:=awaddr
-  awaddr:=    MuxLookup(state, a_ifu, List(
+  awaddr:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.aw.bits.addr ,
                       a_lsu   ->  io.lsu.aw.bits.addr 
                       ))
   io.out.aw.valid:=awvalid
-  awvalid:=    MuxLookup(state, a_ifu, List(
+  awvalid:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.aw.valid ,
                       a_lsu   ->  io.lsu.aw.valid 
                       ))
   io.out.w.bits.data:=wdata
-  wdata:=    MuxLookup(state, a_ifu, List(
+  wdata:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.w.bits.data ,
                       a_lsu   ->  io.lsu.w.bits.data 
                       ))
   io.out.w.bits.strb:=wstrb
-  wstrb:=    MuxLookup(state, a_ifu, List(
+  wstrb:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.w.bits.strb ,
                       a_lsu   ->  io.lsu.w.bits.strb 
                       ))
   io.out.w.valid:=wvalid
-  wvalid:=    MuxLookup(state, a_ifu, List(
+  wvalid:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.w.valid ,
                       a_lsu   ->  io.lsu.w.valid 
                       ))
   io.out.b.ready:=bready
-  bready:=    MuxLookup(state, a_ifu, List(
+  bready:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.b.ready ,
                       a_lsu   ->  io.lsu.b.ready 
                       ))
   io.out.ar.bits.len:=arlen
-  arlen:=    MuxLookup(state, a_ifu, List(
+  arlen:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.ar.bits.len ,
                       a_lsu   ->  io.lsu.ar.bits.len 
                       ))
   io.out.ar.bits.size:=arsize
-  arsize:=    MuxLookup(state, a_ifu, List(
+  arsize:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.ar.bits.size ,
                       a_lsu   ->  io.lsu.ar.bits.size 
                       ))
   io.out.ar.bits.burst:=arburst
-  arburst:=    MuxLookup(state, a_ifu, List(
+  arburst:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.ar.bits.burst ,
                       a_lsu   ->  io.lsu.ar.bits.burst 
                       ))
   io.out.aw.bits.len:=awlen
-  awlen:=    MuxLookup(state, a_ifu, List(
+  awlen:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.aw.bits.len ,
                       a_lsu   ->  io.lsu.aw.bits.len 
                       ))
   io.out.aw.bits.size:=awsize
-  awsize:=    MuxLookup(state, a_ifu, List(
+  awsize:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.aw.bits.size ,
                       a_lsu   ->  io.lsu.aw.bits.size 
                       ))
   io.out.aw.bits.burst:=awburst
-  awburst:=    MuxLookup(state, a_ifu, List(
+  awburst:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.aw.bits.burst ,
                       a_lsu   ->  io.lsu.aw.bits.burst 
                       ))
   io.out.w.bits.last:=wlast
-  wlast:=    MuxLookup(state, a_ifu, List(
+  wlast:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.ifu.w.bits.last,
                       a_lsu   ->  io.lsu.w.bits.last
                       ))             
   //ifu
   io.ifu.r.bits.last:=ifu_rlast
-  ifu_rlast:=    MuxLookup(state, a_ifu, List(
+  ifu_rlast:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.r.bits.last ,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.ar.ready:=ifu_arready
-  ifu_arready:=    MuxLookup(state, a_ifu, List(
+  ifu_arready:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.ar.ready ,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.r.bits.data:=ifu_rdata
-  ifu_rdata:=    MuxLookup(state, a_ifu, List(
+  ifu_rdata:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.r.bits.data ,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.r.bits.resp:=ifu_rresp
-  ifu_rresp:=    MuxLookup(state, a_ifu, List(
+  ifu_rresp:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.r.bits.resp,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.r.valid:=ifu_rvalid
-  ifu_rvalid:=    MuxLookup(state, a_ifu, List(
+  ifu_rvalid:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.r.valid ,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.aw.ready:=ifu_awready
-  ifu_awready:=    MuxLookup(state, a_ifu, List(
+  ifu_awready:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.aw.ready ,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.w.ready:=ifu_wready
-  ifu_wready:=   MuxLookup(state, a_ifu, List(
+  ifu_wready:=   MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.w.ready ,
                       a_lsu   ->  0.U 
                       ))
   io.ifu.b.bits.resp:=ifu_bresp
-  ifu_bresp:=    MuxLookup(state, a_ifu, List(
+  ifu_bresp:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.b.bits.resp ,
                       a_lsu   ->  0.U
                       ))
   io.ifu.b.valid:=ifu_bvalid
-  ifu_bvalid:=    MuxLookup(state, a_ifu, List(
+  ifu_bvalid:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  io.out.b.valid ,
                       a_lsu   ->  0.U 
@@ -245,55 +257,55 @@ class AXI4Arbiter extends Module{
 
   //lsu
   io.lsu.r.bits.last:=lsu_rlast
-  lsu_rlast:=    MuxLookup(state, a_ifu, List(
+  lsu_rlast:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.r.bits.last 
                       ))
   io.lsu.ar.ready:=lsu_arready
-  lsu_arready:=    MuxLookup(state, a_ifu, List(
+  lsu_arready:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.ar.ready 
                       ))
   io.lsu.r.bits.data:=lsu_rdata
-  lsu_rdata:=    MuxLookup(state, a_ifu, List(
+  lsu_rdata:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.r.bits.data 
                       ))
   io.lsu.r.bits.resp:=lsu_rresp
-  lsu_rresp:=    MuxLookup(state, a_ifu, List(
+  lsu_rresp:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.r.bits.resp 
                       ))
   io.lsu.r.valid:=lsu_rvalid
-  lsu_rvalid:=    MuxLookup(state, a_ifu, List(
+  lsu_rvalid:=    MuxLookup(rstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.r.valid 
                       ))
   io.lsu.aw.ready:=lsu_awready
-  lsu_awready:=    MuxLookup(state, a_ifu, List(
+  lsu_awready:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.aw.ready
                       ))
   io.lsu.w.ready:=lsu_wready
-  lsu_wready:=    MuxLookup(state, a_ifu, List(
+  lsu_wready:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.w.ready 
                       ))
   io.lsu.b.bits.resp:=lsu_bresp
-  lsu_bresp:=    MuxLookup(state, a_ifu, List(
+  lsu_bresp:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.b.bits.resp 
                       ))
   io.lsu.b.valid:=lsu_bvalid
-  lsu_bvalid:=    MuxLookup(state, a_ifu, List(
+  lsu_bvalid:=    MuxLookup(wstate, a_ifu, List(
                       a_idle  ->  0.U ,
                       a_ifu   ->  0.U ,
                       a_lsu   ->  io.out.b.valid 

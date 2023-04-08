@@ -27,5 +27,13 @@ run: image
 
 gdb: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) gdb IMG=$(IMAGE)
+
 wave: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) wave IMG=$(IMAGE)
+
+verilog: image
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) b IMG=$(IMAGE)
+
+compile_run: verilog run
+
+compile_gdb: verilog gdb

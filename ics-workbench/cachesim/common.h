@@ -10,7 +10,7 @@
 #define mask_with_len(x) (exp2(x) - 1)
 
 #define MEM_SIZE (1 << 25) // 1MB
-#define BLOCK_WIDTH  4  // 8B
+#define BLOCK_WIDTH  4  // 16B
 #define BLOCK_SIZE exp2(BLOCK_WIDTH)
 #define ADDR_WIDTH 32
 

@@ -1,15 +1,12 @@
-#include "common.h"
-#include <inttypes.h>
-
-void mem_read(uintptr_t block_num, uint8_t *buf);
-void mem_write(uintptr_t block_num, const uint8_t *buf);
+#include <memory/cache.h>
+#include <memory/host.h>
+#include <memory/paddr.h>
 
 static uint64_t cycle_cnt = 0;
 static uint64_t hit_cnt = 0;
 static uint64_t miss_cnt = 0;
 
 void cycle_increase(int n) { cycle_cnt += n; }
-
 
 uint8_t ***cache_data = NULL;
 uint8_t **D = NULL; // dirty
@@ -19,6 +16,7 @@ uint8_t *buf = NULL;
 
 int tag_width = 0, idx_width = 0, offset_width = 0;
 int way, line, line_size;
+
 
 int check_tag(int idx, int tag)
 {
@@ -32,9 +30,10 @@ int check_tag(int idx, int tag)
   return -1;
 }
 
-uint32_t cache_read(uintptr_t addr)
+
+word_t cache_read(uintptr_t addr,size_t len)
 {
-  uint32_t offset = BITS(addr & ~0x3, offset_width - 1, 0);
+  uint32_t offset = BITS(addr, offset_width - 1, 0);
   uint32_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
   uint32_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
   // printf("%lx %x %x %x\n",addr,tag,idx,offset);
@@ -45,7 +44,7 @@ uint32_t cache_read(uintptr_t addr)
       hit_cnt++;
       //printf("hit_cnt:%ld\t",hit_cnt);
       //printf("%lx\t%08x\n",addr & ~0x3,(*(uint32_t *)(cache_data[i][idx] + offset)));
-      return *(uint32_t *)(cache_data[i][idx] + offset);
+      return host_read(cache_data[i][idx] + offset,len);
     }
   }
   // miss
@@ -56,25 +55,38 @@ uint32_t cache_read(uintptr_t addr)
   if (D[way2][idx])
   {
     //printf("d\n");
-    mem_write(cache_tag[way2][idx]<<idx_width | idx, cache_data[way2][idx]);
+    for(int i=0;i<BLOCK_SIZE/8;i++)
+        pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
+    if(BLOCK_SIZE%8!=0) 
+        pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8,*(cache_data[way2][idx]+(BLOCK_SIZE/8*8)));
     D[way2][idx] = 0;
   }
 
-  mem_read(addr >> BLOCK_WIDTH, buf);
+  for(int i=0;i<BLOCK_SIZE/8;i++)
+      host_write(buf+(i*8),8,pmem_read(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8));
+  if(BLOCK_SIZE%8!=0) 
+      host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
+
   for (int i = 0; i < line_size; i++)
   {
     cache_data[way2][idx][i] = buf[i];
   }
   cache_tag[way2][idx] = tag;
   V[way2][idx] = 1;
-  return *(uint32_t *)(cache_data[way2][idx] + offset);
+  return *(word_t *)(cache_data[way2][idx] + offset);
 }
 
-void cache_write(uintptr_t addr, uint32_t data, uint32_t wmask)
+void cache_write(uintptr_t addr, size_t len, word_t data)
 {
-  uint32_t offset = BITS(addr & ~0x3, offset_width - 1, 0);
+  uint32_t offset = BITS(addr, offset_width - 1, 0);
   uint32_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
   uint32_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
+  int l=len;
+  word_t wmask=0;
+  while(l){
+    wmask=(wmask<<8)|(0b11111111); 
+    l--;
+  }
   // printf("%lx %x %x %x\n",addr,tag,idx,offset);
   for (int i = 0; i < way; i++)
   {
@@ -82,7 +94,7 @@ void cache_write(uintptr_t addr, uint32_t data, uint32_t wmask)
     { // hit
       hit_cnt++;
       //printf("hit\n");
-      uint32_t *p = (uint32_t *)(cache_data[i][idx] + offset);
+      word_t *p = (word_t *)(cache_data[i][idx] + offset);
       *p = (*p & ~wmask) | (data & wmask);
       D[i][idx] = 1;
       return;
@@ -96,31 +108,35 @@ void cache_write(uintptr_t addr, uint32_t data, uint32_t wmask)
   if (D[way2][idx])
   {
     //printf("dirty\n");
-    mem_write(cache_tag[way2][idx]<<idx_width | idx, cache_data[way2][idx]);
+    for(int i=0;i<BLOCK_SIZE/8;i++)
+        pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
+    if(BLOCK_SIZE%8!=0) 
+        pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8,*(cache_data[way2][idx]+(BLOCK_SIZE/8*8)));
     D[way2][idx] = 0;
   }
-  mem_read(addr >> BLOCK_WIDTH, buf);
-  uint32_t *p = (uint32_t *)(buf + offset);
-  *p = (*p & ~wmask) | (data & wmask);
+
+  for(int i=0;i<BLOCK_SIZE/8;i++)
+      host_write(buf+(i*8),8,pmem_read(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8));
+  if(BLOCK_SIZE%8!=0) 
+      host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
+
+    host_write(buf+offset,len,data);
+
   for (int i = 0; i < line_size; i++)
   {
     cache_data[way2][idx][i] = buf[i];
   }
   cache_tag[way2][idx] = tag;
-#ifdef WRITE_THROUGH
-  D[way2][idx] = 0;
-  mem_write(addr >> BLOCK_WIDTH, buf);
-#else
+
   D[way2][idx] = 1; 
-#endif
 }
 
-void init_cache(int total_size_width, int associativity_width)
+void init_cache()
 {
   offset_width = BLOCK_WIDTH;
-  idx_width = total_size_width - associativity_width - offset_width;
-  tag_width = ADDR_WIDTH - total_size_width + associativity_width;
-  way = exp2(associativity_width);
+  idx_width = TOTAL_SIZE_WIDTH - ASSOCIATIVITY_WIDTH - offset_width;
+  tag_width = ADDR_WIDTH - TOTAL_SIZE_WIDTH + ASSOCIATIVITY_WIDTH;
+  way = exp2(ASSOCIATIVITY_WIDTH);
   line = exp2(idx_width);
   line_size = exp2(offset_width);
   // init data array

@@ -7,6 +7,7 @@ class Cache extends Module {
     val in = Flipped(new AXILite)
     val mem = (new AXI4)
     val ram = Flipped(new CacheRAM_Bundle)
+    val hitrate = Output(UInt(64.W))
   })
   def exp2(x: Int) = 1 << x
   val total_size_width: Int = 12
@@ -33,7 +34,7 @@ class Cache extends Module {
   val tag = addr(31, offset_width + idx_width)
 
   val hit_way = Wire(UInt(8.W))
-  val way2 = Wire(UInt(8.W))
+  val way2 = RegInit(0.U(8.W))
 
   val s_idle :: s_delay :: s_tag :: s_hit :: s_miss :: s_reload :: s_wait_ready :: s_fire :: s_over :: s_wait :: Nil = Enum(10)
   val state = RegInit(s_idle)
@@ -58,7 +59,7 @@ class Cache extends Module {
               Mux(((tag_read(t1l, t1r) === tag) && valid(idx)(1).asBool), 1.U, "xff".U))
 
   val lfsr8 = Module(new LFSR_8)
-  way2 := lfsr8.io.out(assassociativity_width - 1, 0)
+  way2 := Mux(state===s_idle,lfsr8.io.out(assassociativity_width - 1, 0),way2)
 
   val tag_way = Wire(UInt((tag_width).W))
   tag_way := Mux(way2 === 0.U, tag_read(t0l, t0r), tag_read(t1l, t1r))
@@ -79,6 +80,7 @@ class Cache extends Module {
 
   io.in.r.bits.data := Mux(state === s_hit,(cache_data.Q >> offset)(63, 0),
                        Mux(state === s_reload, buf >> offset, 0.U))
+  //printf("%x\t%x\t%x\t%x\n",state,cache_data.Q,buf,io.in.r.bits.data)
   io.in.ar.ready := (state === s_idle)
   io.in.r.valid := ((state === s_hit) || (state === s_reload)) & rmode
   io.in.r.bits.resp := 0.U
@@ -86,6 +88,7 @@ class Cache extends Module {
   io.in.b.valid := (state === s_reload || state === s_hit) & wmode
   io.in.aw.ready := (state === s_idle)
   io.in.w.ready := 1.U
+  
 
   // miss
 
@@ -106,23 +109,21 @@ class Cache extends Module {
       s_idle -> Mux(state === s_miss && io.mem.aw.fire, s_delay, s_idle),
       s_delay -> s_wait_ready,
       s_wait_ready -> Mux(io.mem.w.fire, s_fire, s_wait_ready),
-      s_fire -> Mux(io.mem.w.fire, s_wait, s_fire),
+      s_fire -> Mux(io.mem.b.fire, s_wait, s_fire),
       s_wait -> Mux(state =/= s_miss, s_idle, s_wait)
     )
   )
   io.mem.aw.bits.addr := (tag_way << idx_width | idx) << offset_width
   io.mem.aw.bits.len := 1.U
   io.mem.aw.bits.size := 3.U // 2^3 === 8B
-  io.mem.aw.valid := state_w === s_idle && dirty(idx)(
-    way2
-  ).asBool && state === s_miss
+  io.mem.aw.valid := state_w === s_idle && dirty(idx)(way2).asBool && state === s_miss
+
+  //printf("cache:%x\t%x\t%x\t%x\t",io.mem.aw.valid,io.mem.aw.ready,io.mem.w.valid,io.mem.w.ready)
+  //printf("%x\t%x\t%x\t%x\t%x\n", state, state_r, state_w,dirty(idx)(way2),io.mem.aw.ready)
+  //printf("dirty:%x\n",dirty(idx)(way2))
   io.mem.aw.bits.burst := 0.U
-  io.mem.w.bits.data := Mux(
-    state_w === s_fire,
-    cache_data.Q(127, 64),
-    cache_data.Q(63, 0)
-  )
-  io.mem.w.bits.strb := ~(0.U)
+  io.mem.w.bits.data := Mux(state_w === s_fire,cache_data.Q(127, 64),cache_data.Q(63, 0))
+  io.mem.w.bits.strb := ~(0.U(8.W))
   io.mem.w.bits.last := state_w === s_fire
   io.mem.w.valid := (state_w === s_fire | state_w === s_wait_ready)
   io.mem.b.ready := 1.U
@@ -148,22 +149,15 @@ class Cache extends Module {
   // reload
   val taggg = RegInit(0.U((tag_width * way).W))
   taggg := tag_read
-  val tagg =
-    Mux(way2 === 0.U, Cat(taggg(t1l, t1r), tag), Cat(tag, taggg(t0l, t0r)))
+  val tagg =Mux(way2 === 0.U, Cat(taggg(t1l, t1r), tag), Cat(tag, taggg(t0l, t0r)))
   when(state === s_reload) { cache_tag.write(idx, tagg) }
   valid(idx)(way2) := Mux(state === s_reload, 1.U, valid(idx)(way2))
 
   val d_way = Wire(UInt(8.W))
-  d_way := Mux(
-    state === s_hit && wmode === 1.U,
-    hit_way,
-    Mux(state === s_reload, way2, 0.U)
-  )
-  dirty(idx)(d_way) := Mux(
-    state === s_hit && wmode === 1.U,
-    1.U,
-    Mux(state === s_reload, 0.U, dirty(idx)(d_way))
-  )
+  d_way :=  Mux(state === s_hit && wmode === 1.U,hit_way,
+            Mux(state === s_reload, way2, 0.U))
+  dirty(idx)(d_way) :=  Mux(state === s_hit && wmode === 1.U,1.U,
+                        Mux(state === s_reload, 0.U, dirty(idx)(d_way)))
   io.ram.ready := 1.U
 
   val wstrb_map = Wire(UInt(128.W))
@@ -180,24 +174,27 @@ class Cache extends Module {
   cache_data.CEN := (state === s_tag) | (state_w =/= s_idle & state_w =/= s_wait) | (state === s_reload) | (state === s_hit && wmode === 1.U)
   cache_data.WEN := (state === s_reload) | (state === s_hit && wmode === 1.U)
   cache_data.BWEN := Mux(state === s_hit && wmode === 1.U, wstrb_map, ~(0.U(128.W)))
-  cache_data.A := Mux(
-    (state === s_tag) | (state === s_hit && wmode === 1.U),
-    idxh,
-    Mux(
-      (state_w =/= s_idle & state_w =/= s_wait) | (state === s_reload),
-      idxw,
-      0.U
-    )
-  )
-  cache_data.D := Mux(state === s_hit && wmode === 1.U, wdata_map, (buf&(~wstrb_map))|(wdata_map&wstrb_map))
-  printf("%x\t%x\t%x\n", state, state_r, state_w)
-  printf("**%x\t%x\t%x\t%x\n",wstrb,io.in.w.bits.strb,io.in.w.fire,io.in.aw.fire)
-  when(cache_data.CEN === 1.U && cache_data.WEN === 1.U) {
-    //printf("write:%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\n",cache_data.D,cache_data.A,cache_data.BWEN,addr,buf,wstrb_map,wdata_map,wstrb,offset)
-  } /*.elsewhen(cache_data.CEN===1.U){
-    printf("read :%x\tat:%x\n",cache_data.Q,addr)
-  }*/
-  // when(state === s_hit && wmode === 1.U){printf("hit\n")}
+  cache_data.A := Mux((state === s_tag) | (state === s_hit && wmode === 1.U),idxh,
+                  Mux((state_w =/= s_idle & state_w =/= s_wait) | (state === s_reload),idxw,
+                  0.U))
+  cache_data.D := Mux(state === s_hit && wmode === 1.U, wdata_map,
+                  Mux(wmode === 1.U,(buf&(~wstrb_map))|(wdata_map&wstrb_map),buf))
+  //printf("**%x\t%x\t%x\t%x\n",wstrb,io.in.w.bits.strb,io.in.w.fire,io.in.aw.fire)
+  //when(wmode === 1.U && state === s_hit){printf("hit\n");}  
+  //when(state_w === s_fire){printf("dirty\n");}
+  //when(cache_data.CEN === 1.U && cache_data.WEN === 1.U) {
+  //printf("cache_write:addr=%x\tdata=%x\tmask=%x\tstate=\n",cache_data.A,cache_data.D&cache_data.BWEN,cache_data.BWEN)//,state)
+  //printf("buf=%x\twstrb=%x\twdata=%x\n",buf,wstrb_map,wdata_map)
+  //}.elsewhen(rmode === 1.U){
+  //printf("cache_read: addr=%x\tdata=%x\tstate=\n",cache_data.A,cache_data.Q)//,state)
+  //}
+
+  //record
+  val cnt=RegInit(0.U(32.W))
+  val hit=RegInit(0.U(32.W))
+  cnt:=Mux(state === s_delay,cnt+1.U,cnt);
+  hit:=Mux(state === s_hit,hit+1.U,hit);
+  io.hitrate:=Cat(cnt,hit);
 }
 
 class AXILite2AXI4 extends Module {

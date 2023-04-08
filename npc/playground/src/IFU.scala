@@ -32,7 +32,7 @@ class IFU extends Module{
   io.lm.aw.bits.addr:=0.U
   io.lm.aw.valid:=0.U
   io.lm.w.valid:=0.U
-  io.lm.b.ready:=1.U
+  io.lm.b.ready:=0.U
   io.lm.w.bits.data:=0.U
   io.lm.w.bits.strb:=0.U
 

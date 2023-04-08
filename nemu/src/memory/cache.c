@@ -112,12 +112,13 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
         host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
 
     host_write(buf+offset,len,data);
-  for (int i = 0; i < line_size; i++){
-    cache_data[way2][idx][i] = buf[i];
-  }
-  cache_tag[way2][idx] = tag;
+    for (int i = 0; i < line_size; i++){
+        cache_data[way2][idx][i] = buf[i];
+    }
+    cache_tag[way2][idx] = tag;
 
-  D[way2][idx] = 1; 
+    V[way2][idx] = 1;
+    D[way2][idx] = 1; 
 }
 
 void init_cache()

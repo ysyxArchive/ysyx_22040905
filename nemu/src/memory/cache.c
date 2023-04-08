@@ -43,7 +43,7 @@ word_t cache_read(uintptr_t addr,size_t len)
     { // hit
       hit_cnt++;
       //printf("hit_cnt:%ld\t",hit_cnt);
-      //printf("%lx\t%08x\n",addr & ~0x3,(*(uint32_t *)(cache_data[i][idx] + offset)));
+      assert(offset+len<=BLOCK_SIZE/8);
       return host_read(cache_data[i][idx] + offset,len);
     }
   }
@@ -61,6 +61,7 @@ word_t cache_read(uintptr_t addr,size_t len)
         pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (BLOCK_SIZE/8*8),BLOCK_SIZE%8,*(cache_data[way2][idx]+(BLOCK_SIZE/8*8)));
     D[way2][idx] = 0;
   }
+
   for(int i=0;i<BLOCK_SIZE/8;i++){
     host_write(buf+(i*8),8,pmem_read( ((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH) | (i*8),8));
   }
@@ -88,6 +89,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     { // hit
       hit_cnt++;
       //printf("hit\n");
+      assert(offset+len<=BLOCK_SIZE/8);
       host_write(cache_data[i][idx] + offset,len,data);
       return;
     }
@@ -111,6 +113,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     if(BLOCK_SIZE%8!=0) 
         host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
 
+    assert(offset+len<=BLOCK_SIZE/8);
     host_write(buf+offset,len,data);
     for (int i = 0; i < line_size; i++){
         cache_data[way2][idx][i] = buf[i];

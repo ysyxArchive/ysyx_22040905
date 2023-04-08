@@ -81,12 +81,6 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
   word_t offset = BITS(addr, offset_width - 1, 0);
   word_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
   word_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
-  int l=len;
-  word_t wmask=0;
-  while(l){
-    wmask=(wmask<<8)|(0b11111111); 
-    l--;
-  }
   // printf("%lx %x %x %x\n",addr,tag,idx,offset);
   for (int i = 0; i < way; i++)
   {
@@ -94,9 +88,7 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     { // hit
       hit_cnt++;
       //printf("hit\n");
-      word_t *p = (word_t *)(cache_data[i][idx] + offset);
-      *p = (*p & ~wmask) | (data & wmask);
-      D[i][idx] = 1;
+      host_write(cache_data[i][idx] + offset,len,data);
       return;
     }
   }
@@ -119,17 +111,6 @@ void cache_write(uintptr_t addr, size_t len, word_t data)
     if(BLOCK_SIZE%8!=0) 
         host_write(buf+(BLOCK_SIZE/8*8),BLOCK_SIZE%8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (BLOCK_SIZE/8*8),BLOCK_SIZE%8));
 
-    for(int i=0;i<line_size;i++){
-        printf("%x",buf[i]);
-    }
-    printf("\n");
-    host_write(buf+offset,len,data);
-    printf("%ld %ld\n",offset,len);
-    host_write(buf+offset,len,data);
-    for(int i=0;i<line_size;i++){
-        printf("%x",buf[i]);
-    }
-    printf("\n");
     host_write(buf+offset,len,data);
   for (int i = 0; i < line_size; i++){
     cache_data[way2][idx][i] = buf[i];

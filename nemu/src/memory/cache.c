@@ -10,7 +10,7 @@ void cycle_increase(int n) { cycle_cnt += n; }
 
 uint8_t ***cache_data = NULL;
 uint8_t **D = NULL; // dirty
-uint32_t **cache_tag = NULL;
+word_t **cache_tag = NULL;
 uint8_t **V = NULL; // valid
 uint8_t *buf = NULL;
 
@@ -33,9 +33,9 @@ int check_tag(int idx, int tag)
 
 word_t cache_read(uintptr_t addr,size_t len)
 {
-  uint32_t offset = BITS(addr, offset_width - 1, 0);
-  uint32_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
-  uint32_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
+  word_t offset = BITS(addr, offset_width - 1, 0);
+  word_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
+  word_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
   // printf("%lx %x %x %x\n",addr,tag,idx,offset);
   for (int i = 0; i < way; i++)
   {
@@ -78,9 +78,9 @@ word_t cache_read(uintptr_t addr,size_t len)
 
 void cache_write(uintptr_t addr, size_t len, word_t data)
 {
-  uint32_t offset = BITS(addr, offset_width - 1, 0);
-  uint32_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
-  uint32_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
+  word_t offset = BITS(addr, offset_width - 1, 0);
+  word_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
+  word_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
   int l=len;
   word_t wmask=0;
   while(l){
@@ -150,10 +150,10 @@ void init_cache()
     }
   }
   // init tag array
-  cache_tag = malloc(way * sizeof(uint32_t *));
+  cache_tag = malloc(way * sizeof(word_t ));
   for (int i = 0; i < way; i++)
   {
-    cache_tag[i] = malloc(line * sizeof(uint32_t));
+    cache_tag[i] = malloc(line * sizeof(word_t));
   }
   // init dirty
   D = malloc(way * sizeof(uint8_t *));

@@ -80,7 +80,7 @@ void paddr_write(paddr_t addr, int len, word_t data) {
   fclose(fp); 
 #endif  
   if (likely(in_pmem(addr))) {    
-#ifdef CONFIG_CACHE_ENABLED
+#ifdef CONFIG_CACHE_ENABLE
   cache_write(addr,len,data);
 #else
   pmem_write(addr, len, data);

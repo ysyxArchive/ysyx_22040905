@@ -14,14 +14,14 @@ void cycle_increase(int n) { cycle_cnt += n; }
 //uint8_t **V = NULL; // valid
 uint8_t *buf = NULL;
 
-const int offset_width = BLOCK_WIDTH;
-const int idx_width = TOTAL_SIZE_WIDTH - ASSOCIATIVITY_WIDTH - offset_width;
-const int tag_width = ADDR_WIDTH - TOTAL_SIZE_WIDTH + ASSOCIATIVITY_WIDTH;
-const int way = exp2(ASSOCIATIVITY_WIDTH);
-const int line = exp2(idx_width);
-const int line_size = exp2(offset_width);
+#define offset_width  (BLOCK_WIDTH)
+#define idx_width  (TOTAL_SIZE_WIDTH - ASSOCIATIVITY_WIDTH - offset_width)
+#define tag_width  (ADDR_WIDTH - TOTAL_SIZE_WIDTH + ASSOCIATIVITY_WIDTH)
+#define way  (exp2(ASSOCIATIVITY_WIDTH))
+#define line  (exp2(idx_width))
+#define line_size  (exp2(offset_width))
 
-CacheLine cache[1][1];
+CacheLine cache[way][line];
 
 int check_tag(int idx, int tag)
 {

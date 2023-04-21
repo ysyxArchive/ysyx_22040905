@@ -10,6 +10,7 @@ static uint64_t miss_cnt = 0;
 
 void cycle_increase(int n) { cycle_cnt += n; }
 
+
 uint8_t ***cache_data = NULL;
 uint8_t **D = NULL; // dirty
 uint32_t **cache_tag = NULL;
@@ -106,6 +107,8 @@ void cache_write(uintptr_t addr, uint32_t data, uint32_t wmask)
     cache_data[way2][idx][i] = buf[i];
   }
   cache_tag[way2][idx] = tag;
+  
+  V[way2][idx] = 1; 
 #ifdef WRITE_THROUGH
   D[way2][idx] = 0;
   mem_write(addr >> BLOCK_WIDTH, buf);

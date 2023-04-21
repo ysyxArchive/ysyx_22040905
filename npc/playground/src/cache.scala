@@ -7,6 +7,7 @@ class Cache extends Module {
     val in = Flipped(new AXILite)
     val mem = (new AXI4)
     val ram = Flipped(new CacheRAM_Bundle)
+    val hitrate = Output(UInt(64.W))
   })
   def exp2(x: Int) = 1 << x
   val total_size_width: Int = 12
@@ -34,7 +35,7 @@ class Cache extends Module {
 
   val hit_way = Wire(UInt(8.W))
   val way2 = RegInit(0.U(8.W))
-//       0        1         2         3       4           5             6             7         8         9
+
   val s_idle :: s_delay :: s_tag :: s_hit :: s_miss :: s_reload :: s_wait_ready :: s_fire :: s_over :: s_wait :: Nil = Enum(10)
   val state = RegInit(s_idle)
   val state_r = RegInit(s_idle)
@@ -181,12 +182,19 @@ class Cache extends Module {
   //printf("**%x\t%x\t%x\t%x\n",wstrb,io.in.w.bits.strb,io.in.w.fire,io.in.aw.fire)
   //when(wmode === 1.U && state === s_hit){printf("hit\n");}  
   //when(state_w === s_fire){printf("dirty\n");}
-  when(cache_data.CEN === 1.U && cache_data.WEN === 1.U) {
+  //when(cache_data.CEN === 1.U && cache_data.WEN === 1.U) {
   //printf("cache_write:addr=%x\tdata=%x\tmask=%x\tstate=\n",cache_data.A,cache_data.D&cache_data.BWEN,cache_data.BWEN)//,state)
-    //printf("buf=%x\twstrb=%x\twdata=%x\n",buf,wstrb_map,wdata_map)
-  }.elsewhen(rmode === 1.U){
-    //printf("cache_read: addr=%x\tdata=%x\tstate=\n",cache_data.A,cache_data.Q)//,state)
-  }
+  //printf("buf=%x\twstrb=%x\twdata=%x\n",buf,wstrb_map,wdata_map)
+  //}.elsewhen(rmode === 1.U){
+  //printf("cache_read: addr=%x\tdata=%x\tstate=\n",cache_data.A,cache_data.Q)//,state)
+  //}
+
+  //record
+  val cnt=RegInit(0.U(32.W))
+  val hit=RegInit(0.U(32.W))
+  cnt:=Mux(state === s_delay,cnt+1.U,cnt);
+  hit:=Mux(state === s_hit,hit+1.U,hit);
+  io.hitrate:=Cat(cnt,hit);
 }
 
 class AXILite2AXI4 extends Module {

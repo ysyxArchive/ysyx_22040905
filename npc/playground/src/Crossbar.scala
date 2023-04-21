@@ -7,6 +7,7 @@ class Crossbar extends Module{
         val in1 = Flipped(new AXILite)
         val in2 = Flipped(new AXILite)
         val out = (new AXI4)
+        val hitrate=Output(UInt(128.W))
     })
     val DEVICE_BASE :UInt = "xa0000000".U 
 
@@ -20,6 +21,8 @@ class Crossbar extends Module{
 
     val out1=Wire(new AXILite)
     val out2=Wire(new AXILite)
+
+    io.hitrate:=Cat(icache.hitrate,dcache.hitrate)
 
     io.in1<>out1
     icache.ram<>icacheram

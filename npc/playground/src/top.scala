@@ -6,6 +6,8 @@ class top extends Module{
     val io=IO(new Bundle{
         val pc=Output(UInt(64.W))
         val valid=Output(UInt(1.W))
+        val hitrate_i=Output(UInt(64.W))
+        val hitrate_d=Output(UInt(64.W))
     })
     val pc=RegInit("x80000000".U(64.W))
     val sram=Module(new AXI4SRAM)
@@ -40,6 +42,9 @@ class top extends Module{
     crossbar.io.in2<>lsu.io.lm
     crossbar.io.out<>sram.io
 
+
+    io.hitrate_i:=crossbar.io.hitrate(127,64)
+    io.hitrate_d:=crossbar.io.hitrate(63,0)
     //printf("%x\n",crossbar.io.test)
     //val arbiter=Module(new AXI4Arbiter)
     //val icache=Module(new Cache)

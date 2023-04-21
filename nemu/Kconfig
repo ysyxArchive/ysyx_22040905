@@ -121,6 +121,10 @@ config CC_ASAN
 config WATCHPOINT
   bool "Enable watchpoint"
   default n
+
+config CACHE_ENABLED
+  bool "Enable cache"
+  default n
 endmenu
 
 menu "Testing and Debugging"

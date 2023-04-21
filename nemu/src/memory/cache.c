@@ -81,34 +81,36 @@ word_t cache_read(uintptr_t addr,size_t len)
   return host_read(cache[way2][idx].data+ offset,len);
 }
 
-//void cache_write(uintptr_t addr, size_t len, word_t data)
-//{
-//  word_t offset = BITS(addr, offset_width - 1, 0);
-//  word_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
-//  word_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
-//  // printf("%lx %x %x %x\n",addr,tag,idx,offset);
-//  for (int i = 0; i < way; i++)
-//  {
-//    if (cache_tag[i][idx] == tag && V[i][idx])
-//    { // hit
-//      hit_cnt++;
-//      //printf("hit\n");
-//      assert(offset+len<=BLOCK_SIZE);
-//      host_write(cache_data[i][idx] + offset,len,data);
-//      return;
-//    }
-//  }
-//  // miss
-//  // Replacement algorithm: random
-//  miss_cnt++;
-//  int way2 = rand() % way;
-//  // dirty
-//  if (D[way2][idx]){
-//    //printf("dirty\n");
-//    for(int i=0;i<BLOCK_SIZE/8;i++)
-//        pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
-//    D[way2][idx] = 0;
-//   }//else printf("ud\n");
+void cache_write(uintptr_t addr, size_t len, word_t data)
+{
+  word_t offset = BITS(addr, offset_width - 1, 0);
+  word_t idx = BITS(addr, offset_width + idx_width - 1, offset_width);
+  word_t tag = BITS(addr, ADDR_WIDTH - 1, offset_width + idx_width);
+  // printf("%lx %x %x %x\n",addr,tag,idx,offset);
+  for (int i = 0; i < way; i++)
+  {
+    if (cache[i][idx].tag == tag && cache[i][idx].valid)
+    { // hit
+      hit_cnt++;
+      //printf("hit\n");
+      assert(offset+len<=BLOCK_SIZE);
+      host_write(cache[i][idx].data + offset,len,data);
+      pmem_write(addr, len, data);
+      return;
+    }
+  }
+  // miss
+  // Replacement algorithm: random
+  miss_cnt++;
+
+  pmem_write(addr, len, data);
+//// dirty
+//if (D[way2][idx]){
+//  //printf("dirty\n");
+//  for(int i=0;i<BLOCK_SIZE/8;i++)
+//      pmem_write(((cache_tag[way2][idx]<<idx_width |idx)<<offset_width) | (i*8),8,*(cache_data[way2][idx]+(i*8)));
+//  D[way2][idx] = 0;
+// }//else printf("ud\n");
 //
 //    for(int i=0;i<BLOCK_SIZE/8;i++)
 //        host_write(buf+(i*8),8,pmem_read(((addr>> BLOCK_WIDTH)<< BLOCK_WIDTH)| (i*8),8));
@@ -125,7 +127,7 @@ word_t cache_read(uintptr_t addr,size_t len)
 //
 //    V[way2][idx] = 1;
 //    D[way2][idx] = 1; 
-//}
+}
 
 void init_cache()
 {

@@ -1,4 +1,5 @@
 /* verilator lint_off WIDTH */
+/* verilator lint_off WIDTH */
 module AXI4SRAM(
   input         clock,
   input         reset,

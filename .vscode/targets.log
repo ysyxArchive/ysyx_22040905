@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Apr 21 17:25:34 2023
+# Make data base, printed on Wed May  3 22:18:13 2023
 
 # Variables
 
@@ -62,6 +64,8 @@ PWD = /home/cyh/ysyx-workbench
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
+PS1 = \[\e]0;\u: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
+# environment
 XDG_DATA_DIRS = /home/cyh/snap/code/126/.local/share:/home/cyh/snap/code/126:/snap/code/126/usr/share:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
@@ -114,7 +118,7 @@ MAKEFILE_LIST := Makefile
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 3614
+VSCODE_PID = 3766
 # environment
 SDKMAN_DIR = /home/cyh/.sdkman
 # environment
@@ -124,7 +128,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/2107,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/2107
+SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/2216,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/2216
 # automatic
 *F = $(notdir $*)
 # environment
@@ -138,7 +142,7 @@ LOCK_DIR = $(YSYX_HOME)/.git/
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -168,7 +172,7 @@ PATH = /home/cyh/ZSP/ZView5.19.0:/home/cyh/bin:/home/cyh/ZSP/ZView5.19.0:/usr/li
 # default
 MAKEFILES := 
 # environment
-LANGUAGE = en
+LANGUAGE = en_US:en
 # environment
 LC_MONETARY = en_US.UTF-8
 # automatic
@@ -182,7 +186,7 @@ SNAP = /snap/code/126
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = b14c2479fef843b69edcfa7a9bcba7c0
+INVOCATION_ID = 6ad8eb347f154f2b8200ca2b5197f6f7
 # environment
 SNAP_REVISION = 126
 # makefile (from 'Makefile', line 10)
@@ -226,7 +230,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 2152
+SYSTEMD_EXEC_PID = 2261
 # environment
 NAVY_HOME = /home/cyh/ysyx-workbench/navy-apps
 # environment
@@ -244,11 +248,11 @@ SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1731
+MANAGERPID = 1840
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3564
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3717
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -264,7 +268,7 @@ GDK_PIXBUF_MODULE_FILE = /home/cyh/snap/code/common/.cache/gdk-pixbuf-loaders.ca
 # environment
 GIO_MODULE_DIR = /home/cyh/snap/code/common/.cache/gio-modules
 # environment
-JOURNAL_STREAM = 8:43179
+JOURNAL_STREAM = 8:34187
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -276,6 +280,7 @@ QT_IM_MODULE = fcitx
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
+ 
 VSCODE_IPC_HOOK = /run/user/1000/vscode-40045b5f-1.77-main.sock
 # environment
 GTK_EXE_PREFIX = /snap/code/126/usr
@@ -289,9 +294,6 @@ IM_CONFIG_PHASE = 1
 PAPERSIZE = letter
 # default
 .RECIPEPREFIX := 
- 
-make: *** No rule to make target 'all'.  Stop.
-
 # automatic
 <F = $(notdir $<)
 # environment
@@ -319,7 +321,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=151/1024=15%, Rehash=0, Collisions=7/181=4%
+# Load=152/1024=15%, Rehash=0, Collisions=7/182=4%
 
 # Pattern-specific Variable Values
 
@@ -408,6 +410,6 @@ all:
 # strcache performance: lookups = 41 / hit rate = 26%
 # hash-table stats:
 # Load=30/8192=0%, Rehash=0, Collisions=0/41=0%
-# Finished Make data base on Fri Apr 21 17:25:34 2023
+# Finished Make data base on Wed May  3 22:18:13 2023
 
  

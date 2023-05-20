@@ -39,7 +39,7 @@ class Crossbar extends Module{
     istate := MuxLookup(istate, s_idle, List(
     s_idle   ->  Mux(~(io.in1.ar.valid),s_idle,
                  Mux((io.in1.ar.bits.addr>=DEVICE_BASE),s_skip,
-                 s_cache)),
+                 s_skip)),/////****
     s_skip   ->  Mux(arbiter.ifu.r.fire, s_idle, s_skip),
     s_cache  ->  Mux(icache.in.r.fire, s_idle, s_cache)
     ))

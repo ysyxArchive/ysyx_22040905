@@ -84,3 +84,5 @@ wave: runb
 
 b: verilog
 	$(shell (echo '0a'; echo '/* verilator lint_off WIDTH */'; echo '.'; echo 'wq') | ed -s $(VSRC_DIR)/top.v )
+
+

@@ -39,7 +39,7 @@ class Crossbar extends Module{
     istate := MuxLookup(istate, s_idle, List(
     s_idle   ->  Mux(~(io.in1.ar.valid),s_idle,
                  Mux((io.in1.ar.bits.addr>=DEVICE_BASE),s_skip,
-                 s_cache)),
+                 s_skip)),/////****
     s_skip   ->  Mux(arbiter.ifu.r.fire, s_idle, s_skip),
     s_cache  ->  Mux(icache.in.r.fire, s_idle, s_cache)
     ))
@@ -191,8 +191,39 @@ class Crossbar extends Module{
     dcache.mem.r.bits.resp:=arbiter.lsu.r.bits.resp
     dcache.mem.r.bits.last:=arbiter.lsu.r.bits.last
     dcache.mem.b.bits.resp:=arbiter.lsu.b.bits.resp
-
-
-    
-
 } 
+
+class AXILite2AXI4 extends Module {
+  val io = IO(new Bundle {
+    val in = Flipped(new AXILite)
+    val mem = (new AXI4)
+  })
+  io.in.ar.bits.addr <> io.mem.ar.bits.addr
+  io.in.ar.valid <> io.mem.ar.valid
+  io.in.ar.ready <> io.mem.ar.ready
+  io.in.r.bits.data <> io.mem.r.bits.data
+  io.in.r.bits.resp <> io.mem.r.bits.resp
+  io.in.r.valid <> io.mem.r.valid
+  io.in.r.ready <> io.mem.r.ready
+  io.in.aw.bits.addr <> io.mem.aw.bits.addr
+  io.in.aw.valid <> io.mem.aw.valid
+  io.in.aw.ready <> io.mem.aw.ready
+  io.in.w.bits.data <> io.mem.w.bits.data
+  io.in.w.bits.strb <> io.mem.w.bits.strb
+  io.in.w.valid <> io.mem.w.valid
+  io.in.w.ready <> io.mem.w.ready
+  io.in.b.bits.resp <> io.mem.b.bits.resp
+  io.in.b.valid <> io.mem.b.valid
+  io.in.b.ready <> io.mem.b.ready
+
+  io.mem.ar.bits.len := 0.U
+  io.mem.ar.bits.size := 3.U
+  io.mem.ar.bits.burst := "b10".U
+
+  io.mem.aw.bits.len := 0.U
+  io.mem.aw.bits.size := 3.U
+  io.mem.aw.bits.burst := 0.U
+
+  io.mem.w.bits.last := io.in.w.valid
+
+}

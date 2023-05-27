@@ -2,7 +2,7 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage._
 
-class div extends Module{
+class Div extends Module{
     val io=IO(new Bundle{
         val dividend = Input(UInt(64.W))         //被除数
         val divisor = Input(UInt(64.W))          //除数

@@ -65,7 +65,7 @@ class Cache extends Module {
   tag_way := Mux(way2 === 0.U, tag_read(t0l, t0r), tag_read(t1l, t1r))
   // when(state === s_hit) {printf("hit:%x\n",tag)}
   state := MuxLookup(state,s_idle,List(
-      s_idle -> Mux(io.in.aw.fire | io.in.ar.fire, s_delay, s_idle),
+      s_idle -> Mux((io.in.aw.fire | io.in.ar.fire), s_delay, s_idle),
       s_delay -> s_tag,
       s_tag -> Mux(hit_way === "xff".U, s_miss, s_hit),
       s_hit -> s_idle,
@@ -197,37 +197,3 @@ class Cache extends Module {
   io.hitrate:=Cat(cnt,hit);
 }
 
-class AXILite2AXI4 extends Module {
-  val io = IO(new Bundle {
-    val in = Flipped(new AXILite)
-    val mem = (new AXI4)
-  })
-  io.in.ar.bits.addr <> io.mem.ar.bits.addr
-  io.in.ar.valid <> io.mem.ar.valid
-  io.in.ar.ready <> io.mem.ar.ready
-  io.in.r.bits.data <> io.mem.r.bits.data
-  io.in.r.bits.resp <> io.mem.r.bits.resp
-  io.in.r.valid <> io.mem.r.valid
-  io.in.r.ready <> io.mem.r.ready
-  io.in.aw.bits.addr <> io.mem.aw.bits.addr
-  io.in.aw.valid <> io.mem.aw.valid
-  io.in.aw.ready <> io.mem.aw.ready
-  io.in.w.bits.data <> io.mem.w.bits.data
-  io.in.w.bits.strb <> io.mem.w.bits.strb
-  io.in.w.valid <> io.mem.w.valid
-  io.in.w.ready <> io.mem.w.ready
-  io.in.b.bits.resp <> io.mem.b.bits.resp
-  io.in.b.valid <> io.mem.b.valid
-  io.in.b.ready <> io.mem.b.ready
-
-  io.mem.ar.bits.len := 0.U
-  io.mem.ar.bits.size := 3.U
-  io.mem.ar.bits.burst := "b10".U
-
-  io.mem.aw.bits.len := 0.U
-  io.mem.aw.bits.size := 3.U
-  io.mem.aw.bits.burst := 0.U
-
-  io.mem.w.bits.last := io.in.w.valid
-
-}

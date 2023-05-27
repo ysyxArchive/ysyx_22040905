@@ -75,7 +75,7 @@ void exec_once()
 #ifdef HAS_TRACE
   dump_itrace();
   if (gdb)
-    print_itrace(top->io_pc);
+    print_itrace();
 #endif
   step_and_dump_wave();
   device_update();
@@ -160,14 +160,14 @@ extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
 }
 char p[99];
 void dump_itrace() {
-  disassemble(p,99,pc, (uint8_t *)&(cpu_itrace[1]), 4);
+  disassemble(p,99,cpu_itrace[0], (uint8_t *)&(cpu_itrace[1]), 4);
   FILE *fp;
   fp=fopen("build/itrace.txt","a");
   if(cpu_itrace[2]==1) fprintf(fp,"0x%08lx:\t%08lx\t%s\n",cpu_itrace[0],cpu_itrace[1],p);
   fclose(fp);
 }
-void print_itrace(uint64_t pcc){
-  if(cpu_itrace[2])printf("0x%08lx:\t%08lx\t%s\n",pcc,cpu_itrace[1],p);
+void print_itrace(){
+  if(cpu_itrace[2])printf("0x%08lx:\t%08lx\t%s\n",cpu_itrace[0],cpu_itrace[1],p);
 }
 void dump_ftrace(){
   if(!cpu_itrace[2])return;

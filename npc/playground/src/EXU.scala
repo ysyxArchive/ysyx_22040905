@@ -8,7 +8,7 @@ class WB extends Bundle{
     val inst=Output(UInt(32.W))
     val pc_dnpc=Output(UInt(64.W))
     val gpr=(new GPR_w)
-    val csr=(new CSR_w)
+    val csr=(new CSw_w)
     val isJump=Output(UInt(1.W))
     val clearidx=Output(UInt(5.W))
 }

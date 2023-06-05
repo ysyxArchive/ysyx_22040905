@@ -19,6 +19,7 @@ class IFUBundle extends Bundle{
   val clearJump=Input(UInt(1.W))
   val lm=(new AXILite)
   val out=Decoupled(new ID)
+  val flush=Input(UInt(1.W))
 }
 
 class IFU extends Module{

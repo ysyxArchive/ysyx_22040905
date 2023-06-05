@@ -951,6 +951,7 @@ module EXU(
   input  [63:0] io_gpr_val_r1,
   input  [63:0] io_gpr_val_r2,
   output [11:0] io_csr_idx_r,
+  output        io_csr_en_r,
   input  [63:0] io_csr_val_r,
   input         io_lm_ar_ready,
   output        io_lm_ar_valid,
@@ -1195,6 +1196,7 @@ module EXU(
   assign io_gpr_en_r1 = _src1_T_4 | EXE_reg_typ[5]; // @[EXU.scala 121:72]
   assign io_gpr_en_r2 = _src2_T_2 | EXE_reg_typ[5]; // @[EXU.scala 122:57]
   assign io_csr_idx_r = _io_out_bits_csr_idx_w_T_3[11:0]; // @[EXU.scala 127:21]
+  assign io_csr_en_r = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 126:40]
   assign io_lm_ar_valid = lsu_io_lm_ar_valid; // @[EXU.scala 114:14]
   assign io_lm_ar_bits_addr = lsu_io_lm_ar_bits_addr; // @[EXU.scala 114:14]
   assign io_lm_r_ready = lsu_io_lm_r_ready; // @[EXU.scala 114:14]
@@ -2284,6 +2286,7 @@ module CSR(
   input         clock,
   input         reset,
   input  [11:0] io_r_idx_r,
+  input         io_r_en_r,
   output [63:0] io_r_val_r,
   input         io_w_en_w,
   input  [11:0] io_w_idx_w,
@@ -2317,7 +2320,7 @@ module CSR(
   wire [63:0] _GEN_1 = 2'h1 == map_r ? csr_1 : csr_0; // @[CSR.scala 44:18 CSR.scala 44:18]
   wire [63:0] _GEN_2 = 2'h2 == map_r ? csr_2 : _GEN_1; // @[CSR.scala 44:18 CSR.scala 44:18]
   wire [63:0] _GEN_3 = 2'h3 == map_r ? csr_3 : _GEN_2; // @[CSR.scala 44:18 CSR.scala 44:18]
-  wire [63:0] _io_r_val_r_T_3 = io_w_en_w ? _GEN_3 : 64'h0; // @[CSR.scala 44:18]
+  wire [63:0] _io_r_val_r_T_3 = io_r_en_r ? _GEN_3 : 64'h0; // @[CSR.scala 44:18]
   wire [63:0] _io_r_val_r_T_4 = io_w_no == 64'h2 ? csr_2 : _io_r_val_r_T_3; // @[CSR.scala 43:18]
   wire [63:0] _GEN_5 = 2'h1 == map_w ? csr_1 : csr_0; // @[CSR.scala 46:20 CSR.scala 46:20]
   wire [63:0] _GEN_6 = 2'h2 == map_w ? csr_2 : _GEN_5; // @[CSR.scala 46:20 CSR.scala 46:20]
@@ -10248,6 +10251,7 @@ module top(
   wire [63:0] exu_io_gpr_val_r1; // @[top.scala 15:19]
   wire [63:0] exu_io_gpr_val_r2; // @[top.scala 15:19]
   wire [11:0] exu_io_csr_idx_r; // @[top.scala 15:19]
+  wire  exu_io_csr_en_r; // @[top.scala 15:19]
   wire [63:0] exu_io_csr_val_r; // @[top.scala 15:19]
   wire  exu_io_lm_ar_ready; // @[top.scala 15:19]
   wire  exu_io_lm_ar_valid; // @[top.scala 15:19]
@@ -10305,6 +10309,7 @@ module top(
   wire  csr_clock; // @[top.scala 18:19]
   wire  csr_reset; // @[top.scala 18:19]
   wire [11:0] csr_io_r_idx_r; // @[top.scala 18:19]
+  wire  csr_io_r_en_r; // @[top.scala 18:19]
   wire [63:0] csr_io_r_val_r; // @[top.scala 18:19]
   wire  csr_io_w_en_w; // @[top.scala 18:19]
   wire [11:0] csr_io_w_idx_w; // @[top.scala 18:19]
@@ -10458,6 +10463,7 @@ module top(
     .io_gpr_val_r1(exu_io_gpr_val_r1),
     .io_gpr_val_r2(exu_io_gpr_val_r2),
     .io_csr_idx_r(exu_io_csr_idx_r),
+    .io_csr_en_r(exu_io_csr_en_r),
     .io_csr_val_r(exu_io_csr_val_r),
     .io_lm_ar_ready(exu_io_lm_ar_ready),
     .io_lm_ar_valid(exu_io_lm_ar_valid),
@@ -10521,6 +10527,7 @@ module top(
     .clock(csr_clock),
     .reset(csr_reset),
     .io_r_idx_r(csr_io_r_idx_r),
+    .io_r_en_r(csr_io_r_en_r),
     .io_r_val_r(csr_io_r_val_r),
     .io_w_en_w(csr_io_w_en_w),
     .io_w_idx_w(csr_io_w_idx_w),
@@ -10663,6 +10670,7 @@ module top(
   assign csr_clock = clock;
   assign csr_reset = reset;
   assign csr_io_r_idx_r = exu_io_csr_idx_r; // @[top.scala 28:15]
+  assign csr_io_r_en_r = exu_io_csr_en_r; // @[top.scala 28:15]
   assign csr_io_w_en_w = wbu_io_csr_en_w; // @[top.scala 31:15]
   assign csr_io_w_idx_w = wbu_io_csr_idx_w; // @[top.scala 31:15]
   assign csr_io_w_val_w = wbu_io_csr_val_w; // @[top.scala 31:15]

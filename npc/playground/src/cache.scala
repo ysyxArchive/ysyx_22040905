@@ -116,7 +116,7 @@ class Cache extends Module {
   io.mem.aw.bits.addr := (tag_way << idx_width | idx) << offset_width
   io.mem.aw.bits.len := 1.U
   io.mem.aw.bits.size := 3.U // 2^3 === 8B
-  io.mem.aw.valid := state_w === s_idle && dirty(idx)(way2).asBool && state === s_miss
+  io.mem.aw.valid := (state_w === s_idle) && dirty(idx)(way2).asBool && (state === s_miss)
 
   //printf("cache:%x\t%x\t%x\t%x\t",io.mem.aw.valid,io.mem.aw.ready,io.mem.w.valid,io.mem.w.ready)
   //printf("%x\t%x\t%x\t%x\t%x\n", state, state_r, state_w,dirty(idx)(way2),io.mem.aw.ready)

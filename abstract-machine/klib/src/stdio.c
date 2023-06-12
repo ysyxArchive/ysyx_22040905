@@ -37,26 +37,14 @@ static int skip_atoi(const char **s)
 
 static char * number(char * str, unsigned long long num, int base, int size, int precision, int type)
 {
-	char c,sign,tmp[66];
+	char c,tmp[66];
 	int i;
 
-	if (type & LEFT)//如果有'-'，如果出现了左对齐，就取消前面补0
-		type &= ~ZEROPAD;
-	if (base < 2 || base > 36)
-		return 0;
 	c = (type & ZEROPAD) ? '0' : ' ';
-	sign = 0;
 	
-	
-	if (type & SPECIAL) 
-    {
-		if (base == 16)
-			size -= 2;//0x
-		else if (base == 8)
-			size--;//0
-	}
 	
 	i = 0;
+	putch(num+'0'-5);
 	if (num == 0)
 		tmp[i++]='0'; 
 	else while (num != 0) 
@@ -70,8 +58,6 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	if (!(type&(ZEROPAD+LEFT)))
 		while(size-->0)
 			*str++ = ' ';
-	if (sign)
-		*str++ = sign;
     
 	if (type & SPECIAL) 
     {
@@ -216,6 +202,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 	
 		default: assert(0);
 		}
+
 		if (qualifier == 'l') 
         {
 			num = va_arg(ap, unsigned long);

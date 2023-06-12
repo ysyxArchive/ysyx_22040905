@@ -143,13 +143,9 @@ int vsprintf(char *out, const char *fmt, va_list ap)
         
 		//after find %
 		flags = 0;
-		repeat:
-			++fmt;				//skip the first '%'
-			switch (*fmt) 		
-            {		
-				case '-': flags |= LEFT; goto repeat;
-				case '+': flags |= PLUS; goto repeat;
-			}
+
+		++fmt;				//skip the first '%'
+
 		field_width = -1;
 		if (('0' <= (*fmt)) && ((*fmt) <= '9'))
 			field_width = skip_atoi(&fmt);  
@@ -168,7 +164,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			qualifier = 'q';//ll
 			fmt += 2;
 		} 
-		else if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L' || *fmt == 'Z') 
+		else if (*fmt == 'l') 
         {
 			qualifier = *fmt;
 			++fmt;
@@ -259,6 +255,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			if (flags & SIGN)
 				num = (signed int) num;
 		}
+		putch(base+'0');
 		str = number(str, num, base, field_width, precision, flags);
 	}
 	*str = '\0';

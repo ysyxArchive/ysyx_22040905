@@ -52,7 +52,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		s[len++] = num%base;
 		num /= base;
 	}
-	while(len>=0){
+	while(len){
 		tmp[i++] = s[--len];
 		putch(s[len]+'0');
 	}

@@ -39,8 +39,6 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 {
 	char c,tmp[66];
 	int i;
-	char s[66];
-	int len=0;
 	c = (type & ZEROPAD) ? '0' : ' ';
 	
 	
@@ -49,14 +47,9 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		tmp[i++]='0'; 
 	else while (num != 0) 
     {
-		s[len++] = num%base;
+		tmp[i++] = num%base;
 		num /= base;
 	}
-	while(len){
-		tmp[i++] = s[--len];
-		//putch(s[len]+'0');
-	}
-	//putch('\n');
 	if (i > precision)
 		precision = i;
 	size -= precision;
@@ -72,7 +65,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		*str++ = tmp[i];
 	while (size-- > 0)
 		*str++ = ' ';
-	putch(*(str-2));
+	putch(*(str-3));
 	return str;
 }
 

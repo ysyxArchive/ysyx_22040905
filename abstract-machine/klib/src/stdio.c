@@ -220,6 +220,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 		}
 		putch(num/10+'0');
 		putch(num%10+'0');
+		putch('\n');
 		str = number(str, num, base, field_width, precision, flags);
 	}
 	*str = '\0';

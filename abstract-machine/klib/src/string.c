@@ -64,16 +64,20 @@ int strncmp(const char *s1, const char *s2, size_t n) {
     do{
     c1 = (unsigned char) *s1++;
     c2 = (unsigned char) *s2++;
-    if (c1 == '\0' || c1 != c2) return c1 - c2;
-    c1 = (unsigned char) *s1++;
-    c2 = (unsigned char) *s2++;
-    if (c1 == '\0' || c1 != c2) return c1 - c2;
-    c1 = (unsigned char) *s1++;
-    c2 = (unsigned char) *s2++;
-    if (c1 == '\0' || c1 != c2) return c1 - c2;
-    c1 = (unsigned char) *s1++;
-    c2 = (unsigned char) *s2++;
-    if (c1 == '\0' || c1 != c2) return c1 - c2;
+    if (c1 == '\0' || c1 != c2)
+                    return c1 - c2;
+            c1 = (unsigned char) *s1++;
+            c2 = (unsigned char) *s2++;
+            if (c1 == '\0' || c1 != c2)
+                    return c1 - c2;
+            c1 = (unsigned char) *s1++;
+            c2 = (unsigned char) *s2++;
+            if (c1 == '\0' || c1 != c2)
+                    return c1 - c2;
+            c1 = (unsigned char) *s1++;
+            c2 = (unsigned char) *s2++;
+            if (c1 == '\0' || c1 != c2)
+                    return c1 - c2;
     } while (--n4);
     n &= 3;
   }
@@ -82,7 +86,8 @@ int strncmp(const char *s1, const char *s2, size_t n) {
   {
           c1 = (unsigned char) *s1++;
           c2 = (unsigned char) *s2++;
-          if (c1 == '\0' || c1 != c2) return c1 - c2;
+          if (c1 == '\0' || c1 != c2)
+                  return c1 - c2;
           --n;
   }
 

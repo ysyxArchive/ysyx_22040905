@@ -255,7 +255,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			if (flags & SIGN)
 				num = (signed int) num;
 		}
-		putch(base+'0');
+		putch(base);
 		str = number(str, num, base, field_width, precision, flags);
 	}
 	*str = '\0';

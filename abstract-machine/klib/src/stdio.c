@@ -62,10 +62,11 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	while (i < precision--)
 		*str++ = '0';
 	while (i-- > 0)
-		*str++ = tmp[i];
+	{	*str++ = tmp[i];
+		putch(tmp[i]+'0');
+	}
 	while (size-- > 0)
 		*str++ = ' ';
-	putch(*(str-4));
 	return str;
 }
 

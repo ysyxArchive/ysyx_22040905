@@ -126,9 +126,9 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 		//after find %
 		flags = 0;
 
-		++fmt;				//skip the first '%'
 
 		repeat :
+		++fmt;				//skip the first '%'
 		switch (*fmt)
 		{
 			case '0': flags |=ZEROPAD; goto repeat;

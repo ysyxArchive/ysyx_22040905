@@ -39,7 +39,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 {
 	char c,tmp[66];
 	int i;
-	char *s="";
+	char s[66];
 	int len=0;
 	c = (type & ZEROPAD) ? '0' : ' ';
 	
@@ -49,12 +49,11 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		tmp[i++]='0'; 
 	else while (num != 0) 
     {
-
 		s[len++] = num%base;
 		num /= base;
 	}
 	while(len>=0){
-		tmp[i++] = str[--len];
+		tmp[i++] = s[--len];
 		putch(str[len]+'0');
 	}
 

@@ -84,7 +84,11 @@ static char * number(char * str, unsigned long long num, int base, int size, int
     }
 
 	while (size-- > 0)
+	{
+
 		*str++ = c;
+		putch(c);
+	}
 	while (i < precision--)
 		*str++ = '0';
 	while (i-- > 0)
@@ -124,9 +128,11 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 
 		++fmt;				//skip the first '%'
 
+		repeat :
 		switch (*fmt)
 		{
-			case '0':flags |=ZEROPAD; 
+			case '0': flags |=ZEROPAD; goto repeat;
+			case '#': flags |= SPECIAL; goto repeat;
 		}
 		field_width = -1;
 		if (('0' <= (*fmt)) && ((*fmt) <= '9'))

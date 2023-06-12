@@ -62,8 +62,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	while (i < precision--)
 		*str++ = '0';
 	while (i-- > 0)
-	{	*str++ = tmp[i]+'0';
-	}
+		*str++ = tmp[i]+'0';
 	while (size-- > 0)
 		*str++ = ' ';
 	return str;
@@ -179,9 +178,6 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			break;
 	
 		case 'd':	
-		case 'i':
-			flags |= SIGN;
-		case 'u':	
 			break;
 	
 		default: assert(0);

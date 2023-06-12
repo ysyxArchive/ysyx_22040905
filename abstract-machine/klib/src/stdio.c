@@ -56,6 +56,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		tmp[i++]='0'; 
 	else while (num != 0) 
     {
+		if((num>>32) !=0)assert(0);
 		tmp[i++] = num%base;
 		num /= base;
 	}

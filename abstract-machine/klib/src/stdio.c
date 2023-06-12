@@ -214,7 +214,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 		case 'u':	
 			break;
 	
-		default: ;
+		default: assert(0);
 		}
 		if (qualifier == 'l') 
         {

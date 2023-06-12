@@ -41,8 +41,6 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	const char *digits="0123456789abcdefghijklmnopqrstuvwxyz";
 	int i;
 	c = (type & ZEROPAD) ? '0' : ' ';
-	putch(':');
-	putch(c);
 
 	if (type & SPECIAL) 
     {

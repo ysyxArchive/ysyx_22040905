@@ -54,7 +54,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	}
 	while(len>=0){
 		tmp[i++] = s[--len];
-		putch(str[len]+'0');
+		putch(s[len]+'0');
 	}
 
 	if (i > precision)

@@ -8,6 +8,13 @@ class ALU extends Module{
         val src2=Input(UInt(64.W))
         val op=Input(UInt(19.W))
         val result=Output(UInt(64.W))
+        val validin=Input(UInt(1.W))
+        val readyin=Output(UInt(1.W))
+        val validout=Output(UInt(1.W))
+        val busy =Output(UInt(1.W))
+        val flush=Input(UInt(1.W))
+        val op_mul=Input(UInt(1.W))
+        val op_div=Input(UInt(1.W))
     })
     val adder_a=Wire(UInt(64.W))
     val adder_b=Wire(UInt(64.W))
@@ -30,24 +37,33 @@ class ALU extends Module{
     eql_result:=Cat(Fill(63,0.U),adder_result===0.U)
 
 
+    val mul=Module(new mul_pipe).io
+    mul.mul_valid := (io.op(12)|io.op(13)|io.op(14))&io.validin 
+    mul.flush := io.flush
+    mul.mul_signed:= Cat(io.op(13)|io.op(14),io.op(13)) 
+    mul.multiplicand:=io.src1
+    mul.multiplier:=io.src2
+    mul.mulw:=0.U //64位乘法
+
+
+    io.validout:=(~(io.op(12)|io.op(13)|io.op(14)))|(mul.out_valid)
+
     io.result:=Mux(io.op(0)|io.op(1),adder_result,                    //add|sub
                Mux(io.op(2),io.src1&io.src2,                          //and
                Mux(io.op(3),io.src1|io.src2,                          //or
                Mux(io.op(4),io.src1^io.src2,                          //xor
                Mux(io.op(5),(io.src1<<io.src2(5,0))(63,0),            //sll
                Mux(io.op(6),io.src1>>(io.src2(5,0)),                  //srl
-               Mux(io.op(7),(io.src1.asSInt>>(io.src2(5,0))).asUInt,//sra
+               Mux(io.op(7),(io.src1.asSInt>>(io.src2(5,0))).asUInt,  //sra
                Mux(io.op(8),slt_result,                               //slt
                Mux(io.op(9),sltu_result,                              //sltu
                Mux(io.op(10),adder_result&(~(1.U(64.W))),             //jalr
-               Mux(io.op(11),eql_result,      //eql
-               Mux(io.op(12),io.src1*io.src2,                         //mul
-               Mux(io.op(13),(io.src1.asSInt*io.src2.asSInt).asUInt,
-               Mux(io.op(14),(io.src1.asSInt*io.src2).asUInt,
-               Mux(io.op(15),(io.src1.asSInt/io.src2.asSInt).asUInt,        //div
+               Mux(io.op(11),eql_result,                              //eql
+               Mux(io.op(12)|io.op(13)|io.op(14),mul.result_lo,       //mul
+               Mux(io.op(15),(io.src1.asSInt/io.src2.asSInt).asUInt,  //div
                Mux(io.op(16),io.src1/io.src2,
-               Mux(io.op(17),(io.src1.asSInt%io.src2.asSInt).asUInt,        //rem
+               Mux(io.op(17),(io.src1.asSInt%io.src2.asSInt).asUInt,  //rem
                Mux(io.op(18),io.src1%io.src2,                           
-                0.U))))))))))))))))))                  //reset
+                0.U))))))))))))))))                                   //reset
 
 }

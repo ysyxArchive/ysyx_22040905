@@ -214,13 +214,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 		case 'u':	
 			break;
 	
-		default:
-			*str++ = '%';
-			if (*fmt)
-				*str++ = *fmt;
-			else
-				--fmt;
-			break;
+		default: ;
 		}
 		if (qualifier == 'l') 
         {
@@ -232,6 +226,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
         {
 			num = va_arg(ap, unsigned int);
 		}
+
 		str = number(str, num, base, field_width, precision, flags);
 	}
 	*str = '\0';

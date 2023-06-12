@@ -218,7 +218,8 @@ int vsprintf(char *out, const char *fmt, va_list ap)
         {
 			num = va_arg(ap, unsigned int);
 		}
-
+		putch(num/10+'0');
+		putch(num%10+'0');
 		str = number(str, num, base, field_width, precision, flags);
 	}
 	*str = '\0';

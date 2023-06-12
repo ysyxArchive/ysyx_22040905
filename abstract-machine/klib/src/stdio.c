@@ -123,6 +123,10 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 
 		++fmt;				//skip the first '%'
 
+		switch (*fmt)
+		{
+			case '0':flags |=ZEROPAD; 
+		}
 		field_width = -1;
 		if (('0' <= (*fmt)) && ((*fmt) <= '9'))
 			field_width = skip_atoi(&fmt);  

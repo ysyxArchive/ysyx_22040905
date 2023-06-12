@@ -72,7 +72,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		*str++ = tmp[i];
 	while (size-- > 0)
 		*str++ = ' ';
-	putch(*(str-1));
+	putch(*(str-2));
 	return str;
 }
 

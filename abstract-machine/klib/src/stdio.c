@@ -137,6 +137,8 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			++fmt;	
 			if ('0' <= *fmt && *fmt <= '9')
 				precision = skip_atoi(&fmt);
+			if (precision < 0)
+                precision = 0;
 		}
 	
 		qualifier = -1;

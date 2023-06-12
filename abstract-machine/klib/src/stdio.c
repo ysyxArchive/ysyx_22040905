@@ -44,12 +44,12 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	
 	
 	i = 0;
-	putch(num+'0'-5);
 	if (num == 0)
 		tmp[i++]='0'; 
 	else while (num != 0) 
     {
 		tmp[i++] = num%base;
+		putch(num%base+'0');
 		num /= base;
 	}
 	if (i > precision)

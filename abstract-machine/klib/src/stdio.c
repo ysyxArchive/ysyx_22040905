@@ -38,6 +38,7 @@ static int skip_atoi(const char **s)
 static char * number(char * str, unsigned long long num, int base, int size, int precision, int type)
 {
 	char c,tmp[66];
+	const char *digits="0123456789abcdefghijklmnopqrstuvwxyz";
 	int i;
 	c = (type & ZEROPAD) ? '0' : ' ';
 
@@ -56,8 +57,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 		tmp[i++]='0'; 
 	else while (num != 0) 
     {
-		if((num>>32) !=0)assert(0);
-		tmp[i++] = num%base;
+		tmp[i++] = digits[num%base];
 		num /= base;
 	}
 	if (i > precision)
@@ -88,7 +88,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	while (i < precision--)
 		*str++ = '0';
 	while (i-- > 0)
-		*str++ = tmp[i]+'0';
+		*str++ = tmp[i];
 	while (size-- > 0)
 		*str++ = ' ';
 	return str;

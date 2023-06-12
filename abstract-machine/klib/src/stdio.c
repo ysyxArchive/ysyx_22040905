@@ -87,7 +87,7 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	{
 
 		*str++ = c;
-		putch(c);
+		putch('1');
 	}
 	while (i < precision--)
 		*str++ = '0';

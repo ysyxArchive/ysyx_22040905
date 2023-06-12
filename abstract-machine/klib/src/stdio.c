@@ -54,34 +54,18 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	}
 	while(len){
 		tmp[i++] = s[--len];
-		putch(s[len]+'0');
+		//putch(s[len]+'0');
 	}
-
-	putch('\n');
+	//putch('\n');
 	if (i > precision)
 		precision = i;
 	size -= precision;
-	if (!(type&(ZEROPAD+LEFT)))
-		while(size-->0)
-			*str++ = ' ';
+
+	while(size-->0)
+		*str++ = ' ';
     
-	if (type & SPECIAL) 
-    {
-		if (base==8)
-			*str++ = '0';
-		else if (base==16) 
-        {
-			*str++ = '0';
-		if (type & LARGE)//大写字符
-			*str++ = 'X';
-		else 
-			*str++ = 'x';
-		}
-	}
-    
-	if (!(type & LEFT))
-		while (size-- > 0)
-			*str++ = c;
+	while (size-- > 0)
+		*str++ = c;
 	while (i < precision--)
 		*str++ = '0';
 	while (i-- > 0)

@@ -47,23 +47,6 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 	c = (type & ZEROPAD) ? '0' : ' ';
 	sign = 0;
 	
-	if (type & SIGN) //有符号与无符号
-    {
-		if ((signed long long)num < 0) 
-        {
-			sign = '-';
-			num = - (signed long long)num;
-			size--;
-		} else if (type & PLUS) 
-        {
-			sign = '+';
-			size--;
-		} else if (type & SPACE)
-        {
-			sign = ' ';
-			size--;
-		}
-	}
 	
 	if (type & SPECIAL) 
     {
@@ -181,7 +164,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			*str++ = (unsigned char) va_arg(ap, int);
 			while (--field_width > 0)
 				*str++ = ' ';
-			break;
+			continue;
 	
 		case 's':
 			s = va_arg(ap, char *);
@@ -196,7 +179,7 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 				*str++ = *s++;
 			while (len < field_width--)
 				*str++ = ' ';
-			break;
+			continue;
 	
 		case 'p':
 			if (field_width == -1) 
@@ -205,11 +188,11 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 				flags |= ZEROPAD;
 			}
 			str = number(str,(unsigned long) va_arg(ap, void *), 16,field_width, precision, flags);
-			break;
+			continue;
 	
 		case '%':
 			*str++ = '%';
-			break;
+			continue;
 	
 		case 'o':
 			base = 8;
@@ -242,20 +225,13 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 		if (qualifier == 'l') 
         {
 			num = va_arg(ap, unsigned long);
-			if (flags & SIGN)
-				num = (signed long) num;
 		} else if (qualifier == 'q') 
         {
 			num = va_arg(ap, unsigned long long);
-			if (flags & SIGN)
-				num = (signed long long) num;
 		}else 
         {
 			num = va_arg(ap, unsigned int);
-			if (flags & SIGN)
-				num = (signed int) num;
 		}
-		putch(base+'0'-5);
 		str = number(str, num, base, field_width, precision, flags);
 	}
 	*str = '\0';

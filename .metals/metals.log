@@ -3738,3 +3738,138 @@ INFO: Schema "PUBLIC" is up to date. No migration necessary.
 2023.06.12 22:41:01 INFO  time: code lens generation in 6.14s
 2023.06.12 22:41:01 INFO  time: code lens generation in 6.14s
 2023.06.12 22:45:33 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/mul.scala
+2023.06.13 03:15:18 INFO  Shutting down server
+2023.06.13 03:15:18 INFO  shutting down Metals
+2023.06.13 03:15:18 INFO  Exiting server
+2023.07.07 12:12:13 INFO  Started: Metals version 0.11.12 in workspace '/home/cyh/ysyx-workbench' for client Visual Studio Code 1.79.2.
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/home/cyh/ysyx-workbench/.metals/metals (H2 2.1)
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.029s)
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+Jul 07, 2023 12:12:14 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.07.07 12:12:14 INFO  time: initialize in 0.57s
+2023.07.07 12:12:16 WARN  Build server is not auto-connectable.
+2023.07.07 12:12:16 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.07.07 12:12:16 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.07.07 12:12:16 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:12:21 INFO  no build target found for /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala. Using presentation compiler with project's scala-library version: 3.2.2
+Jul 07, 2023 12:12:21 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1
+2023.07.07 12:12:23 INFO  time: code lens generation in 1.73s
+2023.07.07 12:12:23 INFO  time: code lens generation in 1.76s
+2023.07.07 12:13:41 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ALU.scala
+2023.07.07 12:14:15 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/mul.scala
+2023.07.07 12:16:01 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:16:01 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:16:51 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Jul 07, 2023 12:34:38 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 498
+2023.07.07 12:39:30 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:39:53 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:40:49 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:41:07 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:46:02 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:46:20 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:48:28 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:48:30 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.07 12:51:56 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.07.09 19:25:47 INFO  Started: Metals version 0.11.12 in workspace '/home/cyh/ysyx-workbench' for client Visual Studio Code 1.79.2.
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/home/cyh/ysyx-workbench/.metals/metals (H2 2.1)
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.028s)
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+Jul 09, 2023 7:25:48 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.07.09 19:25:48 INFO  time: initialize in 0.58s
+2023.07.09 19:25:51 WARN  Build server is not auto-connectable.
+2023.07.09 19:25:51 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.07.09 19:25:51 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:25:51 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.07.09 19:25:56 INFO  no build target found for /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala. Using presentation compiler with project's scala-library version: 3.2.2
+2023.07.09 19:25:58 INFO  time: code lens generation in 6.91s
+Jul 09, 2023 7:27:38 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 134
+2023.07.09 19:28:24 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Jul 09, 2023 7:31:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 670
+Jul 09, 2023 7:31:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 673
+Jul 09, 2023 7:32:28 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 837
+2023.07.09 19:32:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:32:49 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Jul 09, 2023 7:34:09 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1050
+2023.07.09 19:35:29 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:35:57 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Jul 09, 2023 7:36:18 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.07.09 19:37:56 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:38:44 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ALU.scala
+Jul 09, 2023 7:38:56 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2094
+2023.07.09 19:41:11 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:41:53 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:43:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:44:05 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:45:36 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:46:39 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:47:51 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ALU.scala
+2023.07.09 19:48:07 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Jul 09, 2023 7:48:39 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3350
+Jul 09, 2023 7:49:04 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3379
+2023.07.09 19:50:02 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:50:29 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:50:53 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.07.09 19:52:10 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.07.09 19:53:17 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.07.09 19:54:10 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.07.09 19:55:37 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:55:50 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:57:32 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.07.09 19:58:08 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Jul 09, 2023 7:59:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4683
+2023.07.09 19:59:36 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/mul.scala
+Jul 09, 2023 8:00:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4767
+2023.07.09 20:01:18 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ALU.scala
+2023.07.09 20:03:25 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ALU.scala
+2023.07.09 20:04:00 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ALU.scala
+2023.07.09 20:06:35 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/mul.scala
+2023.07.09 20:08:03 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/mul.scala
+2023.07.09 20:20:11 WARN  Using indexes to guess the definition of io
+2023.07.09 20:26:50 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.07.09 20:27:11 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.07.09 20:28:49 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.07.09 20:29:46 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+Jul 09, 2023 8:31:25 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5887
+Jul 09, 2023 8:32:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5937
+2023.07.09 21:25:26 WARN  Using indexes to guess the definition of EXU
+2023.07.09 23:15:41 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+Jul 09, 2023 11:16:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6066
+2023.07.10 16:44:45 INFO  Shutting down server
+2023.07.10 16:44:45 INFO  shutting down Metals
+2023.07.10 16:44:45 INFO  Exiting server

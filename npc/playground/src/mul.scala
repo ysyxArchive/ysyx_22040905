@@ -4,7 +4,7 @@ import chisel3.stage._
 
 
 class mul_cell extends Module{
-  val io=IO(new Bundle{
+  val io=dontTouch(IO(new Bundle{
     val flush   = Input(UInt(1.W))
     val valid   = Input(UInt(1.W))
     val a_in    = Input(UInt(129.W))
@@ -20,7 +20,7 @@ class mul_cell extends Module{
     val b       = Input(UInt(64.W))
     val A       = Output(UInt(64.W))
     val B       = Output(UInt(64.W))
-  })
+  }))
   //test
   val reg_a = RegInit(0.U(64.W))
   val reg_b = RegInit(0.U(64.W))

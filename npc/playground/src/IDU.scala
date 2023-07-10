@@ -44,7 +44,7 @@ class IDU extends Module{
    io.out.bits.inst:=ID_reg_inst
 
 //op
-   val op_t=VecInit(0.U(80.W))
+   val op_t=VecInit(Seq.fill(80)(0.U(1.W)))
 
     //RV64I
    op_t(0) :=(ID_reg_inst(6,0)==="b0110011".U)&(ID_reg_inst(14,12)==="b000".U)&(ID_reg_inst(31,25)==="b0000000".U)           //add,R
@@ -133,7 +133,7 @@ class IDU extends Module{
    //io.out.bits.op_div:=op(15)|op(16)|op(17)|op(18)
 
 //type
-   val typ_t=VecInit(0.U(6.W))
+   val typ_t=VecInit(Seq.fill(6)(0.U(1.W)))
    typ_t(0):= (op(2)|op(3)|op(7)|op(9)|op(11)|op(14)|op(15)|op(18)|op(19)|op(22)|op(23)|op(28)|op(29)|op(37)|op(38)|op(39)|op(40)|op(41)|op(46)|op(47)|op(48)|op(63)|op(64))                                     //I
    typ_t(1):= (op(24)|op(25))                                                                                                                                                                                    //U
    typ_t(2):= (op(42)|op(43)|op(44)|op(45))                                                                                                                                                                      //S

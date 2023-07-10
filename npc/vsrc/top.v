@@ -278,7 +278,9 @@ module Pre_Decode(
   wire  _io_jump_T_44 = io_inst == 32'h73; // @[IFU.scala 90:17]
   wire  _io_jump_T_45 = _io_jump_T_43 | _io_jump_T_44; // @[IFU.scala 89:64]
   wire  _io_jump_T_46 = io_inst == 32'h30200073; // @[IFU.scala 91:17]
-  assign io_jump = _io_jump_T_45 | _io_jump_T_46; // @[IFU.scala 90:64]
+  wire  _io_jump_T_47 = _io_jump_T_45 | _io_jump_T_46; // @[IFU.scala 90:64]
+  wire  _io_jump_T_48 = io_inst == 32'h100073; // @[IFU.scala 92:17]
+  assign io_jump = _io_jump_T_47 | _io_jump_T_48; // @[IFU.scala 91:64]
 endmodule
 module IFU(
   input         clock,
@@ -465,119 +467,130 @@ module IDU(
   reg  state; // @[IDU.scala 34:23]
   wire  _state_T_2 = io_out_ready & io_out_valid; // @[Decoupled.scala 52:35]
   wire  _io_in_ready_T_1 = ~io_sb_isBusy; // @[IDU.scala 41:39]
-  wire  _op_T_1 = ID_reg_inst[6:0] == 7'h33; // @[IDU.scala 48:33]
-  wire  _op_T_3 = ID_reg_inst[14:12] == 3'h0; // @[IDU.scala 48:69]
-  wire  _op_T_4 = ID_reg_inst[6:0] == 7'h33 & ID_reg_inst[14:12] == 3'h0; // @[IDU.scala 48:49]
-  wire  _op_T_6 = ID_reg_inst[31:25] == 7'h0; // @[IDU.scala 48:101]
-  wire  _op_T_11 = ID_reg_inst[6:0] == 7'h3b; // @[IDU.scala 49:33]
-  wire  _op_T_14 = ID_reg_inst[6:0] == 7'h3b & _op_T_3; // @[IDU.scala 49:49]
-  wire  _op_T_22 = ID_reg_inst[6:0] == 7'h13; // @[IDU.scala 50:33]
-  wire  _op_T_31 = ID_reg_inst[6:0] == 7'h1b; // @[IDU.scala 51:33]
-  wire  _op_T_45 = ID_reg_inst[31:25] == 7'h20; // @[IDU.scala 52:101]
-  wire  _op_T_66 = ID_reg_inst[14:12] == 3'h7; // @[IDU.scala 54:69]
-  wire  _op_T_67 = _op_T_1 & ID_reg_inst[14:12] == 3'h7; // @[IDU.scala 54:49]
-  wire  _op_T_87 = ID_reg_inst[14:12] == 3'h6; // @[IDU.scala 56:69]
-  wire  _op_T_88 = _op_T_1 & ID_reg_inst[14:12] == 3'h6; // @[IDU.scala 56:49]
-  wire  _op_T_108 = ID_reg_inst[14:12] == 3'h4; // @[IDU.scala 59:69]
-  wire  _op_T_109 = _op_T_1 & ID_reg_inst[14:12] == 3'h4; // @[IDU.scala 59:49]
-  wire  _op_T_129 = ID_reg_inst[14:12] == 3'h1; // @[IDU.scala 61:69]
-  wire  _op_T_130 = _op_T_1 & ID_reg_inst[14:12] == 3'h1; // @[IDU.scala 61:49]
-  wire  _op_T_156 = ID_reg_inst[31:26] == 6'h0; // @[IDU.scala 63:101]
-  wire  _op_T_177 = ID_reg_inst[14:12] == 3'h5; // @[IDU.scala 65:69]
-  wire  _op_T_178 = _op_T_1 & ID_reg_inst[14:12] == 3'h5; // @[IDU.scala 65:49]
-  wire  _op_T_190 = _op_T_11 & _op_T_177; // @[IDU.scala 66:49]
-  wire  _op_T_202 = _op_T_22 & _op_T_177; // @[IDU.scala 67:49]
-  wire  _op_T_204 = ID_reg_inst[31:26] == 6'h10; // @[IDU.scala 67:101]
-  wire  _op_T_214 = _op_T_31 & _op_T_177; // @[IDU.scala 68:49]
-  wire  _op_T_285 = ID_reg_inst[14:12] == 3'h2; // @[IDU.scala 76:69]
-  wire  _op_T_286 = _op_T_1 & ID_reg_inst[14:12] == 3'h2; // @[IDU.scala 76:49]
-  wire  _op_T_297 = ID_reg_inst[14:12] == 3'h3; // @[IDU.scala 77:69]
-  wire  _op_T_298 = _op_T_1 & ID_reg_inst[14:12] == 3'h3; // @[IDU.scala 77:49]
-  wire  _op_T_325 = ID_reg_inst[6:0] == 7'h63; // @[IDU.scala 81:33]
-  wire  _op_T_394 = ID_reg_inst[6:0] == 7'h3; // @[IDU.scala 89:33]
-  wire  _op_T_430 = ID_reg_inst[6:0] == 7'h23; // @[IDU.scala 94:33]
-  wire  _op_T_503 = ID_reg_inst[31:25] == 7'h1; // @[IDU.scala 104:101]
-  wire  _op_T_654 = ID_reg_inst[6:0] == 7'h73; // @[IDU.scala 119:33]
-  wire [81:0] _op_T_681 = ID_reg_inst == 32'h30200073 ? 82'h40000000000000000 : 82'h0; // @[IDU.scala 122:15]
-  wire [81:0] _op_T_682 = ID_reg_inst == 32'h73 ? 82'h20000000000000000 : _op_T_681; // @[IDU.scala 121:15]
-  wire [81:0] _op_T_683 = _op_T_654 & _op_T_285 ? 82'h10000000000000000 : _op_T_682; // @[IDU.scala 120:15]
-  wire [81:0] _op_T_684 = ID_reg_inst[6:0] == 7'h73 & _op_T_129 ? 82'h8000000000000000 : _op_T_683; // @[IDU.scala 119:15]
-  wire [81:0] _op_T_685 = _op_T_11 & _op_T_66 & _op_T_503 ? 82'h4000000000000000 : _op_T_684; // @[IDU.scala 116:15]
-  wire [81:0] _op_T_686 = _op_T_67 & _op_T_503 ? 82'h2000000000000000 : _op_T_685; // @[IDU.scala 115:15]
-  wire [81:0] _op_T_687 = _op_T_11 & _op_T_87 & _op_T_503 ? 82'h1000000000000000 : _op_T_686; // @[IDU.scala 114:15]
-  wire [81:0] _op_T_688 = _op_T_88 & _op_T_503 ? 82'h800000000000000 : _op_T_687; // @[IDU.scala 113:15]
-  wire [81:0] _op_T_689 = _op_T_190 & _op_T_503 ? 82'h400000000000000 : _op_T_688; // @[IDU.scala 112:15]
-  wire [81:0] _op_T_690 = _op_T_178 & _op_T_503 ? 82'h200000000000000 : _op_T_689; // @[IDU.scala 111:15]
-  wire [81:0] _op_T_691 = _op_T_11 & _op_T_108 & _op_T_503 ? 82'h100000000000000 : _op_T_690; // @[IDU.scala 110:15]
-  wire [81:0] _op_T_692 = _op_T_109 & _op_T_503 ? 82'h80000000000000 : _op_T_691; // @[IDU.scala 109:15]
-  wire [81:0] _op_T_693 = _op_T_286 & _op_T_503 ? 82'h40000000000000 : _op_T_692; // @[IDU.scala 108:15]
-  wire [81:0] _op_T_694 = _op_T_298 & _op_T_503 ? 82'h20000000000000 : _op_T_693; // @[IDU.scala 107:15]
-  wire [81:0] _op_T_695 = _op_T_130 & _op_T_503 ? 82'h10000000000000 : _op_T_694; // @[IDU.scala 106:15]
-  wire [81:0] _op_T_696 = _op_T_14 & _op_T_503 ? 82'h8000000000000 : _op_T_695; // @[IDU.scala 105:15]
-  wire [81:0] _op_T_697 = _op_T_4 & ID_reg_inst[31:25] == 7'h1 ? 82'h4000000000000 : _op_T_696; // @[IDU.scala 104:15]
-  wire [81:0] _op_T_698 = ID_reg_inst == 32'h100073 ? 82'h2000000000000 : _op_T_697; // @[IDU.scala 101:15]
-  wire [81:0] _op_T_699 = _op_T_394 & _op_T_87 ? 82'h1000000000000 : _op_T_698; // @[IDU.scala 100:15]
-  wire [81:0] _op_T_700 = _op_T_394 & _op_T_177 ? 82'h800000000000 : _op_T_699; // @[IDU.scala 99:15]
-  wire [81:0] _op_T_701 = _op_T_394 & _op_T_108 ? 82'h400000000000 : _op_T_700; // @[IDU.scala 98:15]
-  wire [81:0] _op_T_702 = _op_T_430 & _op_T_297 ? 82'h200000000000 : _op_T_701; // @[IDU.scala 97:15]
-  wire [81:0] _op_T_703 = _op_T_430 & _op_T_285 ? 82'h100000000000 : _op_T_702; // @[IDU.scala 96:15]
-  wire [81:0] _op_T_704 = _op_T_430 & _op_T_129 ? 82'h80000000000 : _op_T_703; // @[IDU.scala 95:15]
-  wire [81:0] _op_T_705 = ID_reg_inst[6:0] == 7'h23 & _op_T_3 ? 82'h40000000000 : _op_T_704; // @[IDU.scala 94:15]
-  wire [81:0] _op_T_706 = _op_T_394 & _op_T_297 ? 82'h20000000000 : _op_T_705; // @[IDU.scala 93:15]
-  wire [81:0] _op_T_707 = _op_T_394 & _op_T_285 ? 82'h10000000000 : _op_T_706; // @[IDU.scala 92:15]
-  wire [81:0] _op_T_708 = _op_T_394 & _op_T_129 ? 82'h8000000000 : _op_T_707; // @[IDU.scala 90:15]
-  wire [81:0] _op_T_709 = ID_reg_inst[6:0] == 7'h3 & _op_T_3 ? 82'h4000000000 : _op_T_708; // @[IDU.scala 89:15]
-  wire [81:0] _op_T_710 = ID_reg_inst[6:0] == 7'h67 & _op_T_3 ? 82'h2000000000 : _op_T_709; // @[IDU.scala 88:15]
-  wire [81:0] _op_T_711 = ID_reg_inst[6:0] == 7'h6f ? 82'h1000000000 : _op_T_710; // @[IDU.scala 87:15]
-  wire [81:0] _op_T_712 = _op_T_325 & _op_T_87 ? 82'h800000000 : _op_T_711; // @[IDU.scala 86:15]
-  wire [81:0] _op_T_713 = _op_T_325 & _op_T_108 ? 82'h400000000 : _op_T_712; // @[IDU.scala 85:15]
-  wire [81:0] _op_T_714 = _op_T_325 & _op_T_66 ? 82'h200000000 : _op_T_713; // @[IDU.scala 84:15]
-  wire [81:0] _op_T_715 = _op_T_325 & _op_T_177 ? 82'h100000000 : _op_T_714; // @[IDU.scala 83:15]
-  wire [81:0] _op_T_716 = _op_T_325 & _op_T_129 ? 82'h80000000 : _op_T_715; // @[IDU.scala 82:15]
-  wire [81:0] _op_T_717 = ID_reg_inst[6:0] == 7'h63 & _op_T_3 ? 82'h40000000 : _op_T_716; // @[IDU.scala 81:15]
-  wire [81:0] _op_T_718 = _op_T_22 & _op_T_297 ? 82'h20000000 : _op_T_717; // @[IDU.scala 79:15]
-  wire [81:0] _op_T_719 = _op_T_22 & _op_T_285 ? 82'h10000000 : _op_T_718; // @[IDU.scala 78:15]
-  wire [81:0] _op_T_720 = _op_T_1 & ID_reg_inst[14:12] == 3'h3 & _op_T_6 ? 82'h8000000 : _op_T_719; // @[IDU.scala 77:15]
-  wire [81:0] _op_T_721 = _op_T_1 & ID_reg_inst[14:12] == 3'h2 & _op_T_6 ? 82'h4000000 : _op_T_720; // @[IDU.scala 76:15]
-  wire [81:0] _op_T_722 = ID_reg_inst[6:0] == 7'h17 ? 82'h2000000 : _op_T_721; // @[IDU.scala 75:15]
-  wire [81:0] _op_T_723 = ID_reg_inst[6:0] == 7'h37 ? 82'h1000000 : _op_T_722; // @[IDU.scala 74:15]
-  wire [81:0] _op_T_724 = _op_T_214 & _op_T_156 ? 82'h800000 : _op_T_723; // @[IDU.scala 73:15]
-  wire [81:0] _op_T_725 = _op_T_202 & _op_T_156 ? 82'h400000 : _op_T_724; // @[IDU.scala 72:15]
-  wire [81:0] _op_T_726 = _op_T_190 & _op_T_6 ? 82'h200000 : _op_T_725; // @[IDU.scala 71:15]
-  wire [81:0] _op_T_727 = _op_T_178 & _op_T_6 ? 82'h100000 : _op_T_726; // @[IDU.scala 70:15]
-  wire [81:0] _op_T_728 = _op_T_31 & _op_T_177 & _op_T_204 ? 82'h80000 : _op_T_727; // @[IDU.scala 68:15]
-  wire [81:0] _op_T_729 = _op_T_22 & _op_T_177 & ID_reg_inst[31:26] == 6'h10 ? 82'h40000 : _op_T_728; // @[IDU.scala 67:15]
-  wire [81:0] _op_T_730 = _op_T_11 & _op_T_177 & _op_T_45 ? 82'h20000 : _op_T_729; // @[IDU.scala 66:15]
-  wire [81:0] _op_T_731 = _op_T_1 & ID_reg_inst[14:12] == 3'h5 & _op_T_45 ? 82'h10000 : _op_T_730; // @[IDU.scala 65:15]
-  wire [81:0] _op_T_732 = _op_T_31 & _op_T_129 & _op_T_156 ? 82'h8000 : _op_T_731; // @[IDU.scala 64:15]
-  wire [81:0] _op_T_733 = _op_T_22 & _op_T_129 & ID_reg_inst[31:26] == 6'h0 ? 82'h4000 : _op_T_732; // @[IDU.scala 63:15]
-  wire [81:0] _op_T_734 = _op_T_11 & _op_T_129 & _op_T_6 ? 82'h2000 : _op_T_733; // @[IDU.scala 62:15]
-  wire [81:0] _op_T_735 = _op_T_1 & ID_reg_inst[14:12] == 3'h1 & _op_T_6 ? 82'h1000 : _op_T_734; // @[IDU.scala 61:15]
-  wire [81:0] _op_T_736 = _op_T_22 & _op_T_108 ? 82'h800 : _op_T_735; // @[IDU.scala 60:15]
-  wire [81:0] _op_T_737 = _op_T_1 & ID_reg_inst[14:12] == 3'h4 & _op_T_6 ? 82'h400 : _op_T_736; // @[IDU.scala 59:15]
-  wire [81:0] _op_T_738 = _op_T_22 & _op_T_87 ? 82'h200 : _op_T_737; // @[IDU.scala 57:15]
-  wire [81:0] _op_T_739 = _op_T_1 & ID_reg_inst[14:12] == 3'h6 & _op_T_6 ? 82'h100 : _op_T_738; // @[IDU.scala 56:15]
-  wire [81:0] _op_T_740 = _op_T_22 & _op_T_66 ? 82'h80 : _op_T_739; // @[IDU.scala 55:15]
-  wire [81:0] _op_T_741 = _op_T_1 & ID_reg_inst[14:12] == 3'h7 & _op_T_6 ? 82'h40 : _op_T_740; // @[IDU.scala 54:15]
-  wire [81:0] _op_T_742 = _op_T_14 & _op_T_45 ? 82'h20 : _op_T_741; // @[IDU.scala 53:15]
-  wire [81:0] _op_T_743 = _op_T_4 & ID_reg_inst[31:25] == 7'h20 ? 82'h10 : _op_T_742; // @[IDU.scala 52:15]
-  wire [81:0] _op_T_744 = ID_reg_inst[6:0] == 7'h1b & _op_T_3 ? 82'h8 : _op_T_743; // @[IDU.scala 51:15]
-  wire [81:0] _op_T_745 = ID_reg_inst[6:0] == 7'h13 & _op_T_3 ? 82'h4 : _op_T_744; // @[IDU.scala 50:15]
-  wire [81:0] _op_T_746 = ID_reg_inst[6:0] == 7'h3b & _op_T_3 & _op_T_6 ? 82'h2 : _op_T_745; // @[IDU.scala 49:15]
-  wire [81:0] _op_T_747 = ID_reg_inst[6:0] == 7'h33 & ID_reg_inst[14:12] == 3'h0 & ID_reg_inst[31:25] == 7'h0 ? 82'h1 :
-    _op_T_746; // @[IDU.scala 48:15]
-  wire [79:0] op = _op_T_747[79:0]; // @[IDU.scala 46:16 48:7]
-  wire  _typ_T_30 = op[2] | op[3] | op[7] | op[9] | op[11] | op[14] | op[15] | op[18] | op[19] | op[22] | op[23] | op[28
-    ] | op[29] | op[37] | op[38] | op[39]; // @[IDU.scala 130:116]
-  wire  _typ_T_97 = op[0] | op[1] | op[4] | op[5] | op[6] | op[8] | op[10] | op[12] | op[13] | op[16] | op[17] | op[20]
-     | op[21] | op[26] | op[27] | op[50]; // @[IDU.scala 135:114]
-  wire [5:0] _typ_T_122 = _typ_T_97 | op[51] | op[52] | op[53] | op[54] | op[55] | op[56] | op[57] | op[58] | op[59] |
-    op[60] | op[61] | op[62] ? 6'h20 : 6'h0; // @[IDU.scala 135:14]
-  wire [5:0] _typ_T_123 = op[30] | op[31] | op[32] | op[33] | op[34] | op[35] ? 6'h10 : _typ_T_122; // @[IDU.scala 134:14]
-  wire [5:0] _typ_T_124 = op[36] ? 6'h8 : _typ_T_123; // @[IDU.scala 133:14]
-  wire [5:0] _typ_T_125 = op[42] | op[43] | op[44] | op[45] ? 6'h4 : _typ_T_124; // @[IDU.scala 132:14]
-  wire [5:0] _typ_T_126 = op[24] | op[25] ? 6'h2 : _typ_T_125; // @[IDU.scala 131:14]
-  wire [5:0] typ = _typ_T_30 | op[40] | op[41] | op[46] | op[47] | op[48] | op[63] | op[64] ? 6'h1 : _typ_T_126; // @[IDU.scala 130:14]
+  wire  _op_t_0_T_1 = ID_reg_inst[6:0] == 7'h33; // @[IDU.scala 50:31]
+  wire  _op_t_0_T_3 = ID_reg_inst[14:12] == 3'h0; // @[IDU.scala 50:67]
+  wire  _op_t_0_T_4 = ID_reg_inst[6:0] == 7'h33 & ID_reg_inst[14:12] == 3'h0; // @[IDU.scala 50:47]
+  wire  _op_t_0_T_6 = ID_reg_inst[31:25] == 7'h0; // @[IDU.scala 50:99]
+  wire  op_t_0 = ID_reg_inst[6:0] == 7'h33 & ID_reg_inst[14:12] == 3'h0 & ID_reg_inst[31:25] == 7'h0; // @[IDU.scala 50:79]
+  wire  _op_t_1_T_1 = ID_reg_inst[6:0] == 7'h3b; // @[IDU.scala 51:31]
+  wire  _op_t_1_T_4 = ID_reg_inst[6:0] == 7'h3b & _op_t_0_T_3; // @[IDU.scala 51:47]
+  wire  op_t_1 = ID_reg_inst[6:0] == 7'h3b & _op_t_0_T_3 & _op_t_0_T_6; // @[IDU.scala 51:79]
+  wire  _op_t_2_T_1 = ID_reg_inst[6:0] == 7'h13; // @[IDU.scala 52:31]
+  wire  op_t_2 = ID_reg_inst[6:0] == 7'h13 & _op_t_0_T_3; // @[IDU.scala 52:47]
+  wire  _op_t_3_T_1 = ID_reg_inst[6:0] == 7'h1b; // @[IDU.scala 53:31]
+  wire  op_t_3 = ID_reg_inst[6:0] == 7'h1b & _op_t_0_T_3; // @[IDU.scala 53:47]
+  wire  _op_t_4_T_6 = ID_reg_inst[31:25] == 7'h20; // @[IDU.scala 54:99]
+  wire  op_t_4 = _op_t_0_T_4 & ID_reg_inst[31:25] == 7'h20; // @[IDU.scala 54:79]
+  wire  op_t_5 = _op_t_1_T_4 & _op_t_4_T_6; // @[IDU.scala 55:79]
+  wire  _op_t_6_T_3 = ID_reg_inst[14:12] == 3'h7; // @[IDU.scala 56:67]
+  wire  _op_t_6_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h7; // @[IDU.scala 56:47]
+  wire  op_t_6 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h7 & _op_t_0_T_6; // @[IDU.scala 56:79]
+  wire  op_t_7 = _op_t_2_T_1 & _op_t_6_T_3; // @[IDU.scala 57:47]
+  wire  _op_t_8_T_3 = ID_reg_inst[14:12] == 3'h6; // @[IDU.scala 58:67]
+  wire  _op_t_8_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h6; // @[IDU.scala 58:47]
+  wire  op_t_8 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h6 & _op_t_0_T_6; // @[IDU.scala 58:79]
+  wire  op_t_9 = _op_t_2_T_1 & _op_t_8_T_3; // @[IDU.scala 59:47]
+  wire  _op_t_10_T_3 = ID_reg_inst[14:12] == 3'h4; // @[IDU.scala 60:67]
+  wire  _op_t_10_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h4; // @[IDU.scala 60:47]
+  wire  op_t_10 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h4 & _op_t_0_T_6; // @[IDU.scala 60:79]
+  wire  op_t_11 = _op_t_2_T_1 & _op_t_10_T_3; // @[IDU.scala 61:47]
+  wire  _op_t_12_T_3 = ID_reg_inst[14:12] == 3'h1; // @[IDU.scala 62:67]
+  wire  _op_t_12_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h1; // @[IDU.scala 62:47]
+  wire  op_t_12 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h1 & _op_t_0_T_6; // @[IDU.scala 62:79]
+  wire  op_t_13 = _op_t_1_T_1 & _op_t_12_T_3 & _op_t_0_T_6; // @[IDU.scala 63:79]
+  wire  _op_t_14_T_6 = ID_reg_inst[31:26] == 6'h0; // @[IDU.scala 64:99]
+  wire  op_t_14 = _op_t_2_T_1 & _op_t_12_T_3 & ID_reg_inst[31:26] == 6'h0; // @[IDU.scala 64:79]
+  wire  op_t_15 = _op_t_3_T_1 & _op_t_12_T_3 & _op_t_14_T_6; // @[IDU.scala 65:79]
+  wire  _op_t_16_T_3 = ID_reg_inst[14:12] == 3'h5; // @[IDU.scala 66:67]
+  wire  _op_t_16_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h5; // @[IDU.scala 66:47]
+  wire  op_t_16 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h5 & _op_t_4_T_6; // @[IDU.scala 66:79]
+  wire  _op_t_17_T_4 = _op_t_1_T_1 & _op_t_16_T_3; // @[IDU.scala 67:47]
+  wire  op_t_17 = _op_t_1_T_1 & _op_t_16_T_3 & _op_t_4_T_6; // @[IDU.scala 67:79]
+  wire  _op_t_18_T_4 = _op_t_2_T_1 & _op_t_16_T_3; // @[IDU.scala 68:47]
+  wire  _op_t_18_T_6 = ID_reg_inst[31:26] == 6'h10; // @[IDU.scala 68:99]
+  wire  op_t_18 = _op_t_2_T_1 & _op_t_16_T_3 & ID_reg_inst[31:26] == 6'h10; // @[IDU.scala 68:79]
+  wire  _op_t_19_T_4 = _op_t_3_T_1 & _op_t_16_T_3; // @[IDU.scala 69:47]
+  wire  op_t_19 = _op_t_3_T_1 & _op_t_16_T_3 & _op_t_18_T_6; // @[IDU.scala 69:79]
+  wire  op_t_20 = _op_t_16_T_4 & _op_t_0_T_6; // @[IDU.scala 70:79]
+  wire  op_t_21 = _op_t_17_T_4 & _op_t_0_T_6; // @[IDU.scala 71:79]
+  wire  op_t_22 = _op_t_18_T_4 & _op_t_14_T_6; // @[IDU.scala 72:79]
+  wire  op_t_23 = _op_t_19_T_4 & _op_t_14_T_6; // @[IDU.scala 73:79]
+  wire  op_t_24 = ID_reg_inst[6:0] == 7'h37; // @[IDU.scala 74:31]
+  wire  op_t_25 = ID_reg_inst[6:0] == 7'h17; // @[IDU.scala 75:31]
+  wire  _op_t_26_T_3 = ID_reg_inst[14:12] == 3'h2; // @[IDU.scala 76:67]
+  wire  _op_t_26_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h2; // @[IDU.scala 76:47]
+  wire  op_t_26 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h2 & _op_t_0_T_6; // @[IDU.scala 76:79]
+  wire  _op_t_27_T_3 = ID_reg_inst[14:12] == 3'h3; // @[IDU.scala 77:67]
+  wire  _op_t_27_T_4 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h3; // @[IDU.scala 77:47]
+  wire  op_t_27 = _op_t_0_T_1 & ID_reg_inst[14:12] == 3'h3 & _op_t_0_T_6; // @[IDU.scala 77:79]
+  wire  op_t_28 = _op_t_2_T_1 & _op_t_26_T_3; // @[IDU.scala 78:47]
+  wire  op_t_29 = _op_t_2_T_1 & _op_t_27_T_3; // @[IDU.scala 79:47]
+  wire  _op_t_30_T_1 = ID_reg_inst[6:0] == 7'h63; // @[IDU.scala 80:31]
+  wire  op_t_30 = ID_reg_inst[6:0] == 7'h63 & _op_t_0_T_3; // @[IDU.scala 80:47]
+  wire  op_t_31 = _op_t_30_T_1 & _op_t_12_T_3; // @[IDU.scala 81:47]
+  wire  op_t_32 = _op_t_30_T_1 & _op_t_16_T_3; // @[IDU.scala 82:47]
+  wire  op_t_33 = _op_t_30_T_1 & _op_t_6_T_3; // @[IDU.scala 83:47]
+  wire  op_t_34 = _op_t_30_T_1 & _op_t_10_T_3; // @[IDU.scala 84:47]
+  wire  op_t_35 = _op_t_30_T_1 & _op_t_8_T_3; // @[IDU.scala 85:47]
+  wire  op_t_36 = ID_reg_inst[6:0] == 7'h6f; // @[IDU.scala 86:31]
+  wire  op_t_37 = ID_reg_inst[6:0] == 7'h67 & _op_t_0_T_3; // @[IDU.scala 87:47]
+  wire  _op_t_38_T_1 = ID_reg_inst[6:0] == 7'h3; // @[IDU.scala 88:31]
+  wire  op_t_38 = ID_reg_inst[6:0] == 7'h3 & _op_t_0_T_3; // @[IDU.scala 88:47]
+  wire  op_t_39 = _op_t_38_T_1 & _op_t_12_T_3; // @[IDU.scala 89:47]
+  wire  op_t_40 = _op_t_38_T_1 & _op_t_26_T_3; // @[IDU.scala 90:47]
+  wire  op_t_41 = _op_t_38_T_1 & _op_t_27_T_3; // @[IDU.scala 91:47]
+  wire  _op_t_42_T_1 = ID_reg_inst[6:0] == 7'h23; // @[IDU.scala 92:31]
+  wire  op_t_42 = ID_reg_inst[6:0] == 7'h23 & _op_t_0_T_3; // @[IDU.scala 92:47]
+  wire  op_t_43 = _op_t_42_T_1 & _op_t_12_T_3; // @[IDU.scala 93:47]
+  wire  op_t_44 = _op_t_42_T_1 & _op_t_26_T_3; // @[IDU.scala 94:47]
+  wire  op_t_45 = _op_t_42_T_1 & _op_t_27_T_3; // @[IDU.scala 95:47]
+  wire  op_t_46 = _op_t_38_T_1 & _op_t_10_T_3; // @[IDU.scala 96:47]
+  wire  op_t_47 = _op_t_38_T_1 & _op_t_16_T_3; // @[IDU.scala 97:47]
+  wire  op_t_48 = _op_t_38_T_1 & _op_t_8_T_3; // @[IDU.scala 98:47]
+  wire  op_t_49 = ID_reg_inst == 32'h100073; // @[IDU.scala 99:26]
+  wire  _op_t_50_T_6 = ID_reg_inst[31:25] == 7'h1; // @[IDU.scala 102:99]
+  wire  op_t_50 = _op_t_0_T_4 & ID_reg_inst[31:25] == 7'h1; // @[IDU.scala 102:79]
+  wire  op_t_51 = _op_t_1_T_4 & _op_t_50_T_6; // @[IDU.scala 103:79]
+  wire  op_t_52 = _op_t_12_T_4 & _op_t_50_T_6; // @[IDU.scala 104:79]
+  wire  op_t_53 = _op_t_27_T_4 & _op_t_50_T_6; // @[IDU.scala 105:79]
+  wire  op_t_54 = _op_t_26_T_4 & _op_t_50_T_6; // @[IDU.scala 106:79]
+  wire  op_t_55 = _op_t_10_T_4 & _op_t_50_T_6; // @[IDU.scala 107:79]
+  wire  op_t_56 = _op_t_1_T_1 & _op_t_10_T_3 & _op_t_50_T_6; // @[IDU.scala 108:79]
+  wire  op_t_57 = _op_t_16_T_4 & _op_t_50_T_6; // @[IDU.scala 109:79]
+  wire  op_t_58 = _op_t_17_T_4 & _op_t_50_T_6; // @[IDU.scala 110:79]
+  wire  op_t_59 = _op_t_8_T_4 & _op_t_50_T_6; // @[IDU.scala 111:79]
+  wire  op_t_60 = _op_t_1_T_1 & _op_t_8_T_3 & _op_t_50_T_6; // @[IDU.scala 112:79]
+  wire  op_t_61 = _op_t_6_T_4 & _op_t_50_T_6; // @[IDU.scala 113:79]
+  wire  op_t_62 = _op_t_1_T_1 & _op_t_6_T_3 & _op_t_50_T_6; // @[IDU.scala 114:79]
+  wire  _op_t_63_T_1 = ID_reg_inst[6:0] == 7'h73; // @[IDU.scala 117:31]
+  wire  op_t_63 = ID_reg_inst[6:0] == 7'h73 & _op_t_12_T_3; // @[IDU.scala 117:47]
+  wire  op_t_64 = _op_t_63_T_1 & _op_t_26_T_3; // @[IDU.scala 118:47]
+  wire  op_t_65 = ID_reg_inst == 32'h73; // @[IDU.scala 119:26]
+  wire  op_t_66 = ID_reg_inst == 32'h30200073; // @[IDU.scala 120:26]
+  wire [9:0] op_lo_lo_lo = {op_t_9,op_t_8,op_t_7,op_t_6,op_t_5,op_t_4,op_t_3,op_t_2,op_t_1,op_t_0}; // @[IDU.scala 123:13]
+  wire [9:0] op_lo_lo_hi = {op_t_19,op_t_18,op_t_17,op_t_16,op_t_15,op_t_14,op_t_13,op_t_12,op_t_11,op_t_10}; // @[IDU.scala 123:13]
+  wire [9:0] op_lo_hi_lo = {op_t_29,op_t_28,op_t_27,op_t_26,op_t_25,op_t_24,op_t_23,op_t_22,op_t_21,op_t_20}; // @[IDU.scala 123:13]
+  wire [9:0] op_lo_hi_hi = {op_t_39,op_t_38,op_t_37,op_t_36,op_t_35,op_t_34,op_t_33,op_t_32,op_t_31,op_t_30}; // @[IDU.scala 123:13]
+  wire [39:0] op_lo = {op_lo_hi_hi,op_lo_hi_lo,op_lo_lo_hi,op_lo_lo_lo}; // @[IDU.scala 123:13]
+  wire [9:0] op_hi_lo_lo = {op_t_49,op_t_48,op_t_47,op_t_46,op_t_45,op_t_44,op_t_43,op_t_42,op_t_41,op_t_40}; // @[IDU.scala 123:13]
+  wire [9:0] op_hi_lo_hi = {op_t_59,op_t_58,op_t_57,op_t_56,op_t_55,op_t_54,op_t_53,op_t_52,op_t_51,op_t_50}; // @[IDU.scala 123:13]
+  wire [19:0] op_hi_lo = {op_hi_lo_hi,op_hi_lo_lo}; // @[IDU.scala 123:13]
+  wire [39:0] op_hi = {10'h0,3'h0,op_t_66,op_t_65,op_t_64,op_t_63,op_t_62,op_t_61,op_t_60,op_hi_lo}; // @[IDU.scala 123:13]
+  wire [79:0] op = {op_hi,op_lo_hi_hi,op_lo_hi_lo,op_lo_lo_hi,op_lo_lo_lo}; // @[IDU.scala 123:13]
+  wire  _typ_t_0_T_30 = op[2] | op[3] | op[7] | op[9] | op[11] | op[14] | op[15] | op[18] | op[19] | op[22] | op[23] |
+    op[28] | op[29] | op[37] | op[38] | op[39]; // @[IDU.scala 137:116]
+  wire  typ_t_0 = _typ_t_0_T_30 | op[40] | op[41] | op[46] | op[47] | op[48] | op[63] | op[64]; // @[IDU.scala 137:165]
+  wire  typ_t_1 = op[24] | op[25]; // @[IDU.scala 138:22]
+  wire  typ_t_2 = op[42] | op[43] | op[44] | op[45]; // @[IDU.scala 139:36]
+  wire  typ_t_3 = op[36]; // @[IDU.scala 140:18]
+  wire  typ_t_4 = op[30] | op[31] | op[32] | op[33] | op[34] | op[35]; // @[IDU.scala 141:50]
+  wire  _typ_t_5_T_30 = op[0] | op[1] | op[4] | op[5] | op[6] | op[8] | op[10] | op[12] | op[13] | op[16] | op[17] | op[
+    20] | op[21] | op[26] | op[27] | op[50]; // @[IDU.scala 142:114]
+  wire  typ_t_5 = _typ_t_5_T_30 | op[51] | op[52] | op[53] | op[54] | op[55] | op[56] | op[57] | op[58] | op[59] | op[60
+    ] | op[61] | op[62]; // @[IDU.scala 142:198]
+  wire [2:0] typ_lo = {typ_t_2,typ_t_1,typ_t_0}; // @[IDU.scala 144:15]
+  wire [2:0] typ_hi = {typ_t_5,typ_t_4,typ_t_3}; // @[IDU.scala 144:15]
+  wire [5:0] typ = {typ_t_5,typ_t_4,typ_t_3,typ_t_2,typ_t_1,typ_t_0}; // @[IDU.scala 144:15]
   wire [51:0] _io_out_bits_imm_T_3 = ID_reg_inst[31] ? 52'hfffffffffffff : 52'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _io_out_bits_imm_T_5 = {_io_out_bits_imm_T_3,ID_reg_inst[31:20]}; // @[Cat.scala 33:92]
   wire [31:0] _io_out_bits_imm_T_9 = ID_reg_inst[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
@@ -589,25 +602,25 @@ module IDU(
   wire [50:0] _io_out_bits_imm_T_38 = ID_reg_inst[31] ? 51'h7ffffffffffff : 51'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _io_out_bits_imm_T_47 = {_io_out_bits_imm_T_38,ID_reg_inst[31],ID_reg_inst[7],ID_reg_inst[30:25],
     ID_reg_inst[11:8],1'h0}; // @[Cat.scala 33:92]
-  wire [63:0] _io_out_bits_imm_T_48 = typ[4] ? _io_out_bits_imm_T_47 : 64'h0; // @[IDU.scala 142:16]
-  wire [63:0] _io_out_bits_imm_T_49 = typ[3] ? _io_out_bits_imm_T_34 : _io_out_bits_imm_T_48; // @[IDU.scala 141:16]
-  wire [63:0] _io_out_bits_imm_T_50 = typ[2] ? _io_out_bits_imm_T_21 : _io_out_bits_imm_T_49; // @[IDU.scala 140:16]
-  wire [63:0] _io_out_bits_imm_T_51 = typ[1] ? _io_out_bits_imm_T_13 : _io_out_bits_imm_T_50; // @[IDU.scala 139:16]
+  wire [63:0] _io_out_bits_imm_T_48 = typ[4] ? _io_out_bits_imm_T_47 : 64'h0; // @[IDU.scala 153:25]
+  wire [63:0] _io_out_bits_imm_T_49 = typ[3] ? _io_out_bits_imm_T_34 : _io_out_bits_imm_T_48; // @[IDU.scala 152:25]
+  wire [63:0] _io_out_bits_imm_T_50 = typ[2] ? _io_out_bits_imm_T_21 : _io_out_bits_imm_T_49; // @[IDU.scala 151:25]
+  wire [63:0] _io_out_bits_imm_T_51 = typ[1] ? _io_out_bits_imm_T_13 : _io_out_bits_imm_T_50; // @[IDU.scala 150:25]
   assign io_in_ready = ~state & ~io_sb_isBusy; // @[IDU.scala 41:36]
   assign io_out_valid = state & _io_in_ready_T_1; // @[IDU.scala 42:43]
   assign io_out_bits_pc = ID_reg_pc; // @[IDU.scala 43:18]
   assign io_out_bits_inst = ID_reg_inst; // @[IDU.scala 44:20]
-  assign io_out_bits_rs1 = ID_reg_inst[19:15]; // @[IDU.scala 126:33]
-  assign io_out_bits_rs2 = ID_reg_inst[24:20]; // @[IDU.scala 127:33]
-  assign io_out_bits_rd = ID_reg_inst[11:7]; // @[IDU.scala 125:32]
-  assign io_out_bits_imm = typ[0] ? _io_out_bits_imm_T_5 : _io_out_bits_imm_T_51; // @[IDU.scala 138:25]
-  assign io_out_bits_op = _op_T_747[79:0]; // @[IDU.scala 46:16 48:7]
-  assign io_out_bits_typ = _typ_T_30 | op[40] | op[41] | op[46] | op[47] | op[48] | op[63] | op[64] ? 6'h1 : _typ_T_126; // @[IDU.scala 130:14]
+  assign io_out_bits_rs1 = ID_reg_inst[19:15]; // @[IDU.scala 127:32]
+  assign io_out_bits_rs2 = ID_reg_inst[24:20]; // @[IDU.scala 128:32]
+  assign io_out_bits_rd = ID_reg_inst[11:7]; // @[IDU.scala 126:31]
+  assign io_out_bits_imm = typ[0] ? _io_out_bits_imm_T_5 : _io_out_bits_imm_T_51; // @[IDU.scala 149:25]
+  assign io_out_bits_op = {op_hi,op_lo}; // @[IDU.scala 123:13]
+  assign io_out_bits_typ = {typ_hi,typ_lo}; // @[IDU.scala 144:15]
   assign io_out_bits_isJump = ID_reg_isJump; // @[IDU.scala 29:22]
-  assign io_out_bits_clearidx = io_sb_setidx; // @[IDU.scala 149:24]
-  assign io_sb_lookidx1 = typ[0] | typ[2] | typ[4] | typ[5] ? ID_reg_inst[19:15] : 5'h0; // @[IDU.scala 146:23]
-  assign io_sb_lookidx2 = typ[2] | typ[4] | typ[5] ? ID_reg_inst[24:20] : 5'h0; // @[IDU.scala 147:23]
-  assign io_sb_setidx = (typ[0] | typ[1] | typ[3] | typ[5]) & _state_T_2 ? ID_reg_inst[11:7] : 5'h0; // @[IDU.scala 148:21]
+  assign io_out_bits_clearidx = io_sb_setidx; // @[IDU.scala 160:24]
+  assign io_sb_lookidx1 = typ[0] | typ[2] | typ[4] | typ[5] ? ID_reg_inst[19:15] : 5'h0; // @[IDU.scala 157:23]
+  assign io_sb_lookidx2 = typ[2] | typ[4] | typ[5] ? ID_reg_inst[24:20] : 5'h0; // @[IDU.scala 158:23]
+  assign io_sb_setidx = (typ[0] | typ[1] | typ[3] | typ[5]) & _state_T_2 ? ID_reg_inst[11:7] : 5'h0; // @[IDU.scala 159:21]
   always @(posedge clock) begin
     if (reset) begin // @[Reg.scala 35:20]
       ID_reg_inst <= 32'h0; // @[Reg.scala 35:20]
@@ -839,6 +852,7 @@ endmodule
 module mul_cell(
   input          clock,
   input          reset,
+  input          io_flush,
   input          io_valid,
   input  [128:0] io_a_in,
   input  [128:0] io_b_in,
@@ -880,33 +894,45 @@ module mul_cell(
   always @(posedge clock) begin
     if (reset) begin // @[mul.scala 25:22]
       reg_a <= 64'h0; // @[mul.scala 25:22]
+    end else if (io_flush) begin // @[mul.scala 27:16]
+      reg_a <= 64'h0;
     end else if (io_valid) begin // @[mul.scala 28:15]
       reg_a <= io_a;
     end
     if (reset) begin // @[mul.scala 26:22]
       reg_b <= 64'h0; // @[mul.scala 26:22]
+    end else if (io_flush) begin // @[mul.scala 30:16]
+      reg_b <= 64'h0;
     end else if (io_valid) begin // @[mul.scala 31:15]
       reg_b <= io_b;
     end
     if (reset) begin // @[mul.scala 36:22]
       a_in <= 129'h0; // @[mul.scala 36:22]
+    end else if (io_flush) begin // @[mul.scala 42:17]
+      a_in <= 129'h0;
     end else if (io_valid) begin // @[mul.scala 43:16]
       a_in <= io_a_in;
     end
     if (reset) begin // @[mul.scala 37:22]
       b_in <= 129'h0; // @[mul.scala 37:22]
+    end else if (io_flush) begin // @[mul.scala 46:17]
+      b_in <= 129'h0;
     end else if (io_valid) begin // @[mul.scala 47:16]
       b_in <= io_b_in;
     end
     if (reset) begin // @[mul.scala 38:24]
       sum_in <= 129'h0; // @[mul.scala 38:24]
+    end else if (io_flush) begin // @[mul.scala 50:17]
+      sum_in <= 129'h0;
     end else if (io_valid) begin // @[mul.scala 51:16]
       sum_in <= io_sum_in;
     end
     if (reset) begin // @[mul.scala 39:22]
       valid <= 1'h0; // @[mul.scala 39:22]
+    end else if (io_flush) begin // @[mul.scala 54:17]
+      valid <= 1'h0;
     end else begin
-      valid <= io_valid; // @[mul.scala 54:11]
+      valid <= io_valid;
     end
   end
 // Register and memory initialization
@@ -982,6 +1008,7 @@ module mul_pipe(
 `endif // RANDOMIZE_REG_INIT
   wire  cell_0_clock; // @[mul.scala 95:35]
   wire  cell_0_reset; // @[mul.scala 95:35]
+  wire  cell_0_io_flush; // @[mul.scala 95:35]
   wire  cell_0_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_0_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_0_io_b_in; // @[mul.scala 95:35]
@@ -997,6 +1024,7 @@ module mul_pipe(
   wire [63:0] cell_0_io_B; // @[mul.scala 95:35]
   wire  cell_1_clock; // @[mul.scala 95:35]
   wire  cell_1_reset; // @[mul.scala 95:35]
+  wire  cell_1_io_flush; // @[mul.scala 95:35]
   wire  cell_1_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_1_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_1_io_b_in; // @[mul.scala 95:35]
@@ -1012,6 +1040,7 @@ module mul_pipe(
   wire [63:0] cell_1_io_B; // @[mul.scala 95:35]
   wire  cell_2_clock; // @[mul.scala 95:35]
   wire  cell_2_reset; // @[mul.scala 95:35]
+  wire  cell_2_io_flush; // @[mul.scala 95:35]
   wire  cell_2_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_2_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_2_io_b_in; // @[mul.scala 95:35]
@@ -1027,6 +1056,7 @@ module mul_pipe(
   wire [63:0] cell_2_io_B; // @[mul.scala 95:35]
   wire  cell_3_clock; // @[mul.scala 95:35]
   wire  cell_3_reset; // @[mul.scala 95:35]
+  wire  cell_3_io_flush; // @[mul.scala 95:35]
   wire  cell_3_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_3_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_3_io_b_in; // @[mul.scala 95:35]
@@ -1042,6 +1072,7 @@ module mul_pipe(
   wire [63:0] cell_3_io_B; // @[mul.scala 95:35]
   wire  cell_4_clock; // @[mul.scala 95:35]
   wire  cell_4_reset; // @[mul.scala 95:35]
+  wire  cell_4_io_flush; // @[mul.scala 95:35]
   wire  cell_4_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_4_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_4_io_b_in; // @[mul.scala 95:35]
@@ -1057,6 +1088,7 @@ module mul_pipe(
   wire [63:0] cell_4_io_B; // @[mul.scala 95:35]
   wire  cell_5_clock; // @[mul.scala 95:35]
   wire  cell_5_reset; // @[mul.scala 95:35]
+  wire  cell_5_io_flush; // @[mul.scala 95:35]
   wire  cell_5_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_5_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_5_io_b_in; // @[mul.scala 95:35]
@@ -1072,6 +1104,7 @@ module mul_pipe(
   wire [63:0] cell_5_io_B; // @[mul.scala 95:35]
   wire  cell_6_clock; // @[mul.scala 95:35]
   wire  cell_6_reset; // @[mul.scala 95:35]
+  wire  cell_6_io_flush; // @[mul.scala 95:35]
   wire  cell_6_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_6_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_6_io_b_in; // @[mul.scala 95:35]
@@ -1087,6 +1120,7 @@ module mul_pipe(
   wire [63:0] cell_6_io_B; // @[mul.scala 95:35]
   wire  cell_7_clock; // @[mul.scala 95:35]
   wire  cell_7_reset; // @[mul.scala 95:35]
+  wire  cell_7_io_flush; // @[mul.scala 95:35]
   wire  cell_7_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_7_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_7_io_b_in; // @[mul.scala 95:35]
@@ -1102,6 +1136,7 @@ module mul_pipe(
   wire [63:0] cell_7_io_B; // @[mul.scala 95:35]
   wire  cell_8_clock; // @[mul.scala 95:35]
   wire  cell_8_reset; // @[mul.scala 95:35]
+  wire  cell_8_io_flush; // @[mul.scala 95:35]
   wire  cell_8_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_8_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_8_io_b_in; // @[mul.scala 95:35]
@@ -1117,6 +1152,7 @@ module mul_pipe(
   wire [63:0] cell_8_io_B; // @[mul.scala 95:35]
   wire  cell_9_clock; // @[mul.scala 95:35]
   wire  cell_9_reset; // @[mul.scala 95:35]
+  wire  cell_9_io_flush; // @[mul.scala 95:35]
   wire  cell_9_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_9_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_9_io_b_in; // @[mul.scala 95:35]
@@ -1132,6 +1168,7 @@ module mul_pipe(
   wire [63:0] cell_9_io_B; // @[mul.scala 95:35]
   wire  cell_10_clock; // @[mul.scala 95:35]
   wire  cell_10_reset; // @[mul.scala 95:35]
+  wire  cell_10_io_flush; // @[mul.scala 95:35]
   wire  cell_10_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_10_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_10_io_b_in; // @[mul.scala 95:35]
@@ -1147,6 +1184,7 @@ module mul_pipe(
   wire [63:0] cell_10_io_B; // @[mul.scala 95:35]
   wire  cell_11_clock; // @[mul.scala 95:35]
   wire  cell_11_reset; // @[mul.scala 95:35]
+  wire  cell_11_io_flush; // @[mul.scala 95:35]
   wire  cell_11_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_11_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_11_io_b_in; // @[mul.scala 95:35]
@@ -1162,6 +1200,7 @@ module mul_pipe(
   wire [63:0] cell_11_io_B; // @[mul.scala 95:35]
   wire  cell_12_clock; // @[mul.scala 95:35]
   wire  cell_12_reset; // @[mul.scala 95:35]
+  wire  cell_12_io_flush; // @[mul.scala 95:35]
   wire  cell_12_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_12_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_12_io_b_in; // @[mul.scala 95:35]
@@ -1177,6 +1216,7 @@ module mul_pipe(
   wire [63:0] cell_12_io_B; // @[mul.scala 95:35]
   wire  cell_13_clock; // @[mul.scala 95:35]
   wire  cell_13_reset; // @[mul.scala 95:35]
+  wire  cell_13_io_flush; // @[mul.scala 95:35]
   wire  cell_13_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_13_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_13_io_b_in; // @[mul.scala 95:35]
@@ -1192,6 +1232,7 @@ module mul_pipe(
   wire [63:0] cell_13_io_B; // @[mul.scala 95:35]
   wire  cell_14_clock; // @[mul.scala 95:35]
   wire  cell_14_reset; // @[mul.scala 95:35]
+  wire  cell_14_io_flush; // @[mul.scala 95:35]
   wire  cell_14_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_14_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_14_io_b_in; // @[mul.scala 95:35]
@@ -1207,6 +1248,7 @@ module mul_pipe(
   wire [63:0] cell_14_io_B; // @[mul.scala 95:35]
   wire  cell_15_clock; // @[mul.scala 95:35]
   wire  cell_15_reset; // @[mul.scala 95:35]
+  wire  cell_15_io_flush; // @[mul.scala 95:35]
   wire  cell_15_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_15_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_15_io_b_in; // @[mul.scala 95:35]
@@ -1222,6 +1264,7 @@ module mul_pipe(
   wire [63:0] cell_15_io_B; // @[mul.scala 95:35]
   wire  cell_16_clock; // @[mul.scala 95:35]
   wire  cell_16_reset; // @[mul.scala 95:35]
+  wire  cell_16_io_flush; // @[mul.scala 95:35]
   wire  cell_16_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_16_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_16_io_b_in; // @[mul.scala 95:35]
@@ -1237,6 +1280,7 @@ module mul_pipe(
   wire [63:0] cell_16_io_B; // @[mul.scala 95:35]
   wire  cell_17_clock; // @[mul.scala 95:35]
   wire  cell_17_reset; // @[mul.scala 95:35]
+  wire  cell_17_io_flush; // @[mul.scala 95:35]
   wire  cell_17_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_17_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_17_io_b_in; // @[mul.scala 95:35]
@@ -1252,6 +1296,7 @@ module mul_pipe(
   wire [63:0] cell_17_io_B; // @[mul.scala 95:35]
   wire  cell_18_clock; // @[mul.scala 95:35]
   wire  cell_18_reset; // @[mul.scala 95:35]
+  wire  cell_18_io_flush; // @[mul.scala 95:35]
   wire  cell_18_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_18_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_18_io_b_in; // @[mul.scala 95:35]
@@ -1267,6 +1312,7 @@ module mul_pipe(
   wire [63:0] cell_18_io_B; // @[mul.scala 95:35]
   wire  cell_19_clock; // @[mul.scala 95:35]
   wire  cell_19_reset; // @[mul.scala 95:35]
+  wire  cell_19_io_flush; // @[mul.scala 95:35]
   wire  cell_19_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_19_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_19_io_b_in; // @[mul.scala 95:35]
@@ -1282,6 +1328,7 @@ module mul_pipe(
   wire [63:0] cell_19_io_B; // @[mul.scala 95:35]
   wire  cell_20_clock; // @[mul.scala 95:35]
   wire  cell_20_reset; // @[mul.scala 95:35]
+  wire  cell_20_io_flush; // @[mul.scala 95:35]
   wire  cell_20_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_20_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_20_io_b_in; // @[mul.scala 95:35]
@@ -1297,6 +1344,7 @@ module mul_pipe(
   wire [63:0] cell_20_io_B; // @[mul.scala 95:35]
   wire  cell_21_clock; // @[mul.scala 95:35]
   wire  cell_21_reset; // @[mul.scala 95:35]
+  wire  cell_21_io_flush; // @[mul.scala 95:35]
   wire  cell_21_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_21_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_21_io_b_in; // @[mul.scala 95:35]
@@ -1312,6 +1360,7 @@ module mul_pipe(
   wire [63:0] cell_21_io_B; // @[mul.scala 95:35]
   wire  cell_22_clock; // @[mul.scala 95:35]
   wire  cell_22_reset; // @[mul.scala 95:35]
+  wire  cell_22_io_flush; // @[mul.scala 95:35]
   wire  cell_22_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_22_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_22_io_b_in; // @[mul.scala 95:35]
@@ -1327,6 +1376,7 @@ module mul_pipe(
   wire [63:0] cell_22_io_B; // @[mul.scala 95:35]
   wire  cell_23_clock; // @[mul.scala 95:35]
   wire  cell_23_reset; // @[mul.scala 95:35]
+  wire  cell_23_io_flush; // @[mul.scala 95:35]
   wire  cell_23_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_23_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_23_io_b_in; // @[mul.scala 95:35]
@@ -1342,6 +1392,7 @@ module mul_pipe(
   wire [63:0] cell_23_io_B; // @[mul.scala 95:35]
   wire  cell_24_clock; // @[mul.scala 95:35]
   wire  cell_24_reset; // @[mul.scala 95:35]
+  wire  cell_24_io_flush; // @[mul.scala 95:35]
   wire  cell_24_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_24_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_24_io_b_in; // @[mul.scala 95:35]
@@ -1357,6 +1408,7 @@ module mul_pipe(
   wire [63:0] cell_24_io_B; // @[mul.scala 95:35]
   wire  cell_25_clock; // @[mul.scala 95:35]
   wire  cell_25_reset; // @[mul.scala 95:35]
+  wire  cell_25_io_flush; // @[mul.scala 95:35]
   wire  cell_25_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_25_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_25_io_b_in; // @[mul.scala 95:35]
@@ -1372,6 +1424,7 @@ module mul_pipe(
   wire [63:0] cell_25_io_B; // @[mul.scala 95:35]
   wire  cell_26_clock; // @[mul.scala 95:35]
   wire  cell_26_reset; // @[mul.scala 95:35]
+  wire  cell_26_io_flush; // @[mul.scala 95:35]
   wire  cell_26_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_26_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_26_io_b_in; // @[mul.scala 95:35]
@@ -1387,6 +1440,7 @@ module mul_pipe(
   wire [63:0] cell_26_io_B; // @[mul.scala 95:35]
   wire  cell_27_clock; // @[mul.scala 95:35]
   wire  cell_27_reset; // @[mul.scala 95:35]
+  wire  cell_27_io_flush; // @[mul.scala 95:35]
   wire  cell_27_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_27_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_27_io_b_in; // @[mul.scala 95:35]
@@ -1402,6 +1456,7 @@ module mul_pipe(
   wire [63:0] cell_27_io_B; // @[mul.scala 95:35]
   wire  cell_28_clock; // @[mul.scala 95:35]
   wire  cell_28_reset; // @[mul.scala 95:35]
+  wire  cell_28_io_flush; // @[mul.scala 95:35]
   wire  cell_28_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_28_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_28_io_b_in; // @[mul.scala 95:35]
@@ -1417,6 +1472,7 @@ module mul_pipe(
   wire [63:0] cell_28_io_B; // @[mul.scala 95:35]
   wire  cell_29_clock; // @[mul.scala 95:35]
   wire  cell_29_reset; // @[mul.scala 95:35]
+  wire  cell_29_io_flush; // @[mul.scala 95:35]
   wire  cell_29_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_29_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_29_io_b_in; // @[mul.scala 95:35]
@@ -1432,6 +1488,7 @@ module mul_pipe(
   wire [63:0] cell_29_io_B; // @[mul.scala 95:35]
   wire  cell_30_clock; // @[mul.scala 95:35]
   wire  cell_30_reset; // @[mul.scala 95:35]
+  wire  cell_30_io_flush; // @[mul.scala 95:35]
   wire  cell_30_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_30_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_30_io_b_in; // @[mul.scala 95:35]
@@ -1447,6 +1504,7 @@ module mul_pipe(
   wire [63:0] cell_30_io_B; // @[mul.scala 95:35]
   wire  cell_31_clock; // @[mul.scala 95:35]
   wire  cell_31_reset; // @[mul.scala 95:35]
+  wire  cell_31_io_flush; // @[mul.scala 95:35]
   wire  cell_31_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_31_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_31_io_b_in; // @[mul.scala 95:35]
@@ -1462,6 +1520,7 @@ module mul_pipe(
   wire [63:0] cell_31_io_B; // @[mul.scala 95:35]
   wire  cell_32_clock; // @[mul.scala 95:35]
   wire  cell_32_reset; // @[mul.scala 95:35]
+  wire  cell_32_io_flush; // @[mul.scala 95:35]
   wire  cell_32_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_32_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_32_io_b_in; // @[mul.scala 95:35]
@@ -1477,6 +1536,7 @@ module mul_pipe(
   wire [63:0] cell_32_io_B; // @[mul.scala 95:35]
   wire  cell_33_clock; // @[mul.scala 95:35]
   wire  cell_33_reset; // @[mul.scala 95:35]
+  wire  cell_33_io_flush; // @[mul.scala 95:35]
   wire  cell_33_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_33_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_33_io_b_in; // @[mul.scala 95:35]
@@ -1492,6 +1552,7 @@ module mul_pipe(
   wire [63:0] cell_33_io_B; // @[mul.scala 95:35]
   wire  cell_34_clock; // @[mul.scala 95:35]
   wire  cell_34_reset; // @[mul.scala 95:35]
+  wire  cell_34_io_flush; // @[mul.scala 95:35]
   wire  cell_34_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_34_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_34_io_b_in; // @[mul.scala 95:35]
@@ -1507,6 +1568,7 @@ module mul_pipe(
   wire [63:0] cell_34_io_B; // @[mul.scala 95:35]
   wire  cell_35_clock; // @[mul.scala 95:35]
   wire  cell_35_reset; // @[mul.scala 95:35]
+  wire  cell_35_io_flush; // @[mul.scala 95:35]
   wire  cell_35_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_35_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_35_io_b_in; // @[mul.scala 95:35]
@@ -1522,6 +1584,7 @@ module mul_pipe(
   wire [63:0] cell_35_io_B; // @[mul.scala 95:35]
   wire  cell_36_clock; // @[mul.scala 95:35]
   wire  cell_36_reset; // @[mul.scala 95:35]
+  wire  cell_36_io_flush; // @[mul.scala 95:35]
   wire  cell_36_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_36_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_36_io_b_in; // @[mul.scala 95:35]
@@ -1537,6 +1600,7 @@ module mul_pipe(
   wire [63:0] cell_36_io_B; // @[mul.scala 95:35]
   wire  cell_37_clock; // @[mul.scala 95:35]
   wire  cell_37_reset; // @[mul.scala 95:35]
+  wire  cell_37_io_flush; // @[mul.scala 95:35]
   wire  cell_37_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_37_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_37_io_b_in; // @[mul.scala 95:35]
@@ -1552,6 +1616,7 @@ module mul_pipe(
   wire [63:0] cell_37_io_B; // @[mul.scala 95:35]
   wire  cell_38_clock; // @[mul.scala 95:35]
   wire  cell_38_reset; // @[mul.scala 95:35]
+  wire  cell_38_io_flush; // @[mul.scala 95:35]
   wire  cell_38_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_38_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_38_io_b_in; // @[mul.scala 95:35]
@@ -1567,6 +1632,7 @@ module mul_pipe(
   wire [63:0] cell_38_io_B; // @[mul.scala 95:35]
   wire  cell_39_clock; // @[mul.scala 95:35]
   wire  cell_39_reset; // @[mul.scala 95:35]
+  wire  cell_39_io_flush; // @[mul.scala 95:35]
   wire  cell_39_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_39_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_39_io_b_in; // @[mul.scala 95:35]
@@ -1582,6 +1648,7 @@ module mul_pipe(
   wire [63:0] cell_39_io_B; // @[mul.scala 95:35]
   wire  cell_40_clock; // @[mul.scala 95:35]
   wire  cell_40_reset; // @[mul.scala 95:35]
+  wire  cell_40_io_flush; // @[mul.scala 95:35]
   wire  cell_40_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_40_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_40_io_b_in; // @[mul.scala 95:35]
@@ -1597,6 +1664,7 @@ module mul_pipe(
   wire [63:0] cell_40_io_B; // @[mul.scala 95:35]
   wire  cell_41_clock; // @[mul.scala 95:35]
   wire  cell_41_reset; // @[mul.scala 95:35]
+  wire  cell_41_io_flush; // @[mul.scala 95:35]
   wire  cell_41_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_41_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_41_io_b_in; // @[mul.scala 95:35]
@@ -1612,6 +1680,7 @@ module mul_pipe(
   wire [63:0] cell_41_io_B; // @[mul.scala 95:35]
   wire  cell_42_clock; // @[mul.scala 95:35]
   wire  cell_42_reset; // @[mul.scala 95:35]
+  wire  cell_42_io_flush; // @[mul.scala 95:35]
   wire  cell_42_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_42_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_42_io_b_in; // @[mul.scala 95:35]
@@ -1627,6 +1696,7 @@ module mul_pipe(
   wire [63:0] cell_42_io_B; // @[mul.scala 95:35]
   wire  cell_43_clock; // @[mul.scala 95:35]
   wire  cell_43_reset; // @[mul.scala 95:35]
+  wire  cell_43_io_flush; // @[mul.scala 95:35]
   wire  cell_43_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_43_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_43_io_b_in; // @[mul.scala 95:35]
@@ -1642,6 +1712,7 @@ module mul_pipe(
   wire [63:0] cell_43_io_B; // @[mul.scala 95:35]
   wire  cell_44_clock; // @[mul.scala 95:35]
   wire  cell_44_reset; // @[mul.scala 95:35]
+  wire  cell_44_io_flush; // @[mul.scala 95:35]
   wire  cell_44_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_44_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_44_io_b_in; // @[mul.scala 95:35]
@@ -1657,6 +1728,7 @@ module mul_pipe(
   wire [63:0] cell_44_io_B; // @[mul.scala 95:35]
   wire  cell_45_clock; // @[mul.scala 95:35]
   wire  cell_45_reset; // @[mul.scala 95:35]
+  wire  cell_45_io_flush; // @[mul.scala 95:35]
   wire  cell_45_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_45_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_45_io_b_in; // @[mul.scala 95:35]
@@ -1672,6 +1744,7 @@ module mul_pipe(
   wire [63:0] cell_45_io_B; // @[mul.scala 95:35]
   wire  cell_46_clock; // @[mul.scala 95:35]
   wire  cell_46_reset; // @[mul.scala 95:35]
+  wire  cell_46_io_flush; // @[mul.scala 95:35]
   wire  cell_46_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_46_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_46_io_b_in; // @[mul.scala 95:35]
@@ -1687,6 +1760,7 @@ module mul_pipe(
   wire [63:0] cell_46_io_B; // @[mul.scala 95:35]
   wire  cell_47_clock; // @[mul.scala 95:35]
   wire  cell_47_reset; // @[mul.scala 95:35]
+  wire  cell_47_io_flush; // @[mul.scala 95:35]
   wire  cell_47_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_47_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_47_io_b_in; // @[mul.scala 95:35]
@@ -1702,6 +1776,7 @@ module mul_pipe(
   wire [63:0] cell_47_io_B; // @[mul.scala 95:35]
   wire  cell_48_clock; // @[mul.scala 95:35]
   wire  cell_48_reset; // @[mul.scala 95:35]
+  wire  cell_48_io_flush; // @[mul.scala 95:35]
   wire  cell_48_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_48_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_48_io_b_in; // @[mul.scala 95:35]
@@ -1717,6 +1792,7 @@ module mul_pipe(
   wire [63:0] cell_48_io_B; // @[mul.scala 95:35]
   wire  cell_49_clock; // @[mul.scala 95:35]
   wire  cell_49_reset; // @[mul.scala 95:35]
+  wire  cell_49_io_flush; // @[mul.scala 95:35]
   wire  cell_49_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_49_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_49_io_b_in; // @[mul.scala 95:35]
@@ -1732,6 +1808,7 @@ module mul_pipe(
   wire [63:0] cell_49_io_B; // @[mul.scala 95:35]
   wire  cell_50_clock; // @[mul.scala 95:35]
   wire  cell_50_reset; // @[mul.scala 95:35]
+  wire  cell_50_io_flush; // @[mul.scala 95:35]
   wire  cell_50_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_50_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_50_io_b_in; // @[mul.scala 95:35]
@@ -1747,6 +1824,7 @@ module mul_pipe(
   wire [63:0] cell_50_io_B; // @[mul.scala 95:35]
   wire  cell_51_clock; // @[mul.scala 95:35]
   wire  cell_51_reset; // @[mul.scala 95:35]
+  wire  cell_51_io_flush; // @[mul.scala 95:35]
   wire  cell_51_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_51_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_51_io_b_in; // @[mul.scala 95:35]
@@ -1762,6 +1840,7 @@ module mul_pipe(
   wire [63:0] cell_51_io_B; // @[mul.scala 95:35]
   wire  cell_52_clock; // @[mul.scala 95:35]
   wire  cell_52_reset; // @[mul.scala 95:35]
+  wire  cell_52_io_flush; // @[mul.scala 95:35]
   wire  cell_52_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_52_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_52_io_b_in; // @[mul.scala 95:35]
@@ -1777,6 +1856,7 @@ module mul_pipe(
   wire [63:0] cell_52_io_B; // @[mul.scala 95:35]
   wire  cell_53_clock; // @[mul.scala 95:35]
   wire  cell_53_reset; // @[mul.scala 95:35]
+  wire  cell_53_io_flush; // @[mul.scala 95:35]
   wire  cell_53_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_53_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_53_io_b_in; // @[mul.scala 95:35]
@@ -1792,6 +1872,7 @@ module mul_pipe(
   wire [63:0] cell_53_io_B; // @[mul.scala 95:35]
   wire  cell_54_clock; // @[mul.scala 95:35]
   wire  cell_54_reset; // @[mul.scala 95:35]
+  wire  cell_54_io_flush; // @[mul.scala 95:35]
   wire  cell_54_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_54_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_54_io_b_in; // @[mul.scala 95:35]
@@ -1807,6 +1888,7 @@ module mul_pipe(
   wire [63:0] cell_54_io_B; // @[mul.scala 95:35]
   wire  cell_55_clock; // @[mul.scala 95:35]
   wire  cell_55_reset; // @[mul.scala 95:35]
+  wire  cell_55_io_flush; // @[mul.scala 95:35]
   wire  cell_55_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_55_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_55_io_b_in; // @[mul.scala 95:35]
@@ -1822,6 +1904,7 @@ module mul_pipe(
   wire [63:0] cell_55_io_B; // @[mul.scala 95:35]
   wire  cell_56_clock; // @[mul.scala 95:35]
   wire  cell_56_reset; // @[mul.scala 95:35]
+  wire  cell_56_io_flush; // @[mul.scala 95:35]
   wire  cell_56_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_56_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_56_io_b_in; // @[mul.scala 95:35]
@@ -1837,6 +1920,7 @@ module mul_pipe(
   wire [63:0] cell_56_io_B; // @[mul.scala 95:35]
   wire  cell_57_clock; // @[mul.scala 95:35]
   wire  cell_57_reset; // @[mul.scala 95:35]
+  wire  cell_57_io_flush; // @[mul.scala 95:35]
   wire  cell_57_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_57_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_57_io_b_in; // @[mul.scala 95:35]
@@ -1852,6 +1936,7 @@ module mul_pipe(
   wire [63:0] cell_57_io_B; // @[mul.scala 95:35]
   wire  cell_58_clock; // @[mul.scala 95:35]
   wire  cell_58_reset; // @[mul.scala 95:35]
+  wire  cell_58_io_flush; // @[mul.scala 95:35]
   wire  cell_58_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_58_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_58_io_b_in; // @[mul.scala 95:35]
@@ -1867,6 +1952,7 @@ module mul_pipe(
   wire [63:0] cell_58_io_B; // @[mul.scala 95:35]
   wire  cell_59_clock; // @[mul.scala 95:35]
   wire  cell_59_reset; // @[mul.scala 95:35]
+  wire  cell_59_io_flush; // @[mul.scala 95:35]
   wire  cell_59_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_59_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_59_io_b_in; // @[mul.scala 95:35]
@@ -1882,6 +1968,7 @@ module mul_pipe(
   wire [63:0] cell_59_io_B; // @[mul.scala 95:35]
   wire  cell_60_clock; // @[mul.scala 95:35]
   wire  cell_60_reset; // @[mul.scala 95:35]
+  wire  cell_60_io_flush; // @[mul.scala 95:35]
   wire  cell_60_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_60_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_60_io_b_in; // @[mul.scala 95:35]
@@ -1897,6 +1984,7 @@ module mul_pipe(
   wire [63:0] cell_60_io_B; // @[mul.scala 95:35]
   wire  cell_61_clock; // @[mul.scala 95:35]
   wire  cell_61_reset; // @[mul.scala 95:35]
+  wire  cell_61_io_flush; // @[mul.scala 95:35]
   wire  cell_61_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_61_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_61_io_b_in; // @[mul.scala 95:35]
@@ -1912,6 +2000,7 @@ module mul_pipe(
   wire [63:0] cell_61_io_B; // @[mul.scala 95:35]
   wire  cell_62_clock; // @[mul.scala 95:35]
   wire  cell_62_reset; // @[mul.scala 95:35]
+  wire  cell_62_io_flush; // @[mul.scala 95:35]
   wire  cell_62_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_62_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_62_io_b_in; // @[mul.scala 95:35]
@@ -1927,6 +2016,7 @@ module mul_pipe(
   wire [63:0] cell_62_io_B; // @[mul.scala 95:35]
   wire  cell_63_clock; // @[mul.scala 95:35]
   wire  cell_63_reset; // @[mul.scala 95:35]
+  wire  cell_63_io_flush; // @[mul.scala 95:35]
   wire  cell_63_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_63_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_63_io_b_in; // @[mul.scala 95:35]
@@ -1942,6 +2032,7 @@ module mul_pipe(
   wire [63:0] cell_63_io_B; // @[mul.scala 95:35]
   wire  cell_64_clock; // @[mul.scala 95:35]
   wire  cell_64_reset; // @[mul.scala 95:35]
+  wire  cell_64_io_flush; // @[mul.scala 95:35]
   wire  cell_64_io_valid; // @[mul.scala 95:35]
   wire [128:0] cell_64_io_a_in; // @[mul.scala 95:35]
   wire [128:0] cell_64_io_b_in; // @[mul.scala 95:35]
@@ -1977,6 +2068,7 @@ module mul_pipe(
   mul_cell cell_0 ( // @[mul.scala 95:35]
     .clock(cell_0_clock),
     .reset(cell_0_reset),
+    .io_flush(cell_0_io_flush),
     .io_valid(cell_0_io_valid),
     .io_a_in(cell_0_io_a_in),
     .io_b_in(cell_0_io_b_in),
@@ -1994,6 +2086,7 @@ module mul_pipe(
   mul_cell cell_1 ( // @[mul.scala 95:35]
     .clock(cell_1_clock),
     .reset(cell_1_reset),
+    .io_flush(cell_1_io_flush),
     .io_valid(cell_1_io_valid),
     .io_a_in(cell_1_io_a_in),
     .io_b_in(cell_1_io_b_in),
@@ -2011,6 +2104,7 @@ module mul_pipe(
   mul_cell cell_2 ( // @[mul.scala 95:35]
     .clock(cell_2_clock),
     .reset(cell_2_reset),
+    .io_flush(cell_2_io_flush),
     .io_valid(cell_2_io_valid),
     .io_a_in(cell_2_io_a_in),
     .io_b_in(cell_2_io_b_in),
@@ -2028,6 +2122,7 @@ module mul_pipe(
   mul_cell cell_3 ( // @[mul.scala 95:35]
     .clock(cell_3_clock),
     .reset(cell_3_reset),
+    .io_flush(cell_3_io_flush),
     .io_valid(cell_3_io_valid),
     .io_a_in(cell_3_io_a_in),
     .io_b_in(cell_3_io_b_in),
@@ -2045,6 +2140,7 @@ module mul_pipe(
   mul_cell cell_4 ( // @[mul.scala 95:35]
     .clock(cell_4_clock),
     .reset(cell_4_reset),
+    .io_flush(cell_4_io_flush),
     .io_valid(cell_4_io_valid),
     .io_a_in(cell_4_io_a_in),
     .io_b_in(cell_4_io_b_in),
@@ -2062,6 +2158,7 @@ module mul_pipe(
   mul_cell cell_5 ( // @[mul.scala 95:35]
     .clock(cell_5_clock),
     .reset(cell_5_reset),
+    .io_flush(cell_5_io_flush),
     .io_valid(cell_5_io_valid),
     .io_a_in(cell_5_io_a_in),
     .io_b_in(cell_5_io_b_in),
@@ -2079,6 +2176,7 @@ module mul_pipe(
   mul_cell cell_6 ( // @[mul.scala 95:35]
     .clock(cell_6_clock),
     .reset(cell_6_reset),
+    .io_flush(cell_6_io_flush),
     .io_valid(cell_6_io_valid),
     .io_a_in(cell_6_io_a_in),
     .io_b_in(cell_6_io_b_in),
@@ -2096,6 +2194,7 @@ module mul_pipe(
   mul_cell cell_7 ( // @[mul.scala 95:35]
     .clock(cell_7_clock),
     .reset(cell_7_reset),
+    .io_flush(cell_7_io_flush),
     .io_valid(cell_7_io_valid),
     .io_a_in(cell_7_io_a_in),
     .io_b_in(cell_7_io_b_in),
@@ -2113,6 +2212,7 @@ module mul_pipe(
   mul_cell cell_8 ( // @[mul.scala 95:35]
     .clock(cell_8_clock),
     .reset(cell_8_reset),
+    .io_flush(cell_8_io_flush),
     .io_valid(cell_8_io_valid),
     .io_a_in(cell_8_io_a_in),
     .io_b_in(cell_8_io_b_in),
@@ -2130,6 +2230,7 @@ module mul_pipe(
   mul_cell cell_9 ( // @[mul.scala 95:35]
     .clock(cell_9_clock),
     .reset(cell_9_reset),
+    .io_flush(cell_9_io_flush),
     .io_valid(cell_9_io_valid),
     .io_a_in(cell_9_io_a_in),
     .io_b_in(cell_9_io_b_in),
@@ -2147,6 +2248,7 @@ module mul_pipe(
   mul_cell cell_10 ( // @[mul.scala 95:35]
     .clock(cell_10_clock),
     .reset(cell_10_reset),
+    .io_flush(cell_10_io_flush),
     .io_valid(cell_10_io_valid),
     .io_a_in(cell_10_io_a_in),
     .io_b_in(cell_10_io_b_in),
@@ -2164,6 +2266,7 @@ module mul_pipe(
   mul_cell cell_11 ( // @[mul.scala 95:35]
     .clock(cell_11_clock),
     .reset(cell_11_reset),
+    .io_flush(cell_11_io_flush),
     .io_valid(cell_11_io_valid),
     .io_a_in(cell_11_io_a_in),
     .io_b_in(cell_11_io_b_in),
@@ -2181,6 +2284,7 @@ module mul_pipe(
   mul_cell cell_12 ( // @[mul.scala 95:35]
     .clock(cell_12_clock),
     .reset(cell_12_reset),
+    .io_flush(cell_12_io_flush),
     .io_valid(cell_12_io_valid),
     .io_a_in(cell_12_io_a_in),
     .io_b_in(cell_12_io_b_in),
@@ -2198,6 +2302,7 @@ module mul_pipe(
   mul_cell cell_13 ( // @[mul.scala 95:35]
     .clock(cell_13_clock),
     .reset(cell_13_reset),
+    .io_flush(cell_13_io_flush),
     .io_valid(cell_13_io_valid),
     .io_a_in(cell_13_io_a_in),
     .io_b_in(cell_13_io_b_in),
@@ -2215,6 +2320,7 @@ module mul_pipe(
   mul_cell cell_14 ( // @[mul.scala 95:35]
     .clock(cell_14_clock),
     .reset(cell_14_reset),
+    .io_flush(cell_14_io_flush),
     .io_valid(cell_14_io_valid),
     .io_a_in(cell_14_io_a_in),
     .io_b_in(cell_14_io_b_in),
@@ -2232,6 +2338,7 @@ module mul_pipe(
   mul_cell cell_15 ( // @[mul.scala 95:35]
     .clock(cell_15_clock),
     .reset(cell_15_reset),
+    .io_flush(cell_15_io_flush),
     .io_valid(cell_15_io_valid),
     .io_a_in(cell_15_io_a_in),
     .io_b_in(cell_15_io_b_in),
@@ -2249,6 +2356,7 @@ module mul_pipe(
   mul_cell cell_16 ( // @[mul.scala 95:35]
     .clock(cell_16_clock),
     .reset(cell_16_reset),
+    .io_flush(cell_16_io_flush),
     .io_valid(cell_16_io_valid),
     .io_a_in(cell_16_io_a_in),
     .io_b_in(cell_16_io_b_in),
@@ -2266,6 +2374,7 @@ module mul_pipe(
   mul_cell cell_17 ( // @[mul.scala 95:35]
     .clock(cell_17_clock),
     .reset(cell_17_reset),
+    .io_flush(cell_17_io_flush),
     .io_valid(cell_17_io_valid),
     .io_a_in(cell_17_io_a_in),
     .io_b_in(cell_17_io_b_in),
@@ -2283,6 +2392,7 @@ module mul_pipe(
   mul_cell cell_18 ( // @[mul.scala 95:35]
     .clock(cell_18_clock),
     .reset(cell_18_reset),
+    .io_flush(cell_18_io_flush),
     .io_valid(cell_18_io_valid),
     .io_a_in(cell_18_io_a_in),
     .io_b_in(cell_18_io_b_in),
@@ -2300,6 +2410,7 @@ module mul_pipe(
   mul_cell cell_19 ( // @[mul.scala 95:35]
     .clock(cell_19_clock),
     .reset(cell_19_reset),
+    .io_flush(cell_19_io_flush),
     .io_valid(cell_19_io_valid),
     .io_a_in(cell_19_io_a_in),
     .io_b_in(cell_19_io_b_in),
@@ -2317,6 +2428,7 @@ module mul_pipe(
   mul_cell cell_20 ( // @[mul.scala 95:35]
     .clock(cell_20_clock),
     .reset(cell_20_reset),
+    .io_flush(cell_20_io_flush),
     .io_valid(cell_20_io_valid),
     .io_a_in(cell_20_io_a_in),
     .io_b_in(cell_20_io_b_in),
@@ -2334,6 +2446,7 @@ module mul_pipe(
   mul_cell cell_21 ( // @[mul.scala 95:35]
     .clock(cell_21_clock),
     .reset(cell_21_reset),
+    .io_flush(cell_21_io_flush),
     .io_valid(cell_21_io_valid),
     .io_a_in(cell_21_io_a_in),
     .io_b_in(cell_21_io_b_in),
@@ -2351,6 +2464,7 @@ module mul_pipe(
   mul_cell cell_22 ( // @[mul.scala 95:35]
     .clock(cell_22_clock),
     .reset(cell_22_reset),
+    .io_flush(cell_22_io_flush),
     .io_valid(cell_22_io_valid),
     .io_a_in(cell_22_io_a_in),
     .io_b_in(cell_22_io_b_in),
@@ -2368,6 +2482,7 @@ module mul_pipe(
   mul_cell cell_23 ( // @[mul.scala 95:35]
     .clock(cell_23_clock),
     .reset(cell_23_reset),
+    .io_flush(cell_23_io_flush),
     .io_valid(cell_23_io_valid),
     .io_a_in(cell_23_io_a_in),
     .io_b_in(cell_23_io_b_in),
@@ -2385,6 +2500,7 @@ module mul_pipe(
   mul_cell cell_24 ( // @[mul.scala 95:35]
     .clock(cell_24_clock),
     .reset(cell_24_reset),
+    .io_flush(cell_24_io_flush),
     .io_valid(cell_24_io_valid),
     .io_a_in(cell_24_io_a_in),
     .io_b_in(cell_24_io_b_in),
@@ -2402,6 +2518,7 @@ module mul_pipe(
   mul_cell cell_25 ( // @[mul.scala 95:35]
     .clock(cell_25_clock),
     .reset(cell_25_reset),
+    .io_flush(cell_25_io_flush),
     .io_valid(cell_25_io_valid),
     .io_a_in(cell_25_io_a_in),
     .io_b_in(cell_25_io_b_in),
@@ -2419,6 +2536,7 @@ module mul_pipe(
   mul_cell cell_26 ( // @[mul.scala 95:35]
     .clock(cell_26_clock),
     .reset(cell_26_reset),
+    .io_flush(cell_26_io_flush),
     .io_valid(cell_26_io_valid),
     .io_a_in(cell_26_io_a_in),
     .io_b_in(cell_26_io_b_in),
@@ -2436,6 +2554,7 @@ module mul_pipe(
   mul_cell cell_27 ( // @[mul.scala 95:35]
     .clock(cell_27_clock),
     .reset(cell_27_reset),
+    .io_flush(cell_27_io_flush),
     .io_valid(cell_27_io_valid),
     .io_a_in(cell_27_io_a_in),
     .io_b_in(cell_27_io_b_in),
@@ -2453,6 +2572,7 @@ module mul_pipe(
   mul_cell cell_28 ( // @[mul.scala 95:35]
     .clock(cell_28_clock),
     .reset(cell_28_reset),
+    .io_flush(cell_28_io_flush),
     .io_valid(cell_28_io_valid),
     .io_a_in(cell_28_io_a_in),
     .io_b_in(cell_28_io_b_in),
@@ -2470,6 +2590,7 @@ module mul_pipe(
   mul_cell cell_29 ( // @[mul.scala 95:35]
     .clock(cell_29_clock),
     .reset(cell_29_reset),
+    .io_flush(cell_29_io_flush),
     .io_valid(cell_29_io_valid),
     .io_a_in(cell_29_io_a_in),
     .io_b_in(cell_29_io_b_in),
@@ -2487,6 +2608,7 @@ module mul_pipe(
   mul_cell cell_30 ( // @[mul.scala 95:35]
     .clock(cell_30_clock),
     .reset(cell_30_reset),
+    .io_flush(cell_30_io_flush),
     .io_valid(cell_30_io_valid),
     .io_a_in(cell_30_io_a_in),
     .io_b_in(cell_30_io_b_in),
@@ -2504,6 +2626,7 @@ module mul_pipe(
   mul_cell cell_31 ( // @[mul.scala 95:35]
     .clock(cell_31_clock),
     .reset(cell_31_reset),
+    .io_flush(cell_31_io_flush),
     .io_valid(cell_31_io_valid),
     .io_a_in(cell_31_io_a_in),
     .io_b_in(cell_31_io_b_in),
@@ -2521,6 +2644,7 @@ module mul_pipe(
   mul_cell cell_32 ( // @[mul.scala 95:35]
     .clock(cell_32_clock),
     .reset(cell_32_reset),
+    .io_flush(cell_32_io_flush),
     .io_valid(cell_32_io_valid),
     .io_a_in(cell_32_io_a_in),
     .io_b_in(cell_32_io_b_in),
@@ -2538,6 +2662,7 @@ module mul_pipe(
   mul_cell cell_33 ( // @[mul.scala 95:35]
     .clock(cell_33_clock),
     .reset(cell_33_reset),
+    .io_flush(cell_33_io_flush),
     .io_valid(cell_33_io_valid),
     .io_a_in(cell_33_io_a_in),
     .io_b_in(cell_33_io_b_in),
@@ -2555,6 +2680,7 @@ module mul_pipe(
   mul_cell cell_34 ( // @[mul.scala 95:35]
     .clock(cell_34_clock),
     .reset(cell_34_reset),
+    .io_flush(cell_34_io_flush),
     .io_valid(cell_34_io_valid),
     .io_a_in(cell_34_io_a_in),
     .io_b_in(cell_34_io_b_in),
@@ -2572,6 +2698,7 @@ module mul_pipe(
   mul_cell cell_35 ( // @[mul.scala 95:35]
     .clock(cell_35_clock),
     .reset(cell_35_reset),
+    .io_flush(cell_35_io_flush),
     .io_valid(cell_35_io_valid),
     .io_a_in(cell_35_io_a_in),
     .io_b_in(cell_35_io_b_in),
@@ -2589,6 +2716,7 @@ module mul_pipe(
   mul_cell cell_36 ( // @[mul.scala 95:35]
     .clock(cell_36_clock),
     .reset(cell_36_reset),
+    .io_flush(cell_36_io_flush),
     .io_valid(cell_36_io_valid),
     .io_a_in(cell_36_io_a_in),
     .io_b_in(cell_36_io_b_in),
@@ -2606,6 +2734,7 @@ module mul_pipe(
   mul_cell cell_37 ( // @[mul.scala 95:35]
     .clock(cell_37_clock),
     .reset(cell_37_reset),
+    .io_flush(cell_37_io_flush),
     .io_valid(cell_37_io_valid),
     .io_a_in(cell_37_io_a_in),
     .io_b_in(cell_37_io_b_in),
@@ -2623,6 +2752,7 @@ module mul_pipe(
   mul_cell cell_38 ( // @[mul.scala 95:35]
     .clock(cell_38_clock),
     .reset(cell_38_reset),
+    .io_flush(cell_38_io_flush),
     .io_valid(cell_38_io_valid),
     .io_a_in(cell_38_io_a_in),
     .io_b_in(cell_38_io_b_in),
@@ -2640,6 +2770,7 @@ module mul_pipe(
   mul_cell cell_39 ( // @[mul.scala 95:35]
     .clock(cell_39_clock),
     .reset(cell_39_reset),
+    .io_flush(cell_39_io_flush),
     .io_valid(cell_39_io_valid),
     .io_a_in(cell_39_io_a_in),
     .io_b_in(cell_39_io_b_in),
@@ -2657,6 +2788,7 @@ module mul_pipe(
   mul_cell cell_40 ( // @[mul.scala 95:35]
     .clock(cell_40_clock),
     .reset(cell_40_reset),
+    .io_flush(cell_40_io_flush),
     .io_valid(cell_40_io_valid),
     .io_a_in(cell_40_io_a_in),
     .io_b_in(cell_40_io_b_in),
@@ -2674,6 +2806,7 @@ module mul_pipe(
   mul_cell cell_41 ( // @[mul.scala 95:35]
     .clock(cell_41_clock),
     .reset(cell_41_reset),
+    .io_flush(cell_41_io_flush),
     .io_valid(cell_41_io_valid),
     .io_a_in(cell_41_io_a_in),
     .io_b_in(cell_41_io_b_in),
@@ -2691,6 +2824,7 @@ module mul_pipe(
   mul_cell cell_42 ( // @[mul.scala 95:35]
     .clock(cell_42_clock),
     .reset(cell_42_reset),
+    .io_flush(cell_42_io_flush),
     .io_valid(cell_42_io_valid),
     .io_a_in(cell_42_io_a_in),
     .io_b_in(cell_42_io_b_in),
@@ -2708,6 +2842,7 @@ module mul_pipe(
   mul_cell cell_43 ( // @[mul.scala 95:35]
     .clock(cell_43_clock),
     .reset(cell_43_reset),
+    .io_flush(cell_43_io_flush),
     .io_valid(cell_43_io_valid),
     .io_a_in(cell_43_io_a_in),
     .io_b_in(cell_43_io_b_in),
@@ -2725,6 +2860,7 @@ module mul_pipe(
   mul_cell cell_44 ( // @[mul.scala 95:35]
     .clock(cell_44_clock),
     .reset(cell_44_reset),
+    .io_flush(cell_44_io_flush),
     .io_valid(cell_44_io_valid),
     .io_a_in(cell_44_io_a_in),
     .io_b_in(cell_44_io_b_in),
@@ -2742,6 +2878,7 @@ module mul_pipe(
   mul_cell cell_45 ( // @[mul.scala 95:35]
     .clock(cell_45_clock),
     .reset(cell_45_reset),
+    .io_flush(cell_45_io_flush),
     .io_valid(cell_45_io_valid),
     .io_a_in(cell_45_io_a_in),
     .io_b_in(cell_45_io_b_in),
@@ -2759,6 +2896,7 @@ module mul_pipe(
   mul_cell cell_46 ( // @[mul.scala 95:35]
     .clock(cell_46_clock),
     .reset(cell_46_reset),
+    .io_flush(cell_46_io_flush),
     .io_valid(cell_46_io_valid),
     .io_a_in(cell_46_io_a_in),
     .io_b_in(cell_46_io_b_in),
@@ -2776,6 +2914,7 @@ module mul_pipe(
   mul_cell cell_47 ( // @[mul.scala 95:35]
     .clock(cell_47_clock),
     .reset(cell_47_reset),
+    .io_flush(cell_47_io_flush),
     .io_valid(cell_47_io_valid),
     .io_a_in(cell_47_io_a_in),
     .io_b_in(cell_47_io_b_in),
@@ -2793,6 +2932,7 @@ module mul_pipe(
   mul_cell cell_48 ( // @[mul.scala 95:35]
     .clock(cell_48_clock),
     .reset(cell_48_reset),
+    .io_flush(cell_48_io_flush),
     .io_valid(cell_48_io_valid),
     .io_a_in(cell_48_io_a_in),
     .io_b_in(cell_48_io_b_in),
@@ -2810,6 +2950,7 @@ module mul_pipe(
   mul_cell cell_49 ( // @[mul.scala 95:35]
     .clock(cell_49_clock),
     .reset(cell_49_reset),
+    .io_flush(cell_49_io_flush),
     .io_valid(cell_49_io_valid),
     .io_a_in(cell_49_io_a_in),
     .io_b_in(cell_49_io_b_in),
@@ -2827,6 +2968,7 @@ module mul_pipe(
   mul_cell cell_50 ( // @[mul.scala 95:35]
     .clock(cell_50_clock),
     .reset(cell_50_reset),
+    .io_flush(cell_50_io_flush),
     .io_valid(cell_50_io_valid),
     .io_a_in(cell_50_io_a_in),
     .io_b_in(cell_50_io_b_in),
@@ -2844,6 +2986,7 @@ module mul_pipe(
   mul_cell cell_51 ( // @[mul.scala 95:35]
     .clock(cell_51_clock),
     .reset(cell_51_reset),
+    .io_flush(cell_51_io_flush),
     .io_valid(cell_51_io_valid),
     .io_a_in(cell_51_io_a_in),
     .io_b_in(cell_51_io_b_in),
@@ -2861,6 +3004,7 @@ module mul_pipe(
   mul_cell cell_52 ( // @[mul.scala 95:35]
     .clock(cell_52_clock),
     .reset(cell_52_reset),
+    .io_flush(cell_52_io_flush),
     .io_valid(cell_52_io_valid),
     .io_a_in(cell_52_io_a_in),
     .io_b_in(cell_52_io_b_in),
@@ -2878,6 +3022,7 @@ module mul_pipe(
   mul_cell cell_53 ( // @[mul.scala 95:35]
     .clock(cell_53_clock),
     .reset(cell_53_reset),
+    .io_flush(cell_53_io_flush),
     .io_valid(cell_53_io_valid),
     .io_a_in(cell_53_io_a_in),
     .io_b_in(cell_53_io_b_in),
@@ -2895,6 +3040,7 @@ module mul_pipe(
   mul_cell cell_54 ( // @[mul.scala 95:35]
     .clock(cell_54_clock),
     .reset(cell_54_reset),
+    .io_flush(cell_54_io_flush),
     .io_valid(cell_54_io_valid),
     .io_a_in(cell_54_io_a_in),
     .io_b_in(cell_54_io_b_in),
@@ -2912,6 +3058,7 @@ module mul_pipe(
   mul_cell cell_55 ( // @[mul.scala 95:35]
     .clock(cell_55_clock),
     .reset(cell_55_reset),
+    .io_flush(cell_55_io_flush),
     .io_valid(cell_55_io_valid),
     .io_a_in(cell_55_io_a_in),
     .io_b_in(cell_55_io_b_in),
@@ -2929,6 +3076,7 @@ module mul_pipe(
   mul_cell cell_56 ( // @[mul.scala 95:35]
     .clock(cell_56_clock),
     .reset(cell_56_reset),
+    .io_flush(cell_56_io_flush),
     .io_valid(cell_56_io_valid),
     .io_a_in(cell_56_io_a_in),
     .io_b_in(cell_56_io_b_in),
@@ -2946,6 +3094,7 @@ module mul_pipe(
   mul_cell cell_57 ( // @[mul.scala 95:35]
     .clock(cell_57_clock),
     .reset(cell_57_reset),
+    .io_flush(cell_57_io_flush),
     .io_valid(cell_57_io_valid),
     .io_a_in(cell_57_io_a_in),
     .io_b_in(cell_57_io_b_in),
@@ -2963,6 +3112,7 @@ module mul_pipe(
   mul_cell cell_58 ( // @[mul.scala 95:35]
     .clock(cell_58_clock),
     .reset(cell_58_reset),
+    .io_flush(cell_58_io_flush),
     .io_valid(cell_58_io_valid),
     .io_a_in(cell_58_io_a_in),
     .io_b_in(cell_58_io_b_in),
@@ -2980,6 +3130,7 @@ module mul_pipe(
   mul_cell cell_59 ( // @[mul.scala 95:35]
     .clock(cell_59_clock),
     .reset(cell_59_reset),
+    .io_flush(cell_59_io_flush),
     .io_valid(cell_59_io_valid),
     .io_a_in(cell_59_io_a_in),
     .io_b_in(cell_59_io_b_in),
@@ -2997,6 +3148,7 @@ module mul_pipe(
   mul_cell cell_60 ( // @[mul.scala 95:35]
     .clock(cell_60_clock),
     .reset(cell_60_reset),
+    .io_flush(cell_60_io_flush),
     .io_valid(cell_60_io_valid),
     .io_a_in(cell_60_io_a_in),
     .io_b_in(cell_60_io_b_in),
@@ -3014,6 +3166,7 @@ module mul_pipe(
   mul_cell cell_61 ( // @[mul.scala 95:35]
     .clock(cell_61_clock),
     .reset(cell_61_reset),
+    .io_flush(cell_61_io_flush),
     .io_valid(cell_61_io_valid),
     .io_a_in(cell_61_io_a_in),
     .io_b_in(cell_61_io_b_in),
@@ -3031,6 +3184,7 @@ module mul_pipe(
   mul_cell cell_62 ( // @[mul.scala 95:35]
     .clock(cell_62_clock),
     .reset(cell_62_reset),
+    .io_flush(cell_62_io_flush),
     .io_valid(cell_62_io_valid),
     .io_a_in(cell_62_io_a_in),
     .io_b_in(cell_62_io_b_in),
@@ -3048,6 +3202,7 @@ module mul_pipe(
   mul_cell cell_63 ( // @[mul.scala 95:35]
     .clock(cell_63_clock),
     .reset(cell_63_reset),
+    .io_flush(cell_63_io_flush),
     .io_valid(cell_63_io_valid),
     .io_a_in(cell_63_io_a_in),
     .io_b_in(cell_63_io_b_in),
@@ -3065,6 +3220,7 @@ module mul_pipe(
   mul_cell cell_64 ( // @[mul.scala 95:35]
     .clock(cell_64_clock),
     .reset(cell_64_reset),
+    .io_flush(cell_64_io_flush),
     .io_valid(cell_64_io_valid),
     .io_a_in(cell_64_io_a_in),
     .io_b_in(cell_64_io_b_in),
@@ -3083,6 +3239,7 @@ module mul_pipe(
   assign io_result_lo = cell_64_io_sum_out[63:0]; // @[mul.scala 120:41]
   assign cell_0_clock = clock;
   assign cell_0_reset = reset;
+  assign cell_0_io_flush = 1'h0; // @[mul.scala 97:23]
   assign cell_0_io_valid = valid; // @[mul.scala 98:23]
   assign cell_0_io_a_in = a; // @[mul.scala 99:23]
   assign cell_0_io_b_in = b; // @[mul.scala 100:23]
@@ -3092,6 +3249,7 @@ module mul_pipe(
   assign cell_0_io_b = io_multiplier; // @[mul.scala 104:23]
   assign cell_1_clock = clock;
   assign cell_1_reset = reset;
+  assign cell_1_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_1_io_valid = cell_0_io_ready; // @[mul.scala 108:25]
   assign cell_1_io_a_in = cell_0_io_a_out; // @[mul.scala 109:25]
   assign cell_1_io_b_in = cell_0_io_b_out; // @[mul.scala 110:25]
@@ -3101,6 +3259,7 @@ module mul_pipe(
   assign cell_1_io_b = cell_0_io_B; // @[mul.scala 114:25]
   assign cell_2_clock = clock;
   assign cell_2_reset = reset;
+  assign cell_2_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_2_io_valid = cell_1_io_ready; // @[mul.scala 108:25]
   assign cell_2_io_a_in = cell_1_io_a_out; // @[mul.scala 109:25]
   assign cell_2_io_b_in = cell_1_io_b_out; // @[mul.scala 110:25]
@@ -3110,6 +3269,7 @@ module mul_pipe(
   assign cell_2_io_b = cell_1_io_B; // @[mul.scala 114:25]
   assign cell_3_clock = clock;
   assign cell_3_reset = reset;
+  assign cell_3_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_3_io_valid = cell_2_io_ready; // @[mul.scala 108:25]
   assign cell_3_io_a_in = cell_2_io_a_out; // @[mul.scala 109:25]
   assign cell_3_io_b_in = cell_2_io_b_out; // @[mul.scala 110:25]
@@ -3119,6 +3279,7 @@ module mul_pipe(
   assign cell_3_io_b = cell_2_io_B; // @[mul.scala 114:25]
   assign cell_4_clock = clock;
   assign cell_4_reset = reset;
+  assign cell_4_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_4_io_valid = cell_3_io_ready; // @[mul.scala 108:25]
   assign cell_4_io_a_in = cell_3_io_a_out; // @[mul.scala 109:25]
   assign cell_4_io_b_in = cell_3_io_b_out; // @[mul.scala 110:25]
@@ -3128,6 +3289,7 @@ module mul_pipe(
   assign cell_4_io_b = cell_3_io_B; // @[mul.scala 114:25]
   assign cell_5_clock = clock;
   assign cell_5_reset = reset;
+  assign cell_5_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_5_io_valid = cell_4_io_ready; // @[mul.scala 108:25]
   assign cell_5_io_a_in = cell_4_io_a_out; // @[mul.scala 109:25]
   assign cell_5_io_b_in = cell_4_io_b_out; // @[mul.scala 110:25]
@@ -3137,6 +3299,7 @@ module mul_pipe(
   assign cell_5_io_b = cell_4_io_B; // @[mul.scala 114:25]
   assign cell_6_clock = clock;
   assign cell_6_reset = reset;
+  assign cell_6_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_6_io_valid = cell_5_io_ready; // @[mul.scala 108:25]
   assign cell_6_io_a_in = cell_5_io_a_out; // @[mul.scala 109:25]
   assign cell_6_io_b_in = cell_5_io_b_out; // @[mul.scala 110:25]
@@ -3146,6 +3309,7 @@ module mul_pipe(
   assign cell_6_io_b = cell_5_io_B; // @[mul.scala 114:25]
   assign cell_7_clock = clock;
   assign cell_7_reset = reset;
+  assign cell_7_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_7_io_valid = cell_6_io_ready; // @[mul.scala 108:25]
   assign cell_7_io_a_in = cell_6_io_a_out; // @[mul.scala 109:25]
   assign cell_7_io_b_in = cell_6_io_b_out; // @[mul.scala 110:25]
@@ -3155,6 +3319,7 @@ module mul_pipe(
   assign cell_7_io_b = cell_6_io_B; // @[mul.scala 114:25]
   assign cell_8_clock = clock;
   assign cell_8_reset = reset;
+  assign cell_8_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_8_io_valid = cell_7_io_ready; // @[mul.scala 108:25]
   assign cell_8_io_a_in = cell_7_io_a_out; // @[mul.scala 109:25]
   assign cell_8_io_b_in = cell_7_io_b_out; // @[mul.scala 110:25]
@@ -3164,6 +3329,7 @@ module mul_pipe(
   assign cell_8_io_b = cell_7_io_B; // @[mul.scala 114:25]
   assign cell_9_clock = clock;
   assign cell_9_reset = reset;
+  assign cell_9_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_9_io_valid = cell_8_io_ready; // @[mul.scala 108:25]
   assign cell_9_io_a_in = cell_8_io_a_out; // @[mul.scala 109:25]
   assign cell_9_io_b_in = cell_8_io_b_out; // @[mul.scala 110:25]
@@ -3173,6 +3339,7 @@ module mul_pipe(
   assign cell_9_io_b = cell_8_io_B; // @[mul.scala 114:25]
   assign cell_10_clock = clock;
   assign cell_10_reset = reset;
+  assign cell_10_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_10_io_valid = cell_9_io_ready; // @[mul.scala 108:25]
   assign cell_10_io_a_in = cell_9_io_a_out; // @[mul.scala 109:25]
   assign cell_10_io_b_in = cell_9_io_b_out; // @[mul.scala 110:25]
@@ -3182,6 +3349,7 @@ module mul_pipe(
   assign cell_10_io_b = cell_9_io_B; // @[mul.scala 114:25]
   assign cell_11_clock = clock;
   assign cell_11_reset = reset;
+  assign cell_11_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_11_io_valid = cell_10_io_ready; // @[mul.scala 108:25]
   assign cell_11_io_a_in = cell_10_io_a_out; // @[mul.scala 109:25]
   assign cell_11_io_b_in = cell_10_io_b_out; // @[mul.scala 110:25]
@@ -3191,6 +3359,7 @@ module mul_pipe(
   assign cell_11_io_b = cell_10_io_B; // @[mul.scala 114:25]
   assign cell_12_clock = clock;
   assign cell_12_reset = reset;
+  assign cell_12_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_12_io_valid = cell_11_io_ready; // @[mul.scala 108:25]
   assign cell_12_io_a_in = cell_11_io_a_out; // @[mul.scala 109:25]
   assign cell_12_io_b_in = cell_11_io_b_out; // @[mul.scala 110:25]
@@ -3200,6 +3369,7 @@ module mul_pipe(
   assign cell_12_io_b = cell_11_io_B; // @[mul.scala 114:25]
   assign cell_13_clock = clock;
   assign cell_13_reset = reset;
+  assign cell_13_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_13_io_valid = cell_12_io_ready; // @[mul.scala 108:25]
   assign cell_13_io_a_in = cell_12_io_a_out; // @[mul.scala 109:25]
   assign cell_13_io_b_in = cell_12_io_b_out; // @[mul.scala 110:25]
@@ -3209,6 +3379,7 @@ module mul_pipe(
   assign cell_13_io_b = cell_12_io_B; // @[mul.scala 114:25]
   assign cell_14_clock = clock;
   assign cell_14_reset = reset;
+  assign cell_14_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_14_io_valid = cell_13_io_ready; // @[mul.scala 108:25]
   assign cell_14_io_a_in = cell_13_io_a_out; // @[mul.scala 109:25]
   assign cell_14_io_b_in = cell_13_io_b_out; // @[mul.scala 110:25]
@@ -3218,6 +3389,7 @@ module mul_pipe(
   assign cell_14_io_b = cell_13_io_B; // @[mul.scala 114:25]
   assign cell_15_clock = clock;
   assign cell_15_reset = reset;
+  assign cell_15_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_15_io_valid = cell_14_io_ready; // @[mul.scala 108:25]
   assign cell_15_io_a_in = cell_14_io_a_out; // @[mul.scala 109:25]
   assign cell_15_io_b_in = cell_14_io_b_out; // @[mul.scala 110:25]
@@ -3227,6 +3399,7 @@ module mul_pipe(
   assign cell_15_io_b = cell_14_io_B; // @[mul.scala 114:25]
   assign cell_16_clock = clock;
   assign cell_16_reset = reset;
+  assign cell_16_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_16_io_valid = cell_15_io_ready; // @[mul.scala 108:25]
   assign cell_16_io_a_in = cell_15_io_a_out; // @[mul.scala 109:25]
   assign cell_16_io_b_in = cell_15_io_b_out; // @[mul.scala 110:25]
@@ -3236,6 +3409,7 @@ module mul_pipe(
   assign cell_16_io_b = cell_15_io_B; // @[mul.scala 114:25]
   assign cell_17_clock = clock;
   assign cell_17_reset = reset;
+  assign cell_17_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_17_io_valid = cell_16_io_ready; // @[mul.scala 108:25]
   assign cell_17_io_a_in = cell_16_io_a_out; // @[mul.scala 109:25]
   assign cell_17_io_b_in = cell_16_io_b_out; // @[mul.scala 110:25]
@@ -3245,6 +3419,7 @@ module mul_pipe(
   assign cell_17_io_b = cell_16_io_B; // @[mul.scala 114:25]
   assign cell_18_clock = clock;
   assign cell_18_reset = reset;
+  assign cell_18_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_18_io_valid = cell_17_io_ready; // @[mul.scala 108:25]
   assign cell_18_io_a_in = cell_17_io_a_out; // @[mul.scala 109:25]
   assign cell_18_io_b_in = cell_17_io_b_out; // @[mul.scala 110:25]
@@ -3254,6 +3429,7 @@ module mul_pipe(
   assign cell_18_io_b = cell_17_io_B; // @[mul.scala 114:25]
   assign cell_19_clock = clock;
   assign cell_19_reset = reset;
+  assign cell_19_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_19_io_valid = cell_18_io_ready; // @[mul.scala 108:25]
   assign cell_19_io_a_in = cell_18_io_a_out; // @[mul.scala 109:25]
   assign cell_19_io_b_in = cell_18_io_b_out; // @[mul.scala 110:25]
@@ -3263,6 +3439,7 @@ module mul_pipe(
   assign cell_19_io_b = cell_18_io_B; // @[mul.scala 114:25]
   assign cell_20_clock = clock;
   assign cell_20_reset = reset;
+  assign cell_20_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_20_io_valid = cell_19_io_ready; // @[mul.scala 108:25]
   assign cell_20_io_a_in = cell_19_io_a_out; // @[mul.scala 109:25]
   assign cell_20_io_b_in = cell_19_io_b_out; // @[mul.scala 110:25]
@@ -3272,6 +3449,7 @@ module mul_pipe(
   assign cell_20_io_b = cell_19_io_B; // @[mul.scala 114:25]
   assign cell_21_clock = clock;
   assign cell_21_reset = reset;
+  assign cell_21_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_21_io_valid = cell_20_io_ready; // @[mul.scala 108:25]
   assign cell_21_io_a_in = cell_20_io_a_out; // @[mul.scala 109:25]
   assign cell_21_io_b_in = cell_20_io_b_out; // @[mul.scala 110:25]
@@ -3281,6 +3459,7 @@ module mul_pipe(
   assign cell_21_io_b = cell_20_io_B; // @[mul.scala 114:25]
   assign cell_22_clock = clock;
   assign cell_22_reset = reset;
+  assign cell_22_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_22_io_valid = cell_21_io_ready; // @[mul.scala 108:25]
   assign cell_22_io_a_in = cell_21_io_a_out; // @[mul.scala 109:25]
   assign cell_22_io_b_in = cell_21_io_b_out; // @[mul.scala 110:25]
@@ -3290,6 +3469,7 @@ module mul_pipe(
   assign cell_22_io_b = cell_21_io_B; // @[mul.scala 114:25]
   assign cell_23_clock = clock;
   assign cell_23_reset = reset;
+  assign cell_23_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_23_io_valid = cell_22_io_ready; // @[mul.scala 108:25]
   assign cell_23_io_a_in = cell_22_io_a_out; // @[mul.scala 109:25]
   assign cell_23_io_b_in = cell_22_io_b_out; // @[mul.scala 110:25]
@@ -3299,6 +3479,7 @@ module mul_pipe(
   assign cell_23_io_b = cell_22_io_B; // @[mul.scala 114:25]
   assign cell_24_clock = clock;
   assign cell_24_reset = reset;
+  assign cell_24_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_24_io_valid = cell_23_io_ready; // @[mul.scala 108:25]
   assign cell_24_io_a_in = cell_23_io_a_out; // @[mul.scala 109:25]
   assign cell_24_io_b_in = cell_23_io_b_out; // @[mul.scala 110:25]
@@ -3308,6 +3489,7 @@ module mul_pipe(
   assign cell_24_io_b = cell_23_io_B; // @[mul.scala 114:25]
   assign cell_25_clock = clock;
   assign cell_25_reset = reset;
+  assign cell_25_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_25_io_valid = cell_24_io_ready; // @[mul.scala 108:25]
   assign cell_25_io_a_in = cell_24_io_a_out; // @[mul.scala 109:25]
   assign cell_25_io_b_in = cell_24_io_b_out; // @[mul.scala 110:25]
@@ -3317,6 +3499,7 @@ module mul_pipe(
   assign cell_25_io_b = cell_24_io_B; // @[mul.scala 114:25]
   assign cell_26_clock = clock;
   assign cell_26_reset = reset;
+  assign cell_26_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_26_io_valid = cell_25_io_ready; // @[mul.scala 108:25]
   assign cell_26_io_a_in = cell_25_io_a_out; // @[mul.scala 109:25]
   assign cell_26_io_b_in = cell_25_io_b_out; // @[mul.scala 110:25]
@@ -3326,6 +3509,7 @@ module mul_pipe(
   assign cell_26_io_b = cell_25_io_B; // @[mul.scala 114:25]
   assign cell_27_clock = clock;
   assign cell_27_reset = reset;
+  assign cell_27_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_27_io_valid = cell_26_io_ready; // @[mul.scala 108:25]
   assign cell_27_io_a_in = cell_26_io_a_out; // @[mul.scala 109:25]
   assign cell_27_io_b_in = cell_26_io_b_out; // @[mul.scala 110:25]
@@ -3335,6 +3519,7 @@ module mul_pipe(
   assign cell_27_io_b = cell_26_io_B; // @[mul.scala 114:25]
   assign cell_28_clock = clock;
   assign cell_28_reset = reset;
+  assign cell_28_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_28_io_valid = cell_27_io_ready; // @[mul.scala 108:25]
   assign cell_28_io_a_in = cell_27_io_a_out; // @[mul.scala 109:25]
   assign cell_28_io_b_in = cell_27_io_b_out; // @[mul.scala 110:25]
@@ -3344,6 +3529,7 @@ module mul_pipe(
   assign cell_28_io_b = cell_27_io_B; // @[mul.scala 114:25]
   assign cell_29_clock = clock;
   assign cell_29_reset = reset;
+  assign cell_29_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_29_io_valid = cell_28_io_ready; // @[mul.scala 108:25]
   assign cell_29_io_a_in = cell_28_io_a_out; // @[mul.scala 109:25]
   assign cell_29_io_b_in = cell_28_io_b_out; // @[mul.scala 110:25]
@@ -3353,6 +3539,7 @@ module mul_pipe(
   assign cell_29_io_b = cell_28_io_B; // @[mul.scala 114:25]
   assign cell_30_clock = clock;
   assign cell_30_reset = reset;
+  assign cell_30_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_30_io_valid = cell_29_io_ready; // @[mul.scala 108:25]
   assign cell_30_io_a_in = cell_29_io_a_out; // @[mul.scala 109:25]
   assign cell_30_io_b_in = cell_29_io_b_out; // @[mul.scala 110:25]
@@ -3362,6 +3549,7 @@ module mul_pipe(
   assign cell_30_io_b = cell_29_io_B; // @[mul.scala 114:25]
   assign cell_31_clock = clock;
   assign cell_31_reset = reset;
+  assign cell_31_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_31_io_valid = cell_30_io_ready; // @[mul.scala 108:25]
   assign cell_31_io_a_in = cell_30_io_a_out; // @[mul.scala 109:25]
   assign cell_31_io_b_in = cell_30_io_b_out; // @[mul.scala 110:25]
@@ -3371,6 +3559,7 @@ module mul_pipe(
   assign cell_31_io_b = cell_30_io_B; // @[mul.scala 114:25]
   assign cell_32_clock = clock;
   assign cell_32_reset = reset;
+  assign cell_32_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_32_io_valid = cell_31_io_ready; // @[mul.scala 108:25]
   assign cell_32_io_a_in = cell_31_io_a_out; // @[mul.scala 109:25]
   assign cell_32_io_b_in = cell_31_io_b_out; // @[mul.scala 110:25]
@@ -3380,6 +3569,7 @@ module mul_pipe(
   assign cell_32_io_b = cell_31_io_B; // @[mul.scala 114:25]
   assign cell_33_clock = clock;
   assign cell_33_reset = reset;
+  assign cell_33_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_33_io_valid = cell_32_io_ready; // @[mul.scala 108:25]
   assign cell_33_io_a_in = cell_32_io_a_out; // @[mul.scala 109:25]
   assign cell_33_io_b_in = cell_32_io_b_out; // @[mul.scala 110:25]
@@ -3389,6 +3579,7 @@ module mul_pipe(
   assign cell_33_io_b = cell_32_io_B; // @[mul.scala 114:25]
   assign cell_34_clock = clock;
   assign cell_34_reset = reset;
+  assign cell_34_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_34_io_valid = cell_33_io_ready; // @[mul.scala 108:25]
   assign cell_34_io_a_in = cell_33_io_a_out; // @[mul.scala 109:25]
   assign cell_34_io_b_in = cell_33_io_b_out; // @[mul.scala 110:25]
@@ -3398,6 +3589,7 @@ module mul_pipe(
   assign cell_34_io_b = cell_33_io_B; // @[mul.scala 114:25]
   assign cell_35_clock = clock;
   assign cell_35_reset = reset;
+  assign cell_35_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_35_io_valid = cell_34_io_ready; // @[mul.scala 108:25]
   assign cell_35_io_a_in = cell_34_io_a_out; // @[mul.scala 109:25]
   assign cell_35_io_b_in = cell_34_io_b_out; // @[mul.scala 110:25]
@@ -3407,6 +3599,7 @@ module mul_pipe(
   assign cell_35_io_b = cell_34_io_B; // @[mul.scala 114:25]
   assign cell_36_clock = clock;
   assign cell_36_reset = reset;
+  assign cell_36_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_36_io_valid = cell_35_io_ready; // @[mul.scala 108:25]
   assign cell_36_io_a_in = cell_35_io_a_out; // @[mul.scala 109:25]
   assign cell_36_io_b_in = cell_35_io_b_out; // @[mul.scala 110:25]
@@ -3416,6 +3609,7 @@ module mul_pipe(
   assign cell_36_io_b = cell_35_io_B; // @[mul.scala 114:25]
   assign cell_37_clock = clock;
   assign cell_37_reset = reset;
+  assign cell_37_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_37_io_valid = cell_36_io_ready; // @[mul.scala 108:25]
   assign cell_37_io_a_in = cell_36_io_a_out; // @[mul.scala 109:25]
   assign cell_37_io_b_in = cell_36_io_b_out; // @[mul.scala 110:25]
@@ -3425,6 +3619,7 @@ module mul_pipe(
   assign cell_37_io_b = cell_36_io_B; // @[mul.scala 114:25]
   assign cell_38_clock = clock;
   assign cell_38_reset = reset;
+  assign cell_38_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_38_io_valid = cell_37_io_ready; // @[mul.scala 108:25]
   assign cell_38_io_a_in = cell_37_io_a_out; // @[mul.scala 109:25]
   assign cell_38_io_b_in = cell_37_io_b_out; // @[mul.scala 110:25]
@@ -3434,6 +3629,7 @@ module mul_pipe(
   assign cell_38_io_b = cell_37_io_B; // @[mul.scala 114:25]
   assign cell_39_clock = clock;
   assign cell_39_reset = reset;
+  assign cell_39_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_39_io_valid = cell_38_io_ready; // @[mul.scala 108:25]
   assign cell_39_io_a_in = cell_38_io_a_out; // @[mul.scala 109:25]
   assign cell_39_io_b_in = cell_38_io_b_out; // @[mul.scala 110:25]
@@ -3443,6 +3639,7 @@ module mul_pipe(
   assign cell_39_io_b = cell_38_io_B; // @[mul.scala 114:25]
   assign cell_40_clock = clock;
   assign cell_40_reset = reset;
+  assign cell_40_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_40_io_valid = cell_39_io_ready; // @[mul.scala 108:25]
   assign cell_40_io_a_in = cell_39_io_a_out; // @[mul.scala 109:25]
   assign cell_40_io_b_in = cell_39_io_b_out; // @[mul.scala 110:25]
@@ -3452,6 +3649,7 @@ module mul_pipe(
   assign cell_40_io_b = cell_39_io_B; // @[mul.scala 114:25]
   assign cell_41_clock = clock;
   assign cell_41_reset = reset;
+  assign cell_41_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_41_io_valid = cell_40_io_ready; // @[mul.scala 108:25]
   assign cell_41_io_a_in = cell_40_io_a_out; // @[mul.scala 109:25]
   assign cell_41_io_b_in = cell_40_io_b_out; // @[mul.scala 110:25]
@@ -3461,6 +3659,7 @@ module mul_pipe(
   assign cell_41_io_b = cell_40_io_B; // @[mul.scala 114:25]
   assign cell_42_clock = clock;
   assign cell_42_reset = reset;
+  assign cell_42_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_42_io_valid = cell_41_io_ready; // @[mul.scala 108:25]
   assign cell_42_io_a_in = cell_41_io_a_out; // @[mul.scala 109:25]
   assign cell_42_io_b_in = cell_41_io_b_out; // @[mul.scala 110:25]
@@ -3470,6 +3669,7 @@ module mul_pipe(
   assign cell_42_io_b = cell_41_io_B; // @[mul.scala 114:25]
   assign cell_43_clock = clock;
   assign cell_43_reset = reset;
+  assign cell_43_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_43_io_valid = cell_42_io_ready; // @[mul.scala 108:25]
   assign cell_43_io_a_in = cell_42_io_a_out; // @[mul.scala 109:25]
   assign cell_43_io_b_in = cell_42_io_b_out; // @[mul.scala 110:25]
@@ -3479,6 +3679,7 @@ module mul_pipe(
   assign cell_43_io_b = cell_42_io_B; // @[mul.scala 114:25]
   assign cell_44_clock = clock;
   assign cell_44_reset = reset;
+  assign cell_44_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_44_io_valid = cell_43_io_ready; // @[mul.scala 108:25]
   assign cell_44_io_a_in = cell_43_io_a_out; // @[mul.scala 109:25]
   assign cell_44_io_b_in = cell_43_io_b_out; // @[mul.scala 110:25]
@@ -3488,6 +3689,7 @@ module mul_pipe(
   assign cell_44_io_b = cell_43_io_B; // @[mul.scala 114:25]
   assign cell_45_clock = clock;
   assign cell_45_reset = reset;
+  assign cell_45_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_45_io_valid = cell_44_io_ready; // @[mul.scala 108:25]
   assign cell_45_io_a_in = cell_44_io_a_out; // @[mul.scala 109:25]
   assign cell_45_io_b_in = cell_44_io_b_out; // @[mul.scala 110:25]
@@ -3497,6 +3699,7 @@ module mul_pipe(
   assign cell_45_io_b = cell_44_io_B; // @[mul.scala 114:25]
   assign cell_46_clock = clock;
   assign cell_46_reset = reset;
+  assign cell_46_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_46_io_valid = cell_45_io_ready; // @[mul.scala 108:25]
   assign cell_46_io_a_in = cell_45_io_a_out; // @[mul.scala 109:25]
   assign cell_46_io_b_in = cell_45_io_b_out; // @[mul.scala 110:25]
@@ -3506,6 +3709,7 @@ module mul_pipe(
   assign cell_46_io_b = cell_45_io_B; // @[mul.scala 114:25]
   assign cell_47_clock = clock;
   assign cell_47_reset = reset;
+  assign cell_47_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_47_io_valid = cell_46_io_ready; // @[mul.scala 108:25]
   assign cell_47_io_a_in = cell_46_io_a_out; // @[mul.scala 109:25]
   assign cell_47_io_b_in = cell_46_io_b_out; // @[mul.scala 110:25]
@@ -3515,6 +3719,7 @@ module mul_pipe(
   assign cell_47_io_b = cell_46_io_B; // @[mul.scala 114:25]
   assign cell_48_clock = clock;
   assign cell_48_reset = reset;
+  assign cell_48_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_48_io_valid = cell_47_io_ready; // @[mul.scala 108:25]
   assign cell_48_io_a_in = cell_47_io_a_out; // @[mul.scala 109:25]
   assign cell_48_io_b_in = cell_47_io_b_out; // @[mul.scala 110:25]
@@ -3524,6 +3729,7 @@ module mul_pipe(
   assign cell_48_io_b = cell_47_io_B; // @[mul.scala 114:25]
   assign cell_49_clock = clock;
   assign cell_49_reset = reset;
+  assign cell_49_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_49_io_valid = cell_48_io_ready; // @[mul.scala 108:25]
   assign cell_49_io_a_in = cell_48_io_a_out; // @[mul.scala 109:25]
   assign cell_49_io_b_in = cell_48_io_b_out; // @[mul.scala 110:25]
@@ -3533,6 +3739,7 @@ module mul_pipe(
   assign cell_49_io_b = cell_48_io_B; // @[mul.scala 114:25]
   assign cell_50_clock = clock;
   assign cell_50_reset = reset;
+  assign cell_50_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_50_io_valid = cell_49_io_ready; // @[mul.scala 108:25]
   assign cell_50_io_a_in = cell_49_io_a_out; // @[mul.scala 109:25]
   assign cell_50_io_b_in = cell_49_io_b_out; // @[mul.scala 110:25]
@@ -3542,6 +3749,7 @@ module mul_pipe(
   assign cell_50_io_b = cell_49_io_B; // @[mul.scala 114:25]
   assign cell_51_clock = clock;
   assign cell_51_reset = reset;
+  assign cell_51_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_51_io_valid = cell_50_io_ready; // @[mul.scala 108:25]
   assign cell_51_io_a_in = cell_50_io_a_out; // @[mul.scala 109:25]
   assign cell_51_io_b_in = cell_50_io_b_out; // @[mul.scala 110:25]
@@ -3551,6 +3759,7 @@ module mul_pipe(
   assign cell_51_io_b = cell_50_io_B; // @[mul.scala 114:25]
   assign cell_52_clock = clock;
   assign cell_52_reset = reset;
+  assign cell_52_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_52_io_valid = cell_51_io_ready; // @[mul.scala 108:25]
   assign cell_52_io_a_in = cell_51_io_a_out; // @[mul.scala 109:25]
   assign cell_52_io_b_in = cell_51_io_b_out; // @[mul.scala 110:25]
@@ -3560,6 +3769,7 @@ module mul_pipe(
   assign cell_52_io_b = cell_51_io_B; // @[mul.scala 114:25]
   assign cell_53_clock = clock;
   assign cell_53_reset = reset;
+  assign cell_53_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_53_io_valid = cell_52_io_ready; // @[mul.scala 108:25]
   assign cell_53_io_a_in = cell_52_io_a_out; // @[mul.scala 109:25]
   assign cell_53_io_b_in = cell_52_io_b_out; // @[mul.scala 110:25]
@@ -3569,6 +3779,7 @@ module mul_pipe(
   assign cell_53_io_b = cell_52_io_B; // @[mul.scala 114:25]
   assign cell_54_clock = clock;
   assign cell_54_reset = reset;
+  assign cell_54_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_54_io_valid = cell_53_io_ready; // @[mul.scala 108:25]
   assign cell_54_io_a_in = cell_53_io_a_out; // @[mul.scala 109:25]
   assign cell_54_io_b_in = cell_53_io_b_out; // @[mul.scala 110:25]
@@ -3578,6 +3789,7 @@ module mul_pipe(
   assign cell_54_io_b = cell_53_io_B; // @[mul.scala 114:25]
   assign cell_55_clock = clock;
   assign cell_55_reset = reset;
+  assign cell_55_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_55_io_valid = cell_54_io_ready; // @[mul.scala 108:25]
   assign cell_55_io_a_in = cell_54_io_a_out; // @[mul.scala 109:25]
   assign cell_55_io_b_in = cell_54_io_b_out; // @[mul.scala 110:25]
@@ -3587,6 +3799,7 @@ module mul_pipe(
   assign cell_55_io_b = cell_54_io_B; // @[mul.scala 114:25]
   assign cell_56_clock = clock;
   assign cell_56_reset = reset;
+  assign cell_56_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_56_io_valid = cell_55_io_ready; // @[mul.scala 108:25]
   assign cell_56_io_a_in = cell_55_io_a_out; // @[mul.scala 109:25]
   assign cell_56_io_b_in = cell_55_io_b_out; // @[mul.scala 110:25]
@@ -3596,6 +3809,7 @@ module mul_pipe(
   assign cell_56_io_b = cell_55_io_B; // @[mul.scala 114:25]
   assign cell_57_clock = clock;
   assign cell_57_reset = reset;
+  assign cell_57_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_57_io_valid = cell_56_io_ready; // @[mul.scala 108:25]
   assign cell_57_io_a_in = cell_56_io_a_out; // @[mul.scala 109:25]
   assign cell_57_io_b_in = cell_56_io_b_out; // @[mul.scala 110:25]
@@ -3605,6 +3819,7 @@ module mul_pipe(
   assign cell_57_io_b = cell_56_io_B; // @[mul.scala 114:25]
   assign cell_58_clock = clock;
   assign cell_58_reset = reset;
+  assign cell_58_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_58_io_valid = cell_57_io_ready; // @[mul.scala 108:25]
   assign cell_58_io_a_in = cell_57_io_a_out; // @[mul.scala 109:25]
   assign cell_58_io_b_in = cell_57_io_b_out; // @[mul.scala 110:25]
@@ -3614,6 +3829,7 @@ module mul_pipe(
   assign cell_58_io_b = cell_57_io_B; // @[mul.scala 114:25]
   assign cell_59_clock = clock;
   assign cell_59_reset = reset;
+  assign cell_59_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_59_io_valid = cell_58_io_ready; // @[mul.scala 108:25]
   assign cell_59_io_a_in = cell_58_io_a_out; // @[mul.scala 109:25]
   assign cell_59_io_b_in = cell_58_io_b_out; // @[mul.scala 110:25]
@@ -3623,6 +3839,7 @@ module mul_pipe(
   assign cell_59_io_b = cell_58_io_B; // @[mul.scala 114:25]
   assign cell_60_clock = clock;
   assign cell_60_reset = reset;
+  assign cell_60_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_60_io_valid = cell_59_io_ready; // @[mul.scala 108:25]
   assign cell_60_io_a_in = cell_59_io_a_out; // @[mul.scala 109:25]
   assign cell_60_io_b_in = cell_59_io_b_out; // @[mul.scala 110:25]
@@ -3632,6 +3849,7 @@ module mul_pipe(
   assign cell_60_io_b = cell_59_io_B; // @[mul.scala 114:25]
   assign cell_61_clock = clock;
   assign cell_61_reset = reset;
+  assign cell_61_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_61_io_valid = cell_60_io_ready; // @[mul.scala 108:25]
   assign cell_61_io_a_in = cell_60_io_a_out; // @[mul.scala 109:25]
   assign cell_61_io_b_in = cell_60_io_b_out; // @[mul.scala 110:25]
@@ -3641,6 +3859,7 @@ module mul_pipe(
   assign cell_61_io_b = cell_60_io_B; // @[mul.scala 114:25]
   assign cell_62_clock = clock;
   assign cell_62_reset = reset;
+  assign cell_62_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_62_io_valid = cell_61_io_ready; // @[mul.scala 108:25]
   assign cell_62_io_a_in = cell_61_io_a_out; // @[mul.scala 109:25]
   assign cell_62_io_b_in = cell_61_io_b_out; // @[mul.scala 110:25]
@@ -3650,6 +3869,7 @@ module mul_pipe(
   assign cell_62_io_b = cell_61_io_B; // @[mul.scala 114:25]
   assign cell_63_clock = clock;
   assign cell_63_reset = reset;
+  assign cell_63_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_63_io_valid = cell_62_io_ready; // @[mul.scala 108:25]
   assign cell_63_io_a_in = cell_62_io_a_out; // @[mul.scala 109:25]
   assign cell_63_io_b_in = cell_62_io_b_out; // @[mul.scala 110:25]
@@ -3659,6 +3879,7 @@ module mul_pipe(
   assign cell_63_io_b = cell_62_io_B; // @[mul.scala 114:25]
   assign cell_64_clock = clock;
   assign cell_64_reset = reset;
+  assign cell_64_io_flush = 1'h0; // @[mul.scala 107:25]
   assign cell_64_io_valid = cell_63_io_ready; // @[mul.scala 108:25]
   assign cell_64_io_a_in = cell_63_io_a_out; // @[mul.scala 109:25]
   assign cell_64_io_b_in = cell_63_io_b_out; // @[mul.scala 110:25]
@@ -3756,67 +3977,63 @@ module ALU(
   input  [63:0] io_src2,
   input  [18:0] io_op,
   output [63:0] io_result,
-  output        io_busy
+  input         io_validin,
+  output        io_validout
 );
-`ifdef RANDOMIZE_REG_INIT
-  reg [31:0] _RAND_0;
-`endif // RANDOMIZE_REG_INIT
-  wire  mul_pipe_clock; // @[ALU.scala 34:19]
-  wire  mul_pipe_reset; // @[ALU.scala 34:19]
-  wire  mul_pipe_io_mul_valid; // @[ALU.scala 34:19]
-  wire [1:0] mul_pipe_io_mul_signed; // @[ALU.scala 34:19]
-  wire [63:0] mul_pipe_io_multiplicand; // @[ALU.scala 34:19]
-  wire [63:0] mul_pipe_io_multiplier; // @[ALU.scala 34:19]
-  wire  mul_pipe_io_out_valid; // @[ALU.scala 34:19]
-  wire [63:0] mul_pipe_io_result_lo; // @[ALU.scala 34:19]
-  wire  _adder_b_T_6 = io_op[1] | io_op[8] | io_op[9] | io_op[11]; // @[ALU.scala 23:44]
-  wire [63:0] _adder_b_T_7 = ~io_src2; // @[ALU.scala 23:55]
-  wire [63:0] adder_b = io_op[1] | io_op[8] | io_op[9] | io_op[11] ? _adder_b_T_7 : io_src2; // @[ALU.scala 23:17]
-  wire [64:0] _sum_T = io_src1 + adder_b; // @[ALU.scala 25:17]
-  wire [64:0] _GEN_0 = {{64'd0}, _adder_b_T_6}; // @[ALU.scala 25:26]
-  wire [65:0] _sum_T_1 = _sum_T + _GEN_0; // @[ALU.scala 25:26]
-  wire [64:0] sum = _sum_T_1[64:0]; // @[ALU.scala 18:17 25:8]
-  wire  adder_cout = sum[64]; // @[ALU.scala 26:20]
-  wire [63:0] adder_result = sum[63:0]; // @[ALU.scala 27:22]
-  wire  _slt_result_T_11 = io_src1[63] & ~io_src2[63] | ~(io_src1[63] ^ io_src2[63]) & adder_result[63]; // @[ALU.scala 29:61]
+  wire  mul_pipe_clock; // @[ALU.scala 38:19]
+  wire  mul_pipe_reset; // @[ALU.scala 38:19]
+  wire  mul_pipe_io_mul_valid; // @[ALU.scala 38:19]
+  wire [1:0] mul_pipe_io_mul_signed; // @[ALU.scala 38:19]
+  wire [63:0] mul_pipe_io_multiplicand; // @[ALU.scala 38:19]
+  wire [63:0] mul_pipe_io_multiplier; // @[ALU.scala 38:19]
+  wire  mul_pipe_io_out_valid; // @[ALU.scala 38:19]
+  wire [63:0] mul_pipe_io_result_lo; // @[ALU.scala 38:19]
+  wire  _adder_b_T_6 = io_op[1] | io_op[8] | io_op[9] | io_op[11]; // @[ALU.scala 27:44]
+  wire [63:0] _adder_b_T_7 = ~io_src2; // @[ALU.scala 27:55]
+  wire [63:0] adder_b = io_op[1] | io_op[8] | io_op[9] | io_op[11] ? _adder_b_T_7 : io_src2; // @[ALU.scala 27:17]
+  wire [64:0] _sum_T = io_src1 + adder_b; // @[ALU.scala 29:17]
+  wire [64:0] _GEN_0 = {{64'd0}, _adder_b_T_6}; // @[ALU.scala 29:26]
+  wire [65:0] _sum_T_1 = _sum_T + _GEN_0; // @[ALU.scala 29:26]
+  wire [64:0] sum = _sum_T_1[64:0]; // @[ALU.scala 22:17 29:8]
+  wire  adder_cout = sum[64]; // @[ALU.scala 30:20]
+  wire [63:0] adder_result = sum[63:0]; // @[ALU.scala 31:22]
+  wire  _slt_result_T_11 = io_src1[63] & ~io_src2[63] | ~(io_src1[63] ^ io_src2[63]) & adder_result[63]; // @[ALU.scala 33:61]
   wire [63:0] slt_result = {63'h0,_slt_result_T_11}; // @[Cat.scala 33:92]
-  wire  _sltu_result_T_1 = ~adder_cout; // @[ALU.scala 30:35]
+  wire  _sltu_result_T_1 = ~adder_cout; // @[ALU.scala 34:35]
   wire [63:0] sltu_result = {63'h0,_sltu_result_T_1}; // @[Cat.scala 33:92]
-  wire  _eql_result_T_1 = adder_result == 64'h0; // @[ALU.scala 31:46]
+  wire  _eql_result_T_1 = adder_result == 64'h0; // @[ALU.scala 35:46]
   wire [63:0] eql_result = {63'h0,_eql_result_T_1}; // @[Cat.scala 33:92]
-  wire  _T_4 = io_op[12] | io_op[13] | io_op[14]; // @[ALU.scala 35:41]
-  wire  _T_7 = io_op[13] | io_op[14]; // @[ALU.scala 37:35]
-  reg  busy; // @[ALU.scala 42:21]
-  wire  _busy_T_6 = _T_4 | busy; // @[ALU.scala 44:16]
-  wire [63:0] _io_result_T_4 = io_src1 & io_src2; // @[ALU.scala 50:36]
-  wire [63:0] _io_result_T_6 = io_src1 | io_src2; // @[ALU.scala 51:36]
-  wire [63:0] _io_result_T_8 = io_src1 ^ io_src2; // @[ALU.scala 52:36]
-  wire [126:0] _GEN_1 = {{63'd0}, io_src1}; // @[ALU.scala 53:37]
-  wire [126:0] _io_result_T_11 = _GEN_1 << io_src2[5:0]; // @[ALU.scala 53:37]
-  wire [63:0] _io_result_T_15 = io_src1 >> io_src2[5:0]; // @[ALU.scala 54:36]
-  wire [63:0] _io_result_T_20 = $signed(io_src1) >>> io_src2[5:0]; // @[ALU.scala 55:62]
-  wire [63:0] _io_result_T_25 = adder_result & 64'hfffffffffffffffe; // @[ALU.scala 58:42]
-  wire [64:0] _io_result_T_36 = $signed(io_src1) / $signed(io_src2); // @[ALU.scala 61:62]
-  wire [63:0] _io_result_T_38 = io_src1 / io_src2; // @[ALU.scala 62:37]
-  wire [63:0] _io_result_T_43 = $signed(io_src1) % $signed(io_src2); // @[ALU.scala 63:62]
-  wire [63:0] _io_result_T_45 = io_src1 % io_src2; // @[ALU.scala 64:37]
-  wire [63:0] _io_result_T_46 = io_op[18] ? _io_result_T_45 : 64'h0; // @[ALU.scala 64:19]
-  wire [63:0] _io_result_T_47 = io_op[17] ? _io_result_T_43 : _io_result_T_46; // @[ALU.scala 63:19]
-  wire [63:0] _io_result_T_48 = io_op[16] ? _io_result_T_38 : _io_result_T_47; // @[ALU.scala 62:19]
-  wire [64:0] _io_result_T_49 = io_op[15] ? _io_result_T_36 : {{1'd0}, _io_result_T_48}; // @[ALU.scala 61:19]
-  wire [64:0] _io_result_T_50 = _T_4 ? {{1'd0}, mul_pipe_io_result_lo} : _io_result_T_49; // @[ALU.scala 60:19]
-  wire [64:0] _io_result_T_51 = io_op[11] ? {{1'd0}, eql_result} : _io_result_T_50; // @[ALU.scala 59:19]
-  wire [64:0] _io_result_T_52 = io_op[10] ? {{1'd0}, _io_result_T_25} : _io_result_T_51; // @[ALU.scala 58:19]
-  wire [64:0] _io_result_T_53 = io_op[9] ? {{1'd0}, sltu_result} : _io_result_T_52; // @[ALU.scala 57:19]
-  wire [64:0] _io_result_T_54 = io_op[8] ? {{1'd0}, slt_result} : _io_result_T_53; // @[ALU.scala 56:19]
-  wire [64:0] _io_result_T_55 = io_op[7] ? {{1'd0}, _io_result_T_20} : _io_result_T_54; // @[ALU.scala 55:19]
-  wire [64:0] _io_result_T_56 = io_op[6] ? {{1'd0}, _io_result_T_15} : _io_result_T_55; // @[ALU.scala 54:19]
-  wire [64:0] _io_result_T_57 = io_op[5] ? {{1'd0}, _io_result_T_11[63:0]} : _io_result_T_56; // @[ALU.scala 53:19]
-  wire [64:0] _io_result_T_58 = io_op[4] ? {{1'd0}, _io_result_T_8} : _io_result_T_57; // @[ALU.scala 52:19]
-  wire [64:0] _io_result_T_59 = io_op[3] ? {{1'd0}, _io_result_T_6} : _io_result_T_58; // @[ALU.scala 51:19]
-  wire [64:0] _io_result_T_60 = io_op[2] ? {{1'd0}, _io_result_T_4} : _io_result_T_59; // @[ALU.scala 50:19]
-  wire [64:0] _io_result_T_61 = io_op[0] | io_op[1] ? {{1'd0}, adder_result} : _io_result_T_60; // @[ALU.scala 49:19]
-  mul_pipe mul_pipe ( // @[ALU.scala 34:19]
+  wire  _T_4 = io_op[12] | io_op[13] | io_op[14]; // @[ALU.scala 39:42]
+  wire  _T_8 = io_op[13] | io_op[14]; // @[ALU.scala 41:35]
+  wire [63:0] _io_result_T_4 = io_src1 & io_src2; // @[ALU.scala 52:36]
+  wire [63:0] _io_result_T_6 = io_src1 | io_src2; // @[ALU.scala 53:36]
+  wire [63:0] _io_result_T_8 = io_src1 ^ io_src2; // @[ALU.scala 54:36]
+  wire [126:0] _GEN_1 = {{63'd0}, io_src1}; // @[ALU.scala 55:37]
+  wire [126:0] _io_result_T_11 = _GEN_1 << io_src2[5:0]; // @[ALU.scala 55:37]
+  wire [63:0] _io_result_T_15 = io_src1 >> io_src2[5:0]; // @[ALU.scala 56:36]
+  wire [63:0] _io_result_T_20 = $signed(io_src1) >>> io_src2[5:0]; // @[ALU.scala 57:62]
+  wire [63:0] _io_result_T_25 = adder_result & 64'hfffffffffffffffe; // @[ALU.scala 60:42]
+  wire [64:0] _io_result_T_36 = $signed(io_src1) / $signed(io_src2); // @[ALU.scala 63:62]
+  wire [63:0] _io_result_T_38 = io_src1 / io_src2; // @[ALU.scala 64:37]
+  wire [63:0] _io_result_T_43 = $signed(io_src1) % $signed(io_src2); // @[ALU.scala 65:62]
+  wire [63:0] _io_result_T_45 = io_src1 % io_src2; // @[ALU.scala 66:37]
+  wire [63:0] _io_result_T_46 = io_op[18] ? _io_result_T_45 : 64'h0; // @[ALU.scala 66:19]
+  wire [63:0] _io_result_T_47 = io_op[17] ? _io_result_T_43 : _io_result_T_46; // @[ALU.scala 65:19]
+  wire [63:0] _io_result_T_48 = io_op[16] ? _io_result_T_38 : _io_result_T_47; // @[ALU.scala 64:19]
+  wire [64:0] _io_result_T_49 = io_op[15] ? _io_result_T_36 : {{1'd0}, _io_result_T_48}; // @[ALU.scala 63:19]
+  wire [64:0] _io_result_T_50 = _T_4 ? {{1'd0}, mul_pipe_io_result_lo} : _io_result_T_49; // @[ALU.scala 62:19]
+  wire [64:0] _io_result_T_51 = io_op[11] ? {{1'd0}, eql_result} : _io_result_T_50; // @[ALU.scala 61:19]
+  wire [64:0] _io_result_T_52 = io_op[10] ? {{1'd0}, _io_result_T_25} : _io_result_T_51; // @[ALU.scala 60:19]
+  wire [64:0] _io_result_T_53 = io_op[9] ? {{1'd0}, sltu_result} : _io_result_T_52; // @[ALU.scala 59:19]
+  wire [64:0] _io_result_T_54 = io_op[8] ? {{1'd0}, slt_result} : _io_result_T_53; // @[ALU.scala 58:19]
+  wire [64:0] _io_result_T_55 = io_op[7] ? {{1'd0}, _io_result_T_20} : _io_result_T_54; // @[ALU.scala 57:19]
+  wire [64:0] _io_result_T_56 = io_op[6] ? {{1'd0}, _io_result_T_15} : _io_result_T_55; // @[ALU.scala 56:19]
+  wire [64:0] _io_result_T_57 = io_op[5] ? {{1'd0}, _io_result_T_11[63:0]} : _io_result_T_56; // @[ALU.scala 55:19]
+  wire [64:0] _io_result_T_58 = io_op[4] ? {{1'd0}, _io_result_T_8} : _io_result_T_57; // @[ALU.scala 54:19]
+  wire [64:0] _io_result_T_59 = io_op[3] ? {{1'd0}, _io_result_T_6} : _io_result_T_58; // @[ALU.scala 53:19]
+  wire [64:0] _io_result_T_60 = io_op[2] ? {{1'd0}, _io_result_T_4} : _io_result_T_59; // @[ALU.scala 52:19]
+  wire [64:0] _io_result_T_61 = io_op[0] | io_op[1] ? {{1'd0}, adder_result} : _io_result_T_60; // @[ALU.scala 51:19]
+  mul_pipe mul_pipe ( // @[ALU.scala 38:19]
     .clock(mul_pipe_clock),
     .reset(mul_pipe_reset),
     .io_mul_valid(mul_pipe_io_mul_valid),
@@ -3826,68 +4043,14 @@ module ALU(
     .io_out_valid(mul_pipe_io_out_valid),
     .io_result_lo(mul_pipe_io_result_lo)
   );
-  assign io_result = _io_result_T_61[63:0]; // @[ALU.scala 49:14]
-  assign io_busy = busy; // @[ALU.scala 47:12]
+  assign io_result = _io_result_T_61[63:0]; // @[ALU.scala 51:14]
+  assign io_validout = ~_T_4 | mul_pipe_io_out_valid; // @[ALU.scala 49:52]
   assign mul_pipe_clock = clock;
   assign mul_pipe_reset = reset;
-  assign mul_pipe_io_mul_valid = io_op[12] | io_op[13] | io_op[14]; // @[ALU.scala 35:41]
-  assign mul_pipe_io_mul_signed = {_T_7,io_op[13]}; // @[Cat.scala 33:92]
-  assign mul_pipe_io_multiplicand = io_src1; // @[ALU.scala 38:21]
-  assign mul_pipe_io_multiplier = io_src2; // @[ALU.scala 39:19]
-  always @(posedge clock) begin
-    if (reset) begin // @[ALU.scala 42:21]
-      busy <= 1'h0; // @[ALU.scala 42:21]
-    end else if (mul_pipe_io_out_valid) begin // @[ALU.scala 43:14]
-      busy <= 1'h0;
-    end else begin
-      busy <= _busy_T_6;
-    end
-  end
-// Register and memory initialization
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-`ifdef FIRRTL_BEFORE_INITIAL
-`FIRRTL_BEFORE_INITIAL
-`endif
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-`ifdef RANDOMIZE_REG_INIT
-  _RAND_0 = {1{`RANDOM}};
-  busy = _RAND_0[0:0];
-`endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`ifdef FIRRTL_AFTER_INITIAL
-`FIRRTL_AFTER_INITIAL
-`endif
-`endif // SYNTHESIS
+  assign mul_pipe_io_mul_valid = (io_op[12] | io_op[13] | io_op[14]) & io_validin; // @[ALU.scala 39:53]
+  assign mul_pipe_io_mul_signed = {_T_8,io_op[13]}; // @[Cat.scala 33:92]
+  assign mul_pipe_io_multiplicand = io_src1; // @[ALU.scala 42:21]
+  assign mul_pipe_io_multiplier = io_src2; // @[ALU.scala 43:19]
 endmodule
 module EXU(
   input         clock,
@@ -3954,50 +4117,46 @@ module EXU(
   reg [31:0] _RAND_8;
   reg [31:0] _RAND_9;
   reg [31:0] _RAND_10;
+  reg [31:0] _RAND_11;
+  reg [31:0] _RAND_12;
 `endif // RANDOMIZE_REG_INIT
-  wire  lsu_clock; // @[EXU.scala 40:25]
-  wire  lsu_reset; // @[EXU.scala 40:25]
-  wire  lsu_io_ls_in_valid; // @[EXU.scala 40:25]
-  wire [31:0] lsu_io_ls_in_bits_raddr; // @[EXU.scala 40:25]
-  wire [31:0] lsu_io_ls_in_bits_waddr; // @[EXU.scala 40:25]
-  wire [63:0] lsu_io_ls_in_bits_wdata; // @[EXU.scala 40:25]
-  wire [7:0] lsu_io_ls_in_bits_wmask; // @[EXU.scala 40:25]
-  wire  lsu_io_ls_out_ready; // @[EXU.scala 40:25]
-  wire  lsu_io_ls_out_valid; // @[EXU.scala 40:25]
-  wire [63:0] lsu_io_ls_out_bits_rdata; // @[EXU.scala 40:25]
-  wire  lsu_io_en_r; // @[EXU.scala 40:25]
-  wire  lsu_io_en_w; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_ar_ready; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_ar_valid; // @[EXU.scala 40:25]
-  wire [31:0] lsu_io_lm_ar_bits_addr; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_r_ready; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_r_valid; // @[EXU.scala 40:25]
-  wire [63:0] lsu_io_lm_r_bits_data; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_aw_ready; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_aw_valid; // @[EXU.scala 40:25]
-  wire [31:0] lsu_io_lm_aw_bits_addr; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_w_ready; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_w_valid; // @[EXU.scala 40:25]
-  wire [63:0] lsu_io_lm_w_bits_data; // @[EXU.scala 40:25]
-  wire [7:0] lsu_io_lm_w_bits_strb; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_b_ready; // @[EXU.scala 40:25]
-  wire  lsu_io_lm_b_valid; // @[EXU.scala 40:25]
-  wire  alu_dest_clock; // @[EXU.scala 49:28]
-  wire  alu_dest_reset; // @[EXU.scala 49:28]
-  wire [63:0] alu_dest_io_src1; // @[EXU.scala 49:28]
-  wire [63:0] alu_dest_io_src2; // @[EXU.scala 49:28]
-  wire [18:0] alu_dest_io_op; // @[EXU.scala 49:28]
-  wire [63:0] alu_dest_io_result; // @[EXU.scala 49:28]
-  wire  alu_dest_io_busy; // @[EXU.scala 49:28]
-  wire  alu_pc_clock; // @[EXU.scala 50:26]
-  wire  alu_pc_reset; // @[EXU.scala 50:26]
-  wire [63:0] alu_pc_io_src1; // @[EXU.scala 50:26]
-  wire [63:0] alu_pc_io_src2; // @[EXU.scala 50:26]
-  wire [18:0] alu_pc_io_op; // @[EXU.scala 50:26]
-  wire [63:0] alu_pc_io_result; // @[EXU.scala 50:26]
-  wire  alu_pc_io_busy; // @[EXU.scala 50:26]
-  wire  ebreak1_en_break; // @[EXU.scala 116:27]
-  wire  ebreak1_clk; // @[EXU.scala 116:27]
+  wire  lsu_clock; // @[EXU.scala 39:25]
+  wire  lsu_reset; // @[EXU.scala 39:25]
+  wire  lsu_io_ls_in_valid; // @[EXU.scala 39:25]
+  wire [31:0] lsu_io_ls_in_bits_raddr; // @[EXU.scala 39:25]
+  wire [31:0] lsu_io_ls_in_bits_waddr; // @[EXU.scala 39:25]
+  wire [63:0] lsu_io_ls_in_bits_wdata; // @[EXU.scala 39:25]
+  wire [7:0] lsu_io_ls_in_bits_wmask; // @[EXU.scala 39:25]
+  wire  lsu_io_ls_out_ready; // @[EXU.scala 39:25]
+  wire  lsu_io_ls_out_valid; // @[EXU.scala 39:25]
+  wire [63:0] lsu_io_ls_out_bits_rdata; // @[EXU.scala 39:25]
+  wire  lsu_io_en_r; // @[EXU.scala 39:25]
+  wire  lsu_io_en_w; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_ar_ready; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_ar_valid; // @[EXU.scala 39:25]
+  wire [31:0] lsu_io_lm_ar_bits_addr; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_r_ready; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_r_valid; // @[EXU.scala 39:25]
+  wire [63:0] lsu_io_lm_r_bits_data; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_aw_ready; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_aw_valid; // @[EXU.scala 39:25]
+  wire [31:0] lsu_io_lm_aw_bits_addr; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_w_ready; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_w_valid; // @[EXU.scala 39:25]
+  wire [63:0] lsu_io_lm_w_bits_data; // @[EXU.scala 39:25]
+  wire [7:0] lsu_io_lm_w_bits_strb; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_b_ready; // @[EXU.scala 39:25]
+  wire  lsu_io_lm_b_valid; // @[EXU.scala 39:25]
+  wire  alu_clock; // @[EXU.scala 64:23]
+  wire  alu_reset; // @[EXU.scala 64:23]
+  wire [63:0] alu_io_src1; // @[EXU.scala 64:23]
+  wire [63:0] alu_io_src2; // @[EXU.scala 64:23]
+  wire [18:0] alu_io_op; // @[EXU.scala 64:23]
+  wire [63:0] alu_io_result; // @[EXU.scala 64:23]
+  wire  alu_io_validin; // @[EXU.scala 64:23]
+  wire  alu_io_validout; // @[EXU.scala 64:23]
+  wire  ebreak1_en_break; // @[EXU.scala 108:27]
+  wire  ebreak1_clk; // @[EXU.scala 108:27]
   wire  _EXE_reg_pc_T = io_in_ready & io_in_valid; // @[Decoupled.scala 52:35]
   reg [31:0] EXE_reg_pc; // @[Reg.scala 35:20]
   reg [31:0] EXE_reg_inst; // @[Reg.scala 35:20]
@@ -4009,23 +4168,86 @@ module EXU(
   reg [5:0] EXE_reg_typ; // @[Reg.scala 35:20]
   reg  EXE_reg_isJump; // @[Reg.scala 35:20]
   reg [4:0] EXE_reg_clearidx; // @[Reg.scala 35:20]
-  reg [1:0] state; // @[EXU.scala 53:28]
-  wire [1:0] _state_T_1 = _EXE_reg_pc_T ? 2'h1 : 2'h0; // @[EXU.scala 55:26]
-  wire  _state_T_2 = lsu_io_ls_out_ready & lsu_io_ls_out_valid; // @[Decoupled.scala 52:35]
   wire  op_r = EXE_reg_op[38] | EXE_reg_op[39] | EXE_reg_op[40] | EXE_reg_op[41] | EXE_reg_op[46] | EXE_reg_op[47] |
-    EXE_reg_op[48]; // @[EXU.scala 65:110]
-  wire  op_w = EXE_reg_op[42] | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45]; // @[EXU.scala 66:62]
-  wire  _state_T_11 = io_out_ready & io_out_valid; // @[Decoupled.scala 52:35]
-  wire  _io_out_bits_csr_en_w_T_2 = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 72:50]
-  wire  _src2_T_2 = EXE_reg_typ[2] | EXE_reg_typ[4]; // @[EXU.scala 134:34]
-  wire [63:0] _src2_T_6 = EXE_reg_typ[0] ? EXE_reg_imm : 64'h0; // @[EXU.scala 135:16]
-  wire [63:0] src2 = EXE_reg_typ[2] | EXE_reg_typ[4] | EXE_reg_typ[5] ? io_gpr_val_r2 : _src2_T_6; // @[EXU.scala 134:18]
-  wire [63:0] _io_out_bits_csr_idx_w_T_3 = _io_out_bits_csr_en_w_T_2 ? src2 : 64'h0; // @[EXU.scala 73:35]
-  wire [1:0] _io_out_bits_csr_no_T_2 = EXE_reg_op[66] ? 2'h2 : 2'h0; // @[EXU.scala 75:32]
-  wire [1:0] _io_out_bits_csr_no_T_3 = EXE_reg_op[65] ? 2'h1 : _io_out_bits_csr_no_T_2; // @[EXU.scala 74:32]
-  wire [31:0] _io_out_bits_gpr_val_w_T_25 = alu_dest_io_result[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
-  wire [63:0] _io_out_bits_gpr_val_w_T_27 = {_io_out_bits_gpr_val_w_T_25,alu_dest_io_result[31:0]}; // @[Cat.scala 33:92]
-  wire [63:0] _io_out_bits_gpr_val_w_T_35 = {32'h0,alu_dest_io_result[63:32]}; // @[Cat.scala 33:92]
+    EXE_reg_op[48]; // @[EXU.scala 45:110]
+  wire  op_w = EXE_reg_op[42] | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45]; // @[EXU.scala 46:62]
+  wire  op_mul = EXE_reg_op[12] | EXE_reg_op[13] | EXE_reg_op[14]; // @[EXU.scala 47:46]
+  wire  op_div = EXE_reg_op[15] | EXE_reg_op[16] | EXE_reg_op[17] | EXE_reg_op[18]; // @[EXU.scala 48:61]
+  wire  _src1_T_4 = EXE_reg_typ[0] | EXE_reg_typ[2] | EXE_reg_typ[4]; // @[EXU.scala 53:49]
+  wire [63:0] _src1_T_10 = EXE_reg_typ[1] | EXE_reg_typ[3] ? EXE_reg_imm : 64'h0; // @[EXU.scala 54:16]
+  wire [63:0] src1 = EXE_reg_typ[0] | EXE_reg_typ[2] | EXE_reg_typ[4] | EXE_reg_typ[5] ? io_gpr_val_r1 : _src1_T_10; // @[EXU.scala 53:18]
+  wire  _src2_T_2 = EXE_reg_typ[2] | EXE_reg_typ[4]; // @[EXU.scala 57:34]
+  wire [63:0] _src2_T_6 = EXE_reg_typ[0] ? EXE_reg_imm : 64'h0; // @[EXU.scala 58:16]
+  wire [63:0] src2 = EXE_reg_typ[2] | EXE_reg_typ[4] | EXE_reg_typ[5] ? io_gpr_val_r2 : _src2_T_6; // @[EXU.scala 57:18]
+  wire [63:0] dest = _src2_T_2 ? EXE_reg_imm : {{59'd0}, EXE_reg_rd}; // @[EXU.scala 61:18]
+  reg  lsu_finish; // @[EXU.scala 66:31]
+  reg  alu_finish; // @[EXU.scala 67:31]
+  reg [1:0] state; // @[EXU.scala 71:28]
+  wire  _lsu_finish_T = state == 2'h2; // @[EXU.scala 73:33]
+  wire  _lsu_finish_T_1 = lsu_io_ls_out_ready & lsu_io_ls_out_valid; // @[Decoupled.scala 52:35]
+  wire  _lsu_finish_T_7 = _lsu_finish_T_1 | ~op_r & ~op_w | lsu_finish; // @[EXU.scala 74:26]
+  wire  _alu_finish_T_6 = alu_io_validout | ~op_mul & ~op_div | alu_finish; // @[EXU.scala 76:26]
+  wire [1:0] _state_T_1 = _EXE_reg_pc_T ? 2'h1 : 2'h0; // @[EXU.scala 80:26]
+  wire  _state_T_6 = io_out_ready & io_out_valid; // @[Decoupled.scala 52:35]
+  wire  _lsu_io_ls_in_valid_T = state == 2'h1; // @[EXU.scala 95:36]
+  wire [63:0] _lsu_io_ls_in_bits_raddr_T_13 = op_r ? alu_io_result : 64'h0; // @[EXU.scala 96:37]
+  wire [63:0] _lsu_io_ls_in_bits_waddr_T_7 = op_w ? alu_io_result : 64'h0; // @[EXU.scala 97:37]
+  wire [7:0] _lsu_io_ls_in_bits_wmask_T_13 = EXE_reg_op[45] ? 8'hff : 8'h0; // @[EXU.scala 102:35]
+  wire [7:0] _lsu_io_ls_in_bits_wmask_T_14 = EXE_reg_op[44] ? 8'hf : _lsu_io_ls_in_bits_wmask_T_13; // @[EXU.scala 101:35]
+  wire [7:0] _lsu_io_ls_in_bits_wmask_T_15 = EXE_reg_op[43] ? 8'h3 : _lsu_io_ls_in_bits_wmask_T_14; // @[EXU.scala 100:35]
+  wire  _io_csr_en_r_T_2 = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 120:40]
+  wire [63:0] _io_csr_idx_r_T_3 = _io_csr_en_r_T_2 ? src2 : 64'h0; // @[EXU.scala 121:26]
+  wire [63:0] _alu_io_src1_T_15 = {32'h0,src1[31:0]}; // @[Cat.scala 33:92]
+  wire [31:0] _alu_io_src1_T_21 = src1[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
+  wire [63:0] _alu_io_src1_T_23 = {_alu_io_src1_T_21,src1[31:0]}; // @[Cat.scala 33:92]
+  wire  _alu_io_src1_T_26 = EXE_reg_op[36] | EXE_reg_op[37]; // @[EXU.scala 133:43]
+  wire [63:0] _alu_io_src1_T_27 = EXE_reg_op[36] | EXE_reg_op[37] ? {{32'd0}, EXE_reg_pc} : src1; // @[EXU.scala 133:28]
+  wire [63:0] _alu_io_src1_T_28 = EXE_reg_op[17] | EXE_reg_op[19] ? _alu_io_src1_T_23 : _alu_io_src1_T_27; // @[EXU.scala 132:28]
+  wire [63:0] _alu_io_src2_T_7 = {59'h0,src2[4:0]}; // @[Cat.scala 33:92]
+  wire [63:0] _alu_io_src2_T_28 = {32'h0,src2[31:0]}; // @[Cat.scala 33:92]
+  wire [63:0] _alu_io_src2_T_30 = EXE_reg_op[64] ? io_csr_val_r : src2; // @[EXU.scala 140:28]
+  wire [63:0] _alu_io_src2_T_31 = EXE_reg_op[56] | EXE_reg_op[58] | EXE_reg_op[60] | EXE_reg_op[62] ? _alu_io_src2_T_28
+     : _alu_io_src2_T_30; // @[EXU.scala 139:28]
+  wire [63:0] _alu_io_src2_T_32 = op_w ? dest : _alu_io_src2_T_31; // @[EXU.scala 138:28]
+  wire [63:0] _alu_io_src2_T_33 = _alu_io_src1_T_26 ? 64'h4 : _alu_io_src2_T_32; // @[EXU.scala 137:28]
+  wire [63:0] _alu_io_src2_T_34 = EXE_reg_op[25] ? {{32'd0}, EXE_reg_pc} : _alu_io_src2_T_33; // @[EXU.scala 136:28]
+  wire [18:0] _alu_io_op_T_108 = EXE_reg_op[61] | EXE_reg_op[62] ? 19'h40000 : 19'h0; // @[EXU.scala 159:28]
+  wire [18:0] _alu_io_op_T_109 = EXE_reg_op[59] | EXE_reg_op[60] ? 19'h20000 : _alu_io_op_T_108; // @[EXU.scala 158:28]
+  wire [18:0] _alu_io_op_T_110 = EXE_reg_op[57] | EXE_reg_op[58] ? 19'h10000 : _alu_io_op_T_109; // @[EXU.scala 157:28]
+  wire [18:0] _alu_io_op_T_111 = EXE_reg_op[55] | EXE_reg_op[56] ? 19'h8000 : _alu_io_op_T_110; // @[EXU.scala 156:28]
+  wire [18:0] _alu_io_op_T_112 = EXE_reg_op[54] ? 19'h4000 : _alu_io_op_T_111; // @[EXU.scala 155:28]
+  wire [18:0] _alu_io_op_T_113 = EXE_reg_op[52] ? 19'h2000 : _alu_io_op_T_112; // @[EXU.scala 154:28]
+  wire [18:0] _alu_io_op_T_114 = EXE_reg_op[50] | EXE_reg_op[51] | EXE_reg_op[53] ? 19'h1000 : _alu_io_op_T_113; // @[EXU.scala 153:28]
+  wire [18:0] _alu_io_op_T_115 = EXE_reg_op[30] | EXE_reg_op[31] ? 19'h800 : _alu_io_op_T_114; // @[EXU.scala 152:28]
+  wire [18:0] _alu_io_op_T_116 = EXE_reg_op[27] | EXE_reg_op[29] | EXE_reg_op[33] | EXE_reg_op[35] ? 19'h200 :
+    _alu_io_op_T_115; // @[EXU.scala 151:28]
+  wire [18:0] _alu_io_op_T_117 = EXE_reg_op[26] | EXE_reg_op[28] | EXE_reg_op[32] | EXE_reg_op[34] ? 19'h100 :
+    _alu_io_op_T_116; // @[EXU.scala 150:28]
+  wire [18:0] _alu_io_op_T_118 = EXE_reg_op[16] | EXE_reg_op[17] | EXE_reg_op[18] | EXE_reg_op[19] ? 19'h80 :
+    _alu_io_op_T_117; // @[EXU.scala 149:28]
+  wire [18:0] _alu_io_op_T_119 = EXE_reg_op[20] | EXE_reg_op[21] | EXE_reg_op[22] | EXE_reg_op[23] ? 19'h40 :
+    _alu_io_op_T_118; // @[EXU.scala 148:28]
+  wire [18:0] _alu_io_op_T_120 = op_mul | EXE_reg_op[15] ? 19'h20 : _alu_io_op_T_119; // @[EXU.scala 147:28]
+  wire [18:0] _alu_io_op_T_121 = EXE_reg_op[10] | EXE_reg_op[11] ? 19'h10 : _alu_io_op_T_120; // @[EXU.scala 146:28]
+  wire [18:0] _alu_io_op_T_122 = EXE_reg_op[8] | EXE_reg_op[9] | EXE_reg_op[64] ? 19'h8 : _alu_io_op_T_121; // @[EXU.scala 145:28]
+  wire [18:0] _alu_io_op_T_123 = EXE_reg_op[6] | EXE_reg_op[7] ? 19'h4 : _alu_io_op_T_122; // @[EXU.scala 144:28]
+  wire [18:0] _alu_io_op_T_124 = EXE_reg_op[4] | EXE_reg_op[5] ? 19'h2 : _alu_io_op_T_123; // @[EXU.scala 143:28]
+  wire [63:0] next_pc_src1 = EXE_reg_op[37] ? src1 : {{32'd0}, EXE_reg_pc}; // @[EXU.scala 166:26]
+  wire  _next_pc_src2_T_5 = ~alu_io_result[0]; // @[EXU.scala 168:43]
+  wire [63:0] _next_pc_src2_T_23 = EXE_reg_op[37] ? src2 : 64'h4; // @[EXU.scala 174:26]
+  wire [63:0] _next_pc_src2_T_24 = EXE_reg_op[36] ? src1 : _next_pc_src2_T_23; // @[EXU.scala 173:26]
+  wire [63:0] _next_pc_src2_T_25 = EXE_reg_op[35] & alu_io_result[0] ? dest : _next_pc_src2_T_24; // @[EXU.scala 172:26]
+  wire [63:0] _next_pc_src2_T_26 = EXE_reg_op[34] & alu_io_result[0] ? dest : _next_pc_src2_T_25; // @[EXU.scala 171:26]
+  wire [63:0] _next_pc_src2_T_27 = EXE_reg_op[33] & _next_pc_src2_T_5 ? dest : _next_pc_src2_T_26; // @[EXU.scala 170:26]
+  wire [63:0] _next_pc_src2_T_28 = EXE_reg_op[32] & _next_pc_src2_T_5 ? dest : _next_pc_src2_T_27; // @[EXU.scala 169:26]
+  wire [63:0] _next_pc_src2_T_29 = EXE_reg_op[31] & ~alu_io_result[0] ? dest : _next_pc_src2_T_28; // @[EXU.scala 168:26]
+  wire [63:0] next_pc_src2 = EXE_reg_op[30] & alu_io_result[0] ? dest : _next_pc_src2_T_29; // @[EXU.scala 167:26]
+  wire [63:0] next_pc_sum = next_pc_src1 + next_pc_src2; // @[EXU.scala 176:34]
+  wire [1:0] _io_out_bits_csr_no_T_2 = EXE_reg_op[66] ? 2'h2 : 2'h0; // @[EXU.scala 185:32]
+  wire [1:0] _io_out_bits_csr_no_T_3 = EXE_reg_op[65] ? 2'h1 : _io_out_bits_csr_no_T_2; // @[EXU.scala 184:32]
+  wire [31:0] _io_out_bits_gpr_val_w_T_25 = alu_io_result[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
+  wire [63:0] _io_out_bits_gpr_val_w_T_27 = {_io_out_bits_gpr_val_w_T_25,alu_io_result[31:0]}; // @[Cat.scala 33:92]
+  wire [63:0] _io_out_bits_gpr_val_w_T_35 = {32'h0,alu_io_result[63:32]}; // @[Cat.scala 33:92]
   wire [55:0] _io_out_bits_gpr_val_w_T_42 = lsu_io_ls_out_bits_rdata[7] ? 56'hffffffffffffff : 56'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _io_out_bits_gpr_val_w_T_44 = {_io_out_bits_gpr_val_w_T_42,lsu_io_ls_out_bits_rdata[7:0]}; // @[Cat.scala 33:92]
   wire [47:0] _io_out_bits_gpr_val_w_T_48 = lsu_io_ls_out_bits_rdata[15] ? 48'hffffffffffff : 48'h0; // @[Bitwise.scala 77:12]
@@ -4035,74 +4257,20 @@ module EXU(
   wire [63:0] _io_out_bits_gpr_val_w_T_61 = {56'h0,lsu_io_ls_out_bits_rdata[7:0]}; // @[Cat.scala 33:92]
   wire [63:0] _io_out_bits_gpr_val_w_T_65 = {48'h0,lsu_io_ls_out_bits_rdata[15:0]}; // @[Cat.scala 33:92]
   wire [63:0] _io_out_bits_gpr_val_w_T_69 = {32'h0,lsu_io_ls_out_bits_rdata[31:0]}; // @[Cat.scala 33:92]
-  wire [63:0] _io_out_bits_gpr_val_w_T_70 = EXE_reg_op[48] ? _io_out_bits_gpr_val_w_T_69 : alu_dest_io_result; // @[EXU.scala 87:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_71 = EXE_reg_op[47] ? _io_out_bits_gpr_val_w_T_65 : _io_out_bits_gpr_val_w_T_70; // @[EXU.scala 86:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_72 = EXE_reg_op[46] ? _io_out_bits_gpr_val_w_T_61 : _io_out_bits_gpr_val_w_T_71; // @[EXU.scala 85:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_73 = EXE_reg_op[41] ? lsu_io_ls_out_bits_rdata : _io_out_bits_gpr_val_w_T_72; // @[EXU.scala 84:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_74 = EXE_reg_op[40] ? _io_out_bits_gpr_val_w_T_56 : _io_out_bits_gpr_val_w_T_73; // @[EXU.scala 83:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_75 = EXE_reg_op[39] ? _io_out_bits_gpr_val_w_T_50 : _io_out_bits_gpr_val_w_T_74; // @[EXU.scala 82:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_76 = EXE_reg_op[38] ? _io_out_bits_gpr_val_w_T_44 : _io_out_bits_gpr_val_w_T_75; // @[EXU.scala 81:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_77 = _io_out_bits_csr_en_w_T_2 ? io_csr_val_r : _io_out_bits_gpr_val_w_T_76; // @[EXU.scala 80:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_70 = EXE_reg_op[48] ? _io_out_bits_gpr_val_w_T_69 : alu_io_result; // @[EXU.scala 197:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_71 = EXE_reg_op[47] ? _io_out_bits_gpr_val_w_T_65 : _io_out_bits_gpr_val_w_T_70; // @[EXU.scala 196:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_72 = EXE_reg_op[46] ? _io_out_bits_gpr_val_w_T_61 : _io_out_bits_gpr_val_w_T_71; // @[EXU.scala 195:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_73 = EXE_reg_op[41] ? lsu_io_ls_out_bits_rdata : _io_out_bits_gpr_val_w_T_72; // @[EXU.scala 194:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_74 = EXE_reg_op[40] ? _io_out_bits_gpr_val_w_T_56 : _io_out_bits_gpr_val_w_T_73; // @[EXU.scala 193:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_75 = EXE_reg_op[39] ? _io_out_bits_gpr_val_w_T_50 : _io_out_bits_gpr_val_w_T_74; // @[EXU.scala 192:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_76 = EXE_reg_op[38] ? _io_out_bits_gpr_val_w_T_44 : _io_out_bits_gpr_val_w_T_75; // @[EXU.scala 191:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_77 = _io_csr_en_r_T_2 ? io_csr_val_r : _io_out_bits_gpr_val_w_T_76; // @[EXU.scala 190:26]
   wire [63:0] _io_out_bits_gpr_val_w_T_78 = EXE_reg_op[52] | EXE_reg_op[53] | EXE_reg_op[54] ?
-    _io_out_bits_gpr_val_w_T_35 : _io_out_bits_gpr_val_w_T_77; // @[EXU.scala 79:26]
-  wire [63:0] _io_out_bits_csr_val_w_T_2 = EXE_reg_op[64] ? alu_dest_io_result : 64'h0; // @[EXU.scala 91:26]
-  wire  _src1_T_4 = EXE_reg_typ[0] | EXE_reg_typ[2] | EXE_reg_typ[4]; // @[EXU.scala 130:49]
-  wire [63:0] _src1_T_10 = EXE_reg_typ[1] | EXE_reg_typ[3] ? EXE_reg_imm : 64'h0; // @[EXU.scala 131:16]
-  wire [63:0] src1 = EXE_reg_typ[0] | EXE_reg_typ[2] | EXE_reg_typ[4] | EXE_reg_typ[5] ? io_gpr_val_r1 : _src1_T_10; // @[EXU.scala 130:18]
-  wire [63:0] _lsu_io_ls_in_bits_raddr_T_13 = op_r ? alu_dest_io_result : 64'h0; // @[EXU.scala 105:37]
-  wire [63:0] _lsu_io_ls_in_bits_waddr_T_7 = op_w ? alu_dest_io_result : 64'h0; // @[EXU.scala 106:37]
-  wire [7:0] _lsu_io_ls_in_bits_wmask_T_13 = EXE_reg_op[45] ? 8'hff : 8'h0; // @[EXU.scala 111:35]
-  wire [7:0] _lsu_io_ls_in_bits_wmask_T_14 = EXE_reg_op[44] ? 8'hf : _lsu_io_ls_in_bits_wmask_T_13; // @[EXU.scala 110:35]
-  wire [7:0] _lsu_io_ls_in_bits_wmask_T_15 = EXE_reg_op[43] ? 8'h3 : _lsu_io_ls_in_bits_wmask_T_14; // @[EXU.scala 109:35]
-  wire [63:0] dest = _src2_T_2 ? EXE_reg_imm : {{59'd0}, EXE_reg_rd}; // @[EXU.scala 138:18]
-  wire [63:0] _alu_dest_io_src1_T_15 = {32'h0,src1[31:0]}; // @[Cat.scala 33:92]
-  wire [31:0] _alu_dest_io_src1_T_21 = src1[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
-  wire [63:0] _alu_dest_io_src1_T_23 = {_alu_dest_io_src1_T_21,src1[31:0]}; // @[Cat.scala 33:92]
-  wire  _alu_dest_io_src1_T_26 = EXE_reg_op[36] | EXE_reg_op[37]; // @[EXU.scala 145:45]
-  wire [63:0] _alu_dest_io_src1_T_27 = EXE_reg_op[36] | EXE_reg_op[37] ? {{32'd0}, EXE_reg_pc} : src1; // @[EXU.scala 145:30]
-  wire [63:0] _alu_dest_io_src1_T_28 = EXE_reg_op[17] | EXE_reg_op[19] ? _alu_dest_io_src1_T_23 : _alu_dest_io_src1_T_27
-    ; // @[EXU.scala 144:30]
-  wire [63:0] _alu_dest_io_src2_T_7 = {59'h0,src2[4:0]}; // @[Cat.scala 33:92]
-  wire [63:0] _alu_dest_io_src2_T_28 = {32'h0,src2[31:0]}; // @[Cat.scala 33:92]
-  wire [63:0] _alu_dest_io_src2_T_30 = EXE_reg_op[64] ? io_csr_val_r : src2; // @[EXU.scala 152:30]
-  wire [63:0] _alu_dest_io_src2_T_31 = EXE_reg_op[56] | EXE_reg_op[58] | EXE_reg_op[60] | EXE_reg_op[62] ?
-    _alu_dest_io_src2_T_28 : _alu_dest_io_src2_T_30; // @[EXU.scala 151:30]
-  wire [63:0] _alu_dest_io_src2_T_32 = op_w ? dest : _alu_dest_io_src2_T_31; // @[EXU.scala 150:30]
-  wire [63:0] _alu_dest_io_src2_T_33 = _alu_dest_io_src1_T_26 ? 64'h4 : _alu_dest_io_src2_T_32; // @[EXU.scala 149:30]
-  wire [63:0] _alu_dest_io_src2_T_34 = EXE_reg_op[25] ? {{32'd0}, EXE_reg_pc} : _alu_dest_io_src2_T_33; // @[EXU.scala 148:30]
-  wire [18:0] _alu_dest_io_op_T_108 = EXE_reg_op[61] | EXE_reg_op[62] ? 19'h40000 : 19'h0; // @[EXU.scala 171:30]
-  wire [18:0] _alu_dest_io_op_T_109 = EXE_reg_op[59] | EXE_reg_op[60] ? 19'h20000 : _alu_dest_io_op_T_108; // @[EXU.scala 170:30]
-  wire [18:0] _alu_dest_io_op_T_110 = EXE_reg_op[57] | EXE_reg_op[58] ? 19'h10000 : _alu_dest_io_op_T_109; // @[EXU.scala 169:30]
-  wire [18:0] _alu_dest_io_op_T_111 = EXE_reg_op[55] | EXE_reg_op[56] ? 19'h8000 : _alu_dest_io_op_T_110; // @[EXU.scala 168:30]
-  wire [18:0] _alu_dest_io_op_T_112 = EXE_reg_op[54] ? 19'h4000 : _alu_dest_io_op_T_111; // @[EXU.scala 167:30]
-  wire [18:0] _alu_dest_io_op_T_113 = EXE_reg_op[52] ? 19'h2000 : _alu_dest_io_op_T_112; // @[EXU.scala 166:30]
-  wire [18:0] _alu_dest_io_op_T_114 = EXE_reg_op[50] | EXE_reg_op[51] | EXE_reg_op[53] ? 19'h1000 :
-    _alu_dest_io_op_T_113; // @[EXU.scala 165:30]
-  wire [18:0] _alu_dest_io_op_T_115 = EXE_reg_op[30] | EXE_reg_op[31] ? 19'h800 : _alu_dest_io_op_T_114; // @[EXU.scala 164:30]
-  wire [18:0] _alu_dest_io_op_T_116 = EXE_reg_op[27] | EXE_reg_op[29] | EXE_reg_op[33] | EXE_reg_op[35] ? 19'h200 :
-    _alu_dest_io_op_T_115; // @[EXU.scala 163:30]
-  wire [18:0] _alu_dest_io_op_T_117 = EXE_reg_op[26] | EXE_reg_op[28] | EXE_reg_op[32] | EXE_reg_op[34] ? 19'h100 :
-    _alu_dest_io_op_T_116; // @[EXU.scala 162:30]
-  wire [18:0] _alu_dest_io_op_T_118 = EXE_reg_op[16] | EXE_reg_op[17] | EXE_reg_op[18] | EXE_reg_op[19] ? 19'h80 :
-    _alu_dest_io_op_T_117; // @[EXU.scala 161:30]
-  wire [18:0] _alu_dest_io_op_T_119 = EXE_reg_op[20] | EXE_reg_op[21] | EXE_reg_op[22] | EXE_reg_op[23] ? 19'h40 :
-    _alu_dest_io_op_T_118; // @[EXU.scala 160:30]
-  wire [18:0] _alu_dest_io_op_T_120 = EXE_reg_op[12] | EXE_reg_op[13] | EXE_reg_op[14] | EXE_reg_op[15] ? 19'h20 :
-    _alu_dest_io_op_T_119; // @[EXU.scala 159:30]
-  wire [18:0] _alu_dest_io_op_T_121 = EXE_reg_op[10] | EXE_reg_op[11] ? 19'h10 : _alu_dest_io_op_T_120; // @[EXU.scala 158:30]
-  wire [18:0] _alu_dest_io_op_T_122 = EXE_reg_op[8] | EXE_reg_op[9] | EXE_reg_op[64] ? 19'h8 : _alu_dest_io_op_T_121; // @[EXU.scala 157:30]
-  wire [18:0] _alu_dest_io_op_T_123 = EXE_reg_op[6] | EXE_reg_op[7] ? 19'h4 : _alu_dest_io_op_T_122; // @[EXU.scala 156:30]
-  wire [18:0] _alu_dest_io_op_T_124 = EXE_reg_op[4] | EXE_reg_op[5] ? 19'h2 : _alu_dest_io_op_T_123; // @[EXU.scala 155:30]
-  wire  _alu_pc_io_src2_T_5 = ~alu_dest_io_result[0]; // @[EXU.scala 176:45]
-  wire [63:0] _alu_pc_io_src2_T_23 = EXE_reg_op[37] ? src2 : 64'h4; // @[EXU.scala 182:28]
-  wire [63:0] _alu_pc_io_src2_T_24 = EXE_reg_op[36] ? src1 : _alu_pc_io_src2_T_23; // @[EXU.scala 181:28]
-  wire [63:0] _alu_pc_io_src2_T_25 = EXE_reg_op[35] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_24; // @[EXU.scala 180:28]
-  wire [63:0] _alu_pc_io_src2_T_26 = EXE_reg_op[34] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_25; // @[EXU.scala 179:28]
-  wire [63:0] _alu_pc_io_src2_T_27 = EXE_reg_op[33] & _alu_pc_io_src2_T_5 ? dest : _alu_pc_io_src2_T_26; // @[EXU.scala 178:28]
-  wire [63:0] _alu_pc_io_src2_T_28 = EXE_reg_op[32] & _alu_pc_io_src2_T_5 ? dest : _alu_pc_io_src2_T_27; // @[EXU.scala 177:28]
-  wire [63:0] _alu_pc_io_src2_T_29 = EXE_reg_op[31] & ~alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_28; // @[EXU.scala 176:28]
-  wire [10:0] _alu_pc_io_op_T_1 = EXE_reg_op[37] ? 11'h400 : 11'h1; // @[EXU.scala 184:28]
-  LSU lsu ( // @[EXU.scala 40:25]
+    _io_out_bits_gpr_val_w_T_35 : _io_out_bits_gpr_val_w_T_77; // @[EXU.scala 189:26]
+  wire [63:0] _io_out_bits_csr_val_w_T_2 = EXE_reg_op[64] ? alu_io_result : 64'h0; // @[EXU.scala 201:26]
+  wire [63:0] _io_out_bits_pc_dnpc_T_5 = next_pc_sum & 64'hfffffffffffffffe; // @[EXU.scala 204:60]
+  wire [63:0] _io_out_bits_pc_dnpc_T_6 = EXE_reg_op[37] ? _io_out_bits_pc_dnpc_T_5 : next_pc_sum; // @[EXU.scala 204:33]
+  LSU lsu ( // @[EXU.scala 39:25]
     .clock(lsu_clock),
     .reset(lsu_reset),
     .io_ls_in_valid(lsu_io_ls_in_valid),
@@ -4131,92 +4299,79 @@ module EXU(
     .io_lm_b_ready(lsu_io_lm_b_ready),
     .io_lm_b_valid(lsu_io_lm_b_valid)
   );
-  ALU alu_dest ( // @[EXU.scala 49:28]
-    .clock(alu_dest_clock),
-    .reset(alu_dest_reset),
-    .io_src1(alu_dest_io_src1),
-    .io_src2(alu_dest_io_src2),
-    .io_op(alu_dest_io_op),
-    .io_result(alu_dest_io_result),
-    .io_busy(alu_dest_io_busy)
+  ALU alu ( // @[EXU.scala 64:23]
+    .clock(alu_clock),
+    .reset(alu_reset),
+    .io_src1(alu_io_src1),
+    .io_src2(alu_io_src2),
+    .io_op(alu_io_op),
+    .io_result(alu_io_result),
+    .io_validin(alu_io_validin),
+    .io_validout(alu_io_validout)
   );
-  ALU alu_pc ( // @[EXU.scala 50:26]
-    .clock(alu_pc_clock),
-    .reset(alu_pc_reset),
-    .io_src1(alu_pc_io_src1),
-    .io_src2(alu_pc_io_src2),
-    .io_op(alu_pc_io_op),
-    .io_result(alu_pc_io_result),
-    .io_busy(alu_pc_io_busy)
-  );
-  ebreak ebreak1 ( // @[EXU.scala 116:27]
+  ebreak ebreak1 ( // @[EXU.scala 108:27]
     .en_break(ebreak1_en_break),
     .clk(ebreak1_clk)
   );
-  assign io_in_ready = state == 2'h0; // @[EXU.scala 61:29]
-  assign io_out_valid = state == 2'h2; // @[EXU.scala 62:30]
-  assign io_out_bits_pc = EXE_reg_pc; // @[EXU.scala 96:23]
-  assign io_out_bits_pc_dnpc = EXE_reg_op[65] | EXE_reg_op[66] ? io_csr_val_r : alu_pc_io_result; // @[EXU.scala 93:33]
-  assign io_out_bits_gpr_idx_w = dest[4:0]; // @[EXU.scala 70:30]
-  assign io_out_bits_gpr_en_w = EXE_reg_typ[0] | EXE_reg_typ[1] | EXE_reg_typ[3] | EXE_reg_typ[5]; // @[EXU.scala 69:80]
+  assign io_in_ready = state == 2'h0; // @[EXU.scala 88:29]
+  assign io_out_valid = state == 2'h2; // @[EXU.scala 89:30]
+  assign io_out_bits_pc = EXE_reg_pc; // @[EXU.scala 207:23]
+  assign io_out_bits_pc_dnpc = EXE_reg_op[65] | EXE_reg_op[66] ? io_csr_val_r : _io_out_bits_pc_dnpc_T_6; // @[EXU.scala 203:33]
+  assign io_out_bits_gpr_idx_w = dest[4:0]; // @[EXU.scala 180:30]
+  assign io_out_bits_gpr_en_w = EXE_reg_typ[0] | EXE_reg_typ[1] | EXE_reg_typ[3] | EXE_reg_typ[5]; // @[EXU.scala 179:80]
   assign io_out_bits_gpr_val_w = EXE_reg_op[1] | EXE_reg_op[3] | EXE_reg_op[5] | EXE_reg_op[13] | EXE_reg_op[15] |
     EXE_reg_op[17] | EXE_reg_op[21] | EXE_reg_op[23] | EXE_reg_op[51] | EXE_reg_op[56] | EXE_reg_op[60] | EXE_reg_op[62]
-     ? _io_out_bits_gpr_val_w_T_27 : _io_out_bits_gpr_val_w_T_78; // @[EXU.scala 78:35]
-  assign io_out_bits_csr_en_w = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 72:50]
-  assign io_out_bits_csr_idx_w = _io_out_bits_csr_idx_w_T_3[11:0]; // @[EXU.scala 73:30]
-  assign io_out_bits_csr_val_w = EXE_reg_op[63] ? src1 : _io_out_bits_csr_val_w_T_2; // @[EXU.scala 90:35]
-  assign io_out_bits_csr_no = {{62'd0}, _io_out_bits_csr_no_T_3}; // @[EXU.scala 74:27]
-  assign io_out_bits_csr_epc = {{32'd0}, EXE_reg_pc}; // @[EXU.scala 77:28]
+     ? _io_out_bits_gpr_val_w_T_27 : _io_out_bits_gpr_val_w_T_78; // @[EXU.scala 188:35]
+  assign io_out_bits_csr_en_w = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 182:50]
+  assign io_out_bits_csr_idx_w = _io_csr_idx_r_T_3[11:0]; // @[EXU.scala 183:30]
+  assign io_out_bits_csr_val_w = EXE_reg_op[63] ? src1 : _io_out_bits_csr_val_w_T_2; // @[EXU.scala 200:35]
+  assign io_out_bits_csr_no = {{62'd0}, _io_out_bits_csr_no_T_3}; // @[EXU.scala 184:27]
+  assign io_out_bits_csr_epc = {{32'd0}, EXE_reg_pc}; // @[EXU.scala 187:28]
   assign io_out_bits_isJump = EXE_reg_isJump; // @[EXU.scala 35:27]
   assign io_out_bits_clearidx = EXE_reg_clearidx; // @[EXU.scala 37:29]
-  assign io_gpr_idx_r1 = EXE_reg_rs1; // @[EXU.scala 123:22]
-  assign io_gpr_idx_r2 = EXE_reg_rs2; // @[EXU.scala 124:22]
-  assign io_gpr_en_r1 = _src1_T_4 | EXE_reg_typ[5]; // @[EXU.scala 121:72]
-  assign io_gpr_en_r2 = _src2_T_2 | EXE_reg_typ[5]; // @[EXU.scala 122:57]
-  assign io_csr_idx_r = _io_out_bits_csr_idx_w_T_3[11:0]; // @[EXU.scala 127:21]
-  assign io_csr_en_r = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 126:40]
-  assign io_lm_ar_valid = lsu_io_lm_ar_valid; // @[EXU.scala 114:14]
-  assign io_lm_ar_bits_addr = lsu_io_lm_ar_bits_addr; // @[EXU.scala 114:14]
-  assign io_lm_r_ready = lsu_io_lm_r_ready; // @[EXU.scala 114:14]
-  assign io_lm_aw_valid = lsu_io_lm_aw_valid; // @[EXU.scala 114:14]
-  assign io_lm_aw_bits_addr = lsu_io_lm_aw_bits_addr; // @[EXU.scala 114:14]
-  assign io_lm_w_valid = lsu_io_lm_w_valid; // @[EXU.scala 114:14]
-  assign io_lm_w_bits_data = lsu_io_lm_w_bits_data; // @[EXU.scala 114:14]
-  assign io_lm_w_bits_strb = lsu_io_lm_w_bits_strb; // @[EXU.scala 114:14]
+  assign io_gpr_idx_r1 = EXE_reg_rs1; // @[EXU.scala 116:22]
+  assign io_gpr_idx_r2 = EXE_reg_rs2; // @[EXU.scala 117:22]
+  assign io_gpr_en_r1 = _src1_T_4 | EXE_reg_typ[5]; // @[EXU.scala 114:72]
+  assign io_gpr_en_r2 = _src2_T_2 | EXE_reg_typ[5]; // @[EXU.scala 115:57]
+  assign io_csr_idx_r = _io_csr_idx_r_T_3[11:0]; // @[EXU.scala 121:21]
+  assign io_csr_en_r = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 120:40]
+  assign io_lm_ar_valid = lsu_io_lm_ar_valid; // @[EXU.scala 105:14]
+  assign io_lm_ar_bits_addr = lsu_io_lm_ar_bits_addr; // @[EXU.scala 105:14]
+  assign io_lm_r_ready = lsu_io_lm_r_ready; // @[EXU.scala 105:14]
+  assign io_lm_aw_valid = lsu_io_lm_aw_valid; // @[EXU.scala 105:14]
+  assign io_lm_aw_bits_addr = lsu_io_lm_aw_bits_addr; // @[EXU.scala 105:14]
+  assign io_lm_w_valid = lsu_io_lm_w_valid; // @[EXU.scala 105:14]
+  assign io_lm_w_bits_data = lsu_io_lm_w_bits_data; // @[EXU.scala 105:14]
+  assign io_lm_w_bits_strb = lsu_io_lm_w_bits_strb; // @[EXU.scala 105:14]
   assign lsu_clock = clock;
   assign lsu_reset = reset;
-  assign lsu_io_ls_in_valid = state == 2'h1 & (op_w | op_r); // @[EXU.scala 104:48]
-  assign lsu_io_ls_in_bits_raddr = _lsu_io_ls_in_bits_raddr_T_13[31:0]; // @[EXU.scala 105:32]
-  assign lsu_io_ls_in_bits_waddr = _lsu_io_ls_in_bits_waddr_T_7[31:0]; // @[EXU.scala 106:32]
-  assign lsu_io_ls_in_bits_wdata = op_w ? io_gpr_val_r2 : 64'h0; // @[EXU.scala 107:37]
-  assign lsu_io_ls_in_bits_wmask = EXE_reg_op[42] ? 8'h1 : _lsu_io_ls_in_bits_wmask_T_15; // @[EXU.scala 108:37]
-  assign lsu_io_ls_out_ready = 1'h1; // @[EXU.scala 103:28]
+  assign lsu_io_ls_in_valid = state == 2'h1 & (op_w | op_r) & ~lsu_finish; // @[EXU.scala 95:62]
+  assign lsu_io_ls_in_bits_raddr = _lsu_io_ls_in_bits_raddr_T_13[31:0]; // @[EXU.scala 96:32]
+  assign lsu_io_ls_in_bits_waddr = _lsu_io_ls_in_bits_waddr_T_7[31:0]; // @[EXU.scala 97:32]
+  assign lsu_io_ls_in_bits_wdata = op_w ? io_gpr_val_r2 : 64'h0; // @[EXU.scala 98:37]
+  assign lsu_io_ls_in_bits_wmask = EXE_reg_op[42] ? 8'h1 : _lsu_io_ls_in_bits_wmask_T_15; // @[EXU.scala 99:37]
+  assign lsu_io_ls_out_ready = 1'h1; // @[EXU.scala 94:28]
   assign lsu_io_en_r = EXE_reg_op[38] | EXE_reg_op[39] | EXE_reg_op[40] | EXE_reg_op[41] | EXE_reg_op[46] | EXE_reg_op[
-    47] | EXE_reg_op[48]; // @[EXU.scala 65:110]
-  assign lsu_io_en_w = EXE_reg_op[42] | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45]; // @[EXU.scala 66:62]
-  assign lsu_io_lm_ar_ready = io_lm_ar_ready; // @[EXU.scala 114:14]
-  assign lsu_io_lm_r_valid = io_lm_r_valid; // @[EXU.scala 114:14]
-  assign lsu_io_lm_r_bits_data = io_lm_r_bits_data; // @[EXU.scala 114:14]
-  assign lsu_io_lm_aw_ready = io_lm_aw_ready; // @[EXU.scala 114:14]
-  assign lsu_io_lm_w_ready = io_lm_w_ready; // @[EXU.scala 114:14]
-  assign lsu_io_lm_b_valid = io_lm_b_valid; // @[EXU.scala 114:14]
-  assign alu_dest_clock = clock;
-  assign alu_dest_reset = reset;
-  assign alu_dest_io_src1 = EXE_reg_op[13] | EXE_reg_op[21] | EXE_reg_op[23] | EXE_reg_op[56] | EXE_reg_op[58] |
-    EXE_reg_op[60] | EXE_reg_op[62] ? _alu_dest_io_src1_T_15 : _alu_dest_io_src1_T_28; // @[EXU.scala 143:30]
-  assign alu_dest_io_src2 = EXE_reg_op[13] | EXE_reg_op[17] | EXE_reg_op[21] ? _alu_dest_io_src2_T_7 :
-    _alu_dest_io_src2_T_34; // @[EXU.scala 147:30]
-  assign alu_dest_io_op = EXE_reg_op[0] | EXE_reg_op[1] | EXE_reg_op[2] | EXE_reg_op[3] | EXE_reg_op[24] | EXE_reg_op[25
-    ] | EXE_reg_op[36] | EXE_reg_op[37] | EXE_reg_op[38] | EXE_reg_op[39] | EXE_reg_op[40] | EXE_reg_op[41] | EXE_reg_op
-    [42] | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45] | EXE_reg_op[46] | EXE_reg_op[47] | EXE_reg_op[48] ? 19'h1
-     : _alu_dest_io_op_T_124; // @[EXU.scala 154:30]
-  assign alu_pc_clock = clock;
-  assign alu_pc_reset = reset;
-  assign alu_pc_io_src1 = EXE_reg_op[37] ? src1 : {{32'd0}, EXE_reg_pc}; // @[EXU.scala 174:28]
-  assign alu_pc_io_src2 = EXE_reg_op[30] & alu_dest_io_result[0] ? dest : _alu_pc_io_src2_T_29; // @[EXU.scala 175:28]
-  assign alu_pc_io_op = {{8'd0}, _alu_pc_io_op_T_1}; // @[EXU.scala 184:21]
-  assign ebreak1_en_break = EXE_reg_op[49] & _EXE_reg_pc_T; // @[EXU.scala 117:44]
-  assign ebreak1_clk = clock; // @[EXU.scala 118:23]
+    47] | EXE_reg_op[48]; // @[EXU.scala 45:110]
+  assign lsu_io_en_w = EXE_reg_op[42] | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45]; // @[EXU.scala 46:62]
+  assign lsu_io_lm_ar_ready = io_lm_ar_ready; // @[EXU.scala 105:14]
+  assign lsu_io_lm_r_valid = io_lm_r_valid; // @[EXU.scala 105:14]
+  assign lsu_io_lm_r_bits_data = io_lm_r_bits_data; // @[EXU.scala 105:14]
+  assign lsu_io_lm_aw_ready = io_lm_aw_ready; // @[EXU.scala 105:14]
+  assign lsu_io_lm_w_ready = io_lm_w_ready; // @[EXU.scala 105:14]
+  assign lsu_io_lm_b_valid = io_lm_b_valid; // @[EXU.scala 105:14]
+  assign alu_clock = clock;
+  assign alu_reset = reset;
+  assign alu_io_src1 = EXE_reg_op[13] | EXE_reg_op[21] | EXE_reg_op[23] | EXE_reg_op[56] | EXE_reg_op[58] | EXE_reg_op[
+    60] | EXE_reg_op[62] ? _alu_io_src1_T_15 : _alu_io_src1_T_28; // @[EXU.scala 131:28]
+  assign alu_io_src2 = EXE_reg_op[13] | EXE_reg_op[17] | EXE_reg_op[21] ? _alu_io_src2_T_7 : _alu_io_src2_T_34; // @[EXU.scala 135:28]
+  assign alu_io_op = EXE_reg_op[0] | EXE_reg_op[1] | EXE_reg_op[2] | EXE_reg_op[3] | EXE_reg_op[24] | EXE_reg_op[25] |
+    EXE_reg_op[36] | EXE_reg_op[37] | EXE_reg_op[38] | EXE_reg_op[39] | EXE_reg_op[40] | EXE_reg_op[41] | EXE_reg_op[42]
+     | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45] | EXE_reg_op[46] | EXE_reg_op[47] | EXE_reg_op[48] ? 19'h1 :
+    _alu_io_op_T_124; // @[EXU.scala 142:28]
+  assign alu_io_validin = _lsu_io_ls_in_valid_T & (op_mul | op_div) & ~alu_finish; // @[EXU.scala 129:64]
+  assign ebreak1_en_break = EXE_reg_op[49] & _EXE_reg_pc_T; // @[EXU.scala 109:44]
+  assign ebreak1_clk = clock; // @[EXU.scala 110:23]
   always @(posedge clock) begin
     if (reset) begin // @[Reg.scala 35:20]
       EXE_reg_pc <= 32'h0; // @[Reg.scala 35:20]
@@ -4268,16 +4423,30 @@ module EXU(
     end else if (_EXE_reg_pc_T) begin // @[Reg.scala 36:18]
       EXE_reg_clearidx <= io_in_bits_clearidx; // @[Reg.scala 36:22]
     end
-    if (reset) begin // @[EXU.scala 53:28]
-      state <= 2'h0; // @[EXU.scala 53:28]
+    if (reset) begin // @[EXU.scala 66:31]
+      lsu_finish <= 1'h0; // @[EXU.scala 66:31]
+    end else if (state == 2'h2) begin // @[EXU.scala 73:26]
+      lsu_finish <= 1'h0;
+    end else begin
+      lsu_finish <= _lsu_finish_T_7;
+    end
+    if (reset) begin // @[EXU.scala 67:31]
+      alu_finish <= 1'h0; // @[EXU.scala 67:31]
+    end else if (_lsu_finish_T) begin // @[EXU.scala 75:26]
+      alu_finish <= 1'h0;
+    end else begin
+      alu_finish <= _alu_finish_T_6;
+    end
+    if (reset) begin // @[EXU.scala 71:28]
+      state <= 2'h0; // @[EXU.scala 71:28]
     end else if (2'h2 == state) begin // @[Mux.scala 81:58]
-      if (_state_T_11) begin // @[EXU.scala 57:31]
+      if (_state_T_6) begin // @[EXU.scala 82:31]
         state <= 2'h0;
       end else begin
         state <= 2'h2;
       end
     end else if (2'h1 == state) begin // @[Mux.scala 81:58]
-      if (_state_T_2 | ~op_r & ~op_w | ~alu_dest_io_busy) begin // @[EXU.scala 56:26]
+      if (lsu_finish & alu_finish) begin // @[EXU.scala 81:26]
         state <= 2'h2;
       end else begin
         state <= 2'h1;
@@ -4345,7 +4514,11 @@ initial begin
   _RAND_9 = {1{`RANDOM}};
   EXE_reg_clearidx = _RAND_9[4:0];
   _RAND_10 = {1{`RANDOM}};
-  state = _RAND_10[1:0];
+  lsu_finish = _RAND_10[0:0];
+  _RAND_11 = {1{`RANDOM}};
+  alu_finish = _RAND_11[0:0];
+  _RAND_12 = {1{`RANDOM}};
+  state = _RAND_12[1:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

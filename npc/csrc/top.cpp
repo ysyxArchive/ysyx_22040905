@@ -192,6 +192,7 @@ int main(int argc, char *argv[])
   }
   else {
     printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
+    return -1;
   }
   printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
   printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));

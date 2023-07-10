@@ -13,8 +13,6 @@ class ALU extends Module{
         val validout=Output(UInt(1.W))
         val busy =Output(UInt(1.W))
         val flush=Input(UInt(1.W))
-        val op_mul=Input(UInt(1.W))
-        val op_div=Input(UInt(1.W))
     })
     val adder_a=Wire(UInt(64.W))
     val adder_b=Wire(UInt(64.W))
@@ -45,6 +43,8 @@ class ALU extends Module{
     mul.multiplier:=io.src2
     mul.mulw:=0.U //64位乘法
 
+    io.busy:= ~mul.mul_ready
+    io.readyin:= mul.mul_ready
 
     io.validout:=(~(io.op(12)|io.op(13)|io.op(14)))|(mul.out_valid)
 

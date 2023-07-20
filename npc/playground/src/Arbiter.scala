@@ -67,7 +67,7 @@ class AXI4Arbiter extends Module{
   //printf("arb:%x\tifu:%x\t%x\tlsu:%x\t%x\n",wstate,io.out.aw.valid,io.out.w.ready,io.lsu.w.valid,io.lsu.w.ready)
   val araddr=RegInit(0.U(32.W))
   val arvalid=RegInit(0.U(1.W)) 
-  val ifu_arready=RegInit(0.U(1.W)) 
+  val ifu_arready=RegInit(1.U(1.W)) 
   val lsu_arready=RegInit(0.U(1.W)) 
   val ifu_rdata=RegInit(0.U(64.W)) 
   val lsu_rdata=RegInit(0.U(64.W)) 

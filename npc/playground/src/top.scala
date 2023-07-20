@@ -16,10 +16,10 @@ class top extends Module{
     val wbu=Module(new WBU)
     val gpr=Module(new GPR)
     val csr=Module(new CSR)
-    //val scoreboard=Module(new ScoreBoard)
+    val scoreboard=Module(new ScoreBoard)
 
-    //scoreboard.io.clearjump<>ifu.io.clearjump
-    //scoreboard.io.waitjump<>ifu.io.waitjump
+    scoreboard.io.ID<>idu.io.sb
+    scoreboard.io.WB<>wbu.io.sb
     ifu.io.pc_dnpc:=wbu.io.pc_dnpc
     ifu.io.clearJump:=wbu.io.isJump
     idu.io.in<>ifu.io.out

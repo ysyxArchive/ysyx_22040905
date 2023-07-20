@@ -33,7 +33,9 @@ class LSU extends Module{
   io.lm.w.valid:=(wstate === s_wait & ~reset.asBool)
   io.lm.b.ready:=1.U
   
-  io.ls.out.bits.rdata:=io.lm.r.bits.data
+
+  val rdata=RegEnable(io.lm.r.bits.data,0.U(64.W),io.lm.r.fire)
+  io.ls.out.bits.rdata:=Mux(io.lm.r.fire,io.lm.r.bits.data,rdata)
   io.ls.out.valid:=io.lm.r.fire | io.lm.b.fire
   io.ls.in.ready:=(rstate === s_idle) && (wstate === s_idle)
 }

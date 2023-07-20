@@ -13,14 +13,13 @@ class EXE extends Bundle{
    val op=Output(UInt(80.W))
    val typ=Output(UInt(6.W)) 
    val isJump=Output(UInt(1.W))
+   val clearidx=Output(UInt(5.W))
 }
 class IDU extends Module{
    val io=IO(new Bundle{
       val in=Flipped(Decoupled(new ID))
       val out=Decoupled(new EXE)
-      val test0=Output(UInt(64.W))
-      val test1=Output(UInt(64.W))
-      val test2=Output(UInt(64.W))
+      val sb=Flipped((new SB_ID)) 
    })
   val ID_reg_inst=RegEnable(io.in.bits.inst,0.U,io.in.fire)
   val ID_reg_pc=RegEnable(io.in.bits.pc,0.U,io.in.fire)
@@ -29,19 +28,18 @@ class IDU extends Module{
    val ID_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
    io.out.bits.isJump:=ID_reg_isJump
    
+   val RAW=Wire(UInt(1.W))
+
    val s_idle :: s_wait_ready :: Nil = Enum(2)
    val state = RegInit(s_idle)
 
-   io.test0:=state
-   io.test1:=ID_reg_pc
-   io.test2:=ID_reg_inst
 
    state := MuxLookup(state, s_idle, List(
      s_idle       -> Mux(io.in.fire, s_wait_ready, s_idle),
      s_wait_ready -> Mux(io.out.fire, s_idle, s_wait_ready)
    ))
-   io.in.ready:=(state === s_idle)
-   io.out.valid:=(state === s_wait_ready)
+   io.in.ready:=(state === s_idle) & (~RAW)
+   io.out.valid:=(state === s_wait_ready) & (~RAW)
    io.out.bits.pc:=ID_reg_pc
    io.out.bits.inst:=ID_reg_inst
 
@@ -143,5 +141,13 @@ class IDU extends Module{
             Mux(typ(3),Cat(Fill(43,ID_reg_inst(31)),Cat(ID_reg_inst(31),Cat(ID_reg_inst(19,12),Cat(ID_reg_inst(20),Cat(ID_reg_inst(30,21),0.U))))),        //J
             Mux(typ(4),Cat(Fill(51,ID_reg_inst(31)),Cat(ID_reg_inst(31),Cat(ID_reg_inst(7),Cat(ID_reg_inst(30,25),Cat(ID_reg_inst(11,8),0.U))))),          //B
             0.U)))))
+
+   //RAW
+   io.sb.lookidx1:=Mux(typ(0)|typ(2)|typ(4)|typ(5),ID_reg_inst(19,15),0.U)              //rs1
+   io.sb.lookidx2:=Mux(typ(2)|typ(4)|typ(5),ID_reg_inst(24,20),0.U)                     //rs2
+   io.sb.setidx:=Mux((typ(0)|typ(1)|typ(3)|typ(5))&(io.out.fire),ID_reg_inst(11,7),0.U)    //rd
+   io.out.bits.clearidx:=io.sb.setidx
+   RAW:=io.sb.isBusy
+
     
 }

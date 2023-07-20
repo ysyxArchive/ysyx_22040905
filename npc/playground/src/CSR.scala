@@ -40,9 +40,9 @@ class CSR extends Module{
     csr(2):=Mux(io.w.no===1.U,io.w.epc,csr(2))
     csr(3):=Mux(io.w.no===1.U,"xb".U,csr(3))               
     io.r.val_r:=Mux(io.w.no===1.U,csr(1),                //return mtvec
-              Mux(io.w.no===2.U,csr(2),                //return mepc
-              Mux(io.w.en_w(0),csr(map_r),
-              0.U)))
+                Mux(io.w.no===2.U,csr(2),                //return mepc
+                Mux(io.r.en_r(0),csr(map_r),
+                0.U)))
     csr(map_w):=Mux(io.w.en_w(0),io.w.val_w,csr(map_w))
 
     val p=Module(new print_csr);

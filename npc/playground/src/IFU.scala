@@ -19,6 +19,7 @@ class IFUBundle extends Bundle{
   val clearJump=Input(UInt(1.W))
   val lm=(new AXILite)
   val out=Decoupled(new ID)
+  //val flush=Input(UInt(1.W))
 }
 
 class IFU extends Module{
@@ -50,7 +51,7 @@ class IFU extends Module{
 
   io.lm.ar.bits.addr:=IF_reg_pc(31,0)
   io.lm.ar.valid:=(state === s_idle & ~reset.asBool & IF_reg_valid)
-  io.lm.r.ready:=(state === s_wait_rvalid)
+  io.lm.r.ready:= 1.U
   io.lm.aw.bits.addr:=0.U
   io.lm.aw.valid:=0.U
   io.lm.w.valid:=0.U

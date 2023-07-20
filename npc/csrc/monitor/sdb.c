@@ -34,7 +34,7 @@ static int cmd_help(char *args);
 static int cmd_c(char *args)
 {
   execute(-1);
-  if(state!=NPC_RUNNING)return -1;
+  //if(state!=NPC_RUNNING)return -1;
   return 0;
 }
 

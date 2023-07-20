@@ -10,8 +10,9 @@ class WBU extends Module{
         val pc_dnpc=Output(UInt(64.W))
         val valid=Output(UInt(1.W))
         val isJump=Output(UInt(1.W))
+        val sb=Flipped((new SB_WB))
     })
-    val WB_reg_pc=RegEnable(io.in.bits.pc,io.in.fire)
+    val WB_reg_pc=dontTouch(RegEnable(io.in.bits.pc,io.in.fire))
     val WB_reg_inst=RegEnable(io.in.bits.inst,io.in.fire)
     val WB_reg_pc_dnpc=RegEnable(io.in.bits.pc_dnpc,"x80000000".U,io.in.fire)
     val WB_reg_gpr_en_w=RegEnable(io.in.bits.gpr.en_w,io.in.fire)
@@ -25,6 +26,7 @@ class WBU extends Module{
     val WB_reg_valid=RegEnable(1.U,true.B)
 
     val WB_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
+    val WB_reg_clearidx=RegEnable(io.in.bits.clearidx,0.U(5.W),io.in.fire)
 
     val s_idle :: s_wait_ready :: Nil = Enum(2)
     val state = RegInit(s_idle)
@@ -49,5 +51,6 @@ class WBU extends Module{
     io.pc_dnpc:=WB_reg_pc_dnpc
     io.valid:=(state === s_wait_ready)
 
+    io.sb.clearidx:=Mux(state === s_wait_ready,WB_reg_clearidx,0.U)    
 }
 

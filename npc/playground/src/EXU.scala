@@ -10,6 +10,7 @@ class WB extends Bundle{
     val gpr=(new GPR_w)
     val csr=(new CSR_w)
     val isJump=Output(UInt(1.W))
+    val clearidx=Output(UInt(5.W))
 }
 
 class EXU extends Module{
@@ -19,12 +20,9 @@ class EXU extends Module{
         val gpr=Flipped(new GPR_r)
         val csr=Flipped(new CSR_r)
         val lm=(new AXILite)
-        val test0=Output(UInt(64.W))
-        val test1=Output(UInt(64.W))
-        val test2=Output(UInt(64.W))
     })
-        val EXE_reg_pc=RegEnable(io.in.bits.pc,0.U,io.in.fire) 
-        val EXE_reg_inst=RegEnable(io.in.bits.inst,0.U,io.in.fire) 
+        val EXE_reg_pc=dontTouch(RegEnable(io.in.bits.pc,0.U,io.in.fire)) 
+        val EXE_reg_inst=dontTouch(RegEnable(io.in.bits.inst,0.U,io.in.fire)) 
         val EXE_reg_rs1=RegEnable(io.in.bits.rs1,0.U,io.in.fire)
         val EXE_reg_rs2=RegEnable(io.in.bits.rs2,0.U,io.in.fire)
         val EXE_reg_rd=RegEnable(io.in.bits.rd,0.U,io.in.fire)
@@ -35,6 +33,9 @@ class EXU extends Module{
 
         val EXE_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
         io.out.bits.isJump:=EXE_reg_isJump
+        val EXE_reg_clearidx=RegEnable(io.in.bits.clearidx,0.U,io.in.fire)
+        io.out.bits.clearidx:=EXE_reg_clearidx
+        val lsu_reg_valid=RegEnable(io.in.fire,0.U,true.B);
 
         val lsu = Module(new LSU)
         val op_r=Wire(UInt(1.W))
@@ -56,9 +57,6 @@ class EXU extends Module{
             s_wait_next -> Mux(io.out.fire,s_idle,s_wait_next)
         ))
 
-        io.test0:=state
-        io.test1:=EXE_reg_pc
-        io.test2:=EXE_reg_inst
 
         io.in.ready:=(state === s_idle) 
         io.out.valid:=(state === s_wait_next)
@@ -76,7 +74,7 @@ class EXU extends Module{
         io.out.bits.csr.no:=Mux(EXE_reg_op(65),1.U,
                             Mux(EXE_reg_op(66),2.U,
                             0.U))
-        io.out.bits.csr.epc:=io.in.bits.pc
+        io.out.bits.csr.epc:=EXE_reg_pc
         io.out.bits.gpr.val_w:=Mux(EXE_reg_op(1)|EXE_reg_op(3)|EXE_reg_op(5)|EXE_reg_op(13)|EXE_reg_op(15)|EXE_reg_op(17)|EXE_reg_op(21)|EXE_reg_op(23)|EXE_reg_op(51)|EXE_reg_op(56)|EXE_reg_op(60)|EXE_reg_op(62),Cat(Fill(32,alu_dest.io.result(31)),alu_dest.io.result(31,0)), 
                       Mux(EXE_reg_op(52)|EXE_reg_op(53)|EXE_reg_op(54),Cat(Fill(32,0.U),alu_dest.io.result(63,32)),
                       Mux(EXE_reg_op(63)|EXE_reg_op(64),io.csr.val_r,
@@ -143,10 +141,10 @@ class EXU extends Module{
 
         alu_dest.io.src1:=Mux(EXE_reg_op(13)|EXE_reg_op(21)|EXE_reg_op(23)|EXE_reg_op(56)|EXE_reg_op(58)|EXE_reg_op(60)|EXE_reg_op(62),Cat(Fill(32,0.U),src1(31,0)),
                           Mux(EXE_reg_op(17)|EXE_reg_op(19),Cat(Fill(32,src1(31)),src1(31,0)),
-                          Mux(EXE_reg_op(36)|EXE_reg_op(37),io.in.bits.pc,
+                          Mux(EXE_reg_op(36)|EXE_reg_op(37),EXE_reg_pc,
                           src1)))
         alu_dest.io.src2:=Mux(EXE_reg_op(13)|EXE_reg_op(17)|EXE_reg_op(21),Cat(Fill(59,0.U),src2(4,0)),
-                          Mux(EXE_reg_op(25),io.in.bits.pc,
+                          Mux(EXE_reg_op(25),EXE_reg_pc,
                           Mux(EXE_reg_op(36)|EXE_reg_op(37),4.U,
                           Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),dest,
                           Mux(EXE_reg_op(56)|EXE_reg_op(58)|EXE_reg_op(60)|EXE_reg_op(62),Cat(Fill(32,0.U),src2(31,0)),
@@ -172,7 +170,7 @@ class EXU extends Module{
                           Mux(EXE_reg_op(61)|EXE_reg_op(62),262144.U,            //u%u
                           0.U))))))))))))))))))
   
-        alu_pc.io.src1:=Mux(EXE_reg_op(37),src1,io.in.bits.pc)
+        alu_pc.io.src1:=Mux(EXE_reg_op(37),src1,EXE_reg_pc)
         alu_pc.io.src2:=Mux(EXE_reg_op(30)&alu_dest.io.result(0),dest,
                         Mux(EXE_reg_op(31)&(~alu_dest.io.result(0)),dest,
                         Mux(EXE_reg_op(32)&(~alu_dest.io.result(0)),dest,

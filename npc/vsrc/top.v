@@ -2055,11 +2055,10 @@ module mul_pipe(
   wire [128:0] _a_T_19 = io_mul_valid ? {{65'd0}, io_multiplicand} : a; // @[mul.scala 84:12]
   wire [128:0] _a_T_20 = _a_T_2 ? _a_T_17 : _a_T_19; // @[mul.scala 83:12]
   wire [160:0] _a_T_21 = {{32'd0}, _a_T_20}; // @[mul.scala 82:12]
-  wire  _b_T_2 = io_mul_valid & io_mul_signed[0]; // @[mul.scala 88:26]
   wire [64:0] _b_T_16 = io_multiplier[63] ? 65'h1ffffffffffffffff : 65'h0; // @[Bitwise.scala 77:12]
   wire [128:0] _b_T_17 = {_b_T_16,io_multiplier}; // @[Cat.scala 33:92]
   wire [128:0] _b_T_19 = io_mul_valid ? {{65'd0}, io_multiplier} : b; // @[mul.scala 90:12]
-  wire [128:0] _b_T_20 = _b_T_2 ? _b_T_17 : _b_T_19; // @[mul.scala 89:12]
+  wire [128:0] _b_T_20 = _a_T_2 ? _b_T_17 : _b_T_19; // @[mul.scala 89:12]
   wire [160:0] _b_T_21 = {{32'd0}, _b_T_20}; // @[mul.scala 88:12]
   wire [127:0] _T_1 = cell_64_io_A * cell_64_io_B; // @[mul.scala 124:64]
   wire [128:0] _GEN_0 = {{1'd0}, _T_1}; // @[mul.scala 124:45]
@@ -3970,6 +3969,209 @@ end // initial
 `endif
 `endif // SYNTHESIS
 endmodule
+module div(
+  input         clock,
+  input         reset,
+  input  [63:0] io_dividend,
+  input  [63:0] io_divisor,
+  input         io_div_valid,
+  input         io_div_signed,
+  output        io_out_valid,
+  output [63:0] io_quotient,
+  output [63:0] io_remainder
+);
+`ifdef RANDOMIZE_REG_INIT
+  reg [63:0] _RAND_0;
+  reg [63:0] _RAND_1;
+  reg [127:0] _RAND_2;
+  reg [95:0] _RAND_3;
+  reg [31:0] _RAND_4;
+  reg [31:0] _RAND_5;
+  reg [31:0] _RAND_6;
+  reg [31:0] _RAND_7;
+  reg [31:0] _RAND_8;
+  reg [31:0] _RAND_9;
+`endif // RANDOMIZE_REG_INIT
+  wire [63:0] _dividend_abs_T_3 = ~io_dividend; // @[div.scala 20:27]
+  wire [63:0] _dividend_abs_T_5 = _dividend_abs_T_3 + 64'h1; // @[div.scala 20:48]
+  wire [63:0] dividend_abs = io_div_signed & io_dividend[63] ? _dividend_abs_T_5 : io_dividend; // @[div.scala 19:25]
+  wire [63:0] _divisor_abs_T_3 = ~io_divisor; // @[div.scala 22:26]
+  wire [63:0] _divisor_abs_T_5 = _divisor_abs_T_3 + 64'h1; // @[div.scala 22:46]
+  wire [63:0] divisor_abs = io_div_signed & io_divisor[63] ? _divisor_abs_T_5 : io_divisor; // @[div.scala 21:24]
+  reg [63:0] quotient; // @[div.scala 24:25]
+  reg [63:0] remainder; // @[div.scala 25:26]
+  reg [127:0] dividend; // @[div.scala 26:25]
+  reg [64:0] divisor; // @[div.scala 27:24]
+  reg [6:0] shift_count; // @[div.scala 29:28]
+  reg  is_dividing; // @[div.scala 31:28]
+  reg  is_dividing_signed; // @[div.scala 33:35]
+  reg  quotient_sign; // @[div.scala 39:30]
+  reg  remainder_sign; // @[div.scala 40:31]
+  reg  out_valid; // @[div.scala 41:26]
+  wire [64:0] sub = dividend[127:63] - divisor; // @[div.scala 43:36]
+  wire  _io_div_ready_T = ~is_dividing; // @[div.scala 45:19]
+  wire  _T_1 = io_div_valid & _io_div_ready_T; // @[div.scala 51:27]
+  wire [127:0] _dividend_T = {64'h0,dividend_abs}; // @[Cat.scala 33:92]
+  wire [64:0] _divisor_T = {1'h0,divisor_abs}; // @[Cat.scala 33:92]
+  wire [63:0] _quotient_T = ~quotient; // @[div.scala 70:41]
+  wire [63:0] _quotient_T_2 = _quotient_T + 64'h1; // @[div.scala 70:59]
+  wire [63:0] _quotient_T_3 = quotient_sign ? _quotient_T_2 : quotient; // @[div.scala 70:24]
+  wire [63:0] _remainder_T_1 = ~remainder; // @[div.scala 71:43]
+  wire [63:0] _remainder_T_3 = _remainder_T_1 + 64'h1; // @[div.scala 71:62]
+  wire [63:0] _remainder_T_4 = remainder_sign ? _remainder_T_3 : remainder; // @[div.scala 71:25]
+  wire [63:0] _GEN_0 = is_dividing_signed ? _quotient_T_3 : quotient; // @[div.scala 69:32 70:18 24:25]
+  wire [63:0] _GEN_1 = is_dividing_signed ? _remainder_T_4 : dividend[63:0]; // @[div.scala 67:17 69:32 71:19]
+  wire [128:0] _dividend_T_1 = {dividend, 1'h0}; // @[div.scala 77:28]
+  wire [64:0] _quotient_T_4 = {quotient, 1'h0}; // @[div.scala 78:28]
+  wire [64:0] _quotient_T_6 = _quotient_T_4 | 65'h1; // @[div.scala 80:37]
+  wire [127:0] _dividend_T_3 = {sub,dividend[62:0]}; // @[Cat.scala 33:92]
+  wire [128:0] _dividend_T_4 = {_dividend_T_3, 1'h0}; // @[div.scala 81:47]
+  wire [128:0] _GEN_2 = sub[64] ? _dividend_T_1 : _dividend_T_4; // @[div.scala 76:33 77:16 81:16]
+  wire [64:0] _GEN_3 = sub[64] ? _quotient_T_4 : _quotient_T_6; // @[div.scala 76:33 78:16 80:16]
+  wire  _GEN_4 = shift_count == 7'h0 ? 1'h0 : is_dividing; // @[div.scala 64:30 65:19 31:28]
+  wire [64:0] _GEN_6 = shift_count == 7'h0 ? {{1'd0}, _GEN_0} : _GEN_3; // @[div.scala 64:30]
+  wire  _GEN_7 = shift_count == 7'h0 | out_valid; // @[div.scala 64:30 74:17 41:26]
+  wire [128:0] _GEN_8 = shift_count == 7'h0 ? {{1'd0}, dividend} : _GEN_2; // @[div.scala 26:25 64:30]
+  wire [6:0] _shift_count_T_1 = shift_count - 7'h1; // @[div.scala 84:32]
+  wire  _GEN_9 = is_dividing ? _GEN_4 : is_dividing; // @[div.scala 63:27 31:28]
+  wire [64:0] _GEN_11 = is_dividing ? _GEN_6 : {{1'd0}, quotient}; // @[div.scala 24:25 63:27]
+  wire  _GEN_12 = is_dividing & _GEN_7; // @[div.scala 63:27 88:15]
+  wire [128:0] _GEN_13 = is_dividing ? _GEN_8 : {{1'd0}, dividend}; // @[div.scala 26:25 63:27]
+  wire  _GEN_15 = io_div_valid & _io_div_ready_T | _GEN_9; // @[div.scala 51:44 52:17]
+  wire [128:0] _GEN_18 = io_div_valid & _io_div_ready_T ? {{1'd0}, _dividend_T} : _GEN_13; // @[div.scala 51:44 55:14]
+  wire [64:0] _GEN_20 = io_div_valid & _io_div_ready_T ? 65'h0 : _GEN_11; // @[div.scala 51:44 57:14]
+  wire [64:0] _GEN_37 = reset ? 65'h0 : _GEN_20; // @[div.scala 24:{25,25}]
+  wire [128:0] _GEN_38 = reset ? 129'h0 : _GEN_18; // @[div.scala 26:{25,25}]
+  assign io_out_valid = out_valid; // @[div.scala 91:16]
+  assign io_quotient = quotient; // @[div.scala 92:15]
+  assign io_remainder = remainder; // @[div.scala 93:16]
+  always @(posedge clock) begin
+    quotient <= _GEN_37[63:0]; // @[div.scala 24:{25,25}]
+    if (reset) begin // @[div.scala 25:26]
+      remainder <= 64'h0; // @[div.scala 25:26]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      remainder <= 64'h0; // @[div.scala 58:15]
+    end else if (is_dividing) begin // @[div.scala 63:27]
+      if (shift_count == 7'h0) begin // @[div.scala 64:30]
+        remainder <= _GEN_1;
+      end
+    end
+    dividend <= _GEN_38[127:0]; // @[div.scala 26:{25,25}]
+    if (reset) begin // @[div.scala 27:24]
+      divisor <= 65'h0; // @[div.scala 27:24]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      divisor <= _divisor_T; // @[div.scala 56:13]
+    end
+    if (reset) begin // @[div.scala 29:28]
+      shift_count <= 7'h40; // @[div.scala 29:28]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      shift_count <= 7'h40; // @[div.scala 59:17]
+    end else if (is_dividing) begin // @[div.scala 63:27]
+      shift_count <= _shift_count_T_1; // @[div.scala 84:17]
+    end
+    if (reset) begin // @[div.scala 31:28]
+      is_dividing <= 1'h0; // @[div.scala 31:28]
+    end else begin
+      is_dividing <= _GEN_15;
+    end
+    if (reset) begin // @[div.scala 33:35]
+      is_dividing_signed <= 1'h0; // @[div.scala 33:35]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      is_dividing_signed <= io_div_signed; // @[div.scala 54:24]
+    end
+    if (reset) begin // @[div.scala 39:30]
+      quotient_sign <= 1'h0; // @[div.scala 39:30]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      quotient_sign <= io_dividend[63] ^ io_divisor[63]; // @[div.scala 60:19]
+    end
+    if (reset) begin // @[div.scala 40:31]
+      remainder_sign <= 1'h0; // @[div.scala 40:31]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      remainder_sign <= io_dividend[63]; // @[div.scala 61:20]
+    end
+    if (reset) begin // @[div.scala 41:26]
+      out_valid <= 1'h0; // @[div.scala 41:26]
+    end else if (io_div_valid & _io_div_ready_T) begin // @[div.scala 51:44]
+      out_valid <= 1'h0; // @[div.scala 62:15]
+    end else begin
+      out_valid <= _GEN_12;
+    end
+    `ifndef SYNTHESIS
+    `ifdef PRINTF_COND
+      if (`PRINTF_COND) begin
+    `endif
+        if (~_T_1 & is_dividing & ~reset) begin
+          $fwrite(32'h80000002,"%d %x %x %x %x %x\n",shift_count,dividend,divisor,quotient,remainder,sub[64]); // @[div.scala 86:11]
+        end
+    `ifdef PRINTF_COND
+      end
+    `endif
+    `endif // SYNTHESIS
+  end
+// Register and memory initialization
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+  integer initvar;
+`endif
+`ifndef SYNTHESIS
+`ifdef FIRRTL_BEFORE_INITIAL
+`FIRRTL_BEFORE_INITIAL
+`endif
+initial begin
+  `ifdef RANDOMIZE
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      `ifdef RANDOMIZE_DELAY
+        #`RANDOMIZE_DELAY begin end
+      `else
+        #0.002 begin end
+      `endif
+    `endif
+`ifdef RANDOMIZE_REG_INIT
+  _RAND_0 = {2{`RANDOM}};
+  quotient = _RAND_0[63:0];
+  _RAND_1 = {2{`RANDOM}};
+  remainder = _RAND_1[63:0];
+  _RAND_2 = {4{`RANDOM}};
+  dividend = _RAND_2[127:0];
+  _RAND_3 = {3{`RANDOM}};
+  divisor = _RAND_3[64:0];
+  _RAND_4 = {1{`RANDOM}};
+  shift_count = _RAND_4[6:0];
+  _RAND_5 = {1{`RANDOM}};
+  is_dividing = _RAND_5[0:0];
+  _RAND_6 = {1{`RANDOM}};
+  is_dividing_signed = _RAND_6[0:0];
+  _RAND_7 = {1{`RANDOM}};
+  quotient_sign = _RAND_7[0:0];
+  _RAND_8 = {1{`RANDOM}};
+  remainder_sign = _RAND_8[0:0];
+  _RAND_9 = {1{`RANDOM}};
+  out_valid = _RAND_9[0:0];
+`endif // RANDOMIZE_REG_INIT
+  `endif // RANDOMIZE
+end // initial
+`ifdef FIRRTL_AFTER_INITIAL
+`FIRRTL_AFTER_INITIAL
+`endif
+`endif // SYNTHESIS
+endmodule
 module ALU(
   input         clock,
   input         reset,
@@ -3988,6 +4190,15 @@ module ALU(
   wire [63:0] mul_pipe_io_multiplier; // @[ALU.scala 38:19]
   wire  mul_pipe_io_out_valid; // @[ALU.scala 38:19]
   wire [63:0] mul_pipe_io_result_lo; // @[ALU.scala 38:19]
+  wire  div_clock; // @[ALU.scala 46:19]
+  wire  div_reset; // @[ALU.scala 46:19]
+  wire [63:0] div_io_dividend; // @[ALU.scala 46:19]
+  wire [63:0] div_io_divisor; // @[ALU.scala 46:19]
+  wire  div_io_div_valid; // @[ALU.scala 46:19]
+  wire  div_io_div_signed; // @[ALU.scala 46:19]
+  wire  div_io_out_valid; // @[ALU.scala 46:19]
+  wire [63:0] div_io_quotient; // @[ALU.scala 46:19]
+  wire [63:0] div_io_remainder; // @[ALU.scala 46:19]
   wire  _adder_b_T_6 = io_op[1] | io_op[8] | io_op[9] | io_op[11]; // @[ALU.scala 27:44]
   wire [63:0] _adder_b_T_7 = ~io_src2; // @[ALU.scala 27:55]
   wire [63:0] adder_b = io_op[1] | io_op[8] | io_op[9] | io_op[11] ? _adder_b_T_7 : io_src2; // @[ALU.scala 27:17]
@@ -4005,34 +4216,28 @@ module ALU(
   wire [63:0] eql_result = {63'h0,_eql_result_T_1}; // @[Cat.scala 33:92]
   wire  _T_4 = io_op[12] | io_op[13] | io_op[14]; // @[ALU.scala 39:42]
   wire  _T_8 = io_op[13] | io_op[14]; // @[ALU.scala 41:35]
-  wire [63:0] _io_result_T_4 = io_src1 & io_src2; // @[ALU.scala 52:36]
-  wire [63:0] _io_result_T_6 = io_src1 | io_src2; // @[ALU.scala 53:36]
-  wire [63:0] _io_result_T_8 = io_src1 ^ io_src2; // @[ALU.scala 54:36]
-  wire [126:0] _GEN_1 = {{63'd0}, io_src1}; // @[ALU.scala 55:37]
-  wire [126:0] _io_result_T_11 = _GEN_1 << io_src2[5:0]; // @[ALU.scala 55:37]
-  wire [63:0] _io_result_T_15 = io_src1 >> io_src2[5:0]; // @[ALU.scala 56:36]
-  wire [63:0] _io_result_T_20 = $signed(io_src1) >>> io_src2[5:0]; // @[ALU.scala 57:62]
-  wire [63:0] _io_result_T_25 = adder_result & 64'hfffffffffffffffe; // @[ALU.scala 60:42]
-  wire [64:0] _io_result_T_36 = $signed(io_src1) / $signed(io_src2); // @[ALU.scala 63:62]
-  wire [63:0] _io_result_T_38 = io_src1 / io_src2; // @[ALU.scala 64:37]
-  wire [63:0] _io_result_T_43 = $signed(io_src1) % $signed(io_src2); // @[ALU.scala 65:62]
-  wire [63:0] _io_result_T_45 = io_src1 % io_src2; // @[ALU.scala 66:37]
-  wire [63:0] _io_result_T_46 = io_op[18] ? _io_result_T_45 : 64'h0; // @[ALU.scala 66:19]
-  wire [63:0] _io_result_T_47 = io_op[17] ? _io_result_T_43 : _io_result_T_46; // @[ALU.scala 65:19]
-  wire [63:0] _io_result_T_48 = io_op[16] ? _io_result_T_38 : _io_result_T_47; // @[ALU.scala 64:19]
-  wire [64:0] _io_result_T_49 = io_op[15] ? _io_result_T_36 : {{1'd0}, _io_result_T_48}; // @[ALU.scala 63:19]
-  wire [64:0] _io_result_T_50 = _T_4 ? {{1'd0}, mul_pipe_io_result_lo} : _io_result_T_49; // @[ALU.scala 62:19]
-  wire [64:0] _io_result_T_51 = io_op[11] ? {{1'd0}, eql_result} : _io_result_T_50; // @[ALU.scala 61:19]
-  wire [64:0] _io_result_T_52 = io_op[10] ? {{1'd0}, _io_result_T_25} : _io_result_T_51; // @[ALU.scala 60:19]
-  wire [64:0] _io_result_T_53 = io_op[9] ? {{1'd0}, sltu_result} : _io_result_T_52; // @[ALU.scala 59:19]
-  wire [64:0] _io_result_T_54 = io_op[8] ? {{1'd0}, slt_result} : _io_result_T_53; // @[ALU.scala 58:19]
-  wire [64:0] _io_result_T_55 = io_op[7] ? {{1'd0}, _io_result_T_20} : _io_result_T_54; // @[ALU.scala 57:19]
-  wire [64:0] _io_result_T_56 = io_op[6] ? {{1'd0}, _io_result_T_15} : _io_result_T_55; // @[ALU.scala 56:19]
-  wire [64:0] _io_result_T_57 = io_op[5] ? {{1'd0}, _io_result_T_11[63:0]} : _io_result_T_56; // @[ALU.scala 55:19]
-  wire [64:0] _io_result_T_58 = io_op[4] ? {{1'd0}, _io_result_T_8} : _io_result_T_57; // @[ALU.scala 54:19]
-  wire [64:0] _io_result_T_59 = io_op[3] ? {{1'd0}, _io_result_T_6} : _io_result_T_58; // @[ALU.scala 53:19]
-  wire [64:0] _io_result_T_60 = io_op[2] ? {{1'd0}, _io_result_T_4} : _io_result_T_59; // @[ALU.scala 52:19]
-  wire [64:0] _io_result_T_61 = io_op[0] | io_op[1] ? {{1'd0}, adder_result} : _io_result_T_60; // @[ALU.scala 51:19]
+  wire  _T_13 = io_op[15] | io_op[16]; // @[ALU.scala 47:32]
+  wire [63:0] _io_result_T_4 = io_src1 & io_src2; // @[ALU.scala 60:36]
+  wire [63:0] _io_result_T_6 = io_src1 | io_src2; // @[ALU.scala 61:36]
+  wire [63:0] _io_result_T_8 = io_src1 ^ io_src2; // @[ALU.scala 62:36]
+  wire [126:0] _GEN_1 = {{63'd0}, io_src1}; // @[ALU.scala 63:37]
+  wire [126:0] _io_result_T_11 = _GEN_1 << io_src2[5:0]; // @[ALU.scala 63:37]
+  wire [63:0] _io_result_T_15 = io_src1 >> io_src2[5:0]; // @[ALU.scala 64:36]
+  wire [63:0] _io_result_T_20 = $signed(io_src1) >>> io_src2[5:0]; // @[ALU.scala 65:62]
+  wire [63:0] _io_result_T_25 = adder_result & 64'hfffffffffffffffe; // @[ALU.scala 68:42]
+  wire [63:0] _io_result_T_38 = io_op[17] | io_op[18] ? div_io_remainder : 64'h0; // @[ALU.scala 72:19]
+  wire [63:0] _io_result_T_39 = _T_13 ? div_io_quotient : _io_result_T_38; // @[ALU.scala 71:19]
+  wire [63:0] _io_result_T_40 = _T_4 ? mul_pipe_io_result_lo : _io_result_T_39; // @[ALU.scala 70:19]
+  wire [63:0] _io_result_T_41 = io_op[11] ? eql_result : _io_result_T_40; // @[ALU.scala 69:19]
+  wire [63:0] _io_result_T_42 = io_op[10] ? _io_result_T_25 : _io_result_T_41; // @[ALU.scala 68:19]
+  wire [63:0] _io_result_T_43 = io_op[9] ? sltu_result : _io_result_T_42; // @[ALU.scala 67:19]
+  wire [63:0] _io_result_T_44 = io_op[8] ? slt_result : _io_result_T_43; // @[ALU.scala 66:19]
+  wire [63:0] _io_result_T_45 = io_op[7] ? _io_result_T_20 : _io_result_T_44; // @[ALU.scala 65:19]
+  wire [63:0] _io_result_T_46 = io_op[6] ? _io_result_T_15 : _io_result_T_45; // @[ALU.scala 64:19]
+  wire [63:0] _io_result_T_47 = io_op[5] ? _io_result_T_11[63:0] : _io_result_T_46; // @[ALU.scala 63:19]
+  wire [63:0] _io_result_T_48 = io_op[4] ? _io_result_T_8 : _io_result_T_47; // @[ALU.scala 62:19]
+  wire [63:0] _io_result_T_49 = io_op[3] ? _io_result_T_6 : _io_result_T_48; // @[ALU.scala 61:19]
+  wire [63:0] _io_result_T_50 = io_op[2] ? _io_result_T_4 : _io_result_T_49; // @[ALU.scala 60:19]
   mul_pipe mul_pipe ( // @[ALU.scala 38:19]
     .clock(mul_pipe_clock),
     .reset(mul_pipe_reset),
@@ -4043,14 +4248,32 @@ module ALU(
     .io_out_valid(mul_pipe_io_out_valid),
     .io_result_lo(mul_pipe_io_result_lo)
   );
-  assign io_result = _io_result_T_61[63:0]; // @[ALU.scala 51:14]
-  assign io_validout = ~_T_4 | mul_pipe_io_out_valid; // @[ALU.scala 49:52]
+  div div ( // @[ALU.scala 46:19]
+    .clock(div_clock),
+    .reset(div_reset),
+    .io_dividend(div_io_dividend),
+    .io_divisor(div_io_divisor),
+    .io_div_valid(div_io_div_valid),
+    .io_div_signed(div_io_div_signed),
+    .io_out_valid(div_io_out_valid),
+    .io_quotient(div_io_quotient),
+    .io_remainder(div_io_remainder)
+  );
+  assign io_result = io_op[0] | io_op[1] ? adder_result : _io_result_T_50; // @[ALU.scala 59:19]
+  assign io_validout = ~(_T_4 | io_op[15] | io_op[16] | io_op[17] | io_op[18]) | mul_pipe_io_out_valid |
+    div_io_out_valid; // @[ALU.scala 57:108]
   assign mul_pipe_clock = clock;
   assign mul_pipe_reset = reset;
   assign mul_pipe_io_mul_valid = (io_op[12] | io_op[13] | io_op[14]) & io_validin; // @[ALU.scala 39:53]
   assign mul_pipe_io_mul_signed = {_T_8,io_op[13]}; // @[Cat.scala 33:92]
   assign mul_pipe_io_multiplicand = io_src1; // @[ALU.scala 42:21]
   assign mul_pipe_io_multiplier = io_src2; // @[ALU.scala 43:19]
+  assign div_clock = clock;
+  assign div_reset = reset;
+  assign div_io_dividend = io_src1; // @[ALU.scala 50:17]
+  assign div_io_divisor = io_src2; // @[ALU.scala 51:16]
+  assign div_io_div_valid = (io_op[15] | io_op[16] | io_op[17] | io_op[18]) & io_validin; // @[ALU.scala 47:63]
+  assign div_io_div_signed = io_op[15] | io_op[17]; // @[ALU.scala 49:30]
 endmodule
 module EXU(
   input         clock,
@@ -4119,6 +4342,7 @@ module EXU(
   reg [31:0] _RAND_10;
   reg [31:0] _RAND_11;
   reg [31:0] _RAND_12;
+  reg [31:0] _RAND_13;
 `endif // RANDOMIZE_REG_INIT
   wire  lsu_clock; // @[EXU.scala 39:25]
   wire  lsu_reset; // @[EXU.scala 39:25]
@@ -4171,8 +4395,10 @@ module EXU(
   wire  op_r = EXE_reg_op[38] | EXE_reg_op[39] | EXE_reg_op[40] | EXE_reg_op[41] | EXE_reg_op[46] | EXE_reg_op[47] |
     EXE_reg_op[48]; // @[EXU.scala 45:110]
   wire  op_w = EXE_reg_op[42] | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45]; // @[EXU.scala 46:62]
-  wire  op_mul = EXE_reg_op[12] | EXE_reg_op[13] | EXE_reg_op[14]; // @[EXU.scala 47:46]
-  wire  op_div = EXE_reg_op[15] | EXE_reg_op[16] | EXE_reg_op[17] | EXE_reg_op[18]; // @[EXU.scala 48:61]
+  wire  _op_mul_T_2 = EXE_reg_op[50] | EXE_reg_op[51]; // @[EXU.scala 47:31]
+  wire  op_mul = EXE_reg_op[50] | EXE_reg_op[51] | EXE_reg_op[52] | EXE_reg_op[53] | EXE_reg_op[54]; // @[EXU.scala 47:76]
+  wire  _op_div_T_2 = EXE_reg_op[55] | EXE_reg_op[56]; // @[EXU.scala 48:31]
+  wire  op_div = EXE_reg_op[55] | EXE_reg_op[56] | EXE_reg_op[57] | EXE_reg_op[58]; // @[EXU.scala 48:61]
   wire  _src1_T_4 = EXE_reg_typ[0] | EXE_reg_typ[2] | EXE_reg_typ[4]; // @[EXU.scala 53:49]
   wire [63:0] _src1_T_10 = EXE_reg_typ[1] | EXE_reg_typ[3] ? EXE_reg_imm : 64'h0; // @[EXU.scala 54:16]
   wire [63:0] src1 = EXE_reg_typ[0] | EXE_reg_typ[2] | EXE_reg_typ[4] | EXE_reg_typ[5] ? io_gpr_val_r1 : _src1_T_10; // @[EXU.scala 53:18]
@@ -4183,7 +4409,7 @@ module EXU(
   reg  lsu_finish; // @[EXU.scala 66:31]
   reg  alu_finish; // @[EXU.scala 67:31]
   reg [1:0] state; // @[EXU.scala 71:28]
-  wire  _lsu_finish_T = state == 2'h2; // @[EXU.scala 73:33]
+  wire  _lsu_finish_T = state != 2'h1; // @[EXU.scala 73:33]
   wire  _lsu_finish_T_1 = lsu_io_ls_out_ready & lsu_io_ls_out_valid; // @[Decoupled.scala 52:35]
   wire  _lsu_finish_T_7 = _lsu_finish_T_1 | ~op_r & ~op_w | lsu_finish; // @[EXU.scala 74:26]
   wire  _alu_finish_T_6 = alu_io_validout | ~op_mul & ~op_div | alu_finish; // @[EXU.scala 76:26]
@@ -4197,54 +4423,56 @@ module EXU(
   wire [7:0] _lsu_io_ls_in_bits_wmask_T_15 = EXE_reg_op[43] ? 8'h3 : _lsu_io_ls_in_bits_wmask_T_14; // @[EXU.scala 100:35]
   wire  _io_csr_en_r_T_2 = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 120:40]
   wire [63:0] _io_csr_idx_r_T_3 = _io_csr_en_r_T_2 ? src2 : 64'h0; // @[EXU.scala 121:26]
+  reg  alu_wait; // @[EXU.scala 129:29]
   wire [63:0] _alu_io_src1_T_15 = {32'h0,src1[31:0]}; // @[Cat.scala 33:92]
   wire [31:0] _alu_io_src1_T_21 = src1[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _alu_io_src1_T_23 = {_alu_io_src1_T_21,src1[31:0]}; // @[Cat.scala 33:92]
-  wire  _alu_io_src1_T_26 = EXE_reg_op[36] | EXE_reg_op[37]; // @[EXU.scala 133:43]
-  wire [63:0] _alu_io_src1_T_27 = EXE_reg_op[36] | EXE_reg_op[37] ? {{32'd0}, EXE_reg_pc} : src1; // @[EXU.scala 133:28]
-  wire [63:0] _alu_io_src1_T_28 = EXE_reg_op[17] | EXE_reg_op[19] ? _alu_io_src1_T_23 : _alu_io_src1_T_27; // @[EXU.scala 132:28]
+  wire  _alu_io_src1_T_26 = EXE_reg_op[36] | EXE_reg_op[37]; // @[EXU.scala 135:43]
+  wire [63:0] _alu_io_src1_T_27 = EXE_reg_op[36] | EXE_reg_op[37] ? {{32'd0}, EXE_reg_pc} : src1; // @[EXU.scala 135:28]
+  wire [63:0] _alu_io_src1_T_28 = EXE_reg_op[17] | EXE_reg_op[19] ? _alu_io_src1_T_23 : _alu_io_src1_T_27; // @[EXU.scala 134:28]
   wire [63:0] _alu_io_src2_T_7 = {59'h0,src2[4:0]}; // @[Cat.scala 33:92]
   wire [63:0] _alu_io_src2_T_28 = {32'h0,src2[31:0]}; // @[Cat.scala 33:92]
-  wire [63:0] _alu_io_src2_T_30 = EXE_reg_op[64] ? io_csr_val_r : src2; // @[EXU.scala 140:28]
+  wire [63:0] _alu_io_src2_T_30 = EXE_reg_op[64] ? io_csr_val_r : src2; // @[EXU.scala 142:28]
   wire [63:0] _alu_io_src2_T_31 = EXE_reg_op[56] | EXE_reg_op[58] | EXE_reg_op[60] | EXE_reg_op[62] ? _alu_io_src2_T_28
-     : _alu_io_src2_T_30; // @[EXU.scala 139:28]
-  wire [63:0] _alu_io_src2_T_32 = op_w ? dest : _alu_io_src2_T_31; // @[EXU.scala 138:28]
-  wire [63:0] _alu_io_src2_T_33 = _alu_io_src1_T_26 ? 64'h4 : _alu_io_src2_T_32; // @[EXU.scala 137:28]
-  wire [63:0] _alu_io_src2_T_34 = EXE_reg_op[25] ? {{32'd0}, EXE_reg_pc} : _alu_io_src2_T_33; // @[EXU.scala 136:28]
-  wire [18:0] _alu_io_op_T_108 = EXE_reg_op[61] | EXE_reg_op[62] ? 19'h40000 : 19'h0; // @[EXU.scala 159:28]
-  wire [18:0] _alu_io_op_T_109 = EXE_reg_op[59] | EXE_reg_op[60] ? 19'h20000 : _alu_io_op_T_108; // @[EXU.scala 158:28]
-  wire [18:0] _alu_io_op_T_110 = EXE_reg_op[57] | EXE_reg_op[58] ? 19'h10000 : _alu_io_op_T_109; // @[EXU.scala 157:28]
-  wire [18:0] _alu_io_op_T_111 = EXE_reg_op[55] | EXE_reg_op[56] ? 19'h8000 : _alu_io_op_T_110; // @[EXU.scala 156:28]
-  wire [18:0] _alu_io_op_T_112 = EXE_reg_op[54] ? 19'h4000 : _alu_io_op_T_111; // @[EXU.scala 155:28]
-  wire [18:0] _alu_io_op_T_113 = EXE_reg_op[52] ? 19'h2000 : _alu_io_op_T_112; // @[EXU.scala 154:28]
-  wire [18:0] _alu_io_op_T_114 = EXE_reg_op[50] | EXE_reg_op[51] | EXE_reg_op[53] ? 19'h1000 : _alu_io_op_T_113; // @[EXU.scala 153:28]
-  wire [18:0] _alu_io_op_T_115 = EXE_reg_op[30] | EXE_reg_op[31] ? 19'h800 : _alu_io_op_T_114; // @[EXU.scala 152:28]
+     : _alu_io_src2_T_30; // @[EXU.scala 141:28]
+  wire [63:0] _alu_io_src2_T_32 = op_w ? dest : _alu_io_src2_T_31; // @[EXU.scala 140:28]
+  wire [63:0] _alu_io_src2_T_33 = _alu_io_src1_T_26 ? 64'h4 : _alu_io_src2_T_32; // @[EXU.scala 139:28]
+  wire [63:0] _alu_io_src2_T_34 = EXE_reg_op[25] ? {{32'd0}, EXE_reg_pc} : _alu_io_src2_T_33; // @[EXU.scala 138:28]
+  wire [18:0] _alu_io_op_T_108 = EXE_reg_op[61] | EXE_reg_op[62] ? 19'h40000 : 19'h0; // @[EXU.scala 161:28]
+  wire [18:0] _alu_io_op_T_109 = EXE_reg_op[59] | EXE_reg_op[60] ? 19'h20000 : _alu_io_op_T_108; // @[EXU.scala 160:28]
+  wire [18:0] _alu_io_op_T_110 = EXE_reg_op[57] | EXE_reg_op[58] ? 19'h10000 : _alu_io_op_T_109; // @[EXU.scala 159:28]
+  wire [18:0] _alu_io_op_T_111 = _op_div_T_2 ? 19'h8000 : _alu_io_op_T_110; // @[EXU.scala 158:28]
+  wire [18:0] _alu_io_op_T_112 = EXE_reg_op[54] ? 19'h4000 : _alu_io_op_T_111; // @[EXU.scala 157:28]
+  wire [18:0] _alu_io_op_T_113 = EXE_reg_op[52] ? 19'h2000 : _alu_io_op_T_112; // @[EXU.scala 156:28]
+  wire [18:0] _alu_io_op_T_114 = _op_mul_T_2 | EXE_reg_op[53] ? 19'h1000 : _alu_io_op_T_113; // @[EXU.scala 155:28]
+  wire [18:0] _alu_io_op_T_115 = EXE_reg_op[30] | EXE_reg_op[31] ? 19'h800 : _alu_io_op_T_114; // @[EXU.scala 154:28]
   wire [18:0] _alu_io_op_T_116 = EXE_reg_op[27] | EXE_reg_op[29] | EXE_reg_op[33] | EXE_reg_op[35] ? 19'h200 :
-    _alu_io_op_T_115; // @[EXU.scala 151:28]
+    _alu_io_op_T_115; // @[EXU.scala 153:28]
   wire [18:0] _alu_io_op_T_117 = EXE_reg_op[26] | EXE_reg_op[28] | EXE_reg_op[32] | EXE_reg_op[34] ? 19'h100 :
-    _alu_io_op_T_116; // @[EXU.scala 150:28]
+    _alu_io_op_T_116; // @[EXU.scala 152:28]
   wire [18:0] _alu_io_op_T_118 = EXE_reg_op[16] | EXE_reg_op[17] | EXE_reg_op[18] | EXE_reg_op[19] ? 19'h80 :
-    _alu_io_op_T_117; // @[EXU.scala 149:28]
+    _alu_io_op_T_117; // @[EXU.scala 151:28]
   wire [18:0] _alu_io_op_T_119 = EXE_reg_op[20] | EXE_reg_op[21] | EXE_reg_op[22] | EXE_reg_op[23] ? 19'h40 :
-    _alu_io_op_T_118; // @[EXU.scala 148:28]
-  wire [18:0] _alu_io_op_T_120 = op_mul | EXE_reg_op[15] ? 19'h20 : _alu_io_op_T_119; // @[EXU.scala 147:28]
-  wire [18:0] _alu_io_op_T_121 = EXE_reg_op[10] | EXE_reg_op[11] ? 19'h10 : _alu_io_op_T_120; // @[EXU.scala 146:28]
-  wire [18:0] _alu_io_op_T_122 = EXE_reg_op[8] | EXE_reg_op[9] | EXE_reg_op[64] ? 19'h8 : _alu_io_op_T_121; // @[EXU.scala 145:28]
-  wire [18:0] _alu_io_op_T_123 = EXE_reg_op[6] | EXE_reg_op[7] ? 19'h4 : _alu_io_op_T_122; // @[EXU.scala 144:28]
-  wire [18:0] _alu_io_op_T_124 = EXE_reg_op[4] | EXE_reg_op[5] ? 19'h2 : _alu_io_op_T_123; // @[EXU.scala 143:28]
-  wire [63:0] next_pc_src1 = EXE_reg_op[37] ? src1 : {{32'd0}, EXE_reg_pc}; // @[EXU.scala 166:26]
-  wire  _next_pc_src2_T_5 = ~alu_io_result[0]; // @[EXU.scala 168:43]
-  wire [63:0] _next_pc_src2_T_23 = EXE_reg_op[37] ? src2 : 64'h4; // @[EXU.scala 174:26]
-  wire [63:0] _next_pc_src2_T_24 = EXE_reg_op[36] ? src1 : _next_pc_src2_T_23; // @[EXU.scala 173:26]
-  wire [63:0] _next_pc_src2_T_25 = EXE_reg_op[35] & alu_io_result[0] ? dest : _next_pc_src2_T_24; // @[EXU.scala 172:26]
-  wire [63:0] _next_pc_src2_T_26 = EXE_reg_op[34] & alu_io_result[0] ? dest : _next_pc_src2_T_25; // @[EXU.scala 171:26]
-  wire [63:0] _next_pc_src2_T_27 = EXE_reg_op[33] & _next_pc_src2_T_5 ? dest : _next_pc_src2_T_26; // @[EXU.scala 170:26]
-  wire [63:0] _next_pc_src2_T_28 = EXE_reg_op[32] & _next_pc_src2_T_5 ? dest : _next_pc_src2_T_27; // @[EXU.scala 169:26]
-  wire [63:0] _next_pc_src2_T_29 = EXE_reg_op[31] & ~alu_io_result[0] ? dest : _next_pc_src2_T_28; // @[EXU.scala 168:26]
-  wire [63:0] next_pc_src2 = EXE_reg_op[30] & alu_io_result[0] ? dest : _next_pc_src2_T_29; // @[EXU.scala 167:26]
-  wire [63:0] next_pc_sum = next_pc_src1 + next_pc_src2; // @[EXU.scala 176:34]
-  wire [1:0] _io_out_bits_csr_no_T_2 = EXE_reg_op[66] ? 2'h2 : 2'h0; // @[EXU.scala 185:32]
-  wire [1:0] _io_out_bits_csr_no_T_3 = EXE_reg_op[65] ? 2'h1 : _io_out_bits_csr_no_T_2; // @[EXU.scala 184:32]
+    _alu_io_op_T_118; // @[EXU.scala 150:28]
+  wire [18:0] _alu_io_op_T_120 = EXE_reg_op[12] | EXE_reg_op[13] | EXE_reg_op[14] | EXE_reg_op[15] ? 19'h20 :
+    _alu_io_op_T_119; // @[EXU.scala 149:28]
+  wire [18:0] _alu_io_op_T_121 = EXE_reg_op[10] | EXE_reg_op[11] ? 19'h10 : _alu_io_op_T_120; // @[EXU.scala 148:28]
+  wire [18:0] _alu_io_op_T_122 = EXE_reg_op[8] | EXE_reg_op[9] | EXE_reg_op[64] ? 19'h8 : _alu_io_op_T_121; // @[EXU.scala 147:28]
+  wire [18:0] _alu_io_op_T_123 = EXE_reg_op[6] | EXE_reg_op[7] ? 19'h4 : _alu_io_op_T_122; // @[EXU.scala 146:28]
+  wire [18:0] _alu_io_op_T_124 = EXE_reg_op[4] | EXE_reg_op[5] ? 19'h2 : _alu_io_op_T_123; // @[EXU.scala 145:28]
+  wire [63:0] next_pc_src1 = EXE_reg_op[37] ? src1 : {{32'd0}, EXE_reg_pc}; // @[EXU.scala 168:26]
+  wire  _next_pc_src2_T_5 = ~alu_io_result[0]; // @[EXU.scala 170:43]
+  wire [63:0] _next_pc_src2_T_23 = EXE_reg_op[37] ? src2 : 64'h4; // @[EXU.scala 176:26]
+  wire [63:0] _next_pc_src2_T_24 = EXE_reg_op[36] ? src1 : _next_pc_src2_T_23; // @[EXU.scala 175:26]
+  wire [63:0] _next_pc_src2_T_25 = EXE_reg_op[35] & alu_io_result[0] ? dest : _next_pc_src2_T_24; // @[EXU.scala 174:26]
+  wire [63:0] _next_pc_src2_T_26 = EXE_reg_op[34] & alu_io_result[0] ? dest : _next_pc_src2_T_25; // @[EXU.scala 173:26]
+  wire [63:0] _next_pc_src2_T_27 = EXE_reg_op[33] & _next_pc_src2_T_5 ? dest : _next_pc_src2_T_26; // @[EXU.scala 172:26]
+  wire [63:0] _next_pc_src2_T_28 = EXE_reg_op[32] & _next_pc_src2_T_5 ? dest : _next_pc_src2_T_27; // @[EXU.scala 171:26]
+  wire [63:0] _next_pc_src2_T_29 = EXE_reg_op[31] & ~alu_io_result[0] ? dest : _next_pc_src2_T_28; // @[EXU.scala 170:26]
+  wire [63:0] next_pc_src2 = EXE_reg_op[30] & alu_io_result[0] ? dest : _next_pc_src2_T_29; // @[EXU.scala 169:26]
+  wire [63:0] next_pc_sum = next_pc_src1 + next_pc_src2; // @[EXU.scala 178:34]
+  wire [1:0] _io_out_bits_csr_no_T_2 = EXE_reg_op[66] ? 2'h2 : 2'h0; // @[EXU.scala 187:32]
+  wire [1:0] _io_out_bits_csr_no_T_3 = EXE_reg_op[65] ? 2'h1 : _io_out_bits_csr_no_T_2; // @[EXU.scala 186:32]
   wire [31:0] _io_out_bits_gpr_val_w_T_25 = alu_io_result[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _io_out_bits_gpr_val_w_T_27 = {_io_out_bits_gpr_val_w_T_25,alu_io_result[31:0]}; // @[Cat.scala 33:92]
   wire [63:0] _io_out_bits_gpr_val_w_T_35 = {32'h0,alu_io_result[63:32]}; // @[Cat.scala 33:92]
@@ -4257,19 +4485,19 @@ module EXU(
   wire [63:0] _io_out_bits_gpr_val_w_T_61 = {56'h0,lsu_io_ls_out_bits_rdata[7:0]}; // @[Cat.scala 33:92]
   wire [63:0] _io_out_bits_gpr_val_w_T_65 = {48'h0,lsu_io_ls_out_bits_rdata[15:0]}; // @[Cat.scala 33:92]
   wire [63:0] _io_out_bits_gpr_val_w_T_69 = {32'h0,lsu_io_ls_out_bits_rdata[31:0]}; // @[Cat.scala 33:92]
-  wire [63:0] _io_out_bits_gpr_val_w_T_70 = EXE_reg_op[48] ? _io_out_bits_gpr_val_w_T_69 : alu_io_result; // @[EXU.scala 197:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_71 = EXE_reg_op[47] ? _io_out_bits_gpr_val_w_T_65 : _io_out_bits_gpr_val_w_T_70; // @[EXU.scala 196:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_72 = EXE_reg_op[46] ? _io_out_bits_gpr_val_w_T_61 : _io_out_bits_gpr_val_w_T_71; // @[EXU.scala 195:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_73 = EXE_reg_op[41] ? lsu_io_ls_out_bits_rdata : _io_out_bits_gpr_val_w_T_72; // @[EXU.scala 194:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_74 = EXE_reg_op[40] ? _io_out_bits_gpr_val_w_T_56 : _io_out_bits_gpr_val_w_T_73; // @[EXU.scala 193:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_75 = EXE_reg_op[39] ? _io_out_bits_gpr_val_w_T_50 : _io_out_bits_gpr_val_w_T_74; // @[EXU.scala 192:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_76 = EXE_reg_op[38] ? _io_out_bits_gpr_val_w_T_44 : _io_out_bits_gpr_val_w_T_75; // @[EXU.scala 191:26]
-  wire [63:0] _io_out_bits_gpr_val_w_T_77 = _io_csr_en_r_T_2 ? io_csr_val_r : _io_out_bits_gpr_val_w_T_76; // @[EXU.scala 190:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_70 = EXE_reg_op[48] ? _io_out_bits_gpr_val_w_T_69 : alu_io_result; // @[EXU.scala 199:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_71 = EXE_reg_op[47] ? _io_out_bits_gpr_val_w_T_65 : _io_out_bits_gpr_val_w_T_70; // @[EXU.scala 198:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_72 = EXE_reg_op[46] ? _io_out_bits_gpr_val_w_T_61 : _io_out_bits_gpr_val_w_T_71; // @[EXU.scala 197:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_73 = EXE_reg_op[41] ? lsu_io_ls_out_bits_rdata : _io_out_bits_gpr_val_w_T_72; // @[EXU.scala 196:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_74 = EXE_reg_op[40] ? _io_out_bits_gpr_val_w_T_56 : _io_out_bits_gpr_val_w_T_73; // @[EXU.scala 195:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_75 = EXE_reg_op[39] ? _io_out_bits_gpr_val_w_T_50 : _io_out_bits_gpr_val_w_T_74; // @[EXU.scala 194:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_76 = EXE_reg_op[38] ? _io_out_bits_gpr_val_w_T_44 : _io_out_bits_gpr_val_w_T_75; // @[EXU.scala 193:26]
+  wire [63:0] _io_out_bits_gpr_val_w_T_77 = _io_csr_en_r_T_2 ? io_csr_val_r : _io_out_bits_gpr_val_w_T_76; // @[EXU.scala 192:26]
   wire [63:0] _io_out_bits_gpr_val_w_T_78 = EXE_reg_op[52] | EXE_reg_op[53] | EXE_reg_op[54] ?
-    _io_out_bits_gpr_val_w_T_35 : _io_out_bits_gpr_val_w_T_77; // @[EXU.scala 189:26]
-  wire [63:0] _io_out_bits_csr_val_w_T_2 = EXE_reg_op[64] ? alu_io_result : 64'h0; // @[EXU.scala 201:26]
-  wire [63:0] _io_out_bits_pc_dnpc_T_5 = next_pc_sum & 64'hfffffffffffffffe; // @[EXU.scala 204:60]
-  wire [63:0] _io_out_bits_pc_dnpc_T_6 = EXE_reg_op[37] ? _io_out_bits_pc_dnpc_T_5 : next_pc_sum; // @[EXU.scala 204:33]
+    _io_out_bits_gpr_val_w_T_35 : _io_out_bits_gpr_val_w_T_77; // @[EXU.scala 191:26]
+  wire [63:0] _io_out_bits_csr_val_w_T_2 = EXE_reg_op[64] ? alu_io_result : 64'h0; // @[EXU.scala 203:26]
+  wire [63:0] _io_out_bits_pc_dnpc_T_5 = next_pc_sum & 64'hfffffffffffffffe; // @[EXU.scala 206:60]
+  wire [63:0] _io_out_bits_pc_dnpc_T_6 = EXE_reg_op[37] ? _io_out_bits_pc_dnpc_T_5 : next_pc_sum; // @[EXU.scala 206:33]
   LSU lsu ( // @[EXU.scala 39:25]
     .clock(lsu_clock),
     .reset(lsu_reset),
@@ -4315,18 +4543,18 @@ module EXU(
   );
   assign io_in_ready = state == 2'h0; // @[EXU.scala 88:29]
   assign io_out_valid = state == 2'h2; // @[EXU.scala 89:30]
-  assign io_out_bits_pc = EXE_reg_pc; // @[EXU.scala 207:23]
-  assign io_out_bits_pc_dnpc = EXE_reg_op[65] | EXE_reg_op[66] ? io_csr_val_r : _io_out_bits_pc_dnpc_T_6; // @[EXU.scala 203:33]
-  assign io_out_bits_gpr_idx_w = dest[4:0]; // @[EXU.scala 180:30]
-  assign io_out_bits_gpr_en_w = EXE_reg_typ[0] | EXE_reg_typ[1] | EXE_reg_typ[3] | EXE_reg_typ[5]; // @[EXU.scala 179:80]
+  assign io_out_bits_pc = EXE_reg_pc; // @[EXU.scala 209:23]
+  assign io_out_bits_pc_dnpc = EXE_reg_op[65] | EXE_reg_op[66] ? io_csr_val_r : _io_out_bits_pc_dnpc_T_6; // @[EXU.scala 205:33]
+  assign io_out_bits_gpr_idx_w = dest[4:0]; // @[EXU.scala 182:30]
+  assign io_out_bits_gpr_en_w = EXE_reg_typ[0] | EXE_reg_typ[1] | EXE_reg_typ[3] | EXE_reg_typ[5]; // @[EXU.scala 181:80]
   assign io_out_bits_gpr_val_w = EXE_reg_op[1] | EXE_reg_op[3] | EXE_reg_op[5] | EXE_reg_op[13] | EXE_reg_op[15] |
     EXE_reg_op[17] | EXE_reg_op[21] | EXE_reg_op[23] | EXE_reg_op[51] | EXE_reg_op[56] | EXE_reg_op[60] | EXE_reg_op[62]
-     ? _io_out_bits_gpr_val_w_T_27 : _io_out_bits_gpr_val_w_T_78; // @[EXU.scala 188:35]
-  assign io_out_bits_csr_en_w = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 182:50]
-  assign io_out_bits_csr_idx_w = _io_csr_idx_r_T_3[11:0]; // @[EXU.scala 183:30]
-  assign io_out_bits_csr_val_w = EXE_reg_op[63] ? src1 : _io_out_bits_csr_val_w_T_2; // @[EXU.scala 200:35]
-  assign io_out_bits_csr_no = {{62'd0}, _io_out_bits_csr_no_T_3}; // @[EXU.scala 184:27]
-  assign io_out_bits_csr_epc = {{32'd0}, EXE_reg_pc}; // @[EXU.scala 187:28]
+     ? _io_out_bits_gpr_val_w_T_27 : _io_out_bits_gpr_val_w_T_78; // @[EXU.scala 190:35]
+  assign io_out_bits_csr_en_w = EXE_reg_op[63] | EXE_reg_op[64]; // @[EXU.scala 184:50]
+  assign io_out_bits_csr_idx_w = _io_csr_idx_r_T_3[11:0]; // @[EXU.scala 185:30]
+  assign io_out_bits_csr_val_w = EXE_reg_op[63] ? src1 : _io_out_bits_csr_val_w_T_2; // @[EXU.scala 202:35]
+  assign io_out_bits_csr_no = {{62'd0}, _io_out_bits_csr_no_T_3}; // @[EXU.scala 186:27]
+  assign io_out_bits_csr_epc = {{32'd0}, EXE_reg_pc}; // @[EXU.scala 189:28]
   assign io_out_bits_isJump = EXE_reg_isJump; // @[EXU.scala 35:27]
   assign io_out_bits_clearidx = EXE_reg_clearidx; // @[EXU.scala 37:29]
   assign io_gpr_idx_r1 = EXE_reg_rs1; // @[EXU.scala 116:22]
@@ -4363,13 +4591,13 @@ module EXU(
   assign alu_clock = clock;
   assign alu_reset = reset;
   assign alu_io_src1 = EXE_reg_op[13] | EXE_reg_op[21] | EXE_reg_op[23] | EXE_reg_op[56] | EXE_reg_op[58] | EXE_reg_op[
-    60] | EXE_reg_op[62] ? _alu_io_src1_T_15 : _alu_io_src1_T_28; // @[EXU.scala 131:28]
-  assign alu_io_src2 = EXE_reg_op[13] | EXE_reg_op[17] | EXE_reg_op[21] ? _alu_io_src2_T_7 : _alu_io_src2_T_34; // @[EXU.scala 135:28]
+    60] | EXE_reg_op[62] ? _alu_io_src1_T_15 : _alu_io_src1_T_28; // @[EXU.scala 133:28]
+  assign alu_io_src2 = EXE_reg_op[13] | EXE_reg_op[17] | EXE_reg_op[21] ? _alu_io_src2_T_7 : _alu_io_src2_T_34; // @[EXU.scala 137:28]
   assign alu_io_op = EXE_reg_op[0] | EXE_reg_op[1] | EXE_reg_op[2] | EXE_reg_op[3] | EXE_reg_op[24] | EXE_reg_op[25] |
     EXE_reg_op[36] | EXE_reg_op[37] | EXE_reg_op[38] | EXE_reg_op[39] | EXE_reg_op[40] | EXE_reg_op[41] | EXE_reg_op[42]
      | EXE_reg_op[43] | EXE_reg_op[44] | EXE_reg_op[45] | EXE_reg_op[46] | EXE_reg_op[47] | EXE_reg_op[48] ? 19'h1 :
-    _alu_io_op_T_124; // @[EXU.scala 142:28]
-  assign alu_io_validin = _lsu_io_ls_in_valid_T & (op_mul | op_div) & ~alu_finish; // @[EXU.scala 129:64]
+    _alu_io_op_T_124; // @[EXU.scala 144:28]
+  assign alu_io_validin = _lsu_io_ls_in_valid_T & (op_mul | op_div) & ~alu_finish & ~alu_wait; // @[EXU.scala 131:79]
   assign ebreak1_en_break = EXE_reg_op[49] & _EXE_reg_pc_T; // @[EXU.scala 109:44]
   assign ebreak1_clk = clock; // @[EXU.scala 110:23]
   always @(posedge clock) begin
@@ -4425,7 +4653,7 @@ module EXU(
     end
     if (reset) begin // @[EXU.scala 66:31]
       lsu_finish <= 1'h0; // @[EXU.scala 66:31]
-    end else if (state == 2'h2) begin // @[EXU.scala 73:26]
+    end else if (state != 2'h1) begin // @[EXU.scala 73:26]
       lsu_finish <= 1'h0;
     end else begin
       lsu_finish <= _lsu_finish_T_7;
@@ -4455,6 +4683,11 @@ module EXU(
       state <= _state_T_1;
     end else begin
       state <= 2'h0;
+    end
+    if (reset) begin // @[EXU.scala 129:29]
+      alu_wait <= 1'h0; // @[EXU.scala 129:29]
+    end else begin
+      alu_wait <= _lsu_io_ls_in_valid_T; // @[EXU.scala 130:17]
     end
   end
 // Register and memory initialization
@@ -4519,6 +4752,8 @@ initial begin
   alu_finish = _RAND_11[0:0];
   _RAND_12 = {1{`RANDOM}};
   state = _RAND_12[1:0];
+  _RAND_13 = {1{`RANDOM}};
+  alu_wait = _RAND_13[0:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

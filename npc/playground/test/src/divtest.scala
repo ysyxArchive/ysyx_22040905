@@ -1,8 +1,12 @@
 import chisel3._
 import chisel3.util._
-import chisel3.stage._
+import chiseltest._
+import chisel3.experimental.BundleLiterals._
+import chiseltest.formal._
+import chiseltest.formal.BoundedCheck
+import utest._
 
-class div(xlen: Int) extends Module{
+class Div(xlen: Int) extends Module{
     val io=IO(new Bundle{
         val dividend = Input(UInt(xlen.W))      //被除数
         val divisor = Input(UInt(xlen.W))       //除数
@@ -61,7 +65,16 @@ class div(xlen: Int) extends Module{
     remainder_sign := dividend_sign
     out_valid := false.B
   }.elsewhen(is_dividing) {
-    when(shift_count === 0.U){
+    when(sub(xlen) === 1.U){
+      quotient := quotient << 1
+    }.otherwise{
+      quotient := quotient << 1 | 1.U
+      dividend := Cat(sub,dividend(xlen-2,0)) << 1
+    }
+
+    shift_count := shift_count - 1.U
+
+    when(shift_count === 0.U) {
       is_dividing := false.B
 
       remainder := dividend(xlen-1, 0)
@@ -73,17 +86,7 @@ class div(xlen: Int) extends Module{
 
       out_valid := true.B
 
-    }.elsewhen(sub(xlen).asBool){
-      dividend := dividend << 1.U
-      quotient := quotient << 1.U
-    }.otherwise{
-      quotient := (quotient << 1.U) | 1.U
-      dividend := Cat(sub,dividend(xlen-2,0)) << 1
     }
-
-    shift_count := shift_count - 1.U
-
-    //printf("%d %x %x %x %x %x\n",shift_count,dividend,divisor,quotient,remainder,sub(xlen))
   }.otherwise{
     out_valid := false.B
   }
@@ -91,5 +94,19 @@ class div(xlen: Int) extends Module{
   io.out_valid := out_valid
   io.quotient := quotient
   io.remainder := remainder
+
+  when(io.out_valid.asBool){
+      chisel3.assert(io.quotient === io.dividend / io.divisor)
+  }
 }
 
+
+object Div extends TestSuite {
+  val tests: Tests = Tests {
+    test("mytest") {
+      new Formal with HasTestName {
+        def getTestName: String = s"div"
+      }.verify(new Div(64), Seq(BoundedCheck(64)))
+    }
+  }
+}

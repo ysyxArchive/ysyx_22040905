@@ -36,17 +36,25 @@ class ALU extends Module{
 
 
     val mul=Module(new mul_pipe).io
-    mul.mul_valid := (io.op(12)|io.op(13)|io.op(14))&io.validin 
+    mul.mul_valid := (io.op(12)|io.op(13)|io.op(14))&io.validin
     mul.flush := io.flush
     mul.mul_signed:= Cat(io.op(13)|io.op(14),io.op(13)) 
     mul.multiplicand:=io.src1
     mul.multiplier:=io.src2
-    mul.mulw:=0.U //64位乘法
+    mul.mulw:= 0.U //64位乘法
 
-    io.busy:= ~mul.mul_ready
-    io.readyin:= mul.mul_ready
+    val div=Module(new div(64)).io
+    div.div_valid := (io.op(15)|io.op(16)|io.op(17)|io.op(18))&io.validin
+    div.flush := io.flush
+    div.div_signed:=io.op(15)|io.op(17)
+    div.dividend:=io.src1
+    div.divisor:=io.src2
+    div.divw:=0.U
 
-    io.validout:=(~(io.op(12)|io.op(13)|io.op(14)))|(mul.out_valid)
+    io.busy:= (~mul.mul_ready) | (~div.div_ready)
+    io.readyin:= mul.mul_ready & div.div_ready
+
+    io.validout:=(~(io.op(12)|io.op(13)|io.op(14)|io.op(15)|io.op(16)|io.op(17)|io.op(18)))|(mul.out_valid)|(div.out_valid)
 
     io.result:=Mux(io.op(0)|io.op(1),adder_result,                    //add|sub
                Mux(io.op(2),io.src1&io.src2,                          //and
@@ -60,10 +68,8 @@ class ALU extends Module{
                Mux(io.op(10),adder_result&(~(1.U(64.W))),             //jalr
                Mux(io.op(11),eql_result,                              //eql
                Mux(io.op(12)|io.op(13)|io.op(14),mul.result_lo,       //mul
-               Mux(io.op(15),(io.src1.asSInt/io.src2.asSInt).asUInt,  //div
-               Mux(io.op(16),io.src1/io.src2,
-               Mux(io.op(17),(io.src1.asSInt%io.src2.asSInt).asUInt,  //rem
-               Mux(io.op(18),io.src1%io.src2,                           
-                0.U))))))))))))))))                                   //reset
+               Mux(io.op(15)|io.op(16),div.quotient,                  //div
+               Mux(io.op(17)|io.op(18),div.remainder,                 //rem
+                0.U))))))))))))))                                     //dont work
 
 }

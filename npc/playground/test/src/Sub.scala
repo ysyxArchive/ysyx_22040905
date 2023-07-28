@@ -1,4 +1,3 @@
-/*
 import chisel3._
 import chisel3.util._
 import chiseltest._
@@ -29,4 +28,3 @@ object Sub extends TestSuite {
     }
   }
 }
-*/

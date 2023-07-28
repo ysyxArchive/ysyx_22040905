@@ -85,8 +85,8 @@ class mul_pipe extends Module{
         ,a))))
     
     b :=Mux(io.flush.asBool,0.U,
-        Mux((io.mul_valid&io.mul_signed(0)&io.mulw).asBool,Cat(Fill(97,io.multiplier(31)),io.multiplier),
-        Mux((io.mul_valid&io.mul_signed(0)&(~io.mulw)).asBool,Cat(Fill(65,io.multiplier(63)),io.multiplier),
+        Mux((io.mul_valid&io.mul_signed(1)&io.mulw).asBool,Cat(Fill(97,io.multiplier(31)),io.multiplier),
+        Mux((io.mul_valid&io.mul_signed(1)&(~io.mulw)).asBool,Cat(Fill(65,io.multiplier(63)),io.multiplier),
         Mux(io.mul_valid.asBool,io.multiplier
         ,b))))
 

@@ -1,6 +1,10 @@
 import chisel3._
 import chisel3.util._
-import chisel3.stage._
+import chiseltest._
+import chisel3.experimental.BundleLiterals._
+import chiseltest.formal._
+import chiseltest.formal.BoundedCheck
+import utest._
 
 class div(xlen: Int) extends Module{
     val io=IO(new Bundle{
@@ -89,5 +93,20 @@ class div(xlen: Int) extends Module{
   io.out_valid := out_valid
   io.quotient := quotient
   io.remainder := remainder
+
+
+  when(io.out_valid.asBool){
+      chisel3.assert(io.quotient === io.dividend / io.divisor)
+  }
 }
 
+
+object div extends TestSuite {
+  val tests: Tests = Tests {
+    test("mytest") {
+      new Formal with HasTestName {
+        def getTestName: String = s"div"
+      }.verify(new div(64), Seq(BoundedCheck(64)))
+    }
+  }
+}

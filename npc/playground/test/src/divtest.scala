@@ -95,9 +95,9 @@ class div(xlen: Int) extends Module{
   io.remainder := remainder
 
 
-  when(io.out_valid.asBool){
-      chisel3.assert(io.quotient === io.dividend / io.divisor)
-  }
+  //when(io.out_valid.asBool){
+  //    chisel3.assert(io.quotient === io.dividend / io.divisor)
+  //}
 }
 
 

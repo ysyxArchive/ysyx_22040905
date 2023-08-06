@@ -14,7 +14,7 @@ class WBU extends Module{
     })
     val WB_reg_pc=dontTouch(RegEnable(io.in.bits.pc,io.in.fire))
     val WB_reg_inst=RegEnable(io.in.bits.inst,io.in.fire)
-    val WB_reg_pc_dnpc=RegEnable(io.in.bits.pc_dnpc,"x80000000".U,io.in.fire)
+    val WB_reg_pc_dnpc=RegEnable(io.in.bits.pc_dnpc,"x80000000".U,io.in.fire & (io.in.bits.pc_dnpc=/=0x4.U))
     val WB_reg_gpr_en_w=RegEnable(io.in.bits.gpr.en_w,io.in.fire)
     val WB_reg_gpr_idx_w=RegEnable(io.in.bits.gpr.idx_w,io.in.fire)
     val WB_reg_gpr_val_w=RegEnable(io.in.bits.gpr.val_w,io.in.fire)
@@ -23,7 +23,7 @@ class WBU extends Module{
     val WB_reg_csr_val_w=RegEnable(io.in.bits.csr.val_w,io.in.fire)
     val WB_reg_csr_no=RegEnable(io.in.bits.csr.no,io.in.fire)
     val WB_reg_csr_epc=RegEnable(io.in.bits.csr.epc,io.in.fire)
-    val WB_reg_valid=RegEnable(1.U,true.B)
+    val WB_reg_valid=RegEnable(io.in.fire && (io.in.bits.pc =/= 0x0.U),0.U,true.B)
 
     val WB_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
     val WB_reg_clearidx=RegEnable(io.in.bits.clearidx,0.U(5.W),io.in.fire)
@@ -32,11 +32,11 @@ class WBU extends Module{
     val state = RegInit(s_idle)
     state := MuxLookup(state, s_idle, List(
       s_idle       -> Mux(io.in.fire, s_wait_ready, s_idle),
-      s_wait_ready -> s_idle
+      s_wait_ready -> Mux(~io.in.fire,s_idle,s_wait_ready)
     ))
     io.isJump:=WB_reg_isJump & (state === s_wait_ready)
 
-    io.in.ready:=(state === s_idle)
+    io.in.ready:= 1.U
  
     io.gpr.en_w:=WB_reg_gpr_en_w & (state === s_wait_ready)
     io.gpr.idx_w:=WB_reg_gpr_idx_w
@@ -49,7 +49,7 @@ class WBU extends Module{
     io.csr.epc:=WB_reg_csr_epc
 
     io.pc_dnpc:=WB_reg_pc_dnpc
-    io.valid:=(state === s_wait_ready)
+    io.valid:=WB_reg_valid
 
     io.sb.clearidx:=Mux(state === s_wait_ready,WB_reg_clearidx,0.U)    
 }

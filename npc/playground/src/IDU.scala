@@ -26,9 +26,9 @@ class IDU extends Module{
   val ID_reg_valid=RegEnable(1.U,1.U,true.B)
 
    val ID_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
-   io.out.bits.isJump:=ID_reg_isJump
-   
    val RAW=Wire(UInt(1.W))
+   io.out.bits.isJump:=Mux(~RAW.asBool,ID_reg_isJump,0.U)
+   
 
    val s_idle :: s_wait_ready :: Nil = Enum(2)
    val state = RegInit(s_idle)
@@ -36,12 +36,13 @@ class IDU extends Module{
 
    state := MuxLookup(state, s_idle, List(
      s_idle       -> Mux(io.in.fire, s_wait_ready, s_idle),
-     s_wait_ready -> Mux(io.out.fire, s_idle, s_wait_ready)
+     s_wait_ready -> Mux(true.B, s_wait_ready, s_idle)
    ))
-   io.in.ready:=(state === s_idle) & (~RAW)
-   io.out.valid:=(state === s_wait_ready) & (~RAW)
-   io.out.bits.pc:=ID_reg_pc
-   io.out.bits.inst:=ID_reg_inst
+   val nop=0x0000013.U 
+   io.in.ready:= (~RAW) & io.out.ready
+   io.out.valid:=(state === s_wait_ready) & io.in.valid
+   io.out.bits.pc:=Mux(~RAW.asBool,ID_reg_pc,0.U)
+   io.out.bits.inst:=Mux(~RAW.asBool,ID_reg_inst,nop)
 
 //op
    val op_t=VecInit(Seq.fill(80)(0.U(1.W)))
@@ -122,10 +123,10 @@ class IDU extends Module{
    val op=Wire(UInt(80.W))
    op:=op_t.asUInt
 
-   io.out.bits.op:=op
-   io.out.bits.rd:=ID_reg_inst(11,7) 
-   io.out.bits.rs1:=ID_reg_inst(19,15) 
-   io.out.bits.rs2:=ID_reg_inst(24,20)
+   io.out.bits.op:=Mux(~RAW.asBool,op,0.U)
+   io.out.bits.rd:=Mux(~RAW.asBool,ID_reg_inst(11,7) ,0.U)
+   io.out.bits.rs1:=Mux(~RAW.asBool,ID_reg_inst(19,15) ,0.U)
+   io.out.bits.rs2:=Mux(~RAW.asBool,ID_reg_inst(24,20),0.U)
 
    //io.out.bits.op_r:=op(38)|op(39)|op(40)|op(41)|op(46)|op(47)|op(48)
    //io.out.bits.op_w:=op(42)|op(43)|op(44)|op(45) 
@@ -143,7 +144,7 @@ class IDU extends Module{
    val typ=Wire(UInt(6.W))
    typ:=typ_t.asUInt
 
-   io.out.bits.typ:=typ
+   io.out.bits.typ:=Mux(~RAW.asBool,typ,0.U)
 
 //imm
    io.out.bits.imm:= Mux(typ(0),Cat(Fill(52,ID_reg_inst(31)),ID_reg_inst(31,20)),                                                                              //I
@@ -156,8 +157,8 @@ class IDU extends Module{
 //RAW
    io.sb.lookidx1:=Mux(typ(0)|typ(2)|typ(4)|typ(5),ID_reg_inst(19,15),0.U)              //rs1
    io.sb.lookidx2:=Mux(typ(2)|typ(4)|typ(5),ID_reg_inst(24,20),0.U)                     //rs2
-   io.sb.setidx:=Mux((typ(0)|typ(1)|typ(3)|typ(5))&(io.out.fire),ID_reg_inst(11,7),0.U) //rd
-   io.out.bits.clearidx:=io.sb.setidx
+   io.sb.setidx:=Mux((typ(0)|typ(1)|typ(3)|typ(5))&(io.out.fire&io.in.fire)&(!RAW),ID_reg_inst(11,7),0.U) //rd
+   io.out.bits.clearidx:=Mux(~RAW.asBool,io.sb.setidx,0.U)
    RAW:=io.sb.isBusy
 
     

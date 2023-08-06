@@ -42,10 +42,16 @@ class EXU extends Module{
         val op_w=Wire(UInt(1.W))
         val op_mul=Wire(UInt(1.W))
         val op_div=Wire(UInt(1.W))
+        val op_wait=Wire(UInt(1.W))
+        val op_rw=Wire(UInt(1.W))
+        val op_alu=Wire(UInt(1.W))
         op_r:=EXE_reg_op(38) |EXE_reg_op(39) |EXE_reg_op(40) |EXE_reg_op(41) |EXE_reg_op(46) |EXE_reg_op(47) |EXE_reg_op(48)
         op_w:=EXE_reg_op(42) |EXE_reg_op(43) |EXE_reg_op(44) |EXE_reg_op(45) 
         op_mul:=EXE_reg_op(50)|EXE_reg_op(51)|EXE_reg_op(52)|EXE_reg_op(53)|EXE_reg_op(54)
         op_div:=EXE_reg_op(55)|EXE_reg_op(56)|EXE_reg_op(57)|EXE_reg_op(58)|EXE_reg_op(59)|EXE_reg_op(60)|EXE_reg_op(61)|EXE_reg_op(62)
+        op_wait:=op_r|op_w|op_mul|op_div
+        op_rw:=io.in.bits.op(38) |io.in.bits.op(39) |io.in.bits.op(40) |io.in.bits.op(41) |io.in.bits.op(46) |io.in.bits.op(47) |io.in.bits.op(48)|io.in.bits.op(42) |io.in.bits.op(43) |io.in.bits.op(44) |io.in.bits.op(45) 
+        op_alu:=io.in.bits.op(50)|io.in.bits.op(51)|io.in.bits.op(52)|io.in.bits.op(53)|io.in.bits.op(54)|io.in.bits.op(55)|io.in.bits.op(56)|io.in.bits.op(57)|io.in.bits.op(58)|io.in.bits.op(59)|io.in.bits.op(60)|io.in.bits.op(61)|io.in.bits.op(62)
 
         val src1=Wire(UInt(64.W))
         val src2=Wire(UInt(64.W))
@@ -63,36 +69,41 @@ class EXU extends Module{
 
         val alu=Module(new ALU)
   
-        val lsu_finish=RegInit(0.U(1.W))
-        val alu_finish=RegInit(0.U(1.W))
+        val lsu_finish=RegInit(1.U(1.W))
+        val alu_finish=RegInit(1.U(1.W))
+        val alu_valid =RegInit(0.U(1.W))
 
         val s_idle :: s_wait :: s_wait_next :: Nil =Enum(3)
 
         val state = RegInit(s_idle)
 
-        lsu_finish := Mux(state =/= s_wait,0.U,
+        lsu_finish := Mux(io.in.fire & op_rw.asBool,0.U,
                       Mux(lsu.io.ls.out.fire | ((~op_r) & (~op_w)).asBool,1.U,lsu_finish))
-        alu_finish := Mux(state =/= s_wait,0.U,
-                      Mux((alu.io.validout | ((~op_mul) & (~op_div))).asBool,1.U,alu_finish)) 
+        alu_finish := Mux(io.in.fire & op_alu.asBool,0.U,
+                      Mux((alu.io.validout | ((~op_mul) & (~op_div))).asBool,1.U,alu_finish))
+        alu_valid  := Mux(io.in.fire & op_alu.asBool,1.U,
+                      Mux(!alu.io.busy,0.U,alu_valid))
+        //printf("%x %x %x\n",lsu_finish,state,lsu.io.ls.out.fire)
 
 
         state:=MuxLookup(state,s_idle,List(
-            s_idle -> Mux(io.in.fire,s_wait,s_idle),
-            s_wait -> Mux(lsu_finish.asBool & alu_finish.asBool,s_wait_next,s_wait),
-            s_wait_next -> Mux(io.out.fire,s_idle,s_wait_next)
+            s_idle -> Mux(io.in.fire,s_wait_next,s_idle),
+            s_wait_next -> Mux(((~io.out.fire)|(~io.in.fire)) && ((!op_wait)|lsu.io.ls.out.fire|alu.io.validout.asBool),s_idle,s_wait_next)
         ))
 
         val lsu_rdata =RegEnable(lsu.io.ls.out.bits.rdata,0.U,lsu.io.ls.out.fire)
-        val alu_result=RegEnable(alu.io.result,0.U,alu.io.validout.asBool)
+        val alu_res=RegEnable(alu.io.result,0.U,alu.io.validout.asBool)
+        val alu_result=Wire(UInt(64.W))
+        alu_result:=Mux(io.out.fire,alu.io.result,alu_res)
 
-        io.in.ready:=(state === s_idle) 
-        io.out.valid:=(state === s_wait_next)
+        io.in.ready:= io.out.ready & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout)
+        io.out.valid:=(state === s_wait_next) & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout)
 
         //lsu
         lsu.io.en_r:=op_r
         lsu.io.en_w:=op_w
-        lsu.io.ls.out.ready:=1.U
-        lsu.io.ls.in.valid:=(state === s_wait) & (op_w|op_r) &(~lsu_finish)
+        lsu.io.ls.out.ready:=io.out.ready
+        lsu.io.ls.in.valid:=(state === s_wait_next) &(~lsu_finish)
         lsu.io.ls.in.bits.raddr:=Mux(EXE_reg_op(38)|EXE_reg_op(39)|EXE_reg_op(40)|EXE_reg_op(41)|EXE_reg_op(46)|EXE_reg_op(47)|EXE_reg_op(48),alu.io.result,0.U)
         lsu.io.ls.in.bits.waddr:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),alu.io.result,0.U)
         lsu.io.ls.in.bits.wdata:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),io.gpr.val_r2,0.U)
@@ -101,6 +112,7 @@ class EXU extends Module{
                                Mux(EXE_reg_op(44),Cat(Fill(4,0.U),Fill(4,1.U)),
                                Mux(EXE_reg_op(45),Fill(8,1.U),
                                0.U))))
+                               
 
         io.lm<>lsu.io.lm
 
@@ -126,9 +138,7 @@ class EXU extends Module{
 
 
         //alu
-        val alu_wait=RegInit(0.U(1.W))
-        alu_wait:=(state === s_wait)
-        alu.io.validin:=(state === s_wait) & (op_mul | op_div) &(~alu_finish) & (~(alu_wait))
+        alu.io.validin:=(state === s_wait_next) & (op_mul | op_div) &(~alu_finish)&alu_valid
         alu.io.flush:=0.U
         alu.io.src1:=   Mux(EXE_reg_op(13)|EXE_reg_op(21)|EXE_reg_op(23)|EXE_reg_op(56)|EXE_reg_op(58)|EXE_reg_op(60)|EXE_reg_op(62),Cat(Fill(32,0.U),src1(31,0)),
                         Mux(EXE_reg_op(17)|EXE_reg_op(19),Cat(Fill(32,src1(31)),src1(31,0)),

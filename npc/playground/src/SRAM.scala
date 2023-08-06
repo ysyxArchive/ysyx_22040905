@@ -79,15 +79,16 @@ class AXI4SRAM extends Module{
   wlast := io.w.bits.last
   rstate := MuxLookup(rstate, s_idle, List(
     s_idle        -> Mux(io.ar.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(rlast.asBool, s_idle, s_wait_ready),
+    s_wait_ready  -> Mux(rlast.asBool & io.ar.fire, s_wait_ready, s_idle),
   ))
   val wstate = RegInit(s_idle)
   wstate := MuxLookup(wstate, s_idle, List(
-    s_idle        -> Mux(io.aw.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(wlast.asBool, s_idle, s_wait_ready),
+    s_idle        -> Mux(io.aw.fire&io.w.fire, s_wait_ready, s_idle),
+    s_wait_ready  -> Mux(io.b.fire, s_idle, s_wait_ready),
   ))
 
   //read
+  val rid=RegInit(0.U(1.W))
   val raddr=RegInit(0.U(32.W))
   val rlen=RegInit(0.U(8.W))
   val rsize=RegInit(0.U(3.W))
@@ -96,10 +97,10 @@ class AXI4SRAM extends Module{
   val rcnt = RegInit(0.U(8.W))
   val beatcnt = RegInit(0.U(8.W))
 
-
+  rid := Mux(io.ar.fire,io.ar.bits.id,rid)
   lower_bound_addr:=Mux(io.ar.fire,io.ar.bits.addr & (((~io.ar.bits.len.asTypeOf(UInt(32.W))) << io.ar.bits.size )),lower_bound_addr)
   //printf("%x\n",raddr)
-  raddr := Mux(io.ar.fire && rstate === s_idle,io.ar.bits.addr,
+  raddr := Mux(io.ar.fire ,io.ar.bits.addr,
            Mux(rlast.asBool,0.U,
            Mux(io.r.fire & (beatcnt === 255.U | beatcnt === rlen),lower_bound_addr,
            Mux(io.r.fire ,raddr + (1.U(32.W)<< rsize),raddr))))
@@ -118,11 +119,13 @@ class AXI4SRAM extends Module{
 
   //printf("%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\n",raddr,rcnt,io.ar.fire,io.ar.bits.addr,rstate,beatcnt,io.r.fire,raddr + (1.U(32.W)<< rsize),lower_bound_addr) 
   //write
+  val wid=RegInit(0.U(1.W))
   val waddr = RegInit(0.U(32.W))
   val wlen=RegInit(0.U(8.W))
   val wcnt = RegInit(0.U(8.W))
   val wsize = RegInit(0.U(3.W))
 
+  wid := Mux(io.aw.fire,io.aw.bits.id,wid)
   wlen:=Mux(io.aw.fire,io.aw.bits.len,wlen)
   wsize:=Mux(io.aw.fire,io.aw.bits.size,wsize)
   waddr:=Mux(io.aw.fire && wstate === s_idle,io.aw.bits.addr,
@@ -135,15 +138,17 @@ class AXI4SRAM extends Module{
   pmem.io.raddr:= raddr
   pmem.io.waddr:= waddr//io.aw.bits.addr
   pmem.io.wdata:= io.w.bits.data
-  pmem.io.wmask:= Mux(io.w.fire,io.w.bits.strb,0.U)
+  pmem.io.wmask:= Mux(io.b.fire,io.w.bits.strb,0.U)
 
-  io.ar.ready := (rstate === s_idle)
+  io.ar.ready := (rstate === s_idle) | ((rlast.asBool)&(rstate =/= s_idle))
   io.r.valid  := (rstate =/= s_idle)
 
   io.aw.ready := (wstate === s_idle)
-  io.w.ready  := (wstate =/= s_idle)
+  io.w.ready  := (wstate === s_idle)
   io.r.bits.data := pmem.io.rdata//RegEnable(pmem.io.rdata,io.r.fire)  
+  io.r.bits.id := rid
   io.r.bits.resp := 0.U//OKAY
+  io.b.bits.id := wid
   io.b.bits.resp := 0.U
   val b=RegInit(0.U(1.W))
   b:= wlast

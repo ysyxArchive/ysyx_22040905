@@ -79,7 +79,7 @@ class AXI4SRAM extends Module{
   wlast := io.w.bits.last
   rstate := MuxLookup(rstate, s_idle, List(
     s_idle        -> Mux(io.ar.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(rlast.asBool & io.ar.fire, s_wait_ready, s_idle),
+    s_wait_ready  -> Mux(rlast.asBool & (~io.ar.fire), s_idle, s_wait_ready),
   ))
   val wstate = RegInit(s_idle)
   wstate := MuxLookup(wstate, s_idle, List(

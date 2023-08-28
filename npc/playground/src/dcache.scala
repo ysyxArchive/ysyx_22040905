@@ -303,8 +303,8 @@ class DCache extends Module {
   dirty(idx)(way) :=  Mux(state === s_lookup && wmode === 1.U && (~miss) && (!uncache),1.U,
                       Mux(state === s_replace, 0.U, dirty(idx)(way)))
 
-  addr := Mux(state === s_idle && io.in.ar.fire,io.in.ar.bits.addr,
-          Mux(state === s_idle && io.in.aw.fire, io.in.aw.bits.addr, addr))
+  addr := Mux(state === s_idle && io.in.ar.fire &&(!uc),io.in.ar.bits.addr,
+          Mux(state === s_idle && io.in.aw.fire &&(!uc), io.in.aw.bits.addr, addr))
   uc:=  Mux(state === s_idle && io.in.ar.fire,io.in.ar.bits.addr >= DEVICE_BASE,
         Mux(state === s_idle && io.in.aw.fire, io.in.aw.bits.addr >= DEVICE_BASE, false.B))
 
@@ -358,7 +358,7 @@ class DCache extends Module {
   io.mem.r.ready := 1.U
 
   //printf("%x %x %x\n",uc,uncache,io.in.aw.bits.addr)
-  io.mem.aw.bits.addr :=  Mux((uc && io.in.aw.fire),io.in.aw.bits.addr,(tag_way << index_width | idx) << offset_width)
+  io.mem.aw.bits.addr :=  Mux((uc && io.in.aw.fire && io.in.w.fire),io.in.aw.bits.addr,(tag_way << index_width | idx) << offset_width)
   io.mem.aw.bits.len := Mux(uc,0.U,1.U)
   io.mem.aw.bits.size := 3.U // 2^3 === 8B
   io.mem.aw.valid := Mux((state === s_idle) &&uc&& io.in.aw.fire,1.U,(state === s_miss) && (wstate === s_idle) && dirty(idx)(way).asBool)
@@ -369,7 +369,8 @@ class DCache extends Module {
   io.mem.w.bits.data := Mux(((uc) && io.in.w.fire),io.in.w.bits.data,
                         Mux((wstate === s_fire1),Mux( way(0).asBool,cache_data.Q1(127, 64),cache_data.Q0(127, 64)),
                         Mux( way(0).asBool, cache_data.Q1(63,0),cache_data.Q0(63,0))))
-  io.mem.w.bits.strb :=  Mux(((uc) && io.in.w.fire),io.in.w.bits.strb,~(0.U(8.W)))
+  io.mem.w.bits.strb :=  Mux(((uc) && io.in.w.fire),io.in.w.bits.strb,
+                         Mux(wstate === s_fire1 || (wstate === s_idle && io.mem.w.fire),~(0.U(8.W)),0.U))
   io.mem.w.bits.last :=  Mux(((uc) && io.in.w.fire),1.U,(wstate === s_fire1))
   io.mem.w.valid := Mux(((state === s_idle) &&(uc) && io.in.w.fire),1.U,(state === s_miss) && (wstate === s_idle || wstate === s_fire1) && dirty(idx)(way).asBool)
   io.mem.b.ready :=   1.U//(wstate === s_fire2)

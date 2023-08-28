@@ -3,6 +3,8 @@ import "DPI-C" function void pmem_write(input int waddr, input longint wdata, in
 module memory(input [31:0]raddr,output [63:0] rdata,input [31:0]waddr,input [63:0]wdata,input [7:0]wmask);
  always @(*) begin
   pmem_read(raddr, rdata);
+ end
+ always @(*) begin
   pmem_write(waddr, wdata, wmask);
  end
 endmodule

@@ -128,7 +128,7 @@ extern "C" void pmem_write(int waddr, long long wdata, char wmask) {
   uint64_t data=(uint64_t) wdata;
   uint8_t mask=(uint8_t) wmask;
   if(mask==0)return;
-  //printf("%x %llx %x\n",waddr,wdata,wmask);
+  printf("%x %llx %x\n",waddr,wdata,wmask);
   int len=0;
   while(mask&1){
     len++;

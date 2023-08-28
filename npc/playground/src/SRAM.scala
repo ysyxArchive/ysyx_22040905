@@ -28,9 +28,11 @@ class memory extends BlackBox with HasBlackBoxInline{
   setInline("memory.v",
           """import "DPI-C" function void pmem_read(input int raddr, output longint rdata);
           |import "DPI-C" function void pmem_write(input int waddr, input longint wdata, input byte wmask);
-          |module memory(input [31:0]raddr,output [63:0] rdata,input [31:0]waddr,input [63:0]wdata,input [7:0]wmask);
+          |module memory(input clock,input [31:0]raddr,output [63:0] rdata,input [31:0]waddr,input [63:0]wdata,input [7:0]wmask);
           | always @(*) begin
           |  pmem_read(raddr, rdata);
+          | end
+          | always @(posedge clock) begin
           |  pmem_write(waddr, wdata, wmask);
           | end
           |endmodule
@@ -128,8 +130,8 @@ class AXI4SRAM extends Module{
   wid := Mux(io.aw.fire,io.aw.bits.id,wid)
   wlen:=Mux(io.aw.fire,io.aw.bits.len,wlen)
   wsize:=Mux(io.aw.fire,io.aw.bits.size,wsize)
-  waddr:=Mux(io.aw.fire && io.w.fire && wstate === s_idle,io.aw.bits.addr +(1.U(32.W)<<io.aw.bits.size),
-         Mux(wlast.asBool,0.U,
+  waddr:=Mux(wlast.asBool,0.U,
+         Mux(io.aw.fire && io.w.fire && wstate === s_idle,io.aw.bits.addr +(1.U(32.W)<<io.aw.bits.size),
          Mux(io.w.fire,waddr +(1.U(32.W)<<wsize),waddr)))
   wcnt:=Mux(wcnt === 255.U|| wlast.asBool || io.aw.fire,0.U,
         Mux(io.w.fire,rcnt + 1.U,rcnt))
@@ -138,7 +140,7 @@ class AXI4SRAM extends Module{
   pmem.io.raddr:= raddr
   pmem.io.waddr:= Mux(io.aw.fire,io.aw.bits.addr,waddr)//io.aw.bits.addr
   pmem.io.wdata:= io.w.bits.data
-  pmem.io.wmask:= Mux(io.w.fire ,io.w.bits.strb,0.U)
+  pmem.io.wmask:= Mux(io.w.fire ,io.w.bits.strb,0.U) 
 
   io.ar.ready := (rstate === s_idle) | ((rlast.asBool)&(rstate =/= s_idle))
   io.r.valid  := (rstate =/= s_idle)
@@ -150,8 +152,6 @@ class AXI4SRAM extends Module{
   io.r.bits.resp := 0.U//OKAY
   io.b.bits.id := wid
   io.b.bits.resp := 0.U
-  val b=RegInit(0.U(1.W))
-  b:= Mux(wstate === s_idle,wlast,b)
   io.b.valid := (wstate === s_wait_ready)
 
   //printf("b:%x\t%x\t%x\n",io.b.valid,wcnt,wlen)

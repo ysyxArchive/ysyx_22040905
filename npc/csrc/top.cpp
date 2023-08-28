@@ -81,7 +81,7 @@ void exec_once()
   device_update();
 #ifdef HAS_DIFFTEST
   if(t){
-    difftest_step(pc, top->io_pc);
+    difftest_step(pc, pc);
     t=0;
   }
   if(top->io_valid){
@@ -191,8 +191,6 @@ int main(int argc, char *argv[])
   }
   else {
     printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
-    exec_once();
-    exec_once();
     return -1;
   }
   printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));

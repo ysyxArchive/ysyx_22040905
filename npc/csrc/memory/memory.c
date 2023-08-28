@@ -30,8 +30,13 @@ uint64_t get_pmem_size(){
 uint8_t* get_pmem(){
   return pmem;
 }
-int check_bound(uint32_t p){
-  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){printf("\033[1;31mCheck bound fail,Error at addr:0x%08x\n\033[0m",p);state=NPC_ABORT;return 0;}return 1;
+int check_bound(uint32_t p,int i){
+  if((p<CONFIG_MBASE)|(p>CONFIG_MBASE+CONFIG_MSIZE)){
+    if(i) {printf("\033[1;31mCheck bound fail,Error at addr:0x%08x write\n\033[0m",p);state=NPC_ABORT;}
+    else  {printf("\033[1;31mCheck bound fail,Error at addr:0x%08x read\n\033[0m",p);state=NPC_ABORT;}
+    return 0;
+  }
+  return 1;
 }
 
 void pmem_init(char *s){ 
@@ -81,13 +86,13 @@ paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 uint64_t pmem_read(paddr_t addr,int len){
   uint64_t ret=0;
-  if(check_bound(addr))
+  if(check_bound(addr,0))
     ret=host_read(guest_to_host(addr), len);
   return ret;
 }
 
 void pmem_write(paddr_t addr, int len, uint64_t data) {
-  if(check_bound(addr))
+  if(check_bound(addr,1))
     host_write(guest_to_host(addr), len, data);
 }
 
@@ -98,19 +103,19 @@ extern "C" void pmem_read(int raddr, long long *rdata) {
   if(addr==RTC_ADDR){
     difftest_skip_ref();
     *rdata=get_time()%(1ll<<32);
-    return;
+    //return;
   }
-  if(addr==RTC_ADDR+4){
+  else if(addr==RTC_ADDR+4){
     difftest_skip_ref();
     *rdata=get_time()/(1ll<<32);
-    return;
+    //return;
   }
-  if(addr>=VGACTL_ADDR&&addr<VGACTL_ADDR+8){
+  else if(addr>=VGACTL_ADDR&&addr<VGACTL_ADDR+8){
     difftest_skip_ref();
     *rdata=get_vgactl_addr(addr);
-    return;
+    //return;
   }
-  *rdata=(long long)pmem_read((((uint64_t)addr)), 8);
+  else *rdata=(long long)pmem_read((((uint64_t)addr)), 8);
 #ifdef HAS_TRACE
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");
@@ -124,29 +129,28 @@ extern "C" void pmem_write(int waddr, long long wdata, char wmask) {
   uint8_t mask=(uint8_t) wmask;
   if(mask==0)return;
   //printf("%x %llx %x\n",waddr,wdata,wmask);
-  if(addr==SERIAL_PORT){
-    difftest_skip_ref();
-    putchar((char)data);
-    return;
-  }  
-
   int len=0;
   while(mask&1){
     len++;
     mask>>=1;
     if(len>8){printf("wmask:%d\nlen:%d\n",mask,len); assert(0);}
   }
-  if(addr>=FB_ADDR&&addr<FB_ADDR+screen_size()){
+  if(addr==SERIAL_PORT){
+    difftest_skip_ref();
+    putchar((char)data);
+    //return;
+  }  
+  else if(addr>=FB_ADDR&&addr<FB_ADDR+screen_size()){
     difftest_skip_ref();
     write_vmem(addr,len,data);
-    return;
+    //return;
   } 
-  if(addr>=VGACTL_ADDR&&addr<VGACTL_ADDR+8){
+  else if(addr>=VGACTL_ADDR&&addr<VGACTL_ADDR+8){
     difftest_skip_ref();
     write_vgactl_addr(addr,len,data);
-    return;
+    //return;
   }
-  pmem_write(addr, len,data);
+  else pmem_write(addr, len,data);
 #ifdef HAS_TRACE
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");

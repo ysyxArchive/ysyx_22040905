@@ -35,17 +35,22 @@ class AXI4A extends AXILiteA {
   val len = Output(UInt(8.W)) // beats -1
   val size = Output(UInt(3.W)) // 2^size Byte
   val burst = Output(UInt(2.W))
+  val id  = Output(UInt(4.W))
 }
 
 class AXI4R extends AXILiteR {
   val last = Output(UInt(1.W))
+  val id  = Output(UInt(4.W))
 }
 
 class AXI4W extends AXILiteW {
   val last = Output(UInt(1.W))
+  val id  = Output(UInt(4.W))
 }
 
-class AXI4B extends AXILiteB {}
+class AXI4B extends AXILiteB {
+  val id  = Output(UInt(4.W))
+}
 
 class AXI4 extends Bundle {
   val ar = Decoupled(new AXI4A)

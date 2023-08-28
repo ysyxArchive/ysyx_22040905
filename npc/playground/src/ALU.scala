@@ -54,7 +54,7 @@ class ALU extends Module{
     io.busy:= (~mul.mul_ready) | (~div.div_ready)
     io.readyin:= mul.mul_ready & div.div_ready
 
-    io.validout:=(~(io.op(12)|io.op(13)|io.op(14)|io.op(15)|io.op(16)|io.op(17)|io.op(18)))|(mul.out_valid)|(div.out_valid)
+    io.validout:=(mul.out_valid)|(div.out_valid)
 
     io.result:=Mux(io.op(0)|io.op(1),adder_result,                    //add|sub
                Mux(io.op(2),io.src1&io.src2,                          //and
@@ -72,4 +72,7 @@ class ALU extends Module{
                Mux(io.op(17)|io.op(18),div.remainder,                 //rem
                 0.U))))))))))))))                                     //dont work
 
+    //when((io.op(15)|io.op(16)|io.op(17)|io.op(18))){
+    //    printf("%x\n",io.result)
+    //}
 }

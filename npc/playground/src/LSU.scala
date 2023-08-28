@@ -18,19 +18,18 @@ class LSU extends Module{
   ))
   val wstate = RegInit(s_idle)
   wstate := MuxLookup(wstate, s_idle, List(
-    s_idle  -> Mux(io.lm.aw.fire, s_wait, s_idle),
-    s_wait  -> Mux(io.lm.w.fire, s_wait_b, s_wait),
-    s_wait_b-> Mux(io.lm.b.fire, s_idle, s_wait_b)
+    s_idle  -> Mux(io.lm.aw.fire & io.lm.w.fire, s_wait, s_idle),
+    s_wait  -> Mux(io.lm.b.fire, s_idle, s_wait)
   ))
 
   io.lm.ar.bits.addr:=io.ls.in.bits.raddr
   io.lm.ar.valid:=(rstate === s_idle & ~reset.asBool & io.ls.in.valid & io.en_r)
-  io.lm.r.ready:=(rstate === s_wait)
+  io.lm.r.ready:= 1.U
   io.lm.aw.bits.addr:=io.ls.in.bits.waddr
   io.lm.aw.valid:=(wstate === s_idle & ~reset.asBool & io.ls.in.valid & io.en_w)
   io.lm.w.bits.data:=io.ls.in.bits.wdata
   io.lm.w.bits.strb:=io.ls.in.bits.wmask
-  io.lm.w.valid:=(wstate === s_wait & ~reset.asBool)
+  io.lm.w.valid:=(wstate === s_idle & ~reset.asBool & io.ls.in.valid & io.en_w)
   io.lm.b.ready:=1.U
   
 

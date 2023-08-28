@@ -64,12 +64,9 @@ class div(xlen: Int) extends Module{
     when(shift_count === 0.U){
       is_dividing := false.B
 
-      remainder := dividend(xlen-1, 0)
 
-      when(is_dividing_signed) {
-        quotient := Mux(quotient_sign, (~quotient).asUInt + 1.U, quotient)
-        remainder := Mux(remainder_sign, (~remainder).asUInt + 1.U, remainder)
-      }
+      quotient := Mux(quotient_sign, (~quotient).asUInt + 1.U, quotient)
+      remainder := Mux(remainder_sign, (~dividend(2*xlen-1, xlen)).asUInt + 1.U, dividend(2*xlen-1, xlen))
 
       out_valid := true.B
 
@@ -83,10 +80,11 @@ class div(xlen: Int) extends Module{
 
     shift_count := shift_count - 1.U
 
-    //printf("%d %x %x %x %x %x\n",shift_count,dividend,divisor,quotient,remainder,sub(xlen))
   }.otherwise{
     out_valid := false.B
   }
+
+  //printf("%d %x %x %x %x %x\n",shift_count,dividend,divisor,quotient,remainder,dividend(2*xlen-1, xlen))
 
   io.out_valid := out_valid
   io.quotient := quotient

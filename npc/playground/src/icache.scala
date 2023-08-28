@@ -8,7 +8,8 @@ class ICache extends Module {
     val in = Flipped(new AXILite)
     val id = Input(UInt(1.W))
     val mem = (new AXI4)
-    val ram = Flipped(new CacheRAM_Bundle)
+    val ram = Flipped(new ICacheRAM_Bundle)
+    //val hitrate = Output(UInt(64.W))
     //val uncache = Input(UInt(1.W))
   })
   //config

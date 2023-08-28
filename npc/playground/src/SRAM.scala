@@ -18,6 +18,7 @@ class pmemio extends Bundle{
 }
 class memory extends BlackBox with HasBlackBoxInline{
   val io=IO(Flipped(new Bundle{
+    val clock=Output(Clock())
     val raddr=Output(UInt(32.W))
     val rdata=Input(UInt(64.W))
     val waddr=Output(UInt(32.W))
@@ -28,8 +29,8 @@ class memory extends BlackBox with HasBlackBoxInline{
   setInline("memory.v",
           """import "DPI-C" function void pmem_read(input int raddr, output longint rdata);
           |import "DPI-C" function void pmem_write(input int waddr, input longint wdata, input byte wmask);
-          |module memory(input [31:0]raddr,output [63:0] rdata,input [31:0]waddr,input [63:0]wdata,input [7:0]wmask);
-          | always @(*) begin
+          |module memory(input clock,input [31:0]raddr,output [63:0] rdata,input [31:0]waddr,input [63:0]wdata,input [7:0]wmask);
+          | always @(negedge clock) begin
           |  pmem_read(raddr, rdata);
           |  pmem_write(waddr, wdata, wmask);
           | end
@@ -37,38 +38,6 @@ class memory extends BlackBox with HasBlackBoxInline{
           |""".stripMargin)
 }
 
-class AXILiteSRAM extends Module{
-  val io = IO(Flipped(new AXILite))
-
-  val s_idle :: s_wait_ready :: Nil = Enum(2)
-  val rstate = RegInit(s_idle)
-  rstate := MuxLookup(rstate, s_idle, List(
-    s_idle        -> Mux(io.ar.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(io.r.fire, s_idle, s_wait_ready)
-  ))
-  val wstate = RegInit(s_idle)
-  wstate := MuxLookup(wstate, s_idle, List(
-    s_idle        -> Mux(io.aw.fire, s_wait_ready, s_idle),
-    s_wait_ready  -> Mux(io.w.fire, s_idle, s_wait_ready)
-  ))
-
-  io.ar.ready := (rstate === s_idle)
-  io.r.valid  := (rstate === s_wait_ready)
-
-  io.aw.ready := (wstate === s_idle)
-  io.w.ready  := (wstate === s_wait_ready)
-
-  val pmem =Module(new memory)
-  pmem.io.raddr:= Mux(io.ar.fire,io.ar.bits.addr,0.U)
-  pmem.io.waddr:= io.aw.bits.addr
-  pmem.io.wdata:= io.w.bits.data
-  pmem.io.wmask:= Mux(io.aw.fire,io.w.bits.strb,0.U)
-
-  io.r.bits.data := RegEnable(pmem.io.rdata,io.ar.fire) 
-  io.r.bits.resp := 0.U//OKAY
-  io.b.bits.resp := 0.U
-  io.b.valid := RegEnable(1.U,io.w.fire)
-}
 
 class AXI4SRAM extends Module{
   val io = IO(Flipped(new AXI4))
@@ -83,7 +52,7 @@ class AXI4SRAM extends Module{
   ))
   val wstate = RegInit(s_idle)
   wstate := MuxLookup(wstate, s_idle, List(
-    s_idle        -> Mux(io.aw.fire&io.w.fire, s_wait_ready, s_idle),
+    s_idle        -> Mux(io.w.fire&wlast.asBool, s_wait_ready, s_idle),
     s_wait_ready  -> Mux(io.b.fire, s_idle, s_wait_ready),
   ))
 
@@ -128,17 +97,18 @@ class AXI4SRAM extends Module{
   wid := Mux(io.aw.fire,io.aw.bits.id,wid)
   wlen:=Mux(io.aw.fire,io.aw.bits.len,wlen)
   wsize:=Mux(io.aw.fire,io.aw.bits.size,wsize)
-  waddr:=Mux(io.aw.fire && wstate === s_idle,io.aw.bits.addr,
-         Mux(wlast.asBool,0.U,
+  waddr:=Mux(wlast.asBool,0.U,
+         Mux(io.aw.fire && io.w.fire && wstate === s_idle,io.aw.bits.addr +(1.U(32.W)<<io.aw.bits.size),
          Mux(io.w.fire,waddr +(1.U(32.W)<<wsize),waddr)))
   wcnt:=Mux(wcnt === 255.U|| wlast.asBool || io.aw.fire,0.U,
-        Mux(io.w.fire,rcnt + 1.U,rcnt))
+        Mux(io.w.fire,wcnt + 1.U,wcnt))
 
   val pmem =Module(new memory)
   pmem.io.raddr:= raddr
-  pmem.io.waddr:= waddr//io.aw.bits.addr
+  pmem.io.waddr:= Mux(io.aw.fire,io.aw.bits.addr,waddr)//io.aw.bits.addr
   pmem.io.wdata:= io.w.bits.data
-  pmem.io.wmask:= Mux(io.b.fire,io.w.bits.strb,0.U)
+  pmem.io.wmask:= Mux(io.w.fire ,io.w.bits.strb,0.U) 
+  pmem.io.clock:=clock
 
   io.ar.ready := (rstate === s_idle) | ((rlast.asBool)&(rstate =/= s_idle))
   io.r.valid  := (rstate =/= s_idle)
@@ -150,9 +120,8 @@ class AXI4SRAM extends Module{
   io.r.bits.resp := 0.U//OKAY
   io.b.bits.id := wid
   io.b.bits.resp := 0.U
-  val b=RegInit(0.U(1.W))
-  b:= wlast
-  io.b.valid := b
+  io.b.valid := (wstate === s_wait_ready)
+
   //printf("b:%x\t%x\t%x\n",io.b.valid,wcnt,wlen)
   //printf("%x\t%x\t%x\n",pmem.io.wmask,io.w.bits.last,io.w.valid)
   //printf("ram:state %x\n",wstate)

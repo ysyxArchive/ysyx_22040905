@@ -12,10 +12,10 @@ class Crossbar extends Module{
     val DEVICE_BASE :UInt = "xa0000000".U 
 
     val icache=Module(new ICache).io
-    val icacheram=Module(new CacheRAM).io
-    //val dcache=Module(new Cache).io
-    //val dcacheram=Module(new CacheRAM).io
-    val d_skip=Module(new AXILite2AXI4).io
+    val icacheram=Module(new ICacheRAM).io
+    val dcache=Module(new DCache).io
+    val dcacheram=Module(new ICacheRAM).io
+    //val d_skip=Module(new AXILite2AXI4).io
     //val i_skip=Module(new AXILite2AXI4).io
     val arbiter=Module(new AXI4Arbiter).io
 
@@ -30,16 +30,20 @@ class Crossbar extends Module{
     icache.mem<>arbiter.ifu
     icache.id := 0.U
 
-    io.in2<>out2
-    //dcache.ram<>dcacheram
+    io.in2<>out2 
+    out2<>dcache.in
+    dcache.ram<>dcacheram
+    dcache.mem<>arbiter.lsu
+    dcache.id := 1.U
+    dcache.uncache :=1.U//(out2.ar.bits.addr >= DEVICE_BASE) || (out2.aw.bits.addr >= DEVICE_BASE)
 
 
     //i_skip.in <> out1
     //i_skip.id := 0.U
-    d_skip.in <> out2
-    d_skip.id := 1.U
+    //d_skip.in <> out2
+    //d_skip.id := 1.U
     //arbiter.ifu <> i_skip.mem
-    arbiter.lsu <> d_skip.mem
+    //arbiter.lsu <> d_skip.mem
 
     io.out<>arbiter.out
 } 

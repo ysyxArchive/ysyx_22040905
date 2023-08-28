@@ -35,95 +35,98 @@ module AXI4SRAM(
   reg [31:0] _RAND_8;
   reg [31:0] _RAND_9;
   reg [31:0] _RAND_10;
-  reg [31:0] _RAND_11;
 `endif // RANDOMIZE_REG_INIT
-  wire [31:0] pmem_raddr; // @[SRAM.scala 137:19]
-  wire [63:0] pmem_rdata; // @[SRAM.scala 137:19]
-  wire [31:0] pmem_waddr; // @[SRAM.scala 137:19]
-  wire [63:0] pmem_wdata; // @[SRAM.scala 137:19]
-  wire [7:0] pmem_wmask; // @[SRAM.scala 137:19]
-  reg  rstate; // @[SRAM.scala 78:23]
+  wire  pmem_clock; // @[SRAM.scala 106:19]
+  wire [31:0] pmem_raddr; // @[SRAM.scala 106:19]
+  wire [63:0] pmem_rdata; // @[SRAM.scala 106:19]
+  wire [31:0] pmem_waddr; // @[SRAM.scala 106:19]
+  wire [63:0] pmem_wdata; // @[SRAM.scala 106:19]
+  wire [7:0] pmem_wmask; // @[SRAM.scala 106:19]
+  reg  rstate; // @[SRAM.scala 47:23]
   wire  _rstate_T = io_ar_ready & io_ar_valid; // @[Decoupled.scala 52:35]
-  reg [7:0] rcnt; // @[SRAM.scala 97:21]
-  reg [7:0] rlen; // @[SRAM.scala 93:19]
+  reg [7:0] rcnt; // @[SRAM.scala 66:21]
+  reg [7:0] rlen; // @[SRAM.scala 62:19]
   wire  _rlast_T_1 = io_r_ready & io_r_valid; // @[Decoupled.scala 52:35]
-  wire  rlast = rcnt == rlen & _rlast_T_1; // @[SRAM.scala 116:25]
-  reg  wstate; // @[SRAM.scala 84:23]
-  wire  _wstate_T = io_aw_ready & io_aw_valid; // @[Decoupled.scala 52:35]
-  wire  _wstate_T_1 = io_w_ready & io_w_valid; // @[Decoupled.scala 52:35]
-  wire  _wstate_T_2 = _wstate_T & _wstate_T_1; // @[SRAM.scala 86:36]
-  reg  rid; // @[SRAM.scala 91:18]
-  reg [31:0] raddr; // @[SRAM.scala 92:20]
-  reg [2:0] rsize; // @[SRAM.scala 94:20]
-  reg [31:0] lower_bound_addr; // @[SRAM.scala 96:31]
-  reg [7:0] beatcnt; // @[SRAM.scala 98:24]
-  wire [3:0] _rid_T_1 = _rstate_T ? io_ar_bits_id : {{3'd0}, rid}; // @[SRAM.scala 100:13]
-  wire [31:0] _lower_bound_addr_WIRE = {{24'd0}, io_ar_bits_len}; // @[SRAM.scala 101:{81,81}]
-  wire [31:0] _lower_bound_addr_T_1 = ~_lower_bound_addr_WIRE; // @[SRAM.scala 101:57]
-  wire [38:0] _GEN_2 = {{7'd0}, _lower_bound_addr_T_1}; // @[SRAM.scala 101:95]
-  wire [38:0] _lower_bound_addr_T_2 = _GEN_2 << io_ar_bits_size; // @[SRAM.scala 101:95]
-  wire [38:0] _GEN_0 = {{7'd0}, io_ar_bits_addr}; // @[SRAM.scala 101:52]
-  wire [38:0] _lower_bound_addr_T_3 = _GEN_0 & _lower_bound_addr_T_2; // @[SRAM.scala 101:52]
-  wire [38:0] _lower_bound_addr_T_4 = _rstate_T ? _lower_bound_addr_T_3 : {{7'd0}, lower_bound_addr}; // @[SRAM.scala 101:24]
-  wire  _raddr_T_5 = beatcnt == 8'hff | beatcnt == rlen; // @[SRAM.scala 105:47]
-  wire [38:0] _raddr_T_8 = 39'h1 << rsize; // @[SRAM.scala 106:45]
-  wire [38:0] _GEN_1 = {{7'd0}, raddr}; // @[SRAM.scala 106:33]
-  wire [38:0] _raddr_T_10 = _GEN_1 + _raddr_T_8; // @[SRAM.scala 106:33]
-  wire [38:0] _raddr_T_11 = _rlast_T_1 ? _raddr_T_10 : {{7'd0}, raddr}; // @[SRAM.scala 106:15]
+  wire  rlast = rcnt == rlen & _rlast_T_1; // @[SRAM.scala 85:25]
+  reg  wstate; // @[SRAM.scala 53:23]
+  wire  _wstate_T = io_w_ready & io_w_valid; // @[Decoupled.scala 52:35]
+  wire  _wstate_T_2 = _wstate_T & io_w_bits_last; // @[SRAM.scala 55:35]
+  reg  rid; // @[SRAM.scala 60:18]
+  reg [31:0] raddr; // @[SRAM.scala 61:20]
+  reg [2:0] rsize; // @[SRAM.scala 63:20]
+  reg [31:0] lower_bound_addr; // @[SRAM.scala 65:31]
+  reg [7:0] beatcnt; // @[SRAM.scala 67:24]
+  wire [3:0] _rid_T_1 = _rstate_T ? io_ar_bits_id : {{3'd0}, rid}; // @[SRAM.scala 69:13]
+  wire [31:0] _lower_bound_addr_WIRE = {{24'd0}, io_ar_bits_len}; // @[SRAM.scala 70:{81,81}]
+  wire [31:0] _lower_bound_addr_T_1 = ~_lower_bound_addr_WIRE; // @[SRAM.scala 70:57]
+  wire [38:0] _GEN_2 = {{7'd0}, _lower_bound_addr_T_1}; // @[SRAM.scala 70:95]
+  wire [38:0] _lower_bound_addr_T_2 = _GEN_2 << io_ar_bits_size; // @[SRAM.scala 70:95]
+  wire [38:0] _GEN_0 = {{7'd0}, io_ar_bits_addr}; // @[SRAM.scala 70:52]
+  wire [38:0] _lower_bound_addr_T_3 = _GEN_0 & _lower_bound_addr_T_2; // @[SRAM.scala 70:52]
+  wire [38:0] _lower_bound_addr_T_4 = _rstate_T ? _lower_bound_addr_T_3 : {{7'd0}, lower_bound_addr}; // @[SRAM.scala 70:24]
+  wire  _raddr_T_5 = beatcnt == 8'hff | beatcnt == rlen; // @[SRAM.scala 74:47]
+  wire [38:0] _raddr_T_8 = 39'h1 << rsize; // @[SRAM.scala 75:45]
+  wire [38:0] _GEN_1 = {{7'd0}, raddr}; // @[SRAM.scala 75:33]
+  wire [38:0] _raddr_T_10 = _GEN_1 + _raddr_T_8; // @[SRAM.scala 75:33]
+  wire [38:0] _raddr_T_11 = _rlast_T_1 ? _raddr_T_10 : {{7'd0}, raddr}; // @[SRAM.scala 75:15]
   wire [38:0] _raddr_T_12 = _rlast_T_1 & (beatcnt == 8'hff | beatcnt == rlen) ? {{7'd0}, lower_bound_addr} : _raddr_T_11
-    ; // @[SRAM.scala 105:15]
-  wire [38:0] _raddr_T_13 = rlast ? 39'h0 : _raddr_T_12; // @[SRAM.scala 104:15]
-  wire [38:0] _raddr_T_14 = _rstate_T ? {{7'd0}, io_ar_bits_addr} : _raddr_T_13; // @[SRAM.scala 103:15]
-  wire [7:0] _rcnt_T_7 = rcnt + 8'h1; // @[SRAM.scala 111:28]
-  wire [31:0] _beatcnt_T_1 = io_ar_bits_addr >> io_ar_bits_size; // @[SRAM.scala 112:44]
-  wire [31:0] _beatcnt_T_2 = _beatcnt_T_1 & _lower_bound_addr_WIRE; // @[SRAM.scala 112:64]
-  wire [7:0] _beatcnt_T_8 = beatcnt + 8'h1; // @[SRAM.scala 114:41]
-  wire [7:0] _beatcnt_T_9 = rstate ? _beatcnt_T_8 : 8'h0; // @[SRAM.scala 114:15]
-  wire [7:0] _beatcnt_T_10 = _raddr_T_5 ? 8'h0 : _beatcnt_T_9; // @[SRAM.scala 113:15]
-  wire [31:0] _beatcnt_T_11 = _rstate_T ? _beatcnt_T_2 : {{24'd0}, _beatcnt_T_10}; // @[SRAM.scala 112:15]
-  reg [31:0] waddr; // @[SRAM.scala 123:22]
-  reg [2:0] wsize; // @[SRAM.scala 126:22]
-  wire [38:0] _waddr_T_5 = 39'h1 << wsize; // @[SRAM.scala 133:41]
-  wire [38:0] _GEN_3 = {{7'd0}, waddr}; // @[SRAM.scala 133:30]
-  wire [38:0] _waddr_T_7 = _GEN_3 + _waddr_T_5; // @[SRAM.scala 133:30]
-  wire [38:0] _waddr_T_8 = _wstate_T_1 ? _waddr_T_7 : {{7'd0}, waddr}; // @[SRAM.scala 133:13]
-  wire [38:0] _waddr_T_9 = io_w_bits_last ? 39'h0 : _waddr_T_8; // @[SRAM.scala 132:13]
-  wire [38:0] _waddr_T_10 = _wstate_T & ~wstate ? {{7'd0}, io_aw_bits_addr} : _waddr_T_9; // @[SRAM.scala 131:13]
-  reg  b; // @[SRAM.scala 153:16]
-  wire [7:0] _T_1 = rlen + 8'h1; // @[SRAM.scala 161:45]
-  wire [7:0] _T_2 = 8'h1 << rsize; // @[SRAM.scala 161:55]
-  wire [15:0] _T_3 = _T_1 * _T_2; // @[SRAM.scala 161:50]
-  wire [31:0] _GEN_4 = {{16'd0}, _T_3}; // @[SRAM.scala 161:38]
-  wire [31:0] _T_5 = lower_bound_addr + _GEN_4; // @[SRAM.scala 161:38]
-  wire [3:0] _GEN_5 = reset ? 4'h0 : _rid_T_1; // @[SRAM.scala 91:{18,18} 100:7]
-  wire [38:0] _GEN_6 = reset ? 39'h0 : _raddr_T_14; // @[SRAM.scala 92:{20,20} 103:9]
-  wire [38:0] _GEN_7 = reset ? 39'h0 : _lower_bound_addr_T_4; // @[SRAM.scala 101:19 96:{31,31}]
-  wire [31:0] _GEN_8 = reset ? 32'h0 : _beatcnt_T_11; // @[SRAM.scala 112:10 98:{24,24}]
-  wire [38:0] _GEN_10 = reset ? 39'h0 : _waddr_T_10; // @[SRAM.scala 123:{22,22} 131:8]
-  memory pmem ( // @[SRAM.scala 137:19]
+    ; // @[SRAM.scala 74:15]
+  wire [38:0] _raddr_T_13 = rlast ? 39'h0 : _raddr_T_12; // @[SRAM.scala 73:15]
+  wire [38:0] _raddr_T_14 = _rstate_T ? {{7'd0}, io_ar_bits_addr} : _raddr_T_13; // @[SRAM.scala 72:15]
+  wire [7:0] _rcnt_T_7 = rcnt + 8'h1; // @[SRAM.scala 80:28]
+  wire [31:0] _beatcnt_T_1 = io_ar_bits_addr >> io_ar_bits_size; // @[SRAM.scala 81:44]
+  wire [31:0] _beatcnt_T_2 = _beatcnt_T_1 & _lower_bound_addr_WIRE; // @[SRAM.scala 81:64]
+  wire [7:0] _beatcnt_T_8 = beatcnt + 8'h1; // @[SRAM.scala 83:41]
+  wire [7:0] _beatcnt_T_9 = rstate ? _beatcnt_T_8 : 8'h0; // @[SRAM.scala 83:15]
+  wire [7:0] _beatcnt_T_10 = _raddr_T_5 ? 8'h0 : _beatcnt_T_9; // @[SRAM.scala 82:15]
+  wire [31:0] _beatcnt_T_11 = _rstate_T ? _beatcnt_T_2 : {{24'd0}, _beatcnt_T_10}; // @[SRAM.scala 81:15]
+  reg [31:0] waddr; // @[SRAM.scala 92:22]
+  reg [2:0] wsize; // @[SRAM.scala 95:22]
+  wire  _wid_T = io_aw_ready & io_aw_valid; // @[Decoupled.scala 52:35]
+  wire [38:0] _GEN_3 = {{7'd0}, io_aw_bits_addr}; // @[SRAM.scala 101:75]
+  wire [38:0] _waddr_T_8 = _GEN_3 + 39'h8; // @[SRAM.scala 101:75]
+  wire [38:0] _waddr_T_10 = 39'h1 << wsize; // @[SRAM.scala 102:41]
+  wire [38:0] _GEN_4 = {{7'd0}, waddr}; // @[SRAM.scala 102:30]
+  wire [38:0] _waddr_T_12 = _GEN_4 + _waddr_T_10; // @[SRAM.scala 102:30]
+  wire [38:0] _waddr_T_13 = _wstate_T ? _waddr_T_12 : {{7'd0}, waddr}; // @[SRAM.scala 102:13]
+  wire [38:0] _waddr_T_14 = _wid_T & _wstate_T & ~wstate ? _waddr_T_8 : _waddr_T_13; // @[SRAM.scala 101:13]
+  wire [38:0] _waddr_T_15 = io_w_bits_last ? 39'h0 : _waddr_T_14; // @[SRAM.scala 100:13]
+  wire [7:0] _T_1 = rlen + 8'h1; // @[SRAM.scala 130:45]
+  wire [7:0] _T_2 = 8'h1 << rsize; // @[SRAM.scala 130:55]
+  wire [15:0] _T_3 = _T_1 * _T_2; // @[SRAM.scala 130:50]
+  wire [31:0] _GEN_5 = {{16'd0}, _T_3}; // @[SRAM.scala 130:38]
+  wire [31:0] _T_5 = lower_bound_addr + _GEN_5; // @[SRAM.scala 130:38]
+  wire [3:0] _GEN_6 = reset ? 4'h0 : _rid_T_1; // @[SRAM.scala 60:{18,18} 69:7]
+  wire [38:0] _GEN_7 = reset ? 39'h0 : _raddr_T_14; // @[SRAM.scala 61:{20,20} 72:9]
+  wire [38:0] _GEN_8 = reset ? 39'h0 : _lower_bound_addr_T_4; // @[SRAM.scala 65:{31,31} 70:19]
+  wire [31:0] _GEN_9 = reset ? 32'h0 : _beatcnt_T_11; // @[SRAM.scala 67:{24,24} 81:10]
+  wire [38:0] _GEN_11 = reset ? 39'h0 : _waddr_T_15; // @[SRAM.scala 92:{22,22} 100:8]
+  memory pmem ( // @[SRAM.scala 106:19]
+    .clock(pmem_clock),
     .raddr(pmem_raddr),
     .rdata(pmem_rdata),
     .waddr(pmem_waddr),
     .wdata(pmem_wdata),
     .wmask(pmem_wmask)
   );
-  assign io_ar_ready = ~rstate | rlast & rstate; // @[SRAM.scala 143:38]
-  assign io_r_valid = rstate; // @[SRAM.scala 144:26]
-  assign io_r_bits_data = pmem_rdata; // @[SRAM.scala 148:18]
-  assign io_r_bits_last = rcnt == rlen & _rlast_T_1; // @[SRAM.scala 116:25]
-  assign io_r_bits_id = {{3'd0}, rid}; // @[SRAM.scala 149:16]
-  assign io_aw_ready = ~wstate; // @[SRAM.scala 146:26]
-  assign io_w_ready = ~wstate; // @[SRAM.scala 147:26]
-  assign io_b_valid = b; // @[SRAM.scala 155:14]
-  assign pmem_raddr = raddr; // @[SRAM.scala 138:16]
-  assign pmem_waddr = waddr; // @[SRAM.scala 139:16]
-  assign pmem_wdata = io_w_bits_data; // @[SRAM.scala 140:16]
-  assign pmem_wmask = io_b_valid ? io_w_bits_strb : 8'h0; // @[SRAM.scala 141:22]
+  assign io_ar_ready = ~rstate | rlast & rstate; // @[SRAM.scala 113:38]
+  assign io_r_valid = rstate; // @[SRAM.scala 114:26]
+  assign io_r_bits_data = pmem_rdata; // @[SRAM.scala 118:18]
+  assign io_r_bits_last = rcnt == rlen & _rlast_T_1; // @[SRAM.scala 85:25]
+  assign io_r_bits_id = {{3'd0}, rid}; // @[SRAM.scala 119:16]
+  assign io_aw_ready = ~wstate; // @[SRAM.scala 116:26]
+  assign io_w_ready = ~wstate; // @[SRAM.scala 117:26]
+  assign io_b_valid = wstate; // @[SRAM.scala 123:25]
+  assign pmem_clock = clock; // @[SRAM.scala 111:16]
+  assign pmem_raddr = raddr; // @[SRAM.scala 107:16]
+  assign pmem_waddr = _wid_T ? io_aw_bits_addr : waddr; // @[SRAM.scala 108:22]
+  assign pmem_wdata = io_w_bits_data; // @[SRAM.scala 109:16]
+  assign pmem_wmask = _wstate_T ? io_w_bits_strb : 8'h0; // @[SRAM.scala 110:22]
   always @(posedge clock) begin
-    if (reset) begin // @[SRAM.scala 78:23]
-      rstate <= 1'h0; // @[SRAM.scala 78:23]
+    if (reset) begin // @[SRAM.scala 47:23]
+      rstate <= 1'h0; // @[SRAM.scala 47:23]
     end else if (rstate) begin // @[Mux.scala 81:58]
-      if (rlast & ~_rstate_T) begin // @[SRAM.scala 82:25]
+      if (rlast & ~_rstate_T) begin // @[SRAM.scala 51:25]
         rstate <= 1'h0;
       end else begin
         rstate <= 1'h1;
@@ -131,22 +134,22 @@ module AXI4SRAM(
     end else begin
       rstate <= _rstate_T;
     end
-    if (reset) begin // @[SRAM.scala 97:21]
-      rcnt <= 8'h0; // @[SRAM.scala 97:21]
-    end else if (rcnt == 8'hff | rlast | _rstate_T) begin // @[SRAM.scala 110:12]
+    if (reset) begin // @[SRAM.scala 66:21]
+      rcnt <= 8'h0; // @[SRAM.scala 66:21]
+    end else if (rcnt == 8'hff | rlast | _rstate_T) begin // @[SRAM.scala 79:12]
       rcnt <= 8'h0;
-    end else if (_rlast_T_1) begin // @[SRAM.scala 111:12]
+    end else if (_rlast_T_1) begin // @[SRAM.scala 80:12]
       rcnt <= _rcnt_T_7;
     end
-    if (reset) begin // @[SRAM.scala 93:19]
-      rlen <= 8'h0; // @[SRAM.scala 93:19]
-    end else if (_rstate_T) begin // @[SRAM.scala 107:14]
+    if (reset) begin // @[SRAM.scala 62:19]
+      rlen <= 8'h0; // @[SRAM.scala 62:19]
+    end else if (_rstate_T) begin // @[SRAM.scala 76:14]
       rlen <= io_ar_bits_len;
     end
-    if (reset) begin // @[SRAM.scala 84:23]
-      wstate <= 1'h0; // @[SRAM.scala 84:23]
+    if (reset) begin // @[SRAM.scala 53:23]
+      wstate <= 1'h0; // @[SRAM.scala 53:23]
     end else if (wstate) begin // @[Mux.scala 81:58]
-      if (io_b_valid) begin // @[SRAM.scala 87:25]
+      if (io_b_valid) begin // @[SRAM.scala 56:25]
         wstate <= 1'h0;
       end else begin
         wstate <= 1'h1;
@@ -154,25 +157,20 @@ module AXI4SRAM(
     end else begin
       wstate <= _wstate_T_2;
     end
-    rid <= _GEN_5[0]; // @[SRAM.scala 91:{18,18} 100:7]
-    raddr <= _GEN_6[31:0]; // @[SRAM.scala 92:{20,20} 103:9]
-    if (reset) begin // @[SRAM.scala 94:20]
-      rsize <= 3'h0; // @[SRAM.scala 94:20]
-    end else if (_rstate_T) begin // @[SRAM.scala 108:15]
+    rid <= _GEN_6[0]; // @[SRAM.scala 60:{18,18} 69:7]
+    raddr <= _GEN_7[31:0]; // @[SRAM.scala 61:{20,20} 72:9]
+    if (reset) begin // @[SRAM.scala 63:20]
+      rsize <= 3'h0; // @[SRAM.scala 63:20]
+    end else if (_rstate_T) begin // @[SRAM.scala 77:15]
       rsize <= io_ar_bits_size;
     end
-    lower_bound_addr <= _GEN_7[31:0]; // @[SRAM.scala 101:19 96:{31,31}]
-    beatcnt <= _GEN_8[7:0]; // @[SRAM.scala 112:10 98:{24,24}]
-    waddr <= _GEN_10[31:0]; // @[SRAM.scala 123:{22,22} 131:8]
-    if (reset) begin // @[SRAM.scala 126:22]
-      wsize <= 3'h0; // @[SRAM.scala 126:22]
-    end else if (_wstate_T) begin // @[SRAM.scala 130:13]
+    lower_bound_addr <= _GEN_8[31:0]; // @[SRAM.scala 65:{31,31} 70:19]
+    beatcnt <= _GEN_9[7:0]; // @[SRAM.scala 67:{24,24} 81:10]
+    waddr <= _GEN_11[31:0]; // @[SRAM.scala 92:{22,22} 100:8]
+    if (reset) begin // @[SRAM.scala 95:22]
+      wsize <= 3'h0; // @[SRAM.scala 95:22]
+    end else if (_wid_T) begin // @[SRAM.scala 99:13]
       wsize <= 3'h3;
-    end
-    if (reset) begin // @[SRAM.scala 153:16]
-      b <= 1'h0; // @[SRAM.scala 153:16]
-    end else begin
-      b <= io_w_bits_last; // @[SRAM.scala 154:4]
     end
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
@@ -180,8 +178,8 @@ module AXI4SRAM(
     `endif
         if (~reset & ~(raddr < _T_5 & raddr >= lower_bound_addr | raddr == 32'h0)) begin
           $fwrite(32'h80000002,
-            "Assertion failed\n    at SRAM.scala:161 assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))\n"
-            ); // @[SRAM.scala 161:9]
+            "Assertion failed\n    at SRAM.scala:130 assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))\n"
+            ); // @[SRAM.scala 130:9]
         end
     `ifdef PRINTF_COND
       end
@@ -192,7 +190,7 @@ module AXI4SRAM(
       if (`STOP_COND) begin
     `endif
         if (~reset & ~(raddr < _T_5 & raddr >= lower_bound_addr | raddr == 32'h0)) begin
-          $fatal; // @[SRAM.scala 161:9]
+          $fatal; // @[SRAM.scala 130:9]
         end
     `ifdef STOP_COND
       end
@@ -257,8 +255,6 @@ initial begin
   waddr = _RAND_9[31:0];
   _RAND_10 = {1{`RANDOM}};
   wsize = _RAND_10[2:0];
-  _RAND_11 = {1{`RANDOM}};
-  b = _RAND_11[0:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -6357,4313 +6353,4313 @@ module ICache(
   reg [31:0] _RAND_389;
   reg [63:0] _RAND_390;
 `endif // RANDOMIZE_REG_INIT
-  wire  lfsr8_clock; // @[icache.scala 52:21]
-  wire  lfsr8_reset; // @[icache.scala 52:21]
-  wire  lfsr8_io_en; // @[icache.scala 52:21]
-  wire [7:0] lfsr8_io_out; // @[icache.scala 52:21]
-  reg [41:0] cache_tag_0; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_1; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_2; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_3; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_4; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_5; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_6; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_7; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_8; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_9; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_10; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_11; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_12; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_13; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_14; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_15; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_16; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_17; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_18; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_19; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_20; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_21; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_22; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_23; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_24; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_25; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_26; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_27; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_28; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_29; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_30; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_31; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_32; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_33; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_34; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_35; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_36; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_37; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_38; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_39; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_40; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_41; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_42; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_43; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_44; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_45; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_46; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_47; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_48; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_49; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_50; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_51; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_52; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_53; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_54; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_55; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_56; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_57; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_58; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_59; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_60; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_61; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_62; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_63; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_64; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_65; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_66; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_67; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_68; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_69; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_70; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_71; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_72; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_73; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_74; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_75; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_76; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_77; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_78; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_79; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_80; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_81; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_82; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_83; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_84; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_85; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_86; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_87; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_88; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_89; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_90; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_91; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_92; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_93; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_94; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_95; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_96; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_97; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_98; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_99; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_100; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_101; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_102; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_103; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_104; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_105; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_106; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_107; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_108; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_109; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_110; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_111; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_112; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_113; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_114; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_115; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_116; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_117; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_118; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_119; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_120; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_121; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_122; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_123; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_124; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_125; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_126; // @[icache.scala 28:26]
-  reg [41:0] cache_tag_127; // @[icache.scala 28:26]
-  reg  valid_0_0; // @[icache.scala 29:22]
-  reg  valid_0_1; // @[icache.scala 29:22]
-  reg  valid_1_0; // @[icache.scala 29:22]
-  reg  valid_1_1; // @[icache.scala 29:22]
-  reg  valid_2_0; // @[icache.scala 29:22]
-  reg  valid_2_1; // @[icache.scala 29:22]
-  reg  valid_3_0; // @[icache.scala 29:22]
-  reg  valid_3_1; // @[icache.scala 29:22]
-  reg  valid_4_0; // @[icache.scala 29:22]
-  reg  valid_4_1; // @[icache.scala 29:22]
-  reg  valid_5_0; // @[icache.scala 29:22]
-  reg  valid_5_1; // @[icache.scala 29:22]
-  reg  valid_6_0; // @[icache.scala 29:22]
-  reg  valid_6_1; // @[icache.scala 29:22]
-  reg  valid_7_0; // @[icache.scala 29:22]
-  reg  valid_7_1; // @[icache.scala 29:22]
-  reg  valid_8_0; // @[icache.scala 29:22]
-  reg  valid_8_1; // @[icache.scala 29:22]
-  reg  valid_9_0; // @[icache.scala 29:22]
-  reg  valid_9_1; // @[icache.scala 29:22]
-  reg  valid_10_0; // @[icache.scala 29:22]
-  reg  valid_10_1; // @[icache.scala 29:22]
-  reg  valid_11_0; // @[icache.scala 29:22]
-  reg  valid_11_1; // @[icache.scala 29:22]
-  reg  valid_12_0; // @[icache.scala 29:22]
-  reg  valid_12_1; // @[icache.scala 29:22]
-  reg  valid_13_0; // @[icache.scala 29:22]
-  reg  valid_13_1; // @[icache.scala 29:22]
-  reg  valid_14_0; // @[icache.scala 29:22]
-  reg  valid_14_1; // @[icache.scala 29:22]
-  reg  valid_15_0; // @[icache.scala 29:22]
-  reg  valid_15_1; // @[icache.scala 29:22]
-  reg  valid_16_0; // @[icache.scala 29:22]
-  reg  valid_16_1; // @[icache.scala 29:22]
-  reg  valid_17_0; // @[icache.scala 29:22]
-  reg  valid_17_1; // @[icache.scala 29:22]
-  reg  valid_18_0; // @[icache.scala 29:22]
-  reg  valid_18_1; // @[icache.scala 29:22]
-  reg  valid_19_0; // @[icache.scala 29:22]
-  reg  valid_19_1; // @[icache.scala 29:22]
-  reg  valid_20_0; // @[icache.scala 29:22]
-  reg  valid_20_1; // @[icache.scala 29:22]
-  reg  valid_21_0; // @[icache.scala 29:22]
-  reg  valid_21_1; // @[icache.scala 29:22]
-  reg  valid_22_0; // @[icache.scala 29:22]
-  reg  valid_22_1; // @[icache.scala 29:22]
-  reg  valid_23_0; // @[icache.scala 29:22]
-  reg  valid_23_1; // @[icache.scala 29:22]
-  reg  valid_24_0; // @[icache.scala 29:22]
-  reg  valid_24_1; // @[icache.scala 29:22]
-  reg  valid_25_0; // @[icache.scala 29:22]
-  reg  valid_25_1; // @[icache.scala 29:22]
-  reg  valid_26_0; // @[icache.scala 29:22]
-  reg  valid_26_1; // @[icache.scala 29:22]
-  reg  valid_27_0; // @[icache.scala 29:22]
-  reg  valid_27_1; // @[icache.scala 29:22]
-  reg  valid_28_0; // @[icache.scala 29:22]
-  reg  valid_28_1; // @[icache.scala 29:22]
-  reg  valid_29_0; // @[icache.scala 29:22]
-  reg  valid_29_1; // @[icache.scala 29:22]
-  reg  valid_30_0; // @[icache.scala 29:22]
-  reg  valid_30_1; // @[icache.scala 29:22]
-  reg  valid_31_0; // @[icache.scala 29:22]
-  reg  valid_31_1; // @[icache.scala 29:22]
-  reg  valid_32_0; // @[icache.scala 29:22]
-  reg  valid_32_1; // @[icache.scala 29:22]
-  reg  valid_33_0; // @[icache.scala 29:22]
-  reg  valid_33_1; // @[icache.scala 29:22]
-  reg  valid_34_0; // @[icache.scala 29:22]
-  reg  valid_34_1; // @[icache.scala 29:22]
-  reg  valid_35_0; // @[icache.scala 29:22]
-  reg  valid_35_1; // @[icache.scala 29:22]
-  reg  valid_36_0; // @[icache.scala 29:22]
-  reg  valid_36_1; // @[icache.scala 29:22]
-  reg  valid_37_0; // @[icache.scala 29:22]
-  reg  valid_37_1; // @[icache.scala 29:22]
-  reg  valid_38_0; // @[icache.scala 29:22]
-  reg  valid_38_1; // @[icache.scala 29:22]
-  reg  valid_39_0; // @[icache.scala 29:22]
-  reg  valid_39_1; // @[icache.scala 29:22]
-  reg  valid_40_0; // @[icache.scala 29:22]
-  reg  valid_40_1; // @[icache.scala 29:22]
-  reg  valid_41_0; // @[icache.scala 29:22]
-  reg  valid_41_1; // @[icache.scala 29:22]
-  reg  valid_42_0; // @[icache.scala 29:22]
-  reg  valid_42_1; // @[icache.scala 29:22]
-  reg  valid_43_0; // @[icache.scala 29:22]
-  reg  valid_43_1; // @[icache.scala 29:22]
-  reg  valid_44_0; // @[icache.scala 29:22]
-  reg  valid_44_1; // @[icache.scala 29:22]
-  reg  valid_45_0; // @[icache.scala 29:22]
-  reg  valid_45_1; // @[icache.scala 29:22]
-  reg  valid_46_0; // @[icache.scala 29:22]
-  reg  valid_46_1; // @[icache.scala 29:22]
-  reg  valid_47_0; // @[icache.scala 29:22]
-  reg  valid_47_1; // @[icache.scala 29:22]
-  reg  valid_48_0; // @[icache.scala 29:22]
-  reg  valid_48_1; // @[icache.scala 29:22]
-  reg  valid_49_0; // @[icache.scala 29:22]
-  reg  valid_49_1; // @[icache.scala 29:22]
-  reg  valid_50_0; // @[icache.scala 29:22]
-  reg  valid_50_1; // @[icache.scala 29:22]
-  reg  valid_51_0; // @[icache.scala 29:22]
-  reg  valid_51_1; // @[icache.scala 29:22]
-  reg  valid_52_0; // @[icache.scala 29:22]
-  reg  valid_52_1; // @[icache.scala 29:22]
-  reg  valid_53_0; // @[icache.scala 29:22]
-  reg  valid_53_1; // @[icache.scala 29:22]
-  reg  valid_54_0; // @[icache.scala 29:22]
-  reg  valid_54_1; // @[icache.scala 29:22]
-  reg  valid_55_0; // @[icache.scala 29:22]
-  reg  valid_55_1; // @[icache.scala 29:22]
-  reg  valid_56_0; // @[icache.scala 29:22]
-  reg  valid_56_1; // @[icache.scala 29:22]
-  reg  valid_57_0; // @[icache.scala 29:22]
-  reg  valid_57_1; // @[icache.scala 29:22]
-  reg  valid_58_0; // @[icache.scala 29:22]
-  reg  valid_58_1; // @[icache.scala 29:22]
-  reg  valid_59_0; // @[icache.scala 29:22]
-  reg  valid_59_1; // @[icache.scala 29:22]
-  reg  valid_60_0; // @[icache.scala 29:22]
-  reg  valid_60_1; // @[icache.scala 29:22]
-  reg  valid_61_0; // @[icache.scala 29:22]
-  reg  valid_61_1; // @[icache.scala 29:22]
-  reg  valid_62_0; // @[icache.scala 29:22]
-  reg  valid_62_1; // @[icache.scala 29:22]
-  reg  valid_63_0; // @[icache.scala 29:22]
-  reg  valid_63_1; // @[icache.scala 29:22]
-  reg  valid_64_0; // @[icache.scala 29:22]
-  reg  valid_64_1; // @[icache.scala 29:22]
-  reg  valid_65_0; // @[icache.scala 29:22]
-  reg  valid_65_1; // @[icache.scala 29:22]
-  reg  valid_66_0; // @[icache.scala 29:22]
-  reg  valid_66_1; // @[icache.scala 29:22]
-  reg  valid_67_0; // @[icache.scala 29:22]
-  reg  valid_67_1; // @[icache.scala 29:22]
-  reg  valid_68_0; // @[icache.scala 29:22]
-  reg  valid_68_1; // @[icache.scala 29:22]
-  reg  valid_69_0; // @[icache.scala 29:22]
-  reg  valid_69_1; // @[icache.scala 29:22]
-  reg  valid_70_0; // @[icache.scala 29:22]
-  reg  valid_70_1; // @[icache.scala 29:22]
-  reg  valid_71_0; // @[icache.scala 29:22]
-  reg  valid_71_1; // @[icache.scala 29:22]
-  reg  valid_72_0; // @[icache.scala 29:22]
-  reg  valid_72_1; // @[icache.scala 29:22]
-  reg  valid_73_0; // @[icache.scala 29:22]
-  reg  valid_73_1; // @[icache.scala 29:22]
-  reg  valid_74_0; // @[icache.scala 29:22]
-  reg  valid_74_1; // @[icache.scala 29:22]
-  reg  valid_75_0; // @[icache.scala 29:22]
-  reg  valid_75_1; // @[icache.scala 29:22]
-  reg  valid_76_0; // @[icache.scala 29:22]
-  reg  valid_76_1; // @[icache.scala 29:22]
-  reg  valid_77_0; // @[icache.scala 29:22]
-  reg  valid_77_1; // @[icache.scala 29:22]
-  reg  valid_78_0; // @[icache.scala 29:22]
-  reg  valid_78_1; // @[icache.scala 29:22]
-  reg  valid_79_0; // @[icache.scala 29:22]
-  reg  valid_79_1; // @[icache.scala 29:22]
-  reg  valid_80_0; // @[icache.scala 29:22]
-  reg  valid_80_1; // @[icache.scala 29:22]
-  reg  valid_81_0; // @[icache.scala 29:22]
-  reg  valid_81_1; // @[icache.scala 29:22]
-  reg  valid_82_0; // @[icache.scala 29:22]
-  reg  valid_82_1; // @[icache.scala 29:22]
-  reg  valid_83_0; // @[icache.scala 29:22]
-  reg  valid_83_1; // @[icache.scala 29:22]
-  reg  valid_84_0; // @[icache.scala 29:22]
-  reg  valid_84_1; // @[icache.scala 29:22]
-  reg  valid_85_0; // @[icache.scala 29:22]
-  reg  valid_85_1; // @[icache.scala 29:22]
-  reg  valid_86_0; // @[icache.scala 29:22]
-  reg  valid_86_1; // @[icache.scala 29:22]
-  reg  valid_87_0; // @[icache.scala 29:22]
-  reg  valid_87_1; // @[icache.scala 29:22]
-  reg  valid_88_0; // @[icache.scala 29:22]
-  reg  valid_88_1; // @[icache.scala 29:22]
-  reg  valid_89_0; // @[icache.scala 29:22]
-  reg  valid_89_1; // @[icache.scala 29:22]
-  reg  valid_90_0; // @[icache.scala 29:22]
-  reg  valid_90_1; // @[icache.scala 29:22]
-  reg  valid_91_0; // @[icache.scala 29:22]
-  reg  valid_91_1; // @[icache.scala 29:22]
-  reg  valid_92_0; // @[icache.scala 29:22]
-  reg  valid_92_1; // @[icache.scala 29:22]
-  reg  valid_93_0; // @[icache.scala 29:22]
-  reg  valid_93_1; // @[icache.scala 29:22]
-  reg  valid_94_0; // @[icache.scala 29:22]
-  reg  valid_94_1; // @[icache.scala 29:22]
-  reg  valid_95_0; // @[icache.scala 29:22]
-  reg  valid_95_1; // @[icache.scala 29:22]
-  reg  valid_96_0; // @[icache.scala 29:22]
-  reg  valid_96_1; // @[icache.scala 29:22]
-  reg  valid_97_0; // @[icache.scala 29:22]
-  reg  valid_97_1; // @[icache.scala 29:22]
-  reg  valid_98_0; // @[icache.scala 29:22]
-  reg  valid_98_1; // @[icache.scala 29:22]
-  reg  valid_99_0; // @[icache.scala 29:22]
-  reg  valid_99_1; // @[icache.scala 29:22]
-  reg  valid_100_0; // @[icache.scala 29:22]
-  reg  valid_100_1; // @[icache.scala 29:22]
-  reg  valid_101_0; // @[icache.scala 29:22]
-  reg  valid_101_1; // @[icache.scala 29:22]
-  reg  valid_102_0; // @[icache.scala 29:22]
-  reg  valid_102_1; // @[icache.scala 29:22]
-  reg  valid_103_0; // @[icache.scala 29:22]
-  reg  valid_103_1; // @[icache.scala 29:22]
-  reg  valid_104_0; // @[icache.scala 29:22]
-  reg  valid_104_1; // @[icache.scala 29:22]
-  reg  valid_105_0; // @[icache.scala 29:22]
-  reg  valid_105_1; // @[icache.scala 29:22]
-  reg  valid_106_0; // @[icache.scala 29:22]
-  reg  valid_106_1; // @[icache.scala 29:22]
-  reg  valid_107_0; // @[icache.scala 29:22]
-  reg  valid_107_1; // @[icache.scala 29:22]
-  reg  valid_108_0; // @[icache.scala 29:22]
-  reg  valid_108_1; // @[icache.scala 29:22]
-  reg  valid_109_0; // @[icache.scala 29:22]
-  reg  valid_109_1; // @[icache.scala 29:22]
-  reg  valid_110_0; // @[icache.scala 29:22]
-  reg  valid_110_1; // @[icache.scala 29:22]
-  reg  valid_111_0; // @[icache.scala 29:22]
-  reg  valid_111_1; // @[icache.scala 29:22]
-  reg  valid_112_0; // @[icache.scala 29:22]
-  reg  valid_112_1; // @[icache.scala 29:22]
-  reg  valid_113_0; // @[icache.scala 29:22]
-  reg  valid_113_1; // @[icache.scala 29:22]
-  reg  valid_114_0; // @[icache.scala 29:22]
-  reg  valid_114_1; // @[icache.scala 29:22]
-  reg  valid_115_0; // @[icache.scala 29:22]
-  reg  valid_115_1; // @[icache.scala 29:22]
-  reg  valid_116_0; // @[icache.scala 29:22]
-  reg  valid_116_1; // @[icache.scala 29:22]
-  reg  valid_117_0; // @[icache.scala 29:22]
-  reg  valid_117_1; // @[icache.scala 29:22]
-  reg  valid_118_0; // @[icache.scala 29:22]
-  reg  valid_118_1; // @[icache.scala 29:22]
-  reg  valid_119_0; // @[icache.scala 29:22]
-  reg  valid_119_1; // @[icache.scala 29:22]
-  reg  valid_120_0; // @[icache.scala 29:22]
-  reg  valid_120_1; // @[icache.scala 29:22]
-  reg  valid_121_0; // @[icache.scala 29:22]
-  reg  valid_121_1; // @[icache.scala 29:22]
-  reg  valid_122_0; // @[icache.scala 29:22]
-  reg  valid_122_1; // @[icache.scala 29:22]
-  reg  valid_123_0; // @[icache.scala 29:22]
-  reg  valid_123_1; // @[icache.scala 29:22]
-  reg  valid_124_0; // @[icache.scala 29:22]
-  reg  valid_124_1; // @[icache.scala 29:22]
-  reg  valid_125_0; // @[icache.scala 29:22]
-  reg  valid_125_1; // @[icache.scala 29:22]
-  reg  valid_126_0; // @[icache.scala 29:22]
-  reg  valid_126_1; // @[icache.scala 29:22]
-  reg  valid_127_0; // @[icache.scala 29:22]
-  reg  valid_127_1; // @[icache.scala 29:22]
-  reg [1:0] state; // @[icache.scala 34:22]
+  wire  lfsr8_clock; // @[icache.scala 53:21]
+  wire  lfsr8_reset; // @[icache.scala 53:21]
+  wire  lfsr8_io_en; // @[icache.scala 53:21]
+  wire [7:0] lfsr8_io_out; // @[icache.scala 53:21]
+  reg [41:0] cache_tag_0; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_1; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_2; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_3; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_4; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_5; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_6; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_7; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_8; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_9; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_10; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_11; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_12; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_13; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_14; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_15; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_16; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_17; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_18; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_19; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_20; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_21; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_22; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_23; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_24; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_25; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_26; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_27; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_28; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_29; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_30; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_31; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_32; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_33; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_34; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_35; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_36; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_37; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_38; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_39; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_40; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_41; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_42; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_43; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_44; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_45; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_46; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_47; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_48; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_49; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_50; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_51; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_52; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_53; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_54; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_55; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_56; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_57; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_58; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_59; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_60; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_61; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_62; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_63; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_64; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_65; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_66; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_67; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_68; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_69; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_70; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_71; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_72; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_73; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_74; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_75; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_76; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_77; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_78; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_79; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_80; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_81; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_82; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_83; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_84; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_85; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_86; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_87; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_88; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_89; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_90; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_91; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_92; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_93; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_94; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_95; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_96; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_97; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_98; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_99; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_100; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_101; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_102; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_103; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_104; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_105; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_106; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_107; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_108; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_109; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_110; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_111; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_112; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_113; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_114; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_115; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_116; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_117; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_118; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_119; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_120; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_121; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_122; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_123; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_124; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_125; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_126; // @[icache.scala 29:26]
+  reg [41:0] cache_tag_127; // @[icache.scala 29:26]
+  reg  valid_0_0; // @[icache.scala 30:22]
+  reg  valid_0_1; // @[icache.scala 30:22]
+  reg  valid_1_0; // @[icache.scala 30:22]
+  reg  valid_1_1; // @[icache.scala 30:22]
+  reg  valid_2_0; // @[icache.scala 30:22]
+  reg  valid_2_1; // @[icache.scala 30:22]
+  reg  valid_3_0; // @[icache.scala 30:22]
+  reg  valid_3_1; // @[icache.scala 30:22]
+  reg  valid_4_0; // @[icache.scala 30:22]
+  reg  valid_4_1; // @[icache.scala 30:22]
+  reg  valid_5_0; // @[icache.scala 30:22]
+  reg  valid_5_1; // @[icache.scala 30:22]
+  reg  valid_6_0; // @[icache.scala 30:22]
+  reg  valid_6_1; // @[icache.scala 30:22]
+  reg  valid_7_0; // @[icache.scala 30:22]
+  reg  valid_7_1; // @[icache.scala 30:22]
+  reg  valid_8_0; // @[icache.scala 30:22]
+  reg  valid_8_1; // @[icache.scala 30:22]
+  reg  valid_9_0; // @[icache.scala 30:22]
+  reg  valid_9_1; // @[icache.scala 30:22]
+  reg  valid_10_0; // @[icache.scala 30:22]
+  reg  valid_10_1; // @[icache.scala 30:22]
+  reg  valid_11_0; // @[icache.scala 30:22]
+  reg  valid_11_1; // @[icache.scala 30:22]
+  reg  valid_12_0; // @[icache.scala 30:22]
+  reg  valid_12_1; // @[icache.scala 30:22]
+  reg  valid_13_0; // @[icache.scala 30:22]
+  reg  valid_13_1; // @[icache.scala 30:22]
+  reg  valid_14_0; // @[icache.scala 30:22]
+  reg  valid_14_1; // @[icache.scala 30:22]
+  reg  valid_15_0; // @[icache.scala 30:22]
+  reg  valid_15_1; // @[icache.scala 30:22]
+  reg  valid_16_0; // @[icache.scala 30:22]
+  reg  valid_16_1; // @[icache.scala 30:22]
+  reg  valid_17_0; // @[icache.scala 30:22]
+  reg  valid_17_1; // @[icache.scala 30:22]
+  reg  valid_18_0; // @[icache.scala 30:22]
+  reg  valid_18_1; // @[icache.scala 30:22]
+  reg  valid_19_0; // @[icache.scala 30:22]
+  reg  valid_19_1; // @[icache.scala 30:22]
+  reg  valid_20_0; // @[icache.scala 30:22]
+  reg  valid_20_1; // @[icache.scala 30:22]
+  reg  valid_21_0; // @[icache.scala 30:22]
+  reg  valid_21_1; // @[icache.scala 30:22]
+  reg  valid_22_0; // @[icache.scala 30:22]
+  reg  valid_22_1; // @[icache.scala 30:22]
+  reg  valid_23_0; // @[icache.scala 30:22]
+  reg  valid_23_1; // @[icache.scala 30:22]
+  reg  valid_24_0; // @[icache.scala 30:22]
+  reg  valid_24_1; // @[icache.scala 30:22]
+  reg  valid_25_0; // @[icache.scala 30:22]
+  reg  valid_25_1; // @[icache.scala 30:22]
+  reg  valid_26_0; // @[icache.scala 30:22]
+  reg  valid_26_1; // @[icache.scala 30:22]
+  reg  valid_27_0; // @[icache.scala 30:22]
+  reg  valid_27_1; // @[icache.scala 30:22]
+  reg  valid_28_0; // @[icache.scala 30:22]
+  reg  valid_28_1; // @[icache.scala 30:22]
+  reg  valid_29_0; // @[icache.scala 30:22]
+  reg  valid_29_1; // @[icache.scala 30:22]
+  reg  valid_30_0; // @[icache.scala 30:22]
+  reg  valid_30_1; // @[icache.scala 30:22]
+  reg  valid_31_0; // @[icache.scala 30:22]
+  reg  valid_31_1; // @[icache.scala 30:22]
+  reg  valid_32_0; // @[icache.scala 30:22]
+  reg  valid_32_1; // @[icache.scala 30:22]
+  reg  valid_33_0; // @[icache.scala 30:22]
+  reg  valid_33_1; // @[icache.scala 30:22]
+  reg  valid_34_0; // @[icache.scala 30:22]
+  reg  valid_34_1; // @[icache.scala 30:22]
+  reg  valid_35_0; // @[icache.scala 30:22]
+  reg  valid_35_1; // @[icache.scala 30:22]
+  reg  valid_36_0; // @[icache.scala 30:22]
+  reg  valid_36_1; // @[icache.scala 30:22]
+  reg  valid_37_0; // @[icache.scala 30:22]
+  reg  valid_37_1; // @[icache.scala 30:22]
+  reg  valid_38_0; // @[icache.scala 30:22]
+  reg  valid_38_1; // @[icache.scala 30:22]
+  reg  valid_39_0; // @[icache.scala 30:22]
+  reg  valid_39_1; // @[icache.scala 30:22]
+  reg  valid_40_0; // @[icache.scala 30:22]
+  reg  valid_40_1; // @[icache.scala 30:22]
+  reg  valid_41_0; // @[icache.scala 30:22]
+  reg  valid_41_1; // @[icache.scala 30:22]
+  reg  valid_42_0; // @[icache.scala 30:22]
+  reg  valid_42_1; // @[icache.scala 30:22]
+  reg  valid_43_0; // @[icache.scala 30:22]
+  reg  valid_43_1; // @[icache.scala 30:22]
+  reg  valid_44_0; // @[icache.scala 30:22]
+  reg  valid_44_1; // @[icache.scala 30:22]
+  reg  valid_45_0; // @[icache.scala 30:22]
+  reg  valid_45_1; // @[icache.scala 30:22]
+  reg  valid_46_0; // @[icache.scala 30:22]
+  reg  valid_46_1; // @[icache.scala 30:22]
+  reg  valid_47_0; // @[icache.scala 30:22]
+  reg  valid_47_1; // @[icache.scala 30:22]
+  reg  valid_48_0; // @[icache.scala 30:22]
+  reg  valid_48_1; // @[icache.scala 30:22]
+  reg  valid_49_0; // @[icache.scala 30:22]
+  reg  valid_49_1; // @[icache.scala 30:22]
+  reg  valid_50_0; // @[icache.scala 30:22]
+  reg  valid_50_1; // @[icache.scala 30:22]
+  reg  valid_51_0; // @[icache.scala 30:22]
+  reg  valid_51_1; // @[icache.scala 30:22]
+  reg  valid_52_0; // @[icache.scala 30:22]
+  reg  valid_52_1; // @[icache.scala 30:22]
+  reg  valid_53_0; // @[icache.scala 30:22]
+  reg  valid_53_1; // @[icache.scala 30:22]
+  reg  valid_54_0; // @[icache.scala 30:22]
+  reg  valid_54_1; // @[icache.scala 30:22]
+  reg  valid_55_0; // @[icache.scala 30:22]
+  reg  valid_55_1; // @[icache.scala 30:22]
+  reg  valid_56_0; // @[icache.scala 30:22]
+  reg  valid_56_1; // @[icache.scala 30:22]
+  reg  valid_57_0; // @[icache.scala 30:22]
+  reg  valid_57_1; // @[icache.scala 30:22]
+  reg  valid_58_0; // @[icache.scala 30:22]
+  reg  valid_58_1; // @[icache.scala 30:22]
+  reg  valid_59_0; // @[icache.scala 30:22]
+  reg  valid_59_1; // @[icache.scala 30:22]
+  reg  valid_60_0; // @[icache.scala 30:22]
+  reg  valid_60_1; // @[icache.scala 30:22]
+  reg  valid_61_0; // @[icache.scala 30:22]
+  reg  valid_61_1; // @[icache.scala 30:22]
+  reg  valid_62_0; // @[icache.scala 30:22]
+  reg  valid_62_1; // @[icache.scala 30:22]
+  reg  valid_63_0; // @[icache.scala 30:22]
+  reg  valid_63_1; // @[icache.scala 30:22]
+  reg  valid_64_0; // @[icache.scala 30:22]
+  reg  valid_64_1; // @[icache.scala 30:22]
+  reg  valid_65_0; // @[icache.scala 30:22]
+  reg  valid_65_1; // @[icache.scala 30:22]
+  reg  valid_66_0; // @[icache.scala 30:22]
+  reg  valid_66_1; // @[icache.scala 30:22]
+  reg  valid_67_0; // @[icache.scala 30:22]
+  reg  valid_67_1; // @[icache.scala 30:22]
+  reg  valid_68_0; // @[icache.scala 30:22]
+  reg  valid_68_1; // @[icache.scala 30:22]
+  reg  valid_69_0; // @[icache.scala 30:22]
+  reg  valid_69_1; // @[icache.scala 30:22]
+  reg  valid_70_0; // @[icache.scala 30:22]
+  reg  valid_70_1; // @[icache.scala 30:22]
+  reg  valid_71_0; // @[icache.scala 30:22]
+  reg  valid_71_1; // @[icache.scala 30:22]
+  reg  valid_72_0; // @[icache.scala 30:22]
+  reg  valid_72_1; // @[icache.scala 30:22]
+  reg  valid_73_0; // @[icache.scala 30:22]
+  reg  valid_73_1; // @[icache.scala 30:22]
+  reg  valid_74_0; // @[icache.scala 30:22]
+  reg  valid_74_1; // @[icache.scala 30:22]
+  reg  valid_75_0; // @[icache.scala 30:22]
+  reg  valid_75_1; // @[icache.scala 30:22]
+  reg  valid_76_0; // @[icache.scala 30:22]
+  reg  valid_76_1; // @[icache.scala 30:22]
+  reg  valid_77_0; // @[icache.scala 30:22]
+  reg  valid_77_1; // @[icache.scala 30:22]
+  reg  valid_78_0; // @[icache.scala 30:22]
+  reg  valid_78_1; // @[icache.scala 30:22]
+  reg  valid_79_0; // @[icache.scala 30:22]
+  reg  valid_79_1; // @[icache.scala 30:22]
+  reg  valid_80_0; // @[icache.scala 30:22]
+  reg  valid_80_1; // @[icache.scala 30:22]
+  reg  valid_81_0; // @[icache.scala 30:22]
+  reg  valid_81_1; // @[icache.scala 30:22]
+  reg  valid_82_0; // @[icache.scala 30:22]
+  reg  valid_82_1; // @[icache.scala 30:22]
+  reg  valid_83_0; // @[icache.scala 30:22]
+  reg  valid_83_1; // @[icache.scala 30:22]
+  reg  valid_84_0; // @[icache.scala 30:22]
+  reg  valid_84_1; // @[icache.scala 30:22]
+  reg  valid_85_0; // @[icache.scala 30:22]
+  reg  valid_85_1; // @[icache.scala 30:22]
+  reg  valid_86_0; // @[icache.scala 30:22]
+  reg  valid_86_1; // @[icache.scala 30:22]
+  reg  valid_87_0; // @[icache.scala 30:22]
+  reg  valid_87_1; // @[icache.scala 30:22]
+  reg  valid_88_0; // @[icache.scala 30:22]
+  reg  valid_88_1; // @[icache.scala 30:22]
+  reg  valid_89_0; // @[icache.scala 30:22]
+  reg  valid_89_1; // @[icache.scala 30:22]
+  reg  valid_90_0; // @[icache.scala 30:22]
+  reg  valid_90_1; // @[icache.scala 30:22]
+  reg  valid_91_0; // @[icache.scala 30:22]
+  reg  valid_91_1; // @[icache.scala 30:22]
+  reg  valid_92_0; // @[icache.scala 30:22]
+  reg  valid_92_1; // @[icache.scala 30:22]
+  reg  valid_93_0; // @[icache.scala 30:22]
+  reg  valid_93_1; // @[icache.scala 30:22]
+  reg  valid_94_0; // @[icache.scala 30:22]
+  reg  valid_94_1; // @[icache.scala 30:22]
+  reg  valid_95_0; // @[icache.scala 30:22]
+  reg  valid_95_1; // @[icache.scala 30:22]
+  reg  valid_96_0; // @[icache.scala 30:22]
+  reg  valid_96_1; // @[icache.scala 30:22]
+  reg  valid_97_0; // @[icache.scala 30:22]
+  reg  valid_97_1; // @[icache.scala 30:22]
+  reg  valid_98_0; // @[icache.scala 30:22]
+  reg  valid_98_1; // @[icache.scala 30:22]
+  reg  valid_99_0; // @[icache.scala 30:22]
+  reg  valid_99_1; // @[icache.scala 30:22]
+  reg  valid_100_0; // @[icache.scala 30:22]
+  reg  valid_100_1; // @[icache.scala 30:22]
+  reg  valid_101_0; // @[icache.scala 30:22]
+  reg  valid_101_1; // @[icache.scala 30:22]
+  reg  valid_102_0; // @[icache.scala 30:22]
+  reg  valid_102_1; // @[icache.scala 30:22]
+  reg  valid_103_0; // @[icache.scala 30:22]
+  reg  valid_103_1; // @[icache.scala 30:22]
+  reg  valid_104_0; // @[icache.scala 30:22]
+  reg  valid_104_1; // @[icache.scala 30:22]
+  reg  valid_105_0; // @[icache.scala 30:22]
+  reg  valid_105_1; // @[icache.scala 30:22]
+  reg  valid_106_0; // @[icache.scala 30:22]
+  reg  valid_106_1; // @[icache.scala 30:22]
+  reg  valid_107_0; // @[icache.scala 30:22]
+  reg  valid_107_1; // @[icache.scala 30:22]
+  reg  valid_108_0; // @[icache.scala 30:22]
+  reg  valid_108_1; // @[icache.scala 30:22]
+  reg  valid_109_0; // @[icache.scala 30:22]
+  reg  valid_109_1; // @[icache.scala 30:22]
+  reg  valid_110_0; // @[icache.scala 30:22]
+  reg  valid_110_1; // @[icache.scala 30:22]
+  reg  valid_111_0; // @[icache.scala 30:22]
+  reg  valid_111_1; // @[icache.scala 30:22]
+  reg  valid_112_0; // @[icache.scala 30:22]
+  reg  valid_112_1; // @[icache.scala 30:22]
+  reg  valid_113_0; // @[icache.scala 30:22]
+  reg  valid_113_1; // @[icache.scala 30:22]
+  reg  valid_114_0; // @[icache.scala 30:22]
+  reg  valid_114_1; // @[icache.scala 30:22]
+  reg  valid_115_0; // @[icache.scala 30:22]
+  reg  valid_115_1; // @[icache.scala 30:22]
+  reg  valid_116_0; // @[icache.scala 30:22]
+  reg  valid_116_1; // @[icache.scala 30:22]
+  reg  valid_117_0; // @[icache.scala 30:22]
+  reg  valid_117_1; // @[icache.scala 30:22]
+  reg  valid_118_0; // @[icache.scala 30:22]
+  reg  valid_118_1; // @[icache.scala 30:22]
+  reg  valid_119_0; // @[icache.scala 30:22]
+  reg  valid_119_1; // @[icache.scala 30:22]
+  reg  valid_120_0; // @[icache.scala 30:22]
+  reg  valid_120_1; // @[icache.scala 30:22]
+  reg  valid_121_0; // @[icache.scala 30:22]
+  reg  valid_121_1; // @[icache.scala 30:22]
+  reg  valid_122_0; // @[icache.scala 30:22]
+  reg  valid_122_1; // @[icache.scala 30:22]
+  reg  valid_123_0; // @[icache.scala 30:22]
+  reg  valid_123_1; // @[icache.scala 30:22]
+  reg  valid_124_0; // @[icache.scala 30:22]
+  reg  valid_124_1; // @[icache.scala 30:22]
+  reg  valid_125_0; // @[icache.scala 30:22]
+  reg  valid_125_1; // @[icache.scala 30:22]
+  reg  valid_126_0; // @[icache.scala 30:22]
+  reg  valid_126_1; // @[icache.scala 30:22]
+  reg  valid_127_0; // @[icache.scala 30:22]
+  reg  valid_127_1; // @[icache.scala 30:22]
+  reg [1:0] state; // @[icache.scala 35:22]
   wire  req = io_in_ar_ready & io_in_ar_valid; // @[Decoupled.scala 52:35]
-  reg [31:0] addr; // @[icache.scala 37:21]
-  reg  uncache; // @[icache.scala 38:24]
-  wire [20:0] tag = addr[31:11]; // @[icache.scala 39:17]
-  wire [6:0] offset = {addr[3:0], 3'h0}; // @[icache.scala 40:42]
-  wire [6:0] idx = addr[10:4]; // @[icache.scala 41:17]
-  wire [41:0] _GEN_1 = 7'h1 == idx ? cache_tag_1 : cache_tag_0; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_2 = 7'h2 == idx ? cache_tag_2 : _GEN_1; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_3 = 7'h3 == idx ? cache_tag_3 : _GEN_2; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_4 = 7'h4 == idx ? cache_tag_4 : _GEN_3; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_5 = 7'h5 == idx ? cache_tag_5 : _GEN_4; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_6 = 7'h6 == idx ? cache_tag_6 : _GEN_5; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_7 = 7'h7 == idx ? cache_tag_7 : _GEN_6; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_8 = 7'h8 == idx ? cache_tag_8 : _GEN_7; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_9 = 7'h9 == idx ? cache_tag_9 : _GEN_8; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_10 = 7'ha == idx ? cache_tag_10 : _GEN_9; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_11 = 7'hb == idx ? cache_tag_11 : _GEN_10; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_12 = 7'hc == idx ? cache_tag_12 : _GEN_11; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_13 = 7'hd == idx ? cache_tag_13 : _GEN_12; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_14 = 7'he == idx ? cache_tag_14 : _GEN_13; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_15 = 7'hf == idx ? cache_tag_15 : _GEN_14; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_16 = 7'h10 == idx ? cache_tag_16 : _GEN_15; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_17 = 7'h11 == idx ? cache_tag_17 : _GEN_16; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_18 = 7'h12 == idx ? cache_tag_18 : _GEN_17; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_19 = 7'h13 == idx ? cache_tag_19 : _GEN_18; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_20 = 7'h14 == idx ? cache_tag_20 : _GEN_19; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_21 = 7'h15 == idx ? cache_tag_21 : _GEN_20; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_22 = 7'h16 == idx ? cache_tag_22 : _GEN_21; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_23 = 7'h17 == idx ? cache_tag_23 : _GEN_22; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_24 = 7'h18 == idx ? cache_tag_24 : _GEN_23; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_25 = 7'h19 == idx ? cache_tag_25 : _GEN_24; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_26 = 7'h1a == idx ? cache_tag_26 : _GEN_25; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_27 = 7'h1b == idx ? cache_tag_27 : _GEN_26; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_28 = 7'h1c == idx ? cache_tag_28 : _GEN_27; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_29 = 7'h1d == idx ? cache_tag_29 : _GEN_28; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_30 = 7'h1e == idx ? cache_tag_30 : _GEN_29; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_31 = 7'h1f == idx ? cache_tag_31 : _GEN_30; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_32 = 7'h20 == idx ? cache_tag_32 : _GEN_31; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_33 = 7'h21 == idx ? cache_tag_33 : _GEN_32; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_34 = 7'h22 == idx ? cache_tag_34 : _GEN_33; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_35 = 7'h23 == idx ? cache_tag_35 : _GEN_34; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_36 = 7'h24 == idx ? cache_tag_36 : _GEN_35; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_37 = 7'h25 == idx ? cache_tag_37 : _GEN_36; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_38 = 7'h26 == idx ? cache_tag_38 : _GEN_37; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_39 = 7'h27 == idx ? cache_tag_39 : _GEN_38; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_40 = 7'h28 == idx ? cache_tag_40 : _GEN_39; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_41 = 7'h29 == idx ? cache_tag_41 : _GEN_40; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_42 = 7'h2a == idx ? cache_tag_42 : _GEN_41; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_43 = 7'h2b == idx ? cache_tag_43 : _GEN_42; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_44 = 7'h2c == idx ? cache_tag_44 : _GEN_43; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_45 = 7'h2d == idx ? cache_tag_45 : _GEN_44; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_46 = 7'h2e == idx ? cache_tag_46 : _GEN_45; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_47 = 7'h2f == idx ? cache_tag_47 : _GEN_46; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_48 = 7'h30 == idx ? cache_tag_48 : _GEN_47; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_49 = 7'h31 == idx ? cache_tag_49 : _GEN_48; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_50 = 7'h32 == idx ? cache_tag_50 : _GEN_49; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_51 = 7'h33 == idx ? cache_tag_51 : _GEN_50; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_52 = 7'h34 == idx ? cache_tag_52 : _GEN_51; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_53 = 7'h35 == idx ? cache_tag_53 : _GEN_52; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_54 = 7'h36 == idx ? cache_tag_54 : _GEN_53; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_55 = 7'h37 == idx ? cache_tag_55 : _GEN_54; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_56 = 7'h38 == idx ? cache_tag_56 : _GEN_55; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_57 = 7'h39 == idx ? cache_tag_57 : _GEN_56; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_58 = 7'h3a == idx ? cache_tag_58 : _GEN_57; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_59 = 7'h3b == idx ? cache_tag_59 : _GEN_58; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_60 = 7'h3c == idx ? cache_tag_60 : _GEN_59; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_61 = 7'h3d == idx ? cache_tag_61 : _GEN_60; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_62 = 7'h3e == idx ? cache_tag_62 : _GEN_61; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_63 = 7'h3f == idx ? cache_tag_63 : _GEN_62; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_64 = 7'h40 == idx ? cache_tag_64 : _GEN_63; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_65 = 7'h41 == idx ? cache_tag_65 : _GEN_64; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_66 = 7'h42 == idx ? cache_tag_66 : _GEN_65; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_67 = 7'h43 == idx ? cache_tag_67 : _GEN_66; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_68 = 7'h44 == idx ? cache_tag_68 : _GEN_67; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_69 = 7'h45 == idx ? cache_tag_69 : _GEN_68; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_70 = 7'h46 == idx ? cache_tag_70 : _GEN_69; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_71 = 7'h47 == idx ? cache_tag_71 : _GEN_70; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_72 = 7'h48 == idx ? cache_tag_72 : _GEN_71; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_73 = 7'h49 == idx ? cache_tag_73 : _GEN_72; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_74 = 7'h4a == idx ? cache_tag_74 : _GEN_73; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_75 = 7'h4b == idx ? cache_tag_75 : _GEN_74; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_76 = 7'h4c == idx ? cache_tag_76 : _GEN_75; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_77 = 7'h4d == idx ? cache_tag_77 : _GEN_76; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_78 = 7'h4e == idx ? cache_tag_78 : _GEN_77; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_79 = 7'h4f == idx ? cache_tag_79 : _GEN_78; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_80 = 7'h50 == idx ? cache_tag_80 : _GEN_79; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_81 = 7'h51 == idx ? cache_tag_81 : _GEN_80; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_82 = 7'h52 == idx ? cache_tag_82 : _GEN_81; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_83 = 7'h53 == idx ? cache_tag_83 : _GEN_82; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_84 = 7'h54 == idx ? cache_tag_84 : _GEN_83; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_85 = 7'h55 == idx ? cache_tag_85 : _GEN_84; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_86 = 7'h56 == idx ? cache_tag_86 : _GEN_85; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_87 = 7'h57 == idx ? cache_tag_87 : _GEN_86; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_88 = 7'h58 == idx ? cache_tag_88 : _GEN_87; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_89 = 7'h59 == idx ? cache_tag_89 : _GEN_88; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_90 = 7'h5a == idx ? cache_tag_90 : _GEN_89; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_91 = 7'h5b == idx ? cache_tag_91 : _GEN_90; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_92 = 7'h5c == idx ? cache_tag_92 : _GEN_91; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_93 = 7'h5d == idx ? cache_tag_93 : _GEN_92; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_94 = 7'h5e == idx ? cache_tag_94 : _GEN_93; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_95 = 7'h5f == idx ? cache_tag_95 : _GEN_94; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_96 = 7'h60 == idx ? cache_tag_96 : _GEN_95; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_97 = 7'h61 == idx ? cache_tag_97 : _GEN_96; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_98 = 7'h62 == idx ? cache_tag_98 : _GEN_97; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_99 = 7'h63 == idx ? cache_tag_99 : _GEN_98; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_100 = 7'h64 == idx ? cache_tag_100 : _GEN_99; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_101 = 7'h65 == idx ? cache_tag_101 : _GEN_100; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_102 = 7'h66 == idx ? cache_tag_102 : _GEN_101; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_103 = 7'h67 == idx ? cache_tag_103 : _GEN_102; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_104 = 7'h68 == idx ? cache_tag_104 : _GEN_103; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_105 = 7'h69 == idx ? cache_tag_105 : _GEN_104; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_106 = 7'h6a == idx ? cache_tag_106 : _GEN_105; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_107 = 7'h6b == idx ? cache_tag_107 : _GEN_106; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_108 = 7'h6c == idx ? cache_tag_108 : _GEN_107; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_109 = 7'h6d == idx ? cache_tag_109 : _GEN_108; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_110 = 7'h6e == idx ? cache_tag_110 : _GEN_109; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_111 = 7'h6f == idx ? cache_tag_111 : _GEN_110; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_112 = 7'h70 == idx ? cache_tag_112 : _GEN_111; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_113 = 7'h71 == idx ? cache_tag_113 : _GEN_112; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_114 = 7'h72 == idx ? cache_tag_114 : _GEN_113; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_115 = 7'h73 == idx ? cache_tag_115 : _GEN_114; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_116 = 7'h74 == idx ? cache_tag_116 : _GEN_115; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_117 = 7'h75 == idx ? cache_tag_117 : _GEN_116; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_118 = 7'h76 == idx ? cache_tag_118 : _GEN_117; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_119 = 7'h77 == idx ? cache_tag_119 : _GEN_118; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_120 = 7'h78 == idx ? cache_tag_120 : _GEN_119; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_121 = 7'h79 == idx ? cache_tag_121 : _GEN_120; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_122 = 7'h7a == idx ? cache_tag_122 : _GEN_121; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_123 = 7'h7b == idx ? cache_tag_123 : _GEN_122; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_124 = 7'h7c == idx ? cache_tag_124 : _GEN_123; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_125 = 7'h7d == idx ? cache_tag_125 : _GEN_124; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_126 = 7'h7e == idx ? cache_tag_126 : _GEN_125; // @[icache.scala 48:{33,33}]
-  wire [41:0] _GEN_127 = 7'h7f == idx ? cache_tag_127 : _GEN_126; // @[icache.scala 48:{33,33}]
-  wire  _GEN_129 = 7'h1 == idx ? valid_1_0 : valid_0_0; // @[icache.scala 48:{70,70}]
-  wire  _GEN_130 = 7'h2 == idx ? valid_2_0 : _GEN_129; // @[icache.scala 48:{70,70}]
-  wire  _GEN_131 = 7'h3 == idx ? valid_3_0 : _GEN_130; // @[icache.scala 48:{70,70}]
-  wire  _GEN_132 = 7'h4 == idx ? valid_4_0 : _GEN_131; // @[icache.scala 48:{70,70}]
-  wire  _GEN_133 = 7'h5 == idx ? valid_5_0 : _GEN_132; // @[icache.scala 48:{70,70}]
-  wire  _GEN_134 = 7'h6 == idx ? valid_6_0 : _GEN_133; // @[icache.scala 48:{70,70}]
-  wire  _GEN_135 = 7'h7 == idx ? valid_7_0 : _GEN_134; // @[icache.scala 48:{70,70}]
-  wire  _GEN_136 = 7'h8 == idx ? valid_8_0 : _GEN_135; // @[icache.scala 48:{70,70}]
-  wire  _GEN_137 = 7'h9 == idx ? valid_9_0 : _GEN_136; // @[icache.scala 48:{70,70}]
-  wire  _GEN_138 = 7'ha == idx ? valid_10_0 : _GEN_137; // @[icache.scala 48:{70,70}]
-  wire  _GEN_139 = 7'hb == idx ? valid_11_0 : _GEN_138; // @[icache.scala 48:{70,70}]
-  wire  _GEN_140 = 7'hc == idx ? valid_12_0 : _GEN_139; // @[icache.scala 48:{70,70}]
-  wire  _GEN_141 = 7'hd == idx ? valid_13_0 : _GEN_140; // @[icache.scala 48:{70,70}]
-  wire  _GEN_142 = 7'he == idx ? valid_14_0 : _GEN_141; // @[icache.scala 48:{70,70}]
-  wire  _GEN_143 = 7'hf == idx ? valid_15_0 : _GEN_142; // @[icache.scala 48:{70,70}]
-  wire  _GEN_144 = 7'h10 == idx ? valid_16_0 : _GEN_143; // @[icache.scala 48:{70,70}]
-  wire  _GEN_145 = 7'h11 == idx ? valid_17_0 : _GEN_144; // @[icache.scala 48:{70,70}]
-  wire  _GEN_146 = 7'h12 == idx ? valid_18_0 : _GEN_145; // @[icache.scala 48:{70,70}]
-  wire  _GEN_147 = 7'h13 == idx ? valid_19_0 : _GEN_146; // @[icache.scala 48:{70,70}]
-  wire  _GEN_148 = 7'h14 == idx ? valid_20_0 : _GEN_147; // @[icache.scala 48:{70,70}]
-  wire  _GEN_149 = 7'h15 == idx ? valid_21_0 : _GEN_148; // @[icache.scala 48:{70,70}]
-  wire  _GEN_150 = 7'h16 == idx ? valid_22_0 : _GEN_149; // @[icache.scala 48:{70,70}]
-  wire  _GEN_151 = 7'h17 == idx ? valid_23_0 : _GEN_150; // @[icache.scala 48:{70,70}]
-  wire  _GEN_152 = 7'h18 == idx ? valid_24_0 : _GEN_151; // @[icache.scala 48:{70,70}]
-  wire  _GEN_153 = 7'h19 == idx ? valid_25_0 : _GEN_152; // @[icache.scala 48:{70,70}]
-  wire  _GEN_154 = 7'h1a == idx ? valid_26_0 : _GEN_153; // @[icache.scala 48:{70,70}]
-  wire  _GEN_155 = 7'h1b == idx ? valid_27_0 : _GEN_154; // @[icache.scala 48:{70,70}]
-  wire  _GEN_156 = 7'h1c == idx ? valid_28_0 : _GEN_155; // @[icache.scala 48:{70,70}]
-  wire  _GEN_157 = 7'h1d == idx ? valid_29_0 : _GEN_156; // @[icache.scala 48:{70,70}]
-  wire  _GEN_158 = 7'h1e == idx ? valid_30_0 : _GEN_157; // @[icache.scala 48:{70,70}]
-  wire  _GEN_159 = 7'h1f == idx ? valid_31_0 : _GEN_158; // @[icache.scala 48:{70,70}]
-  wire  _GEN_160 = 7'h20 == idx ? valid_32_0 : _GEN_159; // @[icache.scala 48:{70,70}]
-  wire  _GEN_161 = 7'h21 == idx ? valid_33_0 : _GEN_160; // @[icache.scala 48:{70,70}]
-  wire  _GEN_162 = 7'h22 == idx ? valid_34_0 : _GEN_161; // @[icache.scala 48:{70,70}]
-  wire  _GEN_163 = 7'h23 == idx ? valid_35_0 : _GEN_162; // @[icache.scala 48:{70,70}]
-  wire  _GEN_164 = 7'h24 == idx ? valid_36_0 : _GEN_163; // @[icache.scala 48:{70,70}]
-  wire  _GEN_165 = 7'h25 == idx ? valid_37_0 : _GEN_164; // @[icache.scala 48:{70,70}]
-  wire  _GEN_166 = 7'h26 == idx ? valid_38_0 : _GEN_165; // @[icache.scala 48:{70,70}]
-  wire  _GEN_167 = 7'h27 == idx ? valid_39_0 : _GEN_166; // @[icache.scala 48:{70,70}]
-  wire  _GEN_168 = 7'h28 == idx ? valid_40_0 : _GEN_167; // @[icache.scala 48:{70,70}]
-  wire  _GEN_169 = 7'h29 == idx ? valid_41_0 : _GEN_168; // @[icache.scala 48:{70,70}]
-  wire  _GEN_170 = 7'h2a == idx ? valid_42_0 : _GEN_169; // @[icache.scala 48:{70,70}]
-  wire  _GEN_171 = 7'h2b == idx ? valid_43_0 : _GEN_170; // @[icache.scala 48:{70,70}]
-  wire  _GEN_172 = 7'h2c == idx ? valid_44_0 : _GEN_171; // @[icache.scala 48:{70,70}]
-  wire  _GEN_173 = 7'h2d == idx ? valid_45_0 : _GEN_172; // @[icache.scala 48:{70,70}]
-  wire  _GEN_174 = 7'h2e == idx ? valid_46_0 : _GEN_173; // @[icache.scala 48:{70,70}]
-  wire  _GEN_175 = 7'h2f == idx ? valid_47_0 : _GEN_174; // @[icache.scala 48:{70,70}]
-  wire  _GEN_176 = 7'h30 == idx ? valid_48_0 : _GEN_175; // @[icache.scala 48:{70,70}]
-  wire  _GEN_177 = 7'h31 == idx ? valid_49_0 : _GEN_176; // @[icache.scala 48:{70,70}]
-  wire  _GEN_178 = 7'h32 == idx ? valid_50_0 : _GEN_177; // @[icache.scala 48:{70,70}]
-  wire  _GEN_179 = 7'h33 == idx ? valid_51_0 : _GEN_178; // @[icache.scala 48:{70,70}]
-  wire  _GEN_180 = 7'h34 == idx ? valid_52_0 : _GEN_179; // @[icache.scala 48:{70,70}]
-  wire  _GEN_181 = 7'h35 == idx ? valid_53_0 : _GEN_180; // @[icache.scala 48:{70,70}]
-  wire  _GEN_182 = 7'h36 == idx ? valid_54_0 : _GEN_181; // @[icache.scala 48:{70,70}]
-  wire  _GEN_183 = 7'h37 == idx ? valid_55_0 : _GEN_182; // @[icache.scala 48:{70,70}]
-  wire  _GEN_184 = 7'h38 == idx ? valid_56_0 : _GEN_183; // @[icache.scala 48:{70,70}]
-  wire  _GEN_185 = 7'h39 == idx ? valid_57_0 : _GEN_184; // @[icache.scala 48:{70,70}]
-  wire  _GEN_186 = 7'h3a == idx ? valid_58_0 : _GEN_185; // @[icache.scala 48:{70,70}]
-  wire  _GEN_187 = 7'h3b == idx ? valid_59_0 : _GEN_186; // @[icache.scala 48:{70,70}]
-  wire  _GEN_188 = 7'h3c == idx ? valid_60_0 : _GEN_187; // @[icache.scala 48:{70,70}]
-  wire  _GEN_189 = 7'h3d == idx ? valid_61_0 : _GEN_188; // @[icache.scala 48:{70,70}]
-  wire  _GEN_190 = 7'h3e == idx ? valid_62_0 : _GEN_189; // @[icache.scala 48:{70,70}]
-  wire  _GEN_191 = 7'h3f == idx ? valid_63_0 : _GEN_190; // @[icache.scala 48:{70,70}]
-  wire  _GEN_192 = 7'h40 == idx ? valid_64_0 : _GEN_191; // @[icache.scala 48:{70,70}]
-  wire  _GEN_193 = 7'h41 == idx ? valid_65_0 : _GEN_192; // @[icache.scala 48:{70,70}]
-  wire  _GEN_194 = 7'h42 == idx ? valid_66_0 : _GEN_193; // @[icache.scala 48:{70,70}]
-  wire  _GEN_195 = 7'h43 == idx ? valid_67_0 : _GEN_194; // @[icache.scala 48:{70,70}]
-  wire  _GEN_196 = 7'h44 == idx ? valid_68_0 : _GEN_195; // @[icache.scala 48:{70,70}]
-  wire  _GEN_197 = 7'h45 == idx ? valid_69_0 : _GEN_196; // @[icache.scala 48:{70,70}]
-  wire  _GEN_198 = 7'h46 == idx ? valid_70_0 : _GEN_197; // @[icache.scala 48:{70,70}]
-  wire  _GEN_199 = 7'h47 == idx ? valid_71_0 : _GEN_198; // @[icache.scala 48:{70,70}]
-  wire  _GEN_200 = 7'h48 == idx ? valid_72_0 : _GEN_199; // @[icache.scala 48:{70,70}]
-  wire  _GEN_201 = 7'h49 == idx ? valid_73_0 : _GEN_200; // @[icache.scala 48:{70,70}]
-  wire  _GEN_202 = 7'h4a == idx ? valid_74_0 : _GEN_201; // @[icache.scala 48:{70,70}]
-  wire  _GEN_203 = 7'h4b == idx ? valid_75_0 : _GEN_202; // @[icache.scala 48:{70,70}]
-  wire  _GEN_204 = 7'h4c == idx ? valid_76_0 : _GEN_203; // @[icache.scala 48:{70,70}]
-  wire  _GEN_205 = 7'h4d == idx ? valid_77_0 : _GEN_204; // @[icache.scala 48:{70,70}]
-  wire  _GEN_206 = 7'h4e == idx ? valid_78_0 : _GEN_205; // @[icache.scala 48:{70,70}]
-  wire  _GEN_207 = 7'h4f == idx ? valid_79_0 : _GEN_206; // @[icache.scala 48:{70,70}]
-  wire  _GEN_208 = 7'h50 == idx ? valid_80_0 : _GEN_207; // @[icache.scala 48:{70,70}]
-  wire  _GEN_209 = 7'h51 == idx ? valid_81_0 : _GEN_208; // @[icache.scala 48:{70,70}]
-  wire  _GEN_210 = 7'h52 == idx ? valid_82_0 : _GEN_209; // @[icache.scala 48:{70,70}]
-  wire  _GEN_211 = 7'h53 == idx ? valid_83_0 : _GEN_210; // @[icache.scala 48:{70,70}]
-  wire  _GEN_212 = 7'h54 == idx ? valid_84_0 : _GEN_211; // @[icache.scala 48:{70,70}]
-  wire  _GEN_213 = 7'h55 == idx ? valid_85_0 : _GEN_212; // @[icache.scala 48:{70,70}]
-  wire  _GEN_214 = 7'h56 == idx ? valid_86_0 : _GEN_213; // @[icache.scala 48:{70,70}]
-  wire  _GEN_215 = 7'h57 == idx ? valid_87_0 : _GEN_214; // @[icache.scala 48:{70,70}]
-  wire  _GEN_216 = 7'h58 == idx ? valid_88_0 : _GEN_215; // @[icache.scala 48:{70,70}]
-  wire  _GEN_217 = 7'h59 == idx ? valid_89_0 : _GEN_216; // @[icache.scala 48:{70,70}]
-  wire  _GEN_218 = 7'h5a == idx ? valid_90_0 : _GEN_217; // @[icache.scala 48:{70,70}]
-  wire  _GEN_219 = 7'h5b == idx ? valid_91_0 : _GEN_218; // @[icache.scala 48:{70,70}]
-  wire  _GEN_220 = 7'h5c == idx ? valid_92_0 : _GEN_219; // @[icache.scala 48:{70,70}]
-  wire  _GEN_221 = 7'h5d == idx ? valid_93_0 : _GEN_220; // @[icache.scala 48:{70,70}]
-  wire  _GEN_222 = 7'h5e == idx ? valid_94_0 : _GEN_221; // @[icache.scala 48:{70,70}]
-  wire  _GEN_223 = 7'h5f == idx ? valid_95_0 : _GEN_222; // @[icache.scala 48:{70,70}]
-  wire  _GEN_224 = 7'h60 == idx ? valid_96_0 : _GEN_223; // @[icache.scala 48:{70,70}]
-  wire  _GEN_225 = 7'h61 == idx ? valid_97_0 : _GEN_224; // @[icache.scala 48:{70,70}]
-  wire  _GEN_226 = 7'h62 == idx ? valid_98_0 : _GEN_225; // @[icache.scala 48:{70,70}]
-  wire  _GEN_227 = 7'h63 == idx ? valid_99_0 : _GEN_226; // @[icache.scala 48:{70,70}]
-  wire  _GEN_228 = 7'h64 == idx ? valid_100_0 : _GEN_227; // @[icache.scala 48:{70,70}]
-  wire  _GEN_229 = 7'h65 == idx ? valid_101_0 : _GEN_228; // @[icache.scala 48:{70,70}]
-  wire  _GEN_230 = 7'h66 == idx ? valid_102_0 : _GEN_229; // @[icache.scala 48:{70,70}]
-  wire  _GEN_231 = 7'h67 == idx ? valid_103_0 : _GEN_230; // @[icache.scala 48:{70,70}]
-  wire  _GEN_232 = 7'h68 == idx ? valid_104_0 : _GEN_231; // @[icache.scala 48:{70,70}]
-  wire  _GEN_233 = 7'h69 == idx ? valid_105_0 : _GEN_232; // @[icache.scala 48:{70,70}]
-  wire  _GEN_234 = 7'h6a == idx ? valid_106_0 : _GEN_233; // @[icache.scala 48:{70,70}]
-  wire  _GEN_235 = 7'h6b == idx ? valid_107_0 : _GEN_234; // @[icache.scala 48:{70,70}]
-  wire  _GEN_236 = 7'h6c == idx ? valid_108_0 : _GEN_235; // @[icache.scala 48:{70,70}]
-  wire  _GEN_237 = 7'h6d == idx ? valid_109_0 : _GEN_236; // @[icache.scala 48:{70,70}]
-  wire  _GEN_238 = 7'h6e == idx ? valid_110_0 : _GEN_237; // @[icache.scala 48:{70,70}]
-  wire  _GEN_239 = 7'h6f == idx ? valid_111_0 : _GEN_238; // @[icache.scala 48:{70,70}]
-  wire  _GEN_240 = 7'h70 == idx ? valid_112_0 : _GEN_239; // @[icache.scala 48:{70,70}]
-  wire  _GEN_241 = 7'h71 == idx ? valid_113_0 : _GEN_240; // @[icache.scala 48:{70,70}]
-  wire  _GEN_242 = 7'h72 == idx ? valid_114_0 : _GEN_241; // @[icache.scala 48:{70,70}]
-  wire  _GEN_243 = 7'h73 == idx ? valid_115_0 : _GEN_242; // @[icache.scala 48:{70,70}]
-  wire  _GEN_244 = 7'h74 == idx ? valid_116_0 : _GEN_243; // @[icache.scala 48:{70,70}]
-  wire  _GEN_245 = 7'h75 == idx ? valid_117_0 : _GEN_244; // @[icache.scala 48:{70,70}]
-  wire  _GEN_246 = 7'h76 == idx ? valid_118_0 : _GEN_245; // @[icache.scala 48:{70,70}]
-  wire  _GEN_247 = 7'h77 == idx ? valid_119_0 : _GEN_246; // @[icache.scala 48:{70,70}]
-  wire  _GEN_248 = 7'h78 == idx ? valid_120_0 : _GEN_247; // @[icache.scala 48:{70,70}]
-  wire  _GEN_249 = 7'h79 == idx ? valid_121_0 : _GEN_248; // @[icache.scala 48:{70,70}]
-  wire  _GEN_250 = 7'h7a == idx ? valid_122_0 : _GEN_249; // @[icache.scala 48:{70,70}]
-  wire  _GEN_251 = 7'h7b == idx ? valid_123_0 : _GEN_250; // @[icache.scala 48:{70,70}]
-  wire  _GEN_252 = 7'h7c == idx ? valid_124_0 : _GEN_251; // @[icache.scala 48:{70,70}]
-  wire  _GEN_253 = 7'h7d == idx ? valid_125_0 : _GEN_252; // @[icache.scala 48:{70,70}]
-  wire  _GEN_254 = 7'h7e == idx ? valid_126_0 : _GEN_253; // @[icache.scala 48:{70,70}]
-  wire  _GEN_255 = 7'h7f == idx ? valid_127_0 : _GEN_254; // @[icache.scala 48:{70,70}]
-  wire  _GEN_257 = 7'h1 == idx ? valid_1_1 : valid_0_1; // @[icache.scala 49:{70,70}]
-  wire  _GEN_258 = 7'h2 == idx ? valid_2_1 : _GEN_257; // @[icache.scala 49:{70,70}]
-  wire  _GEN_259 = 7'h3 == idx ? valid_3_1 : _GEN_258; // @[icache.scala 49:{70,70}]
-  wire  _GEN_260 = 7'h4 == idx ? valid_4_1 : _GEN_259; // @[icache.scala 49:{70,70}]
-  wire  _GEN_261 = 7'h5 == idx ? valid_5_1 : _GEN_260; // @[icache.scala 49:{70,70}]
-  wire  _GEN_262 = 7'h6 == idx ? valid_6_1 : _GEN_261; // @[icache.scala 49:{70,70}]
-  wire  _GEN_263 = 7'h7 == idx ? valid_7_1 : _GEN_262; // @[icache.scala 49:{70,70}]
-  wire  _GEN_264 = 7'h8 == idx ? valid_8_1 : _GEN_263; // @[icache.scala 49:{70,70}]
-  wire  _GEN_265 = 7'h9 == idx ? valid_9_1 : _GEN_264; // @[icache.scala 49:{70,70}]
-  wire  _GEN_266 = 7'ha == idx ? valid_10_1 : _GEN_265; // @[icache.scala 49:{70,70}]
-  wire  _GEN_267 = 7'hb == idx ? valid_11_1 : _GEN_266; // @[icache.scala 49:{70,70}]
-  wire  _GEN_268 = 7'hc == idx ? valid_12_1 : _GEN_267; // @[icache.scala 49:{70,70}]
-  wire  _GEN_269 = 7'hd == idx ? valid_13_1 : _GEN_268; // @[icache.scala 49:{70,70}]
-  wire  _GEN_270 = 7'he == idx ? valid_14_1 : _GEN_269; // @[icache.scala 49:{70,70}]
-  wire  _GEN_271 = 7'hf == idx ? valid_15_1 : _GEN_270; // @[icache.scala 49:{70,70}]
-  wire  _GEN_272 = 7'h10 == idx ? valid_16_1 : _GEN_271; // @[icache.scala 49:{70,70}]
-  wire  _GEN_273 = 7'h11 == idx ? valid_17_1 : _GEN_272; // @[icache.scala 49:{70,70}]
-  wire  _GEN_274 = 7'h12 == idx ? valid_18_1 : _GEN_273; // @[icache.scala 49:{70,70}]
-  wire  _GEN_275 = 7'h13 == idx ? valid_19_1 : _GEN_274; // @[icache.scala 49:{70,70}]
-  wire  _GEN_276 = 7'h14 == idx ? valid_20_1 : _GEN_275; // @[icache.scala 49:{70,70}]
-  wire  _GEN_277 = 7'h15 == idx ? valid_21_1 : _GEN_276; // @[icache.scala 49:{70,70}]
-  wire  _GEN_278 = 7'h16 == idx ? valid_22_1 : _GEN_277; // @[icache.scala 49:{70,70}]
-  wire  _GEN_279 = 7'h17 == idx ? valid_23_1 : _GEN_278; // @[icache.scala 49:{70,70}]
-  wire  _GEN_280 = 7'h18 == idx ? valid_24_1 : _GEN_279; // @[icache.scala 49:{70,70}]
-  wire  _GEN_281 = 7'h19 == idx ? valid_25_1 : _GEN_280; // @[icache.scala 49:{70,70}]
-  wire  _GEN_282 = 7'h1a == idx ? valid_26_1 : _GEN_281; // @[icache.scala 49:{70,70}]
-  wire  _GEN_283 = 7'h1b == idx ? valid_27_1 : _GEN_282; // @[icache.scala 49:{70,70}]
-  wire  _GEN_284 = 7'h1c == idx ? valid_28_1 : _GEN_283; // @[icache.scala 49:{70,70}]
-  wire  _GEN_285 = 7'h1d == idx ? valid_29_1 : _GEN_284; // @[icache.scala 49:{70,70}]
-  wire  _GEN_286 = 7'h1e == idx ? valid_30_1 : _GEN_285; // @[icache.scala 49:{70,70}]
-  wire  _GEN_287 = 7'h1f == idx ? valid_31_1 : _GEN_286; // @[icache.scala 49:{70,70}]
-  wire  _GEN_288 = 7'h20 == idx ? valid_32_1 : _GEN_287; // @[icache.scala 49:{70,70}]
-  wire  _GEN_289 = 7'h21 == idx ? valid_33_1 : _GEN_288; // @[icache.scala 49:{70,70}]
-  wire  _GEN_290 = 7'h22 == idx ? valid_34_1 : _GEN_289; // @[icache.scala 49:{70,70}]
-  wire  _GEN_291 = 7'h23 == idx ? valid_35_1 : _GEN_290; // @[icache.scala 49:{70,70}]
-  wire  _GEN_292 = 7'h24 == idx ? valid_36_1 : _GEN_291; // @[icache.scala 49:{70,70}]
-  wire  _GEN_293 = 7'h25 == idx ? valid_37_1 : _GEN_292; // @[icache.scala 49:{70,70}]
-  wire  _GEN_294 = 7'h26 == idx ? valid_38_1 : _GEN_293; // @[icache.scala 49:{70,70}]
-  wire  _GEN_295 = 7'h27 == idx ? valid_39_1 : _GEN_294; // @[icache.scala 49:{70,70}]
-  wire  _GEN_296 = 7'h28 == idx ? valid_40_1 : _GEN_295; // @[icache.scala 49:{70,70}]
-  wire  _GEN_297 = 7'h29 == idx ? valid_41_1 : _GEN_296; // @[icache.scala 49:{70,70}]
-  wire  _GEN_298 = 7'h2a == idx ? valid_42_1 : _GEN_297; // @[icache.scala 49:{70,70}]
-  wire  _GEN_299 = 7'h2b == idx ? valid_43_1 : _GEN_298; // @[icache.scala 49:{70,70}]
-  wire  _GEN_300 = 7'h2c == idx ? valid_44_1 : _GEN_299; // @[icache.scala 49:{70,70}]
-  wire  _GEN_301 = 7'h2d == idx ? valid_45_1 : _GEN_300; // @[icache.scala 49:{70,70}]
-  wire  _GEN_302 = 7'h2e == idx ? valid_46_1 : _GEN_301; // @[icache.scala 49:{70,70}]
-  wire  _GEN_303 = 7'h2f == idx ? valid_47_1 : _GEN_302; // @[icache.scala 49:{70,70}]
-  wire  _GEN_304 = 7'h30 == idx ? valid_48_1 : _GEN_303; // @[icache.scala 49:{70,70}]
-  wire  _GEN_305 = 7'h31 == idx ? valid_49_1 : _GEN_304; // @[icache.scala 49:{70,70}]
-  wire  _GEN_306 = 7'h32 == idx ? valid_50_1 : _GEN_305; // @[icache.scala 49:{70,70}]
-  wire  _GEN_307 = 7'h33 == idx ? valid_51_1 : _GEN_306; // @[icache.scala 49:{70,70}]
-  wire  _GEN_308 = 7'h34 == idx ? valid_52_1 : _GEN_307; // @[icache.scala 49:{70,70}]
-  wire  _GEN_309 = 7'h35 == idx ? valid_53_1 : _GEN_308; // @[icache.scala 49:{70,70}]
-  wire  _GEN_310 = 7'h36 == idx ? valid_54_1 : _GEN_309; // @[icache.scala 49:{70,70}]
-  wire  _GEN_311 = 7'h37 == idx ? valid_55_1 : _GEN_310; // @[icache.scala 49:{70,70}]
-  wire  _GEN_312 = 7'h38 == idx ? valid_56_1 : _GEN_311; // @[icache.scala 49:{70,70}]
-  wire  _GEN_313 = 7'h39 == idx ? valid_57_1 : _GEN_312; // @[icache.scala 49:{70,70}]
-  wire  _GEN_314 = 7'h3a == idx ? valid_58_1 : _GEN_313; // @[icache.scala 49:{70,70}]
-  wire  _GEN_315 = 7'h3b == idx ? valid_59_1 : _GEN_314; // @[icache.scala 49:{70,70}]
-  wire  _GEN_316 = 7'h3c == idx ? valid_60_1 : _GEN_315; // @[icache.scala 49:{70,70}]
-  wire  _GEN_317 = 7'h3d == idx ? valid_61_1 : _GEN_316; // @[icache.scala 49:{70,70}]
-  wire  _GEN_318 = 7'h3e == idx ? valid_62_1 : _GEN_317; // @[icache.scala 49:{70,70}]
-  wire  _GEN_319 = 7'h3f == idx ? valid_63_1 : _GEN_318; // @[icache.scala 49:{70,70}]
-  wire  _GEN_320 = 7'h40 == idx ? valid_64_1 : _GEN_319; // @[icache.scala 49:{70,70}]
-  wire  _GEN_321 = 7'h41 == idx ? valid_65_1 : _GEN_320; // @[icache.scala 49:{70,70}]
-  wire  _GEN_322 = 7'h42 == idx ? valid_66_1 : _GEN_321; // @[icache.scala 49:{70,70}]
-  wire  _GEN_323 = 7'h43 == idx ? valid_67_1 : _GEN_322; // @[icache.scala 49:{70,70}]
-  wire  _GEN_324 = 7'h44 == idx ? valid_68_1 : _GEN_323; // @[icache.scala 49:{70,70}]
-  wire  _GEN_325 = 7'h45 == idx ? valid_69_1 : _GEN_324; // @[icache.scala 49:{70,70}]
-  wire  _GEN_326 = 7'h46 == idx ? valid_70_1 : _GEN_325; // @[icache.scala 49:{70,70}]
-  wire  _GEN_327 = 7'h47 == idx ? valid_71_1 : _GEN_326; // @[icache.scala 49:{70,70}]
-  wire  _GEN_328 = 7'h48 == idx ? valid_72_1 : _GEN_327; // @[icache.scala 49:{70,70}]
-  wire  _GEN_329 = 7'h49 == idx ? valid_73_1 : _GEN_328; // @[icache.scala 49:{70,70}]
-  wire  _GEN_330 = 7'h4a == idx ? valid_74_1 : _GEN_329; // @[icache.scala 49:{70,70}]
-  wire  _GEN_331 = 7'h4b == idx ? valid_75_1 : _GEN_330; // @[icache.scala 49:{70,70}]
-  wire  _GEN_332 = 7'h4c == idx ? valid_76_1 : _GEN_331; // @[icache.scala 49:{70,70}]
-  wire  _GEN_333 = 7'h4d == idx ? valid_77_1 : _GEN_332; // @[icache.scala 49:{70,70}]
-  wire  _GEN_334 = 7'h4e == idx ? valid_78_1 : _GEN_333; // @[icache.scala 49:{70,70}]
-  wire  _GEN_335 = 7'h4f == idx ? valid_79_1 : _GEN_334; // @[icache.scala 49:{70,70}]
-  wire  _GEN_336 = 7'h50 == idx ? valid_80_1 : _GEN_335; // @[icache.scala 49:{70,70}]
-  wire  _GEN_337 = 7'h51 == idx ? valid_81_1 : _GEN_336; // @[icache.scala 49:{70,70}]
-  wire  _GEN_338 = 7'h52 == idx ? valid_82_1 : _GEN_337; // @[icache.scala 49:{70,70}]
-  wire  _GEN_339 = 7'h53 == idx ? valid_83_1 : _GEN_338; // @[icache.scala 49:{70,70}]
-  wire  _GEN_340 = 7'h54 == idx ? valid_84_1 : _GEN_339; // @[icache.scala 49:{70,70}]
-  wire  _GEN_341 = 7'h55 == idx ? valid_85_1 : _GEN_340; // @[icache.scala 49:{70,70}]
-  wire  _GEN_342 = 7'h56 == idx ? valid_86_1 : _GEN_341; // @[icache.scala 49:{70,70}]
-  wire  _GEN_343 = 7'h57 == idx ? valid_87_1 : _GEN_342; // @[icache.scala 49:{70,70}]
-  wire  _GEN_344 = 7'h58 == idx ? valid_88_1 : _GEN_343; // @[icache.scala 49:{70,70}]
-  wire  _GEN_345 = 7'h59 == idx ? valid_89_1 : _GEN_344; // @[icache.scala 49:{70,70}]
-  wire  _GEN_346 = 7'h5a == idx ? valid_90_1 : _GEN_345; // @[icache.scala 49:{70,70}]
-  wire  _GEN_347 = 7'h5b == idx ? valid_91_1 : _GEN_346; // @[icache.scala 49:{70,70}]
-  wire  _GEN_348 = 7'h5c == idx ? valid_92_1 : _GEN_347; // @[icache.scala 49:{70,70}]
-  wire  _GEN_349 = 7'h5d == idx ? valid_93_1 : _GEN_348; // @[icache.scala 49:{70,70}]
-  wire  _GEN_350 = 7'h5e == idx ? valid_94_1 : _GEN_349; // @[icache.scala 49:{70,70}]
-  wire  _GEN_351 = 7'h5f == idx ? valid_95_1 : _GEN_350; // @[icache.scala 49:{70,70}]
-  wire  _GEN_352 = 7'h60 == idx ? valid_96_1 : _GEN_351; // @[icache.scala 49:{70,70}]
-  wire  _GEN_353 = 7'h61 == idx ? valid_97_1 : _GEN_352; // @[icache.scala 49:{70,70}]
-  wire  _GEN_354 = 7'h62 == idx ? valid_98_1 : _GEN_353; // @[icache.scala 49:{70,70}]
-  wire  _GEN_355 = 7'h63 == idx ? valid_99_1 : _GEN_354; // @[icache.scala 49:{70,70}]
-  wire  _GEN_356 = 7'h64 == idx ? valid_100_1 : _GEN_355; // @[icache.scala 49:{70,70}]
-  wire  _GEN_357 = 7'h65 == idx ? valid_101_1 : _GEN_356; // @[icache.scala 49:{70,70}]
-  wire  _GEN_358 = 7'h66 == idx ? valid_102_1 : _GEN_357; // @[icache.scala 49:{70,70}]
-  wire  _GEN_359 = 7'h67 == idx ? valid_103_1 : _GEN_358; // @[icache.scala 49:{70,70}]
-  wire  _GEN_360 = 7'h68 == idx ? valid_104_1 : _GEN_359; // @[icache.scala 49:{70,70}]
-  wire  _GEN_361 = 7'h69 == idx ? valid_105_1 : _GEN_360; // @[icache.scala 49:{70,70}]
-  wire  _GEN_362 = 7'h6a == idx ? valid_106_1 : _GEN_361; // @[icache.scala 49:{70,70}]
-  wire  _GEN_363 = 7'h6b == idx ? valid_107_1 : _GEN_362; // @[icache.scala 49:{70,70}]
-  wire  _GEN_364 = 7'h6c == idx ? valid_108_1 : _GEN_363; // @[icache.scala 49:{70,70}]
-  wire  _GEN_365 = 7'h6d == idx ? valid_109_1 : _GEN_364; // @[icache.scala 49:{70,70}]
-  wire  _GEN_366 = 7'h6e == idx ? valid_110_1 : _GEN_365; // @[icache.scala 49:{70,70}]
-  wire  _GEN_367 = 7'h6f == idx ? valid_111_1 : _GEN_366; // @[icache.scala 49:{70,70}]
-  wire  _GEN_368 = 7'h70 == idx ? valid_112_1 : _GEN_367; // @[icache.scala 49:{70,70}]
-  wire  _GEN_369 = 7'h71 == idx ? valid_113_1 : _GEN_368; // @[icache.scala 49:{70,70}]
-  wire  _GEN_370 = 7'h72 == idx ? valid_114_1 : _GEN_369; // @[icache.scala 49:{70,70}]
-  wire  _GEN_371 = 7'h73 == idx ? valid_115_1 : _GEN_370; // @[icache.scala 49:{70,70}]
-  wire  _GEN_372 = 7'h74 == idx ? valid_116_1 : _GEN_371; // @[icache.scala 49:{70,70}]
-  wire  _GEN_373 = 7'h75 == idx ? valid_117_1 : _GEN_372; // @[icache.scala 49:{70,70}]
-  wire  _GEN_374 = 7'h76 == idx ? valid_118_1 : _GEN_373; // @[icache.scala 49:{70,70}]
-  wire  _GEN_375 = 7'h77 == idx ? valid_119_1 : _GEN_374; // @[icache.scala 49:{70,70}]
-  wire  _GEN_376 = 7'h78 == idx ? valid_120_1 : _GEN_375; // @[icache.scala 49:{70,70}]
-  wire  _GEN_377 = 7'h79 == idx ? valid_121_1 : _GEN_376; // @[icache.scala 49:{70,70}]
-  wire  _GEN_378 = 7'h7a == idx ? valid_122_1 : _GEN_377; // @[icache.scala 49:{70,70}]
-  wire  _GEN_379 = 7'h7b == idx ? valid_123_1 : _GEN_378; // @[icache.scala 49:{70,70}]
-  wire  _GEN_380 = 7'h7c == idx ? valid_124_1 : _GEN_379; // @[icache.scala 49:{70,70}]
-  wire  _GEN_381 = 7'h7d == idx ? valid_125_1 : _GEN_380; // @[icache.scala 49:{70,70}]
-  wire  _GEN_382 = 7'h7e == idx ? valid_126_1 : _GEN_381; // @[icache.scala 49:{70,70}]
-  wire  _GEN_383 = 7'h7f == idx ? valid_127_1 : _GEN_382; // @[icache.scala 49:{70,70}]
-  wire [1:0] _hit_T_8 = _GEN_127[41:21] == tag & _GEN_383 ? 2'h1 : 2'h3; // @[icache.scala 49:16]
-  wire [1:0] hit = _GEN_127[20:0] == tag & _GEN_255 ? 2'h0 : _hit_T_8; // @[icache.scala 48:16]
-  wire  hit_way = hit[0]; // @[icache.scala 50:21]
-  wire  miss = hit[1] | uncache; // @[icache.scala 51:29]
-  wire  _lfsr8_io_en_T = state == 2'h2; // @[icache.scala 53:25]
+  reg [31:0] addr; // @[icache.scala 38:21]
+  reg  uncache; // @[icache.scala 39:24]
+  wire [20:0] tag = addr[31:11]; // @[icache.scala 40:17]
+  wire [6:0] offset = {addr[3:0], 3'h0}; // @[icache.scala 41:42]
+  wire [6:0] idx = addr[10:4]; // @[icache.scala 42:17]
+  wire [41:0] _GEN_1 = 7'h1 == idx ? cache_tag_1 : cache_tag_0; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_2 = 7'h2 == idx ? cache_tag_2 : _GEN_1; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_3 = 7'h3 == idx ? cache_tag_3 : _GEN_2; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_4 = 7'h4 == idx ? cache_tag_4 : _GEN_3; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_5 = 7'h5 == idx ? cache_tag_5 : _GEN_4; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_6 = 7'h6 == idx ? cache_tag_6 : _GEN_5; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_7 = 7'h7 == idx ? cache_tag_7 : _GEN_6; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_8 = 7'h8 == idx ? cache_tag_8 : _GEN_7; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_9 = 7'h9 == idx ? cache_tag_9 : _GEN_8; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_10 = 7'ha == idx ? cache_tag_10 : _GEN_9; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_11 = 7'hb == idx ? cache_tag_11 : _GEN_10; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_12 = 7'hc == idx ? cache_tag_12 : _GEN_11; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_13 = 7'hd == idx ? cache_tag_13 : _GEN_12; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_14 = 7'he == idx ? cache_tag_14 : _GEN_13; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_15 = 7'hf == idx ? cache_tag_15 : _GEN_14; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_16 = 7'h10 == idx ? cache_tag_16 : _GEN_15; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_17 = 7'h11 == idx ? cache_tag_17 : _GEN_16; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_18 = 7'h12 == idx ? cache_tag_18 : _GEN_17; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_19 = 7'h13 == idx ? cache_tag_19 : _GEN_18; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_20 = 7'h14 == idx ? cache_tag_20 : _GEN_19; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_21 = 7'h15 == idx ? cache_tag_21 : _GEN_20; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_22 = 7'h16 == idx ? cache_tag_22 : _GEN_21; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_23 = 7'h17 == idx ? cache_tag_23 : _GEN_22; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_24 = 7'h18 == idx ? cache_tag_24 : _GEN_23; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_25 = 7'h19 == idx ? cache_tag_25 : _GEN_24; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_26 = 7'h1a == idx ? cache_tag_26 : _GEN_25; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_27 = 7'h1b == idx ? cache_tag_27 : _GEN_26; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_28 = 7'h1c == idx ? cache_tag_28 : _GEN_27; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_29 = 7'h1d == idx ? cache_tag_29 : _GEN_28; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_30 = 7'h1e == idx ? cache_tag_30 : _GEN_29; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_31 = 7'h1f == idx ? cache_tag_31 : _GEN_30; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_32 = 7'h20 == idx ? cache_tag_32 : _GEN_31; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_33 = 7'h21 == idx ? cache_tag_33 : _GEN_32; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_34 = 7'h22 == idx ? cache_tag_34 : _GEN_33; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_35 = 7'h23 == idx ? cache_tag_35 : _GEN_34; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_36 = 7'h24 == idx ? cache_tag_36 : _GEN_35; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_37 = 7'h25 == idx ? cache_tag_37 : _GEN_36; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_38 = 7'h26 == idx ? cache_tag_38 : _GEN_37; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_39 = 7'h27 == idx ? cache_tag_39 : _GEN_38; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_40 = 7'h28 == idx ? cache_tag_40 : _GEN_39; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_41 = 7'h29 == idx ? cache_tag_41 : _GEN_40; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_42 = 7'h2a == idx ? cache_tag_42 : _GEN_41; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_43 = 7'h2b == idx ? cache_tag_43 : _GEN_42; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_44 = 7'h2c == idx ? cache_tag_44 : _GEN_43; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_45 = 7'h2d == idx ? cache_tag_45 : _GEN_44; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_46 = 7'h2e == idx ? cache_tag_46 : _GEN_45; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_47 = 7'h2f == idx ? cache_tag_47 : _GEN_46; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_48 = 7'h30 == idx ? cache_tag_48 : _GEN_47; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_49 = 7'h31 == idx ? cache_tag_49 : _GEN_48; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_50 = 7'h32 == idx ? cache_tag_50 : _GEN_49; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_51 = 7'h33 == idx ? cache_tag_51 : _GEN_50; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_52 = 7'h34 == idx ? cache_tag_52 : _GEN_51; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_53 = 7'h35 == idx ? cache_tag_53 : _GEN_52; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_54 = 7'h36 == idx ? cache_tag_54 : _GEN_53; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_55 = 7'h37 == idx ? cache_tag_55 : _GEN_54; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_56 = 7'h38 == idx ? cache_tag_56 : _GEN_55; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_57 = 7'h39 == idx ? cache_tag_57 : _GEN_56; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_58 = 7'h3a == idx ? cache_tag_58 : _GEN_57; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_59 = 7'h3b == idx ? cache_tag_59 : _GEN_58; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_60 = 7'h3c == idx ? cache_tag_60 : _GEN_59; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_61 = 7'h3d == idx ? cache_tag_61 : _GEN_60; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_62 = 7'h3e == idx ? cache_tag_62 : _GEN_61; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_63 = 7'h3f == idx ? cache_tag_63 : _GEN_62; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_64 = 7'h40 == idx ? cache_tag_64 : _GEN_63; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_65 = 7'h41 == idx ? cache_tag_65 : _GEN_64; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_66 = 7'h42 == idx ? cache_tag_66 : _GEN_65; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_67 = 7'h43 == idx ? cache_tag_67 : _GEN_66; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_68 = 7'h44 == idx ? cache_tag_68 : _GEN_67; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_69 = 7'h45 == idx ? cache_tag_69 : _GEN_68; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_70 = 7'h46 == idx ? cache_tag_70 : _GEN_69; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_71 = 7'h47 == idx ? cache_tag_71 : _GEN_70; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_72 = 7'h48 == idx ? cache_tag_72 : _GEN_71; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_73 = 7'h49 == idx ? cache_tag_73 : _GEN_72; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_74 = 7'h4a == idx ? cache_tag_74 : _GEN_73; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_75 = 7'h4b == idx ? cache_tag_75 : _GEN_74; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_76 = 7'h4c == idx ? cache_tag_76 : _GEN_75; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_77 = 7'h4d == idx ? cache_tag_77 : _GEN_76; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_78 = 7'h4e == idx ? cache_tag_78 : _GEN_77; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_79 = 7'h4f == idx ? cache_tag_79 : _GEN_78; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_80 = 7'h50 == idx ? cache_tag_80 : _GEN_79; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_81 = 7'h51 == idx ? cache_tag_81 : _GEN_80; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_82 = 7'h52 == idx ? cache_tag_82 : _GEN_81; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_83 = 7'h53 == idx ? cache_tag_83 : _GEN_82; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_84 = 7'h54 == idx ? cache_tag_84 : _GEN_83; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_85 = 7'h55 == idx ? cache_tag_85 : _GEN_84; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_86 = 7'h56 == idx ? cache_tag_86 : _GEN_85; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_87 = 7'h57 == idx ? cache_tag_87 : _GEN_86; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_88 = 7'h58 == idx ? cache_tag_88 : _GEN_87; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_89 = 7'h59 == idx ? cache_tag_89 : _GEN_88; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_90 = 7'h5a == idx ? cache_tag_90 : _GEN_89; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_91 = 7'h5b == idx ? cache_tag_91 : _GEN_90; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_92 = 7'h5c == idx ? cache_tag_92 : _GEN_91; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_93 = 7'h5d == idx ? cache_tag_93 : _GEN_92; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_94 = 7'h5e == idx ? cache_tag_94 : _GEN_93; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_95 = 7'h5f == idx ? cache_tag_95 : _GEN_94; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_96 = 7'h60 == idx ? cache_tag_96 : _GEN_95; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_97 = 7'h61 == idx ? cache_tag_97 : _GEN_96; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_98 = 7'h62 == idx ? cache_tag_98 : _GEN_97; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_99 = 7'h63 == idx ? cache_tag_99 : _GEN_98; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_100 = 7'h64 == idx ? cache_tag_100 : _GEN_99; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_101 = 7'h65 == idx ? cache_tag_101 : _GEN_100; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_102 = 7'h66 == idx ? cache_tag_102 : _GEN_101; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_103 = 7'h67 == idx ? cache_tag_103 : _GEN_102; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_104 = 7'h68 == idx ? cache_tag_104 : _GEN_103; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_105 = 7'h69 == idx ? cache_tag_105 : _GEN_104; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_106 = 7'h6a == idx ? cache_tag_106 : _GEN_105; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_107 = 7'h6b == idx ? cache_tag_107 : _GEN_106; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_108 = 7'h6c == idx ? cache_tag_108 : _GEN_107; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_109 = 7'h6d == idx ? cache_tag_109 : _GEN_108; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_110 = 7'h6e == idx ? cache_tag_110 : _GEN_109; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_111 = 7'h6f == idx ? cache_tag_111 : _GEN_110; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_112 = 7'h70 == idx ? cache_tag_112 : _GEN_111; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_113 = 7'h71 == idx ? cache_tag_113 : _GEN_112; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_114 = 7'h72 == idx ? cache_tag_114 : _GEN_113; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_115 = 7'h73 == idx ? cache_tag_115 : _GEN_114; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_116 = 7'h74 == idx ? cache_tag_116 : _GEN_115; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_117 = 7'h75 == idx ? cache_tag_117 : _GEN_116; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_118 = 7'h76 == idx ? cache_tag_118 : _GEN_117; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_119 = 7'h77 == idx ? cache_tag_119 : _GEN_118; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_120 = 7'h78 == idx ? cache_tag_120 : _GEN_119; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_121 = 7'h79 == idx ? cache_tag_121 : _GEN_120; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_122 = 7'h7a == idx ? cache_tag_122 : _GEN_121; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_123 = 7'h7b == idx ? cache_tag_123 : _GEN_122; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_124 = 7'h7c == idx ? cache_tag_124 : _GEN_123; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_125 = 7'h7d == idx ? cache_tag_125 : _GEN_124; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_126 = 7'h7e == idx ? cache_tag_126 : _GEN_125; // @[icache.scala 49:{33,33}]
+  wire [41:0] _GEN_127 = 7'h7f == idx ? cache_tag_127 : _GEN_126; // @[icache.scala 49:{33,33}]
+  wire  _GEN_129 = 7'h1 == idx ? valid_1_0 : valid_0_0; // @[icache.scala 49:{70,70}]
+  wire  _GEN_130 = 7'h2 == idx ? valid_2_0 : _GEN_129; // @[icache.scala 49:{70,70}]
+  wire  _GEN_131 = 7'h3 == idx ? valid_3_0 : _GEN_130; // @[icache.scala 49:{70,70}]
+  wire  _GEN_132 = 7'h4 == idx ? valid_4_0 : _GEN_131; // @[icache.scala 49:{70,70}]
+  wire  _GEN_133 = 7'h5 == idx ? valid_5_0 : _GEN_132; // @[icache.scala 49:{70,70}]
+  wire  _GEN_134 = 7'h6 == idx ? valid_6_0 : _GEN_133; // @[icache.scala 49:{70,70}]
+  wire  _GEN_135 = 7'h7 == idx ? valid_7_0 : _GEN_134; // @[icache.scala 49:{70,70}]
+  wire  _GEN_136 = 7'h8 == idx ? valid_8_0 : _GEN_135; // @[icache.scala 49:{70,70}]
+  wire  _GEN_137 = 7'h9 == idx ? valid_9_0 : _GEN_136; // @[icache.scala 49:{70,70}]
+  wire  _GEN_138 = 7'ha == idx ? valid_10_0 : _GEN_137; // @[icache.scala 49:{70,70}]
+  wire  _GEN_139 = 7'hb == idx ? valid_11_0 : _GEN_138; // @[icache.scala 49:{70,70}]
+  wire  _GEN_140 = 7'hc == idx ? valid_12_0 : _GEN_139; // @[icache.scala 49:{70,70}]
+  wire  _GEN_141 = 7'hd == idx ? valid_13_0 : _GEN_140; // @[icache.scala 49:{70,70}]
+  wire  _GEN_142 = 7'he == idx ? valid_14_0 : _GEN_141; // @[icache.scala 49:{70,70}]
+  wire  _GEN_143 = 7'hf == idx ? valid_15_0 : _GEN_142; // @[icache.scala 49:{70,70}]
+  wire  _GEN_144 = 7'h10 == idx ? valid_16_0 : _GEN_143; // @[icache.scala 49:{70,70}]
+  wire  _GEN_145 = 7'h11 == idx ? valid_17_0 : _GEN_144; // @[icache.scala 49:{70,70}]
+  wire  _GEN_146 = 7'h12 == idx ? valid_18_0 : _GEN_145; // @[icache.scala 49:{70,70}]
+  wire  _GEN_147 = 7'h13 == idx ? valid_19_0 : _GEN_146; // @[icache.scala 49:{70,70}]
+  wire  _GEN_148 = 7'h14 == idx ? valid_20_0 : _GEN_147; // @[icache.scala 49:{70,70}]
+  wire  _GEN_149 = 7'h15 == idx ? valid_21_0 : _GEN_148; // @[icache.scala 49:{70,70}]
+  wire  _GEN_150 = 7'h16 == idx ? valid_22_0 : _GEN_149; // @[icache.scala 49:{70,70}]
+  wire  _GEN_151 = 7'h17 == idx ? valid_23_0 : _GEN_150; // @[icache.scala 49:{70,70}]
+  wire  _GEN_152 = 7'h18 == idx ? valid_24_0 : _GEN_151; // @[icache.scala 49:{70,70}]
+  wire  _GEN_153 = 7'h19 == idx ? valid_25_0 : _GEN_152; // @[icache.scala 49:{70,70}]
+  wire  _GEN_154 = 7'h1a == idx ? valid_26_0 : _GEN_153; // @[icache.scala 49:{70,70}]
+  wire  _GEN_155 = 7'h1b == idx ? valid_27_0 : _GEN_154; // @[icache.scala 49:{70,70}]
+  wire  _GEN_156 = 7'h1c == idx ? valid_28_0 : _GEN_155; // @[icache.scala 49:{70,70}]
+  wire  _GEN_157 = 7'h1d == idx ? valid_29_0 : _GEN_156; // @[icache.scala 49:{70,70}]
+  wire  _GEN_158 = 7'h1e == idx ? valid_30_0 : _GEN_157; // @[icache.scala 49:{70,70}]
+  wire  _GEN_159 = 7'h1f == idx ? valid_31_0 : _GEN_158; // @[icache.scala 49:{70,70}]
+  wire  _GEN_160 = 7'h20 == idx ? valid_32_0 : _GEN_159; // @[icache.scala 49:{70,70}]
+  wire  _GEN_161 = 7'h21 == idx ? valid_33_0 : _GEN_160; // @[icache.scala 49:{70,70}]
+  wire  _GEN_162 = 7'h22 == idx ? valid_34_0 : _GEN_161; // @[icache.scala 49:{70,70}]
+  wire  _GEN_163 = 7'h23 == idx ? valid_35_0 : _GEN_162; // @[icache.scala 49:{70,70}]
+  wire  _GEN_164 = 7'h24 == idx ? valid_36_0 : _GEN_163; // @[icache.scala 49:{70,70}]
+  wire  _GEN_165 = 7'h25 == idx ? valid_37_0 : _GEN_164; // @[icache.scala 49:{70,70}]
+  wire  _GEN_166 = 7'h26 == idx ? valid_38_0 : _GEN_165; // @[icache.scala 49:{70,70}]
+  wire  _GEN_167 = 7'h27 == idx ? valid_39_0 : _GEN_166; // @[icache.scala 49:{70,70}]
+  wire  _GEN_168 = 7'h28 == idx ? valid_40_0 : _GEN_167; // @[icache.scala 49:{70,70}]
+  wire  _GEN_169 = 7'h29 == idx ? valid_41_0 : _GEN_168; // @[icache.scala 49:{70,70}]
+  wire  _GEN_170 = 7'h2a == idx ? valid_42_0 : _GEN_169; // @[icache.scala 49:{70,70}]
+  wire  _GEN_171 = 7'h2b == idx ? valid_43_0 : _GEN_170; // @[icache.scala 49:{70,70}]
+  wire  _GEN_172 = 7'h2c == idx ? valid_44_0 : _GEN_171; // @[icache.scala 49:{70,70}]
+  wire  _GEN_173 = 7'h2d == idx ? valid_45_0 : _GEN_172; // @[icache.scala 49:{70,70}]
+  wire  _GEN_174 = 7'h2e == idx ? valid_46_0 : _GEN_173; // @[icache.scala 49:{70,70}]
+  wire  _GEN_175 = 7'h2f == idx ? valid_47_0 : _GEN_174; // @[icache.scala 49:{70,70}]
+  wire  _GEN_176 = 7'h30 == idx ? valid_48_0 : _GEN_175; // @[icache.scala 49:{70,70}]
+  wire  _GEN_177 = 7'h31 == idx ? valid_49_0 : _GEN_176; // @[icache.scala 49:{70,70}]
+  wire  _GEN_178 = 7'h32 == idx ? valid_50_0 : _GEN_177; // @[icache.scala 49:{70,70}]
+  wire  _GEN_179 = 7'h33 == idx ? valid_51_0 : _GEN_178; // @[icache.scala 49:{70,70}]
+  wire  _GEN_180 = 7'h34 == idx ? valid_52_0 : _GEN_179; // @[icache.scala 49:{70,70}]
+  wire  _GEN_181 = 7'h35 == idx ? valid_53_0 : _GEN_180; // @[icache.scala 49:{70,70}]
+  wire  _GEN_182 = 7'h36 == idx ? valid_54_0 : _GEN_181; // @[icache.scala 49:{70,70}]
+  wire  _GEN_183 = 7'h37 == idx ? valid_55_0 : _GEN_182; // @[icache.scala 49:{70,70}]
+  wire  _GEN_184 = 7'h38 == idx ? valid_56_0 : _GEN_183; // @[icache.scala 49:{70,70}]
+  wire  _GEN_185 = 7'h39 == idx ? valid_57_0 : _GEN_184; // @[icache.scala 49:{70,70}]
+  wire  _GEN_186 = 7'h3a == idx ? valid_58_0 : _GEN_185; // @[icache.scala 49:{70,70}]
+  wire  _GEN_187 = 7'h3b == idx ? valid_59_0 : _GEN_186; // @[icache.scala 49:{70,70}]
+  wire  _GEN_188 = 7'h3c == idx ? valid_60_0 : _GEN_187; // @[icache.scala 49:{70,70}]
+  wire  _GEN_189 = 7'h3d == idx ? valid_61_0 : _GEN_188; // @[icache.scala 49:{70,70}]
+  wire  _GEN_190 = 7'h3e == idx ? valid_62_0 : _GEN_189; // @[icache.scala 49:{70,70}]
+  wire  _GEN_191 = 7'h3f == idx ? valid_63_0 : _GEN_190; // @[icache.scala 49:{70,70}]
+  wire  _GEN_192 = 7'h40 == idx ? valid_64_0 : _GEN_191; // @[icache.scala 49:{70,70}]
+  wire  _GEN_193 = 7'h41 == idx ? valid_65_0 : _GEN_192; // @[icache.scala 49:{70,70}]
+  wire  _GEN_194 = 7'h42 == idx ? valid_66_0 : _GEN_193; // @[icache.scala 49:{70,70}]
+  wire  _GEN_195 = 7'h43 == idx ? valid_67_0 : _GEN_194; // @[icache.scala 49:{70,70}]
+  wire  _GEN_196 = 7'h44 == idx ? valid_68_0 : _GEN_195; // @[icache.scala 49:{70,70}]
+  wire  _GEN_197 = 7'h45 == idx ? valid_69_0 : _GEN_196; // @[icache.scala 49:{70,70}]
+  wire  _GEN_198 = 7'h46 == idx ? valid_70_0 : _GEN_197; // @[icache.scala 49:{70,70}]
+  wire  _GEN_199 = 7'h47 == idx ? valid_71_0 : _GEN_198; // @[icache.scala 49:{70,70}]
+  wire  _GEN_200 = 7'h48 == idx ? valid_72_0 : _GEN_199; // @[icache.scala 49:{70,70}]
+  wire  _GEN_201 = 7'h49 == idx ? valid_73_0 : _GEN_200; // @[icache.scala 49:{70,70}]
+  wire  _GEN_202 = 7'h4a == idx ? valid_74_0 : _GEN_201; // @[icache.scala 49:{70,70}]
+  wire  _GEN_203 = 7'h4b == idx ? valid_75_0 : _GEN_202; // @[icache.scala 49:{70,70}]
+  wire  _GEN_204 = 7'h4c == idx ? valid_76_0 : _GEN_203; // @[icache.scala 49:{70,70}]
+  wire  _GEN_205 = 7'h4d == idx ? valid_77_0 : _GEN_204; // @[icache.scala 49:{70,70}]
+  wire  _GEN_206 = 7'h4e == idx ? valid_78_0 : _GEN_205; // @[icache.scala 49:{70,70}]
+  wire  _GEN_207 = 7'h4f == idx ? valid_79_0 : _GEN_206; // @[icache.scala 49:{70,70}]
+  wire  _GEN_208 = 7'h50 == idx ? valid_80_0 : _GEN_207; // @[icache.scala 49:{70,70}]
+  wire  _GEN_209 = 7'h51 == idx ? valid_81_0 : _GEN_208; // @[icache.scala 49:{70,70}]
+  wire  _GEN_210 = 7'h52 == idx ? valid_82_0 : _GEN_209; // @[icache.scala 49:{70,70}]
+  wire  _GEN_211 = 7'h53 == idx ? valid_83_0 : _GEN_210; // @[icache.scala 49:{70,70}]
+  wire  _GEN_212 = 7'h54 == idx ? valid_84_0 : _GEN_211; // @[icache.scala 49:{70,70}]
+  wire  _GEN_213 = 7'h55 == idx ? valid_85_0 : _GEN_212; // @[icache.scala 49:{70,70}]
+  wire  _GEN_214 = 7'h56 == idx ? valid_86_0 : _GEN_213; // @[icache.scala 49:{70,70}]
+  wire  _GEN_215 = 7'h57 == idx ? valid_87_0 : _GEN_214; // @[icache.scala 49:{70,70}]
+  wire  _GEN_216 = 7'h58 == idx ? valid_88_0 : _GEN_215; // @[icache.scala 49:{70,70}]
+  wire  _GEN_217 = 7'h59 == idx ? valid_89_0 : _GEN_216; // @[icache.scala 49:{70,70}]
+  wire  _GEN_218 = 7'h5a == idx ? valid_90_0 : _GEN_217; // @[icache.scala 49:{70,70}]
+  wire  _GEN_219 = 7'h5b == idx ? valid_91_0 : _GEN_218; // @[icache.scala 49:{70,70}]
+  wire  _GEN_220 = 7'h5c == idx ? valid_92_0 : _GEN_219; // @[icache.scala 49:{70,70}]
+  wire  _GEN_221 = 7'h5d == idx ? valid_93_0 : _GEN_220; // @[icache.scala 49:{70,70}]
+  wire  _GEN_222 = 7'h5e == idx ? valid_94_0 : _GEN_221; // @[icache.scala 49:{70,70}]
+  wire  _GEN_223 = 7'h5f == idx ? valid_95_0 : _GEN_222; // @[icache.scala 49:{70,70}]
+  wire  _GEN_224 = 7'h60 == idx ? valid_96_0 : _GEN_223; // @[icache.scala 49:{70,70}]
+  wire  _GEN_225 = 7'h61 == idx ? valid_97_0 : _GEN_224; // @[icache.scala 49:{70,70}]
+  wire  _GEN_226 = 7'h62 == idx ? valid_98_0 : _GEN_225; // @[icache.scala 49:{70,70}]
+  wire  _GEN_227 = 7'h63 == idx ? valid_99_0 : _GEN_226; // @[icache.scala 49:{70,70}]
+  wire  _GEN_228 = 7'h64 == idx ? valid_100_0 : _GEN_227; // @[icache.scala 49:{70,70}]
+  wire  _GEN_229 = 7'h65 == idx ? valid_101_0 : _GEN_228; // @[icache.scala 49:{70,70}]
+  wire  _GEN_230 = 7'h66 == idx ? valid_102_0 : _GEN_229; // @[icache.scala 49:{70,70}]
+  wire  _GEN_231 = 7'h67 == idx ? valid_103_0 : _GEN_230; // @[icache.scala 49:{70,70}]
+  wire  _GEN_232 = 7'h68 == idx ? valid_104_0 : _GEN_231; // @[icache.scala 49:{70,70}]
+  wire  _GEN_233 = 7'h69 == idx ? valid_105_0 : _GEN_232; // @[icache.scala 49:{70,70}]
+  wire  _GEN_234 = 7'h6a == idx ? valid_106_0 : _GEN_233; // @[icache.scala 49:{70,70}]
+  wire  _GEN_235 = 7'h6b == idx ? valid_107_0 : _GEN_234; // @[icache.scala 49:{70,70}]
+  wire  _GEN_236 = 7'h6c == idx ? valid_108_0 : _GEN_235; // @[icache.scala 49:{70,70}]
+  wire  _GEN_237 = 7'h6d == idx ? valid_109_0 : _GEN_236; // @[icache.scala 49:{70,70}]
+  wire  _GEN_238 = 7'h6e == idx ? valid_110_0 : _GEN_237; // @[icache.scala 49:{70,70}]
+  wire  _GEN_239 = 7'h6f == idx ? valid_111_0 : _GEN_238; // @[icache.scala 49:{70,70}]
+  wire  _GEN_240 = 7'h70 == idx ? valid_112_0 : _GEN_239; // @[icache.scala 49:{70,70}]
+  wire  _GEN_241 = 7'h71 == idx ? valid_113_0 : _GEN_240; // @[icache.scala 49:{70,70}]
+  wire  _GEN_242 = 7'h72 == idx ? valid_114_0 : _GEN_241; // @[icache.scala 49:{70,70}]
+  wire  _GEN_243 = 7'h73 == idx ? valid_115_0 : _GEN_242; // @[icache.scala 49:{70,70}]
+  wire  _GEN_244 = 7'h74 == idx ? valid_116_0 : _GEN_243; // @[icache.scala 49:{70,70}]
+  wire  _GEN_245 = 7'h75 == idx ? valid_117_0 : _GEN_244; // @[icache.scala 49:{70,70}]
+  wire  _GEN_246 = 7'h76 == idx ? valid_118_0 : _GEN_245; // @[icache.scala 49:{70,70}]
+  wire  _GEN_247 = 7'h77 == idx ? valid_119_0 : _GEN_246; // @[icache.scala 49:{70,70}]
+  wire  _GEN_248 = 7'h78 == idx ? valid_120_0 : _GEN_247; // @[icache.scala 49:{70,70}]
+  wire  _GEN_249 = 7'h79 == idx ? valid_121_0 : _GEN_248; // @[icache.scala 49:{70,70}]
+  wire  _GEN_250 = 7'h7a == idx ? valid_122_0 : _GEN_249; // @[icache.scala 49:{70,70}]
+  wire  _GEN_251 = 7'h7b == idx ? valid_123_0 : _GEN_250; // @[icache.scala 49:{70,70}]
+  wire  _GEN_252 = 7'h7c == idx ? valid_124_0 : _GEN_251; // @[icache.scala 49:{70,70}]
+  wire  _GEN_253 = 7'h7d == idx ? valid_125_0 : _GEN_252; // @[icache.scala 49:{70,70}]
+  wire  _GEN_254 = 7'h7e == idx ? valid_126_0 : _GEN_253; // @[icache.scala 49:{70,70}]
+  wire  _GEN_255 = 7'h7f == idx ? valid_127_0 : _GEN_254; // @[icache.scala 49:{70,70}]
+  wire  _GEN_257 = 7'h1 == idx ? valid_1_1 : valid_0_1; // @[icache.scala 50:{70,70}]
+  wire  _GEN_258 = 7'h2 == idx ? valid_2_1 : _GEN_257; // @[icache.scala 50:{70,70}]
+  wire  _GEN_259 = 7'h3 == idx ? valid_3_1 : _GEN_258; // @[icache.scala 50:{70,70}]
+  wire  _GEN_260 = 7'h4 == idx ? valid_4_1 : _GEN_259; // @[icache.scala 50:{70,70}]
+  wire  _GEN_261 = 7'h5 == idx ? valid_5_1 : _GEN_260; // @[icache.scala 50:{70,70}]
+  wire  _GEN_262 = 7'h6 == idx ? valid_6_1 : _GEN_261; // @[icache.scala 50:{70,70}]
+  wire  _GEN_263 = 7'h7 == idx ? valid_7_1 : _GEN_262; // @[icache.scala 50:{70,70}]
+  wire  _GEN_264 = 7'h8 == idx ? valid_8_1 : _GEN_263; // @[icache.scala 50:{70,70}]
+  wire  _GEN_265 = 7'h9 == idx ? valid_9_1 : _GEN_264; // @[icache.scala 50:{70,70}]
+  wire  _GEN_266 = 7'ha == idx ? valid_10_1 : _GEN_265; // @[icache.scala 50:{70,70}]
+  wire  _GEN_267 = 7'hb == idx ? valid_11_1 : _GEN_266; // @[icache.scala 50:{70,70}]
+  wire  _GEN_268 = 7'hc == idx ? valid_12_1 : _GEN_267; // @[icache.scala 50:{70,70}]
+  wire  _GEN_269 = 7'hd == idx ? valid_13_1 : _GEN_268; // @[icache.scala 50:{70,70}]
+  wire  _GEN_270 = 7'he == idx ? valid_14_1 : _GEN_269; // @[icache.scala 50:{70,70}]
+  wire  _GEN_271 = 7'hf == idx ? valid_15_1 : _GEN_270; // @[icache.scala 50:{70,70}]
+  wire  _GEN_272 = 7'h10 == idx ? valid_16_1 : _GEN_271; // @[icache.scala 50:{70,70}]
+  wire  _GEN_273 = 7'h11 == idx ? valid_17_1 : _GEN_272; // @[icache.scala 50:{70,70}]
+  wire  _GEN_274 = 7'h12 == idx ? valid_18_1 : _GEN_273; // @[icache.scala 50:{70,70}]
+  wire  _GEN_275 = 7'h13 == idx ? valid_19_1 : _GEN_274; // @[icache.scala 50:{70,70}]
+  wire  _GEN_276 = 7'h14 == idx ? valid_20_1 : _GEN_275; // @[icache.scala 50:{70,70}]
+  wire  _GEN_277 = 7'h15 == idx ? valid_21_1 : _GEN_276; // @[icache.scala 50:{70,70}]
+  wire  _GEN_278 = 7'h16 == idx ? valid_22_1 : _GEN_277; // @[icache.scala 50:{70,70}]
+  wire  _GEN_279 = 7'h17 == idx ? valid_23_1 : _GEN_278; // @[icache.scala 50:{70,70}]
+  wire  _GEN_280 = 7'h18 == idx ? valid_24_1 : _GEN_279; // @[icache.scala 50:{70,70}]
+  wire  _GEN_281 = 7'h19 == idx ? valid_25_1 : _GEN_280; // @[icache.scala 50:{70,70}]
+  wire  _GEN_282 = 7'h1a == idx ? valid_26_1 : _GEN_281; // @[icache.scala 50:{70,70}]
+  wire  _GEN_283 = 7'h1b == idx ? valid_27_1 : _GEN_282; // @[icache.scala 50:{70,70}]
+  wire  _GEN_284 = 7'h1c == idx ? valid_28_1 : _GEN_283; // @[icache.scala 50:{70,70}]
+  wire  _GEN_285 = 7'h1d == idx ? valid_29_1 : _GEN_284; // @[icache.scala 50:{70,70}]
+  wire  _GEN_286 = 7'h1e == idx ? valid_30_1 : _GEN_285; // @[icache.scala 50:{70,70}]
+  wire  _GEN_287 = 7'h1f == idx ? valid_31_1 : _GEN_286; // @[icache.scala 50:{70,70}]
+  wire  _GEN_288 = 7'h20 == idx ? valid_32_1 : _GEN_287; // @[icache.scala 50:{70,70}]
+  wire  _GEN_289 = 7'h21 == idx ? valid_33_1 : _GEN_288; // @[icache.scala 50:{70,70}]
+  wire  _GEN_290 = 7'h22 == idx ? valid_34_1 : _GEN_289; // @[icache.scala 50:{70,70}]
+  wire  _GEN_291 = 7'h23 == idx ? valid_35_1 : _GEN_290; // @[icache.scala 50:{70,70}]
+  wire  _GEN_292 = 7'h24 == idx ? valid_36_1 : _GEN_291; // @[icache.scala 50:{70,70}]
+  wire  _GEN_293 = 7'h25 == idx ? valid_37_1 : _GEN_292; // @[icache.scala 50:{70,70}]
+  wire  _GEN_294 = 7'h26 == idx ? valid_38_1 : _GEN_293; // @[icache.scala 50:{70,70}]
+  wire  _GEN_295 = 7'h27 == idx ? valid_39_1 : _GEN_294; // @[icache.scala 50:{70,70}]
+  wire  _GEN_296 = 7'h28 == idx ? valid_40_1 : _GEN_295; // @[icache.scala 50:{70,70}]
+  wire  _GEN_297 = 7'h29 == idx ? valid_41_1 : _GEN_296; // @[icache.scala 50:{70,70}]
+  wire  _GEN_298 = 7'h2a == idx ? valid_42_1 : _GEN_297; // @[icache.scala 50:{70,70}]
+  wire  _GEN_299 = 7'h2b == idx ? valid_43_1 : _GEN_298; // @[icache.scala 50:{70,70}]
+  wire  _GEN_300 = 7'h2c == idx ? valid_44_1 : _GEN_299; // @[icache.scala 50:{70,70}]
+  wire  _GEN_301 = 7'h2d == idx ? valid_45_1 : _GEN_300; // @[icache.scala 50:{70,70}]
+  wire  _GEN_302 = 7'h2e == idx ? valid_46_1 : _GEN_301; // @[icache.scala 50:{70,70}]
+  wire  _GEN_303 = 7'h2f == idx ? valid_47_1 : _GEN_302; // @[icache.scala 50:{70,70}]
+  wire  _GEN_304 = 7'h30 == idx ? valid_48_1 : _GEN_303; // @[icache.scala 50:{70,70}]
+  wire  _GEN_305 = 7'h31 == idx ? valid_49_1 : _GEN_304; // @[icache.scala 50:{70,70}]
+  wire  _GEN_306 = 7'h32 == idx ? valid_50_1 : _GEN_305; // @[icache.scala 50:{70,70}]
+  wire  _GEN_307 = 7'h33 == idx ? valid_51_1 : _GEN_306; // @[icache.scala 50:{70,70}]
+  wire  _GEN_308 = 7'h34 == idx ? valid_52_1 : _GEN_307; // @[icache.scala 50:{70,70}]
+  wire  _GEN_309 = 7'h35 == idx ? valid_53_1 : _GEN_308; // @[icache.scala 50:{70,70}]
+  wire  _GEN_310 = 7'h36 == idx ? valid_54_1 : _GEN_309; // @[icache.scala 50:{70,70}]
+  wire  _GEN_311 = 7'h37 == idx ? valid_55_1 : _GEN_310; // @[icache.scala 50:{70,70}]
+  wire  _GEN_312 = 7'h38 == idx ? valid_56_1 : _GEN_311; // @[icache.scala 50:{70,70}]
+  wire  _GEN_313 = 7'h39 == idx ? valid_57_1 : _GEN_312; // @[icache.scala 50:{70,70}]
+  wire  _GEN_314 = 7'h3a == idx ? valid_58_1 : _GEN_313; // @[icache.scala 50:{70,70}]
+  wire  _GEN_315 = 7'h3b == idx ? valid_59_1 : _GEN_314; // @[icache.scala 50:{70,70}]
+  wire  _GEN_316 = 7'h3c == idx ? valid_60_1 : _GEN_315; // @[icache.scala 50:{70,70}]
+  wire  _GEN_317 = 7'h3d == idx ? valid_61_1 : _GEN_316; // @[icache.scala 50:{70,70}]
+  wire  _GEN_318 = 7'h3e == idx ? valid_62_1 : _GEN_317; // @[icache.scala 50:{70,70}]
+  wire  _GEN_319 = 7'h3f == idx ? valid_63_1 : _GEN_318; // @[icache.scala 50:{70,70}]
+  wire  _GEN_320 = 7'h40 == idx ? valid_64_1 : _GEN_319; // @[icache.scala 50:{70,70}]
+  wire  _GEN_321 = 7'h41 == idx ? valid_65_1 : _GEN_320; // @[icache.scala 50:{70,70}]
+  wire  _GEN_322 = 7'h42 == idx ? valid_66_1 : _GEN_321; // @[icache.scala 50:{70,70}]
+  wire  _GEN_323 = 7'h43 == idx ? valid_67_1 : _GEN_322; // @[icache.scala 50:{70,70}]
+  wire  _GEN_324 = 7'h44 == idx ? valid_68_1 : _GEN_323; // @[icache.scala 50:{70,70}]
+  wire  _GEN_325 = 7'h45 == idx ? valid_69_1 : _GEN_324; // @[icache.scala 50:{70,70}]
+  wire  _GEN_326 = 7'h46 == idx ? valid_70_1 : _GEN_325; // @[icache.scala 50:{70,70}]
+  wire  _GEN_327 = 7'h47 == idx ? valid_71_1 : _GEN_326; // @[icache.scala 50:{70,70}]
+  wire  _GEN_328 = 7'h48 == idx ? valid_72_1 : _GEN_327; // @[icache.scala 50:{70,70}]
+  wire  _GEN_329 = 7'h49 == idx ? valid_73_1 : _GEN_328; // @[icache.scala 50:{70,70}]
+  wire  _GEN_330 = 7'h4a == idx ? valid_74_1 : _GEN_329; // @[icache.scala 50:{70,70}]
+  wire  _GEN_331 = 7'h4b == idx ? valid_75_1 : _GEN_330; // @[icache.scala 50:{70,70}]
+  wire  _GEN_332 = 7'h4c == idx ? valid_76_1 : _GEN_331; // @[icache.scala 50:{70,70}]
+  wire  _GEN_333 = 7'h4d == idx ? valid_77_1 : _GEN_332; // @[icache.scala 50:{70,70}]
+  wire  _GEN_334 = 7'h4e == idx ? valid_78_1 : _GEN_333; // @[icache.scala 50:{70,70}]
+  wire  _GEN_335 = 7'h4f == idx ? valid_79_1 : _GEN_334; // @[icache.scala 50:{70,70}]
+  wire  _GEN_336 = 7'h50 == idx ? valid_80_1 : _GEN_335; // @[icache.scala 50:{70,70}]
+  wire  _GEN_337 = 7'h51 == idx ? valid_81_1 : _GEN_336; // @[icache.scala 50:{70,70}]
+  wire  _GEN_338 = 7'h52 == idx ? valid_82_1 : _GEN_337; // @[icache.scala 50:{70,70}]
+  wire  _GEN_339 = 7'h53 == idx ? valid_83_1 : _GEN_338; // @[icache.scala 50:{70,70}]
+  wire  _GEN_340 = 7'h54 == idx ? valid_84_1 : _GEN_339; // @[icache.scala 50:{70,70}]
+  wire  _GEN_341 = 7'h55 == idx ? valid_85_1 : _GEN_340; // @[icache.scala 50:{70,70}]
+  wire  _GEN_342 = 7'h56 == idx ? valid_86_1 : _GEN_341; // @[icache.scala 50:{70,70}]
+  wire  _GEN_343 = 7'h57 == idx ? valid_87_1 : _GEN_342; // @[icache.scala 50:{70,70}]
+  wire  _GEN_344 = 7'h58 == idx ? valid_88_1 : _GEN_343; // @[icache.scala 50:{70,70}]
+  wire  _GEN_345 = 7'h59 == idx ? valid_89_1 : _GEN_344; // @[icache.scala 50:{70,70}]
+  wire  _GEN_346 = 7'h5a == idx ? valid_90_1 : _GEN_345; // @[icache.scala 50:{70,70}]
+  wire  _GEN_347 = 7'h5b == idx ? valid_91_1 : _GEN_346; // @[icache.scala 50:{70,70}]
+  wire  _GEN_348 = 7'h5c == idx ? valid_92_1 : _GEN_347; // @[icache.scala 50:{70,70}]
+  wire  _GEN_349 = 7'h5d == idx ? valid_93_1 : _GEN_348; // @[icache.scala 50:{70,70}]
+  wire  _GEN_350 = 7'h5e == idx ? valid_94_1 : _GEN_349; // @[icache.scala 50:{70,70}]
+  wire  _GEN_351 = 7'h5f == idx ? valid_95_1 : _GEN_350; // @[icache.scala 50:{70,70}]
+  wire  _GEN_352 = 7'h60 == idx ? valid_96_1 : _GEN_351; // @[icache.scala 50:{70,70}]
+  wire  _GEN_353 = 7'h61 == idx ? valid_97_1 : _GEN_352; // @[icache.scala 50:{70,70}]
+  wire  _GEN_354 = 7'h62 == idx ? valid_98_1 : _GEN_353; // @[icache.scala 50:{70,70}]
+  wire  _GEN_355 = 7'h63 == idx ? valid_99_1 : _GEN_354; // @[icache.scala 50:{70,70}]
+  wire  _GEN_356 = 7'h64 == idx ? valid_100_1 : _GEN_355; // @[icache.scala 50:{70,70}]
+  wire  _GEN_357 = 7'h65 == idx ? valid_101_1 : _GEN_356; // @[icache.scala 50:{70,70}]
+  wire  _GEN_358 = 7'h66 == idx ? valid_102_1 : _GEN_357; // @[icache.scala 50:{70,70}]
+  wire  _GEN_359 = 7'h67 == idx ? valid_103_1 : _GEN_358; // @[icache.scala 50:{70,70}]
+  wire  _GEN_360 = 7'h68 == idx ? valid_104_1 : _GEN_359; // @[icache.scala 50:{70,70}]
+  wire  _GEN_361 = 7'h69 == idx ? valid_105_1 : _GEN_360; // @[icache.scala 50:{70,70}]
+  wire  _GEN_362 = 7'h6a == idx ? valid_106_1 : _GEN_361; // @[icache.scala 50:{70,70}]
+  wire  _GEN_363 = 7'h6b == idx ? valid_107_1 : _GEN_362; // @[icache.scala 50:{70,70}]
+  wire  _GEN_364 = 7'h6c == idx ? valid_108_1 : _GEN_363; // @[icache.scala 50:{70,70}]
+  wire  _GEN_365 = 7'h6d == idx ? valid_109_1 : _GEN_364; // @[icache.scala 50:{70,70}]
+  wire  _GEN_366 = 7'h6e == idx ? valid_110_1 : _GEN_365; // @[icache.scala 50:{70,70}]
+  wire  _GEN_367 = 7'h6f == idx ? valid_111_1 : _GEN_366; // @[icache.scala 50:{70,70}]
+  wire  _GEN_368 = 7'h70 == idx ? valid_112_1 : _GEN_367; // @[icache.scala 50:{70,70}]
+  wire  _GEN_369 = 7'h71 == idx ? valid_113_1 : _GEN_368; // @[icache.scala 50:{70,70}]
+  wire  _GEN_370 = 7'h72 == idx ? valid_114_1 : _GEN_369; // @[icache.scala 50:{70,70}]
+  wire  _GEN_371 = 7'h73 == idx ? valid_115_1 : _GEN_370; // @[icache.scala 50:{70,70}]
+  wire  _GEN_372 = 7'h74 == idx ? valid_116_1 : _GEN_371; // @[icache.scala 50:{70,70}]
+  wire  _GEN_373 = 7'h75 == idx ? valid_117_1 : _GEN_372; // @[icache.scala 50:{70,70}]
+  wire  _GEN_374 = 7'h76 == idx ? valid_118_1 : _GEN_373; // @[icache.scala 50:{70,70}]
+  wire  _GEN_375 = 7'h77 == idx ? valid_119_1 : _GEN_374; // @[icache.scala 50:{70,70}]
+  wire  _GEN_376 = 7'h78 == idx ? valid_120_1 : _GEN_375; // @[icache.scala 50:{70,70}]
+  wire  _GEN_377 = 7'h79 == idx ? valid_121_1 : _GEN_376; // @[icache.scala 50:{70,70}]
+  wire  _GEN_378 = 7'h7a == idx ? valid_122_1 : _GEN_377; // @[icache.scala 50:{70,70}]
+  wire  _GEN_379 = 7'h7b == idx ? valid_123_1 : _GEN_378; // @[icache.scala 50:{70,70}]
+  wire  _GEN_380 = 7'h7c == idx ? valid_124_1 : _GEN_379; // @[icache.scala 50:{70,70}]
+  wire  _GEN_381 = 7'h7d == idx ? valid_125_1 : _GEN_380; // @[icache.scala 50:{70,70}]
+  wire  _GEN_382 = 7'h7e == idx ? valid_126_1 : _GEN_381; // @[icache.scala 50:{70,70}]
+  wire  _GEN_383 = 7'h7f == idx ? valid_127_1 : _GEN_382; // @[icache.scala 50:{70,70}]
+  wire [1:0] _hit_T_8 = _GEN_127[41:21] == tag & _GEN_383 ? 2'h1 : 2'h3; // @[icache.scala 50:16]
+  wire [1:0] hit = _GEN_127[20:0] == tag & _GEN_255 ? 2'h0 : _hit_T_8; // @[icache.scala 49:16]
+  wire  hit_way = hit[0]; // @[icache.scala 51:21]
+  wire  miss = hit[1] | uncache; // @[icache.scala 52:29]
+  wire  _lfsr8_io_en_T = state == 2'h2; // @[icache.scala 54:25]
   reg  way; // @[Reg.scala 35:20]
-  reg  cnt; // @[icache.scala 56:20]
-  wire [1:0] _state_T = req ? 2'h1 : 2'h0; // @[icache.scala 59:22]
-  wire [1:0] _state_T_2 = miss ? 2'h2 : _state_T; // @[icache.scala 60:22]
+  reg  cnt; // @[icache.scala 57:20]
+  wire [1:0] _state_T = req ? 2'h1 : 2'h0; // @[icache.scala 60:22]
+  wire [1:0] _state_T_2 = miss ? 2'h2 : _state_T; // @[icache.scala 61:22]
   wire  _state_T_3 = io_mem_ar_ready & io_mem_ar_valid; // @[Decoupled.scala 52:35]
   wire  _state_T_5 = io_mem_r_ready & io_mem_r_valid; // @[Decoupled.scala 52:35]
-  wire  _state_T_7 = _state_T_5 & io_mem_r_bits_last; // @[icache.scala 63:37]
-  wire  _valid_T_2 = _lfsr8_io_en_T & ~uncache; // @[icache.scala 66:43]
-  wire  _GEN_386 = 7'h0 == idx & way ? valid_0_1 : valid_0_0; // @[icache.scala 66:{25,25}]
-  wire  _GEN_1027 = ~way; // @[icache.scala 66:{25,25}]
-  wire  _GEN_387 = 7'h1 == idx & ~way ? valid_1_0 : _GEN_386; // @[icache.scala 66:{25,25}]
-  wire  _GEN_388 = 7'h1 == idx & way ? valid_1_1 : _GEN_387; // @[icache.scala 66:{25,25}]
-  wire  _GEN_389 = 7'h2 == idx & ~way ? valid_2_0 : _GEN_388; // @[icache.scala 66:{25,25}]
-  wire  _GEN_390 = 7'h2 == idx & way ? valid_2_1 : _GEN_389; // @[icache.scala 66:{25,25}]
-  wire  _GEN_391 = 7'h3 == idx & ~way ? valid_3_0 : _GEN_390; // @[icache.scala 66:{25,25}]
-  wire  _GEN_392 = 7'h3 == idx & way ? valid_3_1 : _GEN_391; // @[icache.scala 66:{25,25}]
-  wire  _GEN_393 = 7'h4 == idx & ~way ? valid_4_0 : _GEN_392; // @[icache.scala 66:{25,25}]
-  wire  _GEN_394 = 7'h4 == idx & way ? valid_4_1 : _GEN_393; // @[icache.scala 66:{25,25}]
-  wire  _GEN_395 = 7'h5 == idx & ~way ? valid_5_0 : _GEN_394; // @[icache.scala 66:{25,25}]
-  wire  _GEN_396 = 7'h5 == idx & way ? valid_5_1 : _GEN_395; // @[icache.scala 66:{25,25}]
-  wire  _GEN_397 = 7'h6 == idx & ~way ? valid_6_0 : _GEN_396; // @[icache.scala 66:{25,25}]
-  wire  _GEN_398 = 7'h6 == idx & way ? valid_6_1 : _GEN_397; // @[icache.scala 66:{25,25}]
-  wire  _GEN_399 = 7'h7 == idx & ~way ? valid_7_0 : _GEN_398; // @[icache.scala 66:{25,25}]
-  wire  _GEN_400 = 7'h7 == idx & way ? valid_7_1 : _GEN_399; // @[icache.scala 66:{25,25}]
-  wire  _GEN_401 = 7'h8 == idx & ~way ? valid_8_0 : _GEN_400; // @[icache.scala 66:{25,25}]
-  wire  _GEN_402 = 7'h8 == idx & way ? valid_8_1 : _GEN_401; // @[icache.scala 66:{25,25}]
-  wire  _GEN_403 = 7'h9 == idx & ~way ? valid_9_0 : _GEN_402; // @[icache.scala 66:{25,25}]
-  wire  _GEN_404 = 7'h9 == idx & way ? valid_9_1 : _GEN_403; // @[icache.scala 66:{25,25}]
-  wire  _GEN_405 = 7'ha == idx & ~way ? valid_10_0 : _GEN_404; // @[icache.scala 66:{25,25}]
-  wire  _GEN_406 = 7'ha == idx & way ? valid_10_1 : _GEN_405; // @[icache.scala 66:{25,25}]
-  wire  _GEN_407 = 7'hb == idx & ~way ? valid_11_0 : _GEN_406; // @[icache.scala 66:{25,25}]
-  wire  _GEN_408 = 7'hb == idx & way ? valid_11_1 : _GEN_407; // @[icache.scala 66:{25,25}]
-  wire  _GEN_409 = 7'hc == idx & ~way ? valid_12_0 : _GEN_408; // @[icache.scala 66:{25,25}]
-  wire  _GEN_410 = 7'hc == idx & way ? valid_12_1 : _GEN_409; // @[icache.scala 66:{25,25}]
-  wire  _GEN_411 = 7'hd == idx & ~way ? valid_13_0 : _GEN_410; // @[icache.scala 66:{25,25}]
-  wire  _GEN_412 = 7'hd == idx & way ? valid_13_1 : _GEN_411; // @[icache.scala 66:{25,25}]
-  wire  _GEN_413 = 7'he == idx & ~way ? valid_14_0 : _GEN_412; // @[icache.scala 66:{25,25}]
-  wire  _GEN_414 = 7'he == idx & way ? valid_14_1 : _GEN_413; // @[icache.scala 66:{25,25}]
-  wire  _GEN_415 = 7'hf == idx & ~way ? valid_15_0 : _GEN_414; // @[icache.scala 66:{25,25}]
-  wire  _GEN_416 = 7'hf == idx & way ? valid_15_1 : _GEN_415; // @[icache.scala 66:{25,25}]
-  wire  _GEN_417 = 7'h10 == idx & ~way ? valid_16_0 : _GEN_416; // @[icache.scala 66:{25,25}]
-  wire  _GEN_418 = 7'h10 == idx & way ? valid_16_1 : _GEN_417; // @[icache.scala 66:{25,25}]
-  wire  _GEN_419 = 7'h11 == idx & ~way ? valid_17_0 : _GEN_418; // @[icache.scala 66:{25,25}]
-  wire  _GEN_420 = 7'h11 == idx & way ? valid_17_1 : _GEN_419; // @[icache.scala 66:{25,25}]
-  wire  _GEN_421 = 7'h12 == idx & ~way ? valid_18_0 : _GEN_420; // @[icache.scala 66:{25,25}]
-  wire  _GEN_422 = 7'h12 == idx & way ? valid_18_1 : _GEN_421; // @[icache.scala 66:{25,25}]
-  wire  _GEN_423 = 7'h13 == idx & ~way ? valid_19_0 : _GEN_422; // @[icache.scala 66:{25,25}]
-  wire  _GEN_424 = 7'h13 == idx & way ? valid_19_1 : _GEN_423; // @[icache.scala 66:{25,25}]
-  wire  _GEN_425 = 7'h14 == idx & ~way ? valid_20_0 : _GEN_424; // @[icache.scala 66:{25,25}]
-  wire  _GEN_426 = 7'h14 == idx & way ? valid_20_1 : _GEN_425; // @[icache.scala 66:{25,25}]
-  wire  _GEN_427 = 7'h15 == idx & ~way ? valid_21_0 : _GEN_426; // @[icache.scala 66:{25,25}]
-  wire  _GEN_428 = 7'h15 == idx & way ? valid_21_1 : _GEN_427; // @[icache.scala 66:{25,25}]
-  wire  _GEN_429 = 7'h16 == idx & ~way ? valid_22_0 : _GEN_428; // @[icache.scala 66:{25,25}]
-  wire  _GEN_430 = 7'h16 == idx & way ? valid_22_1 : _GEN_429; // @[icache.scala 66:{25,25}]
-  wire  _GEN_431 = 7'h17 == idx & ~way ? valid_23_0 : _GEN_430; // @[icache.scala 66:{25,25}]
-  wire  _GEN_432 = 7'h17 == idx & way ? valid_23_1 : _GEN_431; // @[icache.scala 66:{25,25}]
-  wire  _GEN_433 = 7'h18 == idx & ~way ? valid_24_0 : _GEN_432; // @[icache.scala 66:{25,25}]
-  wire  _GEN_434 = 7'h18 == idx & way ? valid_24_1 : _GEN_433; // @[icache.scala 66:{25,25}]
-  wire  _GEN_435 = 7'h19 == idx & ~way ? valid_25_0 : _GEN_434; // @[icache.scala 66:{25,25}]
-  wire  _GEN_436 = 7'h19 == idx & way ? valid_25_1 : _GEN_435; // @[icache.scala 66:{25,25}]
-  wire  _GEN_437 = 7'h1a == idx & ~way ? valid_26_0 : _GEN_436; // @[icache.scala 66:{25,25}]
-  wire  _GEN_438 = 7'h1a == idx & way ? valid_26_1 : _GEN_437; // @[icache.scala 66:{25,25}]
-  wire  _GEN_439 = 7'h1b == idx & ~way ? valid_27_0 : _GEN_438; // @[icache.scala 66:{25,25}]
-  wire  _GEN_440 = 7'h1b == idx & way ? valid_27_1 : _GEN_439; // @[icache.scala 66:{25,25}]
-  wire  _GEN_441 = 7'h1c == idx & ~way ? valid_28_0 : _GEN_440; // @[icache.scala 66:{25,25}]
-  wire  _GEN_442 = 7'h1c == idx & way ? valid_28_1 : _GEN_441; // @[icache.scala 66:{25,25}]
-  wire  _GEN_443 = 7'h1d == idx & ~way ? valid_29_0 : _GEN_442; // @[icache.scala 66:{25,25}]
-  wire  _GEN_444 = 7'h1d == idx & way ? valid_29_1 : _GEN_443; // @[icache.scala 66:{25,25}]
-  wire  _GEN_445 = 7'h1e == idx & ~way ? valid_30_0 : _GEN_444; // @[icache.scala 66:{25,25}]
-  wire  _GEN_446 = 7'h1e == idx & way ? valid_30_1 : _GEN_445; // @[icache.scala 66:{25,25}]
-  wire  _GEN_447 = 7'h1f == idx & ~way ? valid_31_0 : _GEN_446; // @[icache.scala 66:{25,25}]
-  wire  _GEN_448 = 7'h1f == idx & way ? valid_31_1 : _GEN_447; // @[icache.scala 66:{25,25}]
-  wire  _GEN_449 = 7'h20 == idx & ~way ? valid_32_0 : _GEN_448; // @[icache.scala 66:{25,25}]
-  wire  _GEN_450 = 7'h20 == idx & way ? valid_32_1 : _GEN_449; // @[icache.scala 66:{25,25}]
-  wire  _GEN_451 = 7'h21 == idx & ~way ? valid_33_0 : _GEN_450; // @[icache.scala 66:{25,25}]
-  wire  _GEN_452 = 7'h21 == idx & way ? valid_33_1 : _GEN_451; // @[icache.scala 66:{25,25}]
-  wire  _GEN_453 = 7'h22 == idx & ~way ? valid_34_0 : _GEN_452; // @[icache.scala 66:{25,25}]
-  wire  _GEN_454 = 7'h22 == idx & way ? valid_34_1 : _GEN_453; // @[icache.scala 66:{25,25}]
-  wire  _GEN_455 = 7'h23 == idx & ~way ? valid_35_0 : _GEN_454; // @[icache.scala 66:{25,25}]
-  wire  _GEN_456 = 7'h23 == idx & way ? valid_35_1 : _GEN_455; // @[icache.scala 66:{25,25}]
-  wire  _GEN_457 = 7'h24 == idx & ~way ? valid_36_0 : _GEN_456; // @[icache.scala 66:{25,25}]
-  wire  _GEN_458 = 7'h24 == idx & way ? valid_36_1 : _GEN_457; // @[icache.scala 66:{25,25}]
-  wire  _GEN_459 = 7'h25 == idx & ~way ? valid_37_0 : _GEN_458; // @[icache.scala 66:{25,25}]
-  wire  _GEN_460 = 7'h25 == idx & way ? valid_37_1 : _GEN_459; // @[icache.scala 66:{25,25}]
-  wire  _GEN_461 = 7'h26 == idx & ~way ? valid_38_0 : _GEN_460; // @[icache.scala 66:{25,25}]
-  wire  _GEN_462 = 7'h26 == idx & way ? valid_38_1 : _GEN_461; // @[icache.scala 66:{25,25}]
-  wire  _GEN_463 = 7'h27 == idx & ~way ? valid_39_0 : _GEN_462; // @[icache.scala 66:{25,25}]
-  wire  _GEN_464 = 7'h27 == idx & way ? valid_39_1 : _GEN_463; // @[icache.scala 66:{25,25}]
-  wire  _GEN_465 = 7'h28 == idx & ~way ? valid_40_0 : _GEN_464; // @[icache.scala 66:{25,25}]
-  wire  _GEN_466 = 7'h28 == idx & way ? valid_40_1 : _GEN_465; // @[icache.scala 66:{25,25}]
-  wire  _GEN_467 = 7'h29 == idx & ~way ? valid_41_0 : _GEN_466; // @[icache.scala 66:{25,25}]
-  wire  _GEN_468 = 7'h29 == idx & way ? valid_41_1 : _GEN_467; // @[icache.scala 66:{25,25}]
-  wire  _GEN_469 = 7'h2a == idx & ~way ? valid_42_0 : _GEN_468; // @[icache.scala 66:{25,25}]
-  wire  _GEN_470 = 7'h2a == idx & way ? valid_42_1 : _GEN_469; // @[icache.scala 66:{25,25}]
-  wire  _GEN_471 = 7'h2b == idx & ~way ? valid_43_0 : _GEN_470; // @[icache.scala 66:{25,25}]
-  wire  _GEN_472 = 7'h2b == idx & way ? valid_43_1 : _GEN_471; // @[icache.scala 66:{25,25}]
-  wire  _GEN_473 = 7'h2c == idx & ~way ? valid_44_0 : _GEN_472; // @[icache.scala 66:{25,25}]
-  wire  _GEN_474 = 7'h2c == idx & way ? valid_44_1 : _GEN_473; // @[icache.scala 66:{25,25}]
-  wire  _GEN_475 = 7'h2d == idx & ~way ? valid_45_0 : _GEN_474; // @[icache.scala 66:{25,25}]
-  wire  _GEN_476 = 7'h2d == idx & way ? valid_45_1 : _GEN_475; // @[icache.scala 66:{25,25}]
-  wire  _GEN_477 = 7'h2e == idx & ~way ? valid_46_0 : _GEN_476; // @[icache.scala 66:{25,25}]
-  wire  _GEN_478 = 7'h2e == idx & way ? valid_46_1 : _GEN_477; // @[icache.scala 66:{25,25}]
-  wire  _GEN_479 = 7'h2f == idx & ~way ? valid_47_0 : _GEN_478; // @[icache.scala 66:{25,25}]
-  wire  _GEN_480 = 7'h2f == idx & way ? valid_47_1 : _GEN_479; // @[icache.scala 66:{25,25}]
-  wire  _GEN_481 = 7'h30 == idx & ~way ? valid_48_0 : _GEN_480; // @[icache.scala 66:{25,25}]
-  wire  _GEN_482 = 7'h30 == idx & way ? valid_48_1 : _GEN_481; // @[icache.scala 66:{25,25}]
-  wire  _GEN_483 = 7'h31 == idx & ~way ? valid_49_0 : _GEN_482; // @[icache.scala 66:{25,25}]
-  wire  _GEN_484 = 7'h31 == idx & way ? valid_49_1 : _GEN_483; // @[icache.scala 66:{25,25}]
-  wire  _GEN_485 = 7'h32 == idx & ~way ? valid_50_0 : _GEN_484; // @[icache.scala 66:{25,25}]
-  wire  _GEN_486 = 7'h32 == idx & way ? valid_50_1 : _GEN_485; // @[icache.scala 66:{25,25}]
-  wire  _GEN_487 = 7'h33 == idx & ~way ? valid_51_0 : _GEN_486; // @[icache.scala 66:{25,25}]
-  wire  _GEN_488 = 7'h33 == idx & way ? valid_51_1 : _GEN_487; // @[icache.scala 66:{25,25}]
-  wire  _GEN_489 = 7'h34 == idx & ~way ? valid_52_0 : _GEN_488; // @[icache.scala 66:{25,25}]
-  wire  _GEN_490 = 7'h34 == idx & way ? valid_52_1 : _GEN_489; // @[icache.scala 66:{25,25}]
-  wire  _GEN_491 = 7'h35 == idx & ~way ? valid_53_0 : _GEN_490; // @[icache.scala 66:{25,25}]
-  wire  _GEN_492 = 7'h35 == idx & way ? valid_53_1 : _GEN_491; // @[icache.scala 66:{25,25}]
-  wire  _GEN_493 = 7'h36 == idx & ~way ? valid_54_0 : _GEN_492; // @[icache.scala 66:{25,25}]
-  wire  _GEN_494 = 7'h36 == idx & way ? valid_54_1 : _GEN_493; // @[icache.scala 66:{25,25}]
-  wire  _GEN_495 = 7'h37 == idx & ~way ? valid_55_0 : _GEN_494; // @[icache.scala 66:{25,25}]
-  wire  _GEN_496 = 7'h37 == idx & way ? valid_55_1 : _GEN_495; // @[icache.scala 66:{25,25}]
-  wire  _GEN_497 = 7'h38 == idx & ~way ? valid_56_0 : _GEN_496; // @[icache.scala 66:{25,25}]
-  wire  _GEN_498 = 7'h38 == idx & way ? valid_56_1 : _GEN_497; // @[icache.scala 66:{25,25}]
-  wire  _GEN_499 = 7'h39 == idx & ~way ? valid_57_0 : _GEN_498; // @[icache.scala 66:{25,25}]
-  wire  _GEN_500 = 7'h39 == idx & way ? valid_57_1 : _GEN_499; // @[icache.scala 66:{25,25}]
-  wire  _GEN_501 = 7'h3a == idx & ~way ? valid_58_0 : _GEN_500; // @[icache.scala 66:{25,25}]
-  wire  _GEN_502 = 7'h3a == idx & way ? valid_58_1 : _GEN_501; // @[icache.scala 66:{25,25}]
-  wire  _GEN_503 = 7'h3b == idx & ~way ? valid_59_0 : _GEN_502; // @[icache.scala 66:{25,25}]
-  wire  _GEN_504 = 7'h3b == idx & way ? valid_59_1 : _GEN_503; // @[icache.scala 66:{25,25}]
-  wire  _GEN_505 = 7'h3c == idx & ~way ? valid_60_0 : _GEN_504; // @[icache.scala 66:{25,25}]
-  wire  _GEN_506 = 7'h3c == idx & way ? valid_60_1 : _GEN_505; // @[icache.scala 66:{25,25}]
-  wire  _GEN_507 = 7'h3d == idx & ~way ? valid_61_0 : _GEN_506; // @[icache.scala 66:{25,25}]
-  wire  _GEN_508 = 7'h3d == idx & way ? valid_61_1 : _GEN_507; // @[icache.scala 66:{25,25}]
-  wire  _GEN_509 = 7'h3e == idx & ~way ? valid_62_0 : _GEN_508; // @[icache.scala 66:{25,25}]
-  wire  _GEN_510 = 7'h3e == idx & way ? valid_62_1 : _GEN_509; // @[icache.scala 66:{25,25}]
-  wire  _GEN_511 = 7'h3f == idx & ~way ? valid_63_0 : _GEN_510; // @[icache.scala 66:{25,25}]
-  wire  _GEN_512 = 7'h3f == idx & way ? valid_63_1 : _GEN_511; // @[icache.scala 66:{25,25}]
-  wire  _GEN_513 = 7'h40 == idx & ~way ? valid_64_0 : _GEN_512; // @[icache.scala 66:{25,25}]
-  wire  _GEN_514 = 7'h40 == idx & way ? valid_64_1 : _GEN_513; // @[icache.scala 66:{25,25}]
-  wire  _GEN_515 = 7'h41 == idx & ~way ? valid_65_0 : _GEN_514; // @[icache.scala 66:{25,25}]
-  wire  _GEN_516 = 7'h41 == idx & way ? valid_65_1 : _GEN_515; // @[icache.scala 66:{25,25}]
-  wire  _GEN_517 = 7'h42 == idx & ~way ? valid_66_0 : _GEN_516; // @[icache.scala 66:{25,25}]
-  wire  _GEN_518 = 7'h42 == idx & way ? valid_66_1 : _GEN_517; // @[icache.scala 66:{25,25}]
-  wire  _GEN_519 = 7'h43 == idx & ~way ? valid_67_0 : _GEN_518; // @[icache.scala 66:{25,25}]
-  wire  _GEN_520 = 7'h43 == idx & way ? valid_67_1 : _GEN_519; // @[icache.scala 66:{25,25}]
-  wire  _GEN_521 = 7'h44 == idx & ~way ? valid_68_0 : _GEN_520; // @[icache.scala 66:{25,25}]
-  wire  _GEN_522 = 7'h44 == idx & way ? valid_68_1 : _GEN_521; // @[icache.scala 66:{25,25}]
-  wire  _GEN_523 = 7'h45 == idx & ~way ? valid_69_0 : _GEN_522; // @[icache.scala 66:{25,25}]
-  wire  _GEN_524 = 7'h45 == idx & way ? valid_69_1 : _GEN_523; // @[icache.scala 66:{25,25}]
-  wire  _GEN_525 = 7'h46 == idx & ~way ? valid_70_0 : _GEN_524; // @[icache.scala 66:{25,25}]
-  wire  _GEN_526 = 7'h46 == idx & way ? valid_70_1 : _GEN_525; // @[icache.scala 66:{25,25}]
-  wire  _GEN_527 = 7'h47 == idx & ~way ? valid_71_0 : _GEN_526; // @[icache.scala 66:{25,25}]
-  wire  _GEN_528 = 7'h47 == idx & way ? valid_71_1 : _GEN_527; // @[icache.scala 66:{25,25}]
-  wire  _GEN_529 = 7'h48 == idx & ~way ? valid_72_0 : _GEN_528; // @[icache.scala 66:{25,25}]
-  wire  _GEN_530 = 7'h48 == idx & way ? valid_72_1 : _GEN_529; // @[icache.scala 66:{25,25}]
-  wire  _GEN_531 = 7'h49 == idx & ~way ? valid_73_0 : _GEN_530; // @[icache.scala 66:{25,25}]
-  wire  _GEN_532 = 7'h49 == idx & way ? valid_73_1 : _GEN_531; // @[icache.scala 66:{25,25}]
-  wire  _GEN_533 = 7'h4a == idx & ~way ? valid_74_0 : _GEN_532; // @[icache.scala 66:{25,25}]
-  wire  _GEN_534 = 7'h4a == idx & way ? valid_74_1 : _GEN_533; // @[icache.scala 66:{25,25}]
-  wire  _GEN_535 = 7'h4b == idx & ~way ? valid_75_0 : _GEN_534; // @[icache.scala 66:{25,25}]
-  wire  _GEN_536 = 7'h4b == idx & way ? valid_75_1 : _GEN_535; // @[icache.scala 66:{25,25}]
-  wire  _GEN_537 = 7'h4c == idx & ~way ? valid_76_0 : _GEN_536; // @[icache.scala 66:{25,25}]
-  wire  _GEN_538 = 7'h4c == idx & way ? valid_76_1 : _GEN_537; // @[icache.scala 66:{25,25}]
-  wire  _GEN_539 = 7'h4d == idx & ~way ? valid_77_0 : _GEN_538; // @[icache.scala 66:{25,25}]
-  wire  _GEN_540 = 7'h4d == idx & way ? valid_77_1 : _GEN_539; // @[icache.scala 66:{25,25}]
-  wire  _GEN_541 = 7'h4e == idx & ~way ? valid_78_0 : _GEN_540; // @[icache.scala 66:{25,25}]
-  wire  _GEN_542 = 7'h4e == idx & way ? valid_78_1 : _GEN_541; // @[icache.scala 66:{25,25}]
-  wire  _GEN_543 = 7'h4f == idx & ~way ? valid_79_0 : _GEN_542; // @[icache.scala 66:{25,25}]
-  wire  _GEN_544 = 7'h4f == idx & way ? valid_79_1 : _GEN_543; // @[icache.scala 66:{25,25}]
-  wire  _GEN_545 = 7'h50 == idx & ~way ? valid_80_0 : _GEN_544; // @[icache.scala 66:{25,25}]
-  wire  _GEN_546 = 7'h50 == idx & way ? valid_80_1 : _GEN_545; // @[icache.scala 66:{25,25}]
-  wire  _GEN_547 = 7'h51 == idx & ~way ? valid_81_0 : _GEN_546; // @[icache.scala 66:{25,25}]
-  wire  _GEN_548 = 7'h51 == idx & way ? valid_81_1 : _GEN_547; // @[icache.scala 66:{25,25}]
-  wire  _GEN_549 = 7'h52 == idx & ~way ? valid_82_0 : _GEN_548; // @[icache.scala 66:{25,25}]
-  wire  _GEN_550 = 7'h52 == idx & way ? valid_82_1 : _GEN_549; // @[icache.scala 66:{25,25}]
-  wire  _GEN_551 = 7'h53 == idx & ~way ? valid_83_0 : _GEN_550; // @[icache.scala 66:{25,25}]
-  wire  _GEN_552 = 7'h53 == idx & way ? valid_83_1 : _GEN_551; // @[icache.scala 66:{25,25}]
-  wire  _GEN_553 = 7'h54 == idx & ~way ? valid_84_0 : _GEN_552; // @[icache.scala 66:{25,25}]
-  wire  _GEN_554 = 7'h54 == idx & way ? valid_84_1 : _GEN_553; // @[icache.scala 66:{25,25}]
-  wire  _GEN_555 = 7'h55 == idx & ~way ? valid_85_0 : _GEN_554; // @[icache.scala 66:{25,25}]
-  wire  _GEN_556 = 7'h55 == idx & way ? valid_85_1 : _GEN_555; // @[icache.scala 66:{25,25}]
-  wire  _GEN_557 = 7'h56 == idx & ~way ? valid_86_0 : _GEN_556; // @[icache.scala 66:{25,25}]
-  wire  _GEN_558 = 7'h56 == idx & way ? valid_86_1 : _GEN_557; // @[icache.scala 66:{25,25}]
-  wire  _GEN_559 = 7'h57 == idx & ~way ? valid_87_0 : _GEN_558; // @[icache.scala 66:{25,25}]
-  wire  _GEN_560 = 7'h57 == idx & way ? valid_87_1 : _GEN_559; // @[icache.scala 66:{25,25}]
-  wire  _GEN_561 = 7'h58 == idx & ~way ? valid_88_0 : _GEN_560; // @[icache.scala 66:{25,25}]
-  wire  _GEN_562 = 7'h58 == idx & way ? valid_88_1 : _GEN_561; // @[icache.scala 66:{25,25}]
-  wire  _GEN_563 = 7'h59 == idx & ~way ? valid_89_0 : _GEN_562; // @[icache.scala 66:{25,25}]
-  wire  _GEN_564 = 7'h59 == idx & way ? valid_89_1 : _GEN_563; // @[icache.scala 66:{25,25}]
-  wire  _GEN_565 = 7'h5a == idx & ~way ? valid_90_0 : _GEN_564; // @[icache.scala 66:{25,25}]
-  wire  _GEN_566 = 7'h5a == idx & way ? valid_90_1 : _GEN_565; // @[icache.scala 66:{25,25}]
-  wire  _GEN_567 = 7'h5b == idx & ~way ? valid_91_0 : _GEN_566; // @[icache.scala 66:{25,25}]
-  wire  _GEN_568 = 7'h5b == idx & way ? valid_91_1 : _GEN_567; // @[icache.scala 66:{25,25}]
-  wire  _GEN_569 = 7'h5c == idx & ~way ? valid_92_0 : _GEN_568; // @[icache.scala 66:{25,25}]
-  wire  _GEN_570 = 7'h5c == idx & way ? valid_92_1 : _GEN_569; // @[icache.scala 66:{25,25}]
-  wire  _GEN_571 = 7'h5d == idx & ~way ? valid_93_0 : _GEN_570; // @[icache.scala 66:{25,25}]
-  wire  _GEN_572 = 7'h5d == idx & way ? valid_93_1 : _GEN_571; // @[icache.scala 66:{25,25}]
-  wire  _GEN_573 = 7'h5e == idx & ~way ? valid_94_0 : _GEN_572; // @[icache.scala 66:{25,25}]
-  wire  _GEN_574 = 7'h5e == idx & way ? valid_94_1 : _GEN_573; // @[icache.scala 66:{25,25}]
-  wire  _GEN_575 = 7'h5f == idx & ~way ? valid_95_0 : _GEN_574; // @[icache.scala 66:{25,25}]
-  wire  _GEN_576 = 7'h5f == idx & way ? valid_95_1 : _GEN_575; // @[icache.scala 66:{25,25}]
-  wire  _GEN_577 = 7'h60 == idx & ~way ? valid_96_0 : _GEN_576; // @[icache.scala 66:{25,25}]
-  wire  _GEN_578 = 7'h60 == idx & way ? valid_96_1 : _GEN_577; // @[icache.scala 66:{25,25}]
-  wire  _GEN_579 = 7'h61 == idx & ~way ? valid_97_0 : _GEN_578; // @[icache.scala 66:{25,25}]
-  wire  _GEN_580 = 7'h61 == idx & way ? valid_97_1 : _GEN_579; // @[icache.scala 66:{25,25}]
-  wire  _GEN_581 = 7'h62 == idx & ~way ? valid_98_0 : _GEN_580; // @[icache.scala 66:{25,25}]
-  wire  _GEN_582 = 7'h62 == idx & way ? valid_98_1 : _GEN_581; // @[icache.scala 66:{25,25}]
-  wire  _GEN_583 = 7'h63 == idx & ~way ? valid_99_0 : _GEN_582; // @[icache.scala 66:{25,25}]
-  wire  _GEN_584 = 7'h63 == idx & way ? valid_99_1 : _GEN_583; // @[icache.scala 66:{25,25}]
-  wire  _GEN_585 = 7'h64 == idx & ~way ? valid_100_0 : _GEN_584; // @[icache.scala 66:{25,25}]
-  wire  _GEN_586 = 7'h64 == idx & way ? valid_100_1 : _GEN_585; // @[icache.scala 66:{25,25}]
-  wire  _GEN_587 = 7'h65 == idx & ~way ? valid_101_0 : _GEN_586; // @[icache.scala 66:{25,25}]
-  wire  _GEN_588 = 7'h65 == idx & way ? valid_101_1 : _GEN_587; // @[icache.scala 66:{25,25}]
-  wire  _GEN_589 = 7'h66 == idx & ~way ? valid_102_0 : _GEN_588; // @[icache.scala 66:{25,25}]
-  wire  _GEN_590 = 7'h66 == idx & way ? valid_102_1 : _GEN_589; // @[icache.scala 66:{25,25}]
-  wire  _GEN_591 = 7'h67 == idx & ~way ? valid_103_0 : _GEN_590; // @[icache.scala 66:{25,25}]
-  wire  _GEN_592 = 7'h67 == idx & way ? valid_103_1 : _GEN_591; // @[icache.scala 66:{25,25}]
-  wire  _GEN_593 = 7'h68 == idx & ~way ? valid_104_0 : _GEN_592; // @[icache.scala 66:{25,25}]
-  wire  _GEN_594 = 7'h68 == idx & way ? valid_104_1 : _GEN_593; // @[icache.scala 66:{25,25}]
-  wire  _GEN_595 = 7'h69 == idx & ~way ? valid_105_0 : _GEN_594; // @[icache.scala 66:{25,25}]
-  wire  _GEN_596 = 7'h69 == idx & way ? valid_105_1 : _GEN_595; // @[icache.scala 66:{25,25}]
-  wire  _GEN_597 = 7'h6a == idx & ~way ? valid_106_0 : _GEN_596; // @[icache.scala 66:{25,25}]
-  wire  _GEN_598 = 7'h6a == idx & way ? valid_106_1 : _GEN_597; // @[icache.scala 66:{25,25}]
-  wire  _GEN_599 = 7'h6b == idx & ~way ? valid_107_0 : _GEN_598; // @[icache.scala 66:{25,25}]
-  wire  _GEN_600 = 7'h6b == idx & way ? valid_107_1 : _GEN_599; // @[icache.scala 66:{25,25}]
-  wire  _GEN_601 = 7'h6c == idx & ~way ? valid_108_0 : _GEN_600; // @[icache.scala 66:{25,25}]
-  wire  _GEN_602 = 7'h6c == idx & way ? valid_108_1 : _GEN_601; // @[icache.scala 66:{25,25}]
-  wire  _GEN_603 = 7'h6d == idx & ~way ? valid_109_0 : _GEN_602; // @[icache.scala 66:{25,25}]
-  wire  _GEN_604 = 7'h6d == idx & way ? valid_109_1 : _GEN_603; // @[icache.scala 66:{25,25}]
-  wire  _GEN_605 = 7'h6e == idx & ~way ? valid_110_0 : _GEN_604; // @[icache.scala 66:{25,25}]
-  wire  _GEN_606 = 7'h6e == idx & way ? valid_110_1 : _GEN_605; // @[icache.scala 66:{25,25}]
-  wire  _GEN_607 = 7'h6f == idx & ~way ? valid_111_0 : _GEN_606; // @[icache.scala 66:{25,25}]
-  wire  _GEN_608 = 7'h6f == idx & way ? valid_111_1 : _GEN_607; // @[icache.scala 66:{25,25}]
-  wire  _GEN_609 = 7'h70 == idx & ~way ? valid_112_0 : _GEN_608; // @[icache.scala 66:{25,25}]
-  wire  _GEN_610 = 7'h70 == idx & way ? valid_112_1 : _GEN_609; // @[icache.scala 66:{25,25}]
-  wire  _GEN_611 = 7'h71 == idx & ~way ? valid_113_0 : _GEN_610; // @[icache.scala 66:{25,25}]
-  wire  _GEN_612 = 7'h71 == idx & way ? valid_113_1 : _GEN_611; // @[icache.scala 66:{25,25}]
-  wire  _GEN_613 = 7'h72 == idx & ~way ? valid_114_0 : _GEN_612; // @[icache.scala 66:{25,25}]
-  wire  _GEN_614 = 7'h72 == idx & way ? valid_114_1 : _GEN_613; // @[icache.scala 66:{25,25}]
-  wire  _GEN_615 = 7'h73 == idx & ~way ? valid_115_0 : _GEN_614; // @[icache.scala 66:{25,25}]
-  wire  _GEN_616 = 7'h73 == idx & way ? valid_115_1 : _GEN_615; // @[icache.scala 66:{25,25}]
-  wire  _GEN_617 = 7'h74 == idx & ~way ? valid_116_0 : _GEN_616; // @[icache.scala 66:{25,25}]
-  wire  _GEN_618 = 7'h74 == idx & way ? valid_116_1 : _GEN_617; // @[icache.scala 66:{25,25}]
-  wire  _GEN_619 = 7'h75 == idx & ~way ? valid_117_0 : _GEN_618; // @[icache.scala 66:{25,25}]
-  wire  _GEN_620 = 7'h75 == idx & way ? valid_117_1 : _GEN_619; // @[icache.scala 66:{25,25}]
-  wire  _GEN_621 = 7'h76 == idx & ~way ? valid_118_0 : _GEN_620; // @[icache.scala 66:{25,25}]
-  wire  _GEN_622 = 7'h76 == idx & way ? valid_118_1 : _GEN_621; // @[icache.scala 66:{25,25}]
-  wire  _GEN_623 = 7'h77 == idx & ~way ? valid_119_0 : _GEN_622; // @[icache.scala 66:{25,25}]
-  wire  _GEN_624 = 7'h77 == idx & way ? valid_119_1 : _GEN_623; // @[icache.scala 66:{25,25}]
-  wire  _GEN_625 = 7'h78 == idx & ~way ? valid_120_0 : _GEN_624; // @[icache.scala 66:{25,25}]
-  wire  _GEN_626 = 7'h78 == idx & way ? valid_120_1 : _GEN_625; // @[icache.scala 66:{25,25}]
-  wire  _GEN_627 = 7'h79 == idx & ~way ? valid_121_0 : _GEN_626; // @[icache.scala 66:{25,25}]
-  wire  _GEN_628 = 7'h79 == idx & way ? valid_121_1 : _GEN_627; // @[icache.scala 66:{25,25}]
-  wire  _GEN_629 = 7'h7a == idx & ~way ? valid_122_0 : _GEN_628; // @[icache.scala 66:{25,25}]
-  wire  _GEN_630 = 7'h7a == idx & way ? valid_122_1 : _GEN_629; // @[icache.scala 66:{25,25}]
-  wire  _GEN_631 = 7'h7b == idx & ~way ? valid_123_0 : _GEN_630; // @[icache.scala 66:{25,25}]
-  wire  _GEN_632 = 7'h7b == idx & way ? valid_123_1 : _GEN_631; // @[icache.scala 66:{25,25}]
-  wire  _GEN_633 = 7'h7c == idx & ~way ? valid_124_0 : _GEN_632; // @[icache.scala 66:{25,25}]
-  wire  _GEN_634 = 7'h7c == idx & way ? valid_124_1 : _GEN_633; // @[icache.scala 66:{25,25}]
-  wire  _GEN_635 = 7'h7d == idx & ~way ? valid_125_0 : _GEN_634; // @[icache.scala 66:{25,25}]
-  wire  _GEN_636 = 7'h7d == idx & way ? valid_125_1 : _GEN_635; // @[icache.scala 66:{25,25}]
-  wire  _GEN_637 = 7'h7e == idx & ~way ? valid_126_0 : _GEN_636; // @[icache.scala 66:{25,25}]
-  wire  _GEN_638 = 7'h7e == idx & way ? valid_126_1 : _GEN_637; // @[icache.scala 66:{25,25}]
-  wire  _GEN_639 = 7'h7f == idx & ~way ? valid_127_0 : _GEN_638; // @[icache.scala 66:{25,25}]
-  wire  _GEN_640 = 7'h7f == idx & way ? valid_127_1 : _GEN_639; // @[icache.scala 66:{25,25}]
+  wire  _state_T_7 = _state_T_5 & io_mem_r_bits_last; // @[icache.scala 64:37]
+  wire  _valid_T_2 = _lfsr8_io_en_T & ~uncache; // @[icache.scala 67:43]
+  wire  _GEN_386 = 7'h0 == idx & way ? valid_0_1 : valid_0_0; // @[icache.scala 67:{25,25}]
+  wire  _GEN_1027 = ~way; // @[icache.scala 67:{25,25}]
+  wire  _GEN_387 = 7'h1 == idx & ~way ? valid_1_0 : _GEN_386; // @[icache.scala 67:{25,25}]
+  wire  _GEN_388 = 7'h1 == idx & way ? valid_1_1 : _GEN_387; // @[icache.scala 67:{25,25}]
+  wire  _GEN_389 = 7'h2 == idx & ~way ? valid_2_0 : _GEN_388; // @[icache.scala 67:{25,25}]
+  wire  _GEN_390 = 7'h2 == idx & way ? valid_2_1 : _GEN_389; // @[icache.scala 67:{25,25}]
+  wire  _GEN_391 = 7'h3 == idx & ~way ? valid_3_0 : _GEN_390; // @[icache.scala 67:{25,25}]
+  wire  _GEN_392 = 7'h3 == idx & way ? valid_3_1 : _GEN_391; // @[icache.scala 67:{25,25}]
+  wire  _GEN_393 = 7'h4 == idx & ~way ? valid_4_0 : _GEN_392; // @[icache.scala 67:{25,25}]
+  wire  _GEN_394 = 7'h4 == idx & way ? valid_4_1 : _GEN_393; // @[icache.scala 67:{25,25}]
+  wire  _GEN_395 = 7'h5 == idx & ~way ? valid_5_0 : _GEN_394; // @[icache.scala 67:{25,25}]
+  wire  _GEN_396 = 7'h5 == idx & way ? valid_5_1 : _GEN_395; // @[icache.scala 67:{25,25}]
+  wire  _GEN_397 = 7'h6 == idx & ~way ? valid_6_0 : _GEN_396; // @[icache.scala 67:{25,25}]
+  wire  _GEN_398 = 7'h6 == idx & way ? valid_6_1 : _GEN_397; // @[icache.scala 67:{25,25}]
+  wire  _GEN_399 = 7'h7 == idx & ~way ? valid_7_0 : _GEN_398; // @[icache.scala 67:{25,25}]
+  wire  _GEN_400 = 7'h7 == idx & way ? valid_7_1 : _GEN_399; // @[icache.scala 67:{25,25}]
+  wire  _GEN_401 = 7'h8 == idx & ~way ? valid_8_0 : _GEN_400; // @[icache.scala 67:{25,25}]
+  wire  _GEN_402 = 7'h8 == idx & way ? valid_8_1 : _GEN_401; // @[icache.scala 67:{25,25}]
+  wire  _GEN_403 = 7'h9 == idx & ~way ? valid_9_0 : _GEN_402; // @[icache.scala 67:{25,25}]
+  wire  _GEN_404 = 7'h9 == idx & way ? valid_9_1 : _GEN_403; // @[icache.scala 67:{25,25}]
+  wire  _GEN_405 = 7'ha == idx & ~way ? valid_10_0 : _GEN_404; // @[icache.scala 67:{25,25}]
+  wire  _GEN_406 = 7'ha == idx & way ? valid_10_1 : _GEN_405; // @[icache.scala 67:{25,25}]
+  wire  _GEN_407 = 7'hb == idx & ~way ? valid_11_0 : _GEN_406; // @[icache.scala 67:{25,25}]
+  wire  _GEN_408 = 7'hb == idx & way ? valid_11_1 : _GEN_407; // @[icache.scala 67:{25,25}]
+  wire  _GEN_409 = 7'hc == idx & ~way ? valid_12_0 : _GEN_408; // @[icache.scala 67:{25,25}]
+  wire  _GEN_410 = 7'hc == idx & way ? valid_12_1 : _GEN_409; // @[icache.scala 67:{25,25}]
+  wire  _GEN_411 = 7'hd == idx & ~way ? valid_13_0 : _GEN_410; // @[icache.scala 67:{25,25}]
+  wire  _GEN_412 = 7'hd == idx & way ? valid_13_1 : _GEN_411; // @[icache.scala 67:{25,25}]
+  wire  _GEN_413 = 7'he == idx & ~way ? valid_14_0 : _GEN_412; // @[icache.scala 67:{25,25}]
+  wire  _GEN_414 = 7'he == idx & way ? valid_14_1 : _GEN_413; // @[icache.scala 67:{25,25}]
+  wire  _GEN_415 = 7'hf == idx & ~way ? valid_15_0 : _GEN_414; // @[icache.scala 67:{25,25}]
+  wire  _GEN_416 = 7'hf == idx & way ? valid_15_1 : _GEN_415; // @[icache.scala 67:{25,25}]
+  wire  _GEN_417 = 7'h10 == idx & ~way ? valid_16_0 : _GEN_416; // @[icache.scala 67:{25,25}]
+  wire  _GEN_418 = 7'h10 == idx & way ? valid_16_1 : _GEN_417; // @[icache.scala 67:{25,25}]
+  wire  _GEN_419 = 7'h11 == idx & ~way ? valid_17_0 : _GEN_418; // @[icache.scala 67:{25,25}]
+  wire  _GEN_420 = 7'h11 == idx & way ? valid_17_1 : _GEN_419; // @[icache.scala 67:{25,25}]
+  wire  _GEN_421 = 7'h12 == idx & ~way ? valid_18_0 : _GEN_420; // @[icache.scala 67:{25,25}]
+  wire  _GEN_422 = 7'h12 == idx & way ? valid_18_1 : _GEN_421; // @[icache.scala 67:{25,25}]
+  wire  _GEN_423 = 7'h13 == idx & ~way ? valid_19_0 : _GEN_422; // @[icache.scala 67:{25,25}]
+  wire  _GEN_424 = 7'h13 == idx & way ? valid_19_1 : _GEN_423; // @[icache.scala 67:{25,25}]
+  wire  _GEN_425 = 7'h14 == idx & ~way ? valid_20_0 : _GEN_424; // @[icache.scala 67:{25,25}]
+  wire  _GEN_426 = 7'h14 == idx & way ? valid_20_1 : _GEN_425; // @[icache.scala 67:{25,25}]
+  wire  _GEN_427 = 7'h15 == idx & ~way ? valid_21_0 : _GEN_426; // @[icache.scala 67:{25,25}]
+  wire  _GEN_428 = 7'h15 == idx & way ? valid_21_1 : _GEN_427; // @[icache.scala 67:{25,25}]
+  wire  _GEN_429 = 7'h16 == idx & ~way ? valid_22_0 : _GEN_428; // @[icache.scala 67:{25,25}]
+  wire  _GEN_430 = 7'h16 == idx & way ? valid_22_1 : _GEN_429; // @[icache.scala 67:{25,25}]
+  wire  _GEN_431 = 7'h17 == idx & ~way ? valid_23_0 : _GEN_430; // @[icache.scala 67:{25,25}]
+  wire  _GEN_432 = 7'h17 == idx & way ? valid_23_1 : _GEN_431; // @[icache.scala 67:{25,25}]
+  wire  _GEN_433 = 7'h18 == idx & ~way ? valid_24_0 : _GEN_432; // @[icache.scala 67:{25,25}]
+  wire  _GEN_434 = 7'h18 == idx & way ? valid_24_1 : _GEN_433; // @[icache.scala 67:{25,25}]
+  wire  _GEN_435 = 7'h19 == idx & ~way ? valid_25_0 : _GEN_434; // @[icache.scala 67:{25,25}]
+  wire  _GEN_436 = 7'h19 == idx & way ? valid_25_1 : _GEN_435; // @[icache.scala 67:{25,25}]
+  wire  _GEN_437 = 7'h1a == idx & ~way ? valid_26_0 : _GEN_436; // @[icache.scala 67:{25,25}]
+  wire  _GEN_438 = 7'h1a == idx & way ? valid_26_1 : _GEN_437; // @[icache.scala 67:{25,25}]
+  wire  _GEN_439 = 7'h1b == idx & ~way ? valid_27_0 : _GEN_438; // @[icache.scala 67:{25,25}]
+  wire  _GEN_440 = 7'h1b == idx & way ? valid_27_1 : _GEN_439; // @[icache.scala 67:{25,25}]
+  wire  _GEN_441 = 7'h1c == idx & ~way ? valid_28_0 : _GEN_440; // @[icache.scala 67:{25,25}]
+  wire  _GEN_442 = 7'h1c == idx & way ? valid_28_1 : _GEN_441; // @[icache.scala 67:{25,25}]
+  wire  _GEN_443 = 7'h1d == idx & ~way ? valid_29_0 : _GEN_442; // @[icache.scala 67:{25,25}]
+  wire  _GEN_444 = 7'h1d == idx & way ? valid_29_1 : _GEN_443; // @[icache.scala 67:{25,25}]
+  wire  _GEN_445 = 7'h1e == idx & ~way ? valid_30_0 : _GEN_444; // @[icache.scala 67:{25,25}]
+  wire  _GEN_446 = 7'h1e == idx & way ? valid_30_1 : _GEN_445; // @[icache.scala 67:{25,25}]
+  wire  _GEN_447 = 7'h1f == idx & ~way ? valid_31_0 : _GEN_446; // @[icache.scala 67:{25,25}]
+  wire  _GEN_448 = 7'h1f == idx & way ? valid_31_1 : _GEN_447; // @[icache.scala 67:{25,25}]
+  wire  _GEN_449 = 7'h20 == idx & ~way ? valid_32_0 : _GEN_448; // @[icache.scala 67:{25,25}]
+  wire  _GEN_450 = 7'h20 == idx & way ? valid_32_1 : _GEN_449; // @[icache.scala 67:{25,25}]
+  wire  _GEN_451 = 7'h21 == idx & ~way ? valid_33_0 : _GEN_450; // @[icache.scala 67:{25,25}]
+  wire  _GEN_452 = 7'h21 == idx & way ? valid_33_1 : _GEN_451; // @[icache.scala 67:{25,25}]
+  wire  _GEN_453 = 7'h22 == idx & ~way ? valid_34_0 : _GEN_452; // @[icache.scala 67:{25,25}]
+  wire  _GEN_454 = 7'h22 == idx & way ? valid_34_1 : _GEN_453; // @[icache.scala 67:{25,25}]
+  wire  _GEN_455 = 7'h23 == idx & ~way ? valid_35_0 : _GEN_454; // @[icache.scala 67:{25,25}]
+  wire  _GEN_456 = 7'h23 == idx & way ? valid_35_1 : _GEN_455; // @[icache.scala 67:{25,25}]
+  wire  _GEN_457 = 7'h24 == idx & ~way ? valid_36_0 : _GEN_456; // @[icache.scala 67:{25,25}]
+  wire  _GEN_458 = 7'h24 == idx & way ? valid_36_1 : _GEN_457; // @[icache.scala 67:{25,25}]
+  wire  _GEN_459 = 7'h25 == idx & ~way ? valid_37_0 : _GEN_458; // @[icache.scala 67:{25,25}]
+  wire  _GEN_460 = 7'h25 == idx & way ? valid_37_1 : _GEN_459; // @[icache.scala 67:{25,25}]
+  wire  _GEN_461 = 7'h26 == idx & ~way ? valid_38_0 : _GEN_460; // @[icache.scala 67:{25,25}]
+  wire  _GEN_462 = 7'h26 == idx & way ? valid_38_1 : _GEN_461; // @[icache.scala 67:{25,25}]
+  wire  _GEN_463 = 7'h27 == idx & ~way ? valid_39_0 : _GEN_462; // @[icache.scala 67:{25,25}]
+  wire  _GEN_464 = 7'h27 == idx & way ? valid_39_1 : _GEN_463; // @[icache.scala 67:{25,25}]
+  wire  _GEN_465 = 7'h28 == idx & ~way ? valid_40_0 : _GEN_464; // @[icache.scala 67:{25,25}]
+  wire  _GEN_466 = 7'h28 == idx & way ? valid_40_1 : _GEN_465; // @[icache.scala 67:{25,25}]
+  wire  _GEN_467 = 7'h29 == idx & ~way ? valid_41_0 : _GEN_466; // @[icache.scala 67:{25,25}]
+  wire  _GEN_468 = 7'h29 == idx & way ? valid_41_1 : _GEN_467; // @[icache.scala 67:{25,25}]
+  wire  _GEN_469 = 7'h2a == idx & ~way ? valid_42_0 : _GEN_468; // @[icache.scala 67:{25,25}]
+  wire  _GEN_470 = 7'h2a == idx & way ? valid_42_1 : _GEN_469; // @[icache.scala 67:{25,25}]
+  wire  _GEN_471 = 7'h2b == idx & ~way ? valid_43_0 : _GEN_470; // @[icache.scala 67:{25,25}]
+  wire  _GEN_472 = 7'h2b == idx & way ? valid_43_1 : _GEN_471; // @[icache.scala 67:{25,25}]
+  wire  _GEN_473 = 7'h2c == idx & ~way ? valid_44_0 : _GEN_472; // @[icache.scala 67:{25,25}]
+  wire  _GEN_474 = 7'h2c == idx & way ? valid_44_1 : _GEN_473; // @[icache.scala 67:{25,25}]
+  wire  _GEN_475 = 7'h2d == idx & ~way ? valid_45_0 : _GEN_474; // @[icache.scala 67:{25,25}]
+  wire  _GEN_476 = 7'h2d == idx & way ? valid_45_1 : _GEN_475; // @[icache.scala 67:{25,25}]
+  wire  _GEN_477 = 7'h2e == idx & ~way ? valid_46_0 : _GEN_476; // @[icache.scala 67:{25,25}]
+  wire  _GEN_478 = 7'h2e == idx & way ? valid_46_1 : _GEN_477; // @[icache.scala 67:{25,25}]
+  wire  _GEN_479 = 7'h2f == idx & ~way ? valid_47_0 : _GEN_478; // @[icache.scala 67:{25,25}]
+  wire  _GEN_480 = 7'h2f == idx & way ? valid_47_1 : _GEN_479; // @[icache.scala 67:{25,25}]
+  wire  _GEN_481 = 7'h30 == idx & ~way ? valid_48_0 : _GEN_480; // @[icache.scala 67:{25,25}]
+  wire  _GEN_482 = 7'h30 == idx & way ? valid_48_1 : _GEN_481; // @[icache.scala 67:{25,25}]
+  wire  _GEN_483 = 7'h31 == idx & ~way ? valid_49_0 : _GEN_482; // @[icache.scala 67:{25,25}]
+  wire  _GEN_484 = 7'h31 == idx & way ? valid_49_1 : _GEN_483; // @[icache.scala 67:{25,25}]
+  wire  _GEN_485 = 7'h32 == idx & ~way ? valid_50_0 : _GEN_484; // @[icache.scala 67:{25,25}]
+  wire  _GEN_486 = 7'h32 == idx & way ? valid_50_1 : _GEN_485; // @[icache.scala 67:{25,25}]
+  wire  _GEN_487 = 7'h33 == idx & ~way ? valid_51_0 : _GEN_486; // @[icache.scala 67:{25,25}]
+  wire  _GEN_488 = 7'h33 == idx & way ? valid_51_1 : _GEN_487; // @[icache.scala 67:{25,25}]
+  wire  _GEN_489 = 7'h34 == idx & ~way ? valid_52_0 : _GEN_488; // @[icache.scala 67:{25,25}]
+  wire  _GEN_490 = 7'h34 == idx & way ? valid_52_1 : _GEN_489; // @[icache.scala 67:{25,25}]
+  wire  _GEN_491 = 7'h35 == idx & ~way ? valid_53_0 : _GEN_490; // @[icache.scala 67:{25,25}]
+  wire  _GEN_492 = 7'h35 == idx & way ? valid_53_1 : _GEN_491; // @[icache.scala 67:{25,25}]
+  wire  _GEN_493 = 7'h36 == idx & ~way ? valid_54_0 : _GEN_492; // @[icache.scala 67:{25,25}]
+  wire  _GEN_494 = 7'h36 == idx & way ? valid_54_1 : _GEN_493; // @[icache.scala 67:{25,25}]
+  wire  _GEN_495 = 7'h37 == idx & ~way ? valid_55_0 : _GEN_494; // @[icache.scala 67:{25,25}]
+  wire  _GEN_496 = 7'h37 == idx & way ? valid_55_1 : _GEN_495; // @[icache.scala 67:{25,25}]
+  wire  _GEN_497 = 7'h38 == idx & ~way ? valid_56_0 : _GEN_496; // @[icache.scala 67:{25,25}]
+  wire  _GEN_498 = 7'h38 == idx & way ? valid_56_1 : _GEN_497; // @[icache.scala 67:{25,25}]
+  wire  _GEN_499 = 7'h39 == idx & ~way ? valid_57_0 : _GEN_498; // @[icache.scala 67:{25,25}]
+  wire  _GEN_500 = 7'h39 == idx & way ? valid_57_1 : _GEN_499; // @[icache.scala 67:{25,25}]
+  wire  _GEN_501 = 7'h3a == idx & ~way ? valid_58_0 : _GEN_500; // @[icache.scala 67:{25,25}]
+  wire  _GEN_502 = 7'h3a == idx & way ? valid_58_1 : _GEN_501; // @[icache.scala 67:{25,25}]
+  wire  _GEN_503 = 7'h3b == idx & ~way ? valid_59_0 : _GEN_502; // @[icache.scala 67:{25,25}]
+  wire  _GEN_504 = 7'h3b == idx & way ? valid_59_1 : _GEN_503; // @[icache.scala 67:{25,25}]
+  wire  _GEN_505 = 7'h3c == idx & ~way ? valid_60_0 : _GEN_504; // @[icache.scala 67:{25,25}]
+  wire  _GEN_506 = 7'h3c == idx & way ? valid_60_1 : _GEN_505; // @[icache.scala 67:{25,25}]
+  wire  _GEN_507 = 7'h3d == idx & ~way ? valid_61_0 : _GEN_506; // @[icache.scala 67:{25,25}]
+  wire  _GEN_508 = 7'h3d == idx & way ? valid_61_1 : _GEN_507; // @[icache.scala 67:{25,25}]
+  wire  _GEN_509 = 7'h3e == idx & ~way ? valid_62_0 : _GEN_508; // @[icache.scala 67:{25,25}]
+  wire  _GEN_510 = 7'h3e == idx & way ? valid_62_1 : _GEN_509; // @[icache.scala 67:{25,25}]
+  wire  _GEN_511 = 7'h3f == idx & ~way ? valid_63_0 : _GEN_510; // @[icache.scala 67:{25,25}]
+  wire  _GEN_512 = 7'h3f == idx & way ? valid_63_1 : _GEN_511; // @[icache.scala 67:{25,25}]
+  wire  _GEN_513 = 7'h40 == idx & ~way ? valid_64_0 : _GEN_512; // @[icache.scala 67:{25,25}]
+  wire  _GEN_514 = 7'h40 == idx & way ? valid_64_1 : _GEN_513; // @[icache.scala 67:{25,25}]
+  wire  _GEN_515 = 7'h41 == idx & ~way ? valid_65_0 : _GEN_514; // @[icache.scala 67:{25,25}]
+  wire  _GEN_516 = 7'h41 == idx & way ? valid_65_1 : _GEN_515; // @[icache.scala 67:{25,25}]
+  wire  _GEN_517 = 7'h42 == idx & ~way ? valid_66_0 : _GEN_516; // @[icache.scala 67:{25,25}]
+  wire  _GEN_518 = 7'h42 == idx & way ? valid_66_1 : _GEN_517; // @[icache.scala 67:{25,25}]
+  wire  _GEN_519 = 7'h43 == idx & ~way ? valid_67_0 : _GEN_518; // @[icache.scala 67:{25,25}]
+  wire  _GEN_520 = 7'h43 == idx & way ? valid_67_1 : _GEN_519; // @[icache.scala 67:{25,25}]
+  wire  _GEN_521 = 7'h44 == idx & ~way ? valid_68_0 : _GEN_520; // @[icache.scala 67:{25,25}]
+  wire  _GEN_522 = 7'h44 == idx & way ? valid_68_1 : _GEN_521; // @[icache.scala 67:{25,25}]
+  wire  _GEN_523 = 7'h45 == idx & ~way ? valid_69_0 : _GEN_522; // @[icache.scala 67:{25,25}]
+  wire  _GEN_524 = 7'h45 == idx & way ? valid_69_1 : _GEN_523; // @[icache.scala 67:{25,25}]
+  wire  _GEN_525 = 7'h46 == idx & ~way ? valid_70_0 : _GEN_524; // @[icache.scala 67:{25,25}]
+  wire  _GEN_526 = 7'h46 == idx & way ? valid_70_1 : _GEN_525; // @[icache.scala 67:{25,25}]
+  wire  _GEN_527 = 7'h47 == idx & ~way ? valid_71_0 : _GEN_526; // @[icache.scala 67:{25,25}]
+  wire  _GEN_528 = 7'h47 == idx & way ? valid_71_1 : _GEN_527; // @[icache.scala 67:{25,25}]
+  wire  _GEN_529 = 7'h48 == idx & ~way ? valid_72_0 : _GEN_528; // @[icache.scala 67:{25,25}]
+  wire  _GEN_530 = 7'h48 == idx & way ? valid_72_1 : _GEN_529; // @[icache.scala 67:{25,25}]
+  wire  _GEN_531 = 7'h49 == idx & ~way ? valid_73_0 : _GEN_530; // @[icache.scala 67:{25,25}]
+  wire  _GEN_532 = 7'h49 == idx & way ? valid_73_1 : _GEN_531; // @[icache.scala 67:{25,25}]
+  wire  _GEN_533 = 7'h4a == idx & ~way ? valid_74_0 : _GEN_532; // @[icache.scala 67:{25,25}]
+  wire  _GEN_534 = 7'h4a == idx & way ? valid_74_1 : _GEN_533; // @[icache.scala 67:{25,25}]
+  wire  _GEN_535 = 7'h4b == idx & ~way ? valid_75_0 : _GEN_534; // @[icache.scala 67:{25,25}]
+  wire  _GEN_536 = 7'h4b == idx & way ? valid_75_1 : _GEN_535; // @[icache.scala 67:{25,25}]
+  wire  _GEN_537 = 7'h4c == idx & ~way ? valid_76_0 : _GEN_536; // @[icache.scala 67:{25,25}]
+  wire  _GEN_538 = 7'h4c == idx & way ? valid_76_1 : _GEN_537; // @[icache.scala 67:{25,25}]
+  wire  _GEN_539 = 7'h4d == idx & ~way ? valid_77_0 : _GEN_538; // @[icache.scala 67:{25,25}]
+  wire  _GEN_540 = 7'h4d == idx & way ? valid_77_1 : _GEN_539; // @[icache.scala 67:{25,25}]
+  wire  _GEN_541 = 7'h4e == idx & ~way ? valid_78_0 : _GEN_540; // @[icache.scala 67:{25,25}]
+  wire  _GEN_542 = 7'h4e == idx & way ? valid_78_1 : _GEN_541; // @[icache.scala 67:{25,25}]
+  wire  _GEN_543 = 7'h4f == idx & ~way ? valid_79_0 : _GEN_542; // @[icache.scala 67:{25,25}]
+  wire  _GEN_544 = 7'h4f == idx & way ? valid_79_1 : _GEN_543; // @[icache.scala 67:{25,25}]
+  wire  _GEN_545 = 7'h50 == idx & ~way ? valid_80_0 : _GEN_544; // @[icache.scala 67:{25,25}]
+  wire  _GEN_546 = 7'h50 == idx & way ? valid_80_1 : _GEN_545; // @[icache.scala 67:{25,25}]
+  wire  _GEN_547 = 7'h51 == idx & ~way ? valid_81_0 : _GEN_546; // @[icache.scala 67:{25,25}]
+  wire  _GEN_548 = 7'h51 == idx & way ? valid_81_1 : _GEN_547; // @[icache.scala 67:{25,25}]
+  wire  _GEN_549 = 7'h52 == idx & ~way ? valid_82_0 : _GEN_548; // @[icache.scala 67:{25,25}]
+  wire  _GEN_550 = 7'h52 == idx & way ? valid_82_1 : _GEN_549; // @[icache.scala 67:{25,25}]
+  wire  _GEN_551 = 7'h53 == idx & ~way ? valid_83_0 : _GEN_550; // @[icache.scala 67:{25,25}]
+  wire  _GEN_552 = 7'h53 == idx & way ? valid_83_1 : _GEN_551; // @[icache.scala 67:{25,25}]
+  wire  _GEN_553 = 7'h54 == idx & ~way ? valid_84_0 : _GEN_552; // @[icache.scala 67:{25,25}]
+  wire  _GEN_554 = 7'h54 == idx & way ? valid_84_1 : _GEN_553; // @[icache.scala 67:{25,25}]
+  wire  _GEN_555 = 7'h55 == idx & ~way ? valid_85_0 : _GEN_554; // @[icache.scala 67:{25,25}]
+  wire  _GEN_556 = 7'h55 == idx & way ? valid_85_1 : _GEN_555; // @[icache.scala 67:{25,25}]
+  wire  _GEN_557 = 7'h56 == idx & ~way ? valid_86_0 : _GEN_556; // @[icache.scala 67:{25,25}]
+  wire  _GEN_558 = 7'h56 == idx & way ? valid_86_1 : _GEN_557; // @[icache.scala 67:{25,25}]
+  wire  _GEN_559 = 7'h57 == idx & ~way ? valid_87_0 : _GEN_558; // @[icache.scala 67:{25,25}]
+  wire  _GEN_560 = 7'h57 == idx & way ? valid_87_1 : _GEN_559; // @[icache.scala 67:{25,25}]
+  wire  _GEN_561 = 7'h58 == idx & ~way ? valid_88_0 : _GEN_560; // @[icache.scala 67:{25,25}]
+  wire  _GEN_562 = 7'h58 == idx & way ? valid_88_1 : _GEN_561; // @[icache.scala 67:{25,25}]
+  wire  _GEN_563 = 7'h59 == idx & ~way ? valid_89_0 : _GEN_562; // @[icache.scala 67:{25,25}]
+  wire  _GEN_564 = 7'h59 == idx & way ? valid_89_1 : _GEN_563; // @[icache.scala 67:{25,25}]
+  wire  _GEN_565 = 7'h5a == idx & ~way ? valid_90_0 : _GEN_564; // @[icache.scala 67:{25,25}]
+  wire  _GEN_566 = 7'h5a == idx & way ? valid_90_1 : _GEN_565; // @[icache.scala 67:{25,25}]
+  wire  _GEN_567 = 7'h5b == idx & ~way ? valid_91_0 : _GEN_566; // @[icache.scala 67:{25,25}]
+  wire  _GEN_568 = 7'h5b == idx & way ? valid_91_1 : _GEN_567; // @[icache.scala 67:{25,25}]
+  wire  _GEN_569 = 7'h5c == idx & ~way ? valid_92_0 : _GEN_568; // @[icache.scala 67:{25,25}]
+  wire  _GEN_570 = 7'h5c == idx & way ? valid_92_1 : _GEN_569; // @[icache.scala 67:{25,25}]
+  wire  _GEN_571 = 7'h5d == idx & ~way ? valid_93_0 : _GEN_570; // @[icache.scala 67:{25,25}]
+  wire  _GEN_572 = 7'h5d == idx & way ? valid_93_1 : _GEN_571; // @[icache.scala 67:{25,25}]
+  wire  _GEN_573 = 7'h5e == idx & ~way ? valid_94_0 : _GEN_572; // @[icache.scala 67:{25,25}]
+  wire  _GEN_574 = 7'h5e == idx & way ? valid_94_1 : _GEN_573; // @[icache.scala 67:{25,25}]
+  wire  _GEN_575 = 7'h5f == idx & ~way ? valid_95_0 : _GEN_574; // @[icache.scala 67:{25,25}]
+  wire  _GEN_576 = 7'h5f == idx & way ? valid_95_1 : _GEN_575; // @[icache.scala 67:{25,25}]
+  wire  _GEN_577 = 7'h60 == idx & ~way ? valid_96_0 : _GEN_576; // @[icache.scala 67:{25,25}]
+  wire  _GEN_578 = 7'h60 == idx & way ? valid_96_1 : _GEN_577; // @[icache.scala 67:{25,25}]
+  wire  _GEN_579 = 7'h61 == idx & ~way ? valid_97_0 : _GEN_578; // @[icache.scala 67:{25,25}]
+  wire  _GEN_580 = 7'h61 == idx & way ? valid_97_1 : _GEN_579; // @[icache.scala 67:{25,25}]
+  wire  _GEN_581 = 7'h62 == idx & ~way ? valid_98_0 : _GEN_580; // @[icache.scala 67:{25,25}]
+  wire  _GEN_582 = 7'h62 == idx & way ? valid_98_1 : _GEN_581; // @[icache.scala 67:{25,25}]
+  wire  _GEN_583 = 7'h63 == idx & ~way ? valid_99_0 : _GEN_582; // @[icache.scala 67:{25,25}]
+  wire  _GEN_584 = 7'h63 == idx & way ? valid_99_1 : _GEN_583; // @[icache.scala 67:{25,25}]
+  wire  _GEN_585 = 7'h64 == idx & ~way ? valid_100_0 : _GEN_584; // @[icache.scala 67:{25,25}]
+  wire  _GEN_586 = 7'h64 == idx & way ? valid_100_1 : _GEN_585; // @[icache.scala 67:{25,25}]
+  wire  _GEN_587 = 7'h65 == idx & ~way ? valid_101_0 : _GEN_586; // @[icache.scala 67:{25,25}]
+  wire  _GEN_588 = 7'h65 == idx & way ? valid_101_1 : _GEN_587; // @[icache.scala 67:{25,25}]
+  wire  _GEN_589 = 7'h66 == idx & ~way ? valid_102_0 : _GEN_588; // @[icache.scala 67:{25,25}]
+  wire  _GEN_590 = 7'h66 == idx & way ? valid_102_1 : _GEN_589; // @[icache.scala 67:{25,25}]
+  wire  _GEN_591 = 7'h67 == idx & ~way ? valid_103_0 : _GEN_590; // @[icache.scala 67:{25,25}]
+  wire  _GEN_592 = 7'h67 == idx & way ? valid_103_1 : _GEN_591; // @[icache.scala 67:{25,25}]
+  wire  _GEN_593 = 7'h68 == idx & ~way ? valid_104_0 : _GEN_592; // @[icache.scala 67:{25,25}]
+  wire  _GEN_594 = 7'h68 == idx & way ? valid_104_1 : _GEN_593; // @[icache.scala 67:{25,25}]
+  wire  _GEN_595 = 7'h69 == idx & ~way ? valid_105_0 : _GEN_594; // @[icache.scala 67:{25,25}]
+  wire  _GEN_596 = 7'h69 == idx & way ? valid_105_1 : _GEN_595; // @[icache.scala 67:{25,25}]
+  wire  _GEN_597 = 7'h6a == idx & ~way ? valid_106_0 : _GEN_596; // @[icache.scala 67:{25,25}]
+  wire  _GEN_598 = 7'h6a == idx & way ? valid_106_1 : _GEN_597; // @[icache.scala 67:{25,25}]
+  wire  _GEN_599 = 7'h6b == idx & ~way ? valid_107_0 : _GEN_598; // @[icache.scala 67:{25,25}]
+  wire  _GEN_600 = 7'h6b == idx & way ? valid_107_1 : _GEN_599; // @[icache.scala 67:{25,25}]
+  wire  _GEN_601 = 7'h6c == idx & ~way ? valid_108_0 : _GEN_600; // @[icache.scala 67:{25,25}]
+  wire  _GEN_602 = 7'h6c == idx & way ? valid_108_1 : _GEN_601; // @[icache.scala 67:{25,25}]
+  wire  _GEN_603 = 7'h6d == idx & ~way ? valid_109_0 : _GEN_602; // @[icache.scala 67:{25,25}]
+  wire  _GEN_604 = 7'h6d == idx & way ? valid_109_1 : _GEN_603; // @[icache.scala 67:{25,25}]
+  wire  _GEN_605 = 7'h6e == idx & ~way ? valid_110_0 : _GEN_604; // @[icache.scala 67:{25,25}]
+  wire  _GEN_606 = 7'h6e == idx & way ? valid_110_1 : _GEN_605; // @[icache.scala 67:{25,25}]
+  wire  _GEN_607 = 7'h6f == idx & ~way ? valid_111_0 : _GEN_606; // @[icache.scala 67:{25,25}]
+  wire  _GEN_608 = 7'h6f == idx & way ? valid_111_1 : _GEN_607; // @[icache.scala 67:{25,25}]
+  wire  _GEN_609 = 7'h70 == idx & ~way ? valid_112_0 : _GEN_608; // @[icache.scala 67:{25,25}]
+  wire  _GEN_610 = 7'h70 == idx & way ? valid_112_1 : _GEN_609; // @[icache.scala 67:{25,25}]
+  wire  _GEN_611 = 7'h71 == idx & ~way ? valid_113_0 : _GEN_610; // @[icache.scala 67:{25,25}]
+  wire  _GEN_612 = 7'h71 == idx & way ? valid_113_1 : _GEN_611; // @[icache.scala 67:{25,25}]
+  wire  _GEN_613 = 7'h72 == idx & ~way ? valid_114_0 : _GEN_612; // @[icache.scala 67:{25,25}]
+  wire  _GEN_614 = 7'h72 == idx & way ? valid_114_1 : _GEN_613; // @[icache.scala 67:{25,25}]
+  wire  _GEN_615 = 7'h73 == idx & ~way ? valid_115_0 : _GEN_614; // @[icache.scala 67:{25,25}]
+  wire  _GEN_616 = 7'h73 == idx & way ? valid_115_1 : _GEN_615; // @[icache.scala 67:{25,25}]
+  wire  _GEN_617 = 7'h74 == idx & ~way ? valid_116_0 : _GEN_616; // @[icache.scala 67:{25,25}]
+  wire  _GEN_618 = 7'h74 == idx & way ? valid_116_1 : _GEN_617; // @[icache.scala 67:{25,25}]
+  wire  _GEN_619 = 7'h75 == idx & ~way ? valid_117_0 : _GEN_618; // @[icache.scala 67:{25,25}]
+  wire  _GEN_620 = 7'h75 == idx & way ? valid_117_1 : _GEN_619; // @[icache.scala 67:{25,25}]
+  wire  _GEN_621 = 7'h76 == idx & ~way ? valid_118_0 : _GEN_620; // @[icache.scala 67:{25,25}]
+  wire  _GEN_622 = 7'h76 == idx & way ? valid_118_1 : _GEN_621; // @[icache.scala 67:{25,25}]
+  wire  _GEN_623 = 7'h77 == idx & ~way ? valid_119_0 : _GEN_622; // @[icache.scala 67:{25,25}]
+  wire  _GEN_624 = 7'h77 == idx & way ? valid_119_1 : _GEN_623; // @[icache.scala 67:{25,25}]
+  wire  _GEN_625 = 7'h78 == idx & ~way ? valid_120_0 : _GEN_624; // @[icache.scala 67:{25,25}]
+  wire  _GEN_626 = 7'h78 == idx & way ? valid_120_1 : _GEN_625; // @[icache.scala 67:{25,25}]
+  wire  _GEN_627 = 7'h79 == idx & ~way ? valid_121_0 : _GEN_626; // @[icache.scala 67:{25,25}]
+  wire  _GEN_628 = 7'h79 == idx & way ? valid_121_1 : _GEN_627; // @[icache.scala 67:{25,25}]
+  wire  _GEN_629 = 7'h7a == idx & ~way ? valid_122_0 : _GEN_628; // @[icache.scala 67:{25,25}]
+  wire  _GEN_630 = 7'h7a == idx & way ? valid_122_1 : _GEN_629; // @[icache.scala 67:{25,25}]
+  wire  _GEN_631 = 7'h7b == idx & ~way ? valid_123_0 : _GEN_630; // @[icache.scala 67:{25,25}]
+  wire  _GEN_632 = 7'h7b == idx & way ? valid_123_1 : _GEN_631; // @[icache.scala 67:{25,25}]
+  wire  _GEN_633 = 7'h7c == idx & ~way ? valid_124_0 : _GEN_632; // @[icache.scala 67:{25,25}]
+  wire  _GEN_634 = 7'h7c == idx & way ? valid_124_1 : _GEN_633; // @[icache.scala 67:{25,25}]
+  wire  _GEN_635 = 7'h7d == idx & ~way ? valid_125_0 : _GEN_634; // @[icache.scala 67:{25,25}]
+  wire  _GEN_636 = 7'h7d == idx & way ? valid_125_1 : _GEN_635; // @[icache.scala 67:{25,25}]
+  wire  _GEN_637 = 7'h7e == idx & ~way ? valid_126_0 : _GEN_636; // @[icache.scala 67:{25,25}]
+  wire  _GEN_638 = 7'h7e == idx & way ? valid_126_1 : _GEN_637; // @[icache.scala 67:{25,25}]
+  wire  _GEN_639 = 7'h7f == idx & ~way ? valid_127_0 : _GEN_638; // @[icache.scala 67:{25,25}]
+  wire  _GEN_640 = 7'h7f == idx & way ? valid_127_1 : _GEN_639; // @[icache.scala 67:{25,25}]
   wire [41:0] _cache_tag_T_5 = {_GEN_127[41:21],tag}; // @[Cat.scala 33:92]
   wire [41:0] _cache_tag_T_7 = {tag,_GEN_127[20:0]}; // @[Cat.scala 33:92]
-  wire  _addr_T = state == 2'h0; // @[icache.scala 69:26]
-  wire  _addr_T_2 = state == 2'h1; // @[icache.scala 69:57]
-  wire  _addr_T_3 = state == 2'h1 & req; // @[icache.scala 69:71]
-  wire  _addr_T_4 = ~miss; // @[icache.scala 69:82]
-  wire  _addr_T_6 = state == 2'h0 & req | state == 2'h1 & req & ~miss; // @[icache.scala 69:46]
-  wire  _en_w_T = state == 2'h3; // @[icache.scala 79:20]
-  wire  en_w = state == 2'h3 & _state_T_5; // @[icache.scala 79:35]
-  wire [6:0] _GEN_1791 = {cnt, 6'h0}; // @[icache.scala 82:90]
-  wire [7:0] _io_ram_bits_BWEN_T = {{1'd0}, _GEN_1791}; // @[icache.scala 82:90]
-  wire [382:0] _io_ram_bits_BWEN_T_1 = 383'hffffffffffffffff << _io_ram_bits_BWEN_T; // @[icache.scala 82:82]
-  wire [382:0] _io_ram_bits_BWEN_T_2 = ~_io_ram_bits_BWEN_T_1; // @[icache.scala 82:32]
-  wire [382:0] _io_ram_bits_BWEN_T_4 = en_w ? _io_ram_bits_BWEN_T_2 : 383'hffffffffffffffffffffffffffffffff; // @[icache.scala 82:25]
+  wire  _addr_T = state == 2'h0; // @[icache.scala 70:26]
+  wire  _addr_T_2 = state == 2'h1; // @[icache.scala 70:57]
+  wire  _addr_T_3 = state == 2'h1 & req; // @[icache.scala 70:71]
+  wire  _addr_T_4 = ~miss; // @[icache.scala 70:82]
+  wire  _addr_T_6 = state == 2'h0 & req | state == 2'h1 & req & ~miss; // @[icache.scala 70:46]
+  wire  _en_w_T = state == 2'h3; // @[icache.scala 80:20]
+  wire  en_w = state == 2'h3 & _state_T_5; // @[icache.scala 80:35]
+  wire [6:0] _GEN_1791 = {cnt, 6'h0}; // @[icache.scala 83:90]
+  wire [7:0] _io_ram_bits_BWEN_T = {{1'd0}, _GEN_1791}; // @[icache.scala 83:90]
+  wire [382:0] _io_ram_bits_BWEN_T_1 = 383'hffffffffffffffff << _io_ram_bits_BWEN_T; // @[icache.scala 83:82]
+  wire [382:0] _io_ram_bits_BWEN_T_2 = ~_io_ram_bits_BWEN_T_1; // @[icache.scala 83:32]
+  wire [382:0] _io_ram_bits_BWEN_T_4 = en_w ? _io_ram_bits_BWEN_T_2 : 383'hffffffffffffffffffffffffffffffff; // @[icache.scala 83:25]
   wire [127:0] _io_ram_bits_D_T = {64'h0,io_mem_r_bits_data}; // @[Cat.scala 33:92]
-  wire [382:0] _GEN_0 = {{255'd0}, _io_ram_bits_D_T}; // @[icache.scala 84:62]
-  wire [382:0] _io_ram_bits_D_T_2 = _GEN_0 << _io_ram_bits_BWEN_T; // @[icache.scala 84:62]
-  wire [382:0] _io_ram_bits_D_T_3 = en_w ? _io_ram_bits_D_T_2 : 383'h0; // @[icache.scala 84:22]
-  reg  flag; // @[icache.scala 87:20]
-  reg [63:0] rdata; // @[icache.scala 88:21]
-  wire  _flag_T_4 = en_w ? 1'h0 : flag; // @[icache.scala 90:14]
-  wire [34:0] _GEN_1793 = {{3'd0}, addr}; // @[icache.scala 93:31]
-  wire [34:0] _io_mem_ar_bits_addr_T_2 = _GEN_1793 & 35'h7fffffff8; // @[icache.scala 93:31]
-  wire  _io_mem_ar_bits_len_T = uncache ? 1'h0 : 1'h1; // @[icache.scala 95:28]
-  wire  _io_in_r_bits_data_T_2 = _addr_T_2 & _addr_T_4; // @[icache.scala 116:50]
-  wire [127:0] _io_in_r_bits_data_T_3 = io_ram_bits_Q1 >> offset; // @[icache.scala 118:44]
-  wire [127:0] _io_in_r_bits_data_T_5 = io_ram_bits_Q0 >> offset; // @[icache.scala 119:44]
-  wire [63:0] _io_in_r_bits_data_T_7 = hit_way ? _io_in_r_bits_data_T_3[63:0] : _io_in_r_bits_data_T_5[63:0]; // @[icache.scala 117:30]
-  wire [63:0] _io_in_r_bits_data_T_14 = rdata >> offset[5:0]; // @[icache.scala 123:37]
-  wire [63:0] _io_in_r_bits_data_T_15 = uncache ? io_mem_r_bits_data : _io_in_r_bits_data_T_14; // @[icache.scala 121:32]
-  wire [63:0] _io_in_r_bits_data_T_16 = en_w & io_mem_r_bits_last ? _io_in_r_bits_data_T_15 : 64'h0; // @[icache.scala 120:30]
-  LFSR_8 lfsr8 ( // @[icache.scala 52:21]
+  wire [382:0] _GEN_0 = {{255'd0}, _io_ram_bits_D_T}; // @[icache.scala 85:62]
+  wire [382:0] _io_ram_bits_D_T_2 = _GEN_0 << _io_ram_bits_BWEN_T; // @[icache.scala 85:62]
+  wire [382:0] _io_ram_bits_D_T_3 = en_w ? _io_ram_bits_D_T_2 : 383'h0; // @[icache.scala 85:22]
+  reg  flag; // @[icache.scala 88:20]
+  reg [63:0] rdata; // @[icache.scala 89:21]
+  wire  _flag_T_4 = en_w ? 1'h0 : flag; // @[icache.scala 91:14]
+  wire [34:0] _GEN_1793 = {{3'd0}, addr}; // @[icache.scala 94:31]
+  wire [34:0] _io_mem_ar_bits_addr_T_2 = _GEN_1793 & 35'h7fffffff8; // @[icache.scala 94:31]
+  wire  _io_mem_ar_bits_len_T = uncache ? 1'h0 : 1'h1; // @[icache.scala 96:28]
+  wire  _io_in_r_bits_data_T_2 = _addr_T_2 & _addr_T_4; // @[icache.scala 117:50]
+  wire [127:0] _io_in_r_bits_data_T_3 = io_ram_bits_Q1 >> offset; // @[icache.scala 119:44]
+  wire [127:0] _io_in_r_bits_data_T_5 = io_ram_bits_Q0 >> offset; // @[icache.scala 120:44]
+  wire [63:0] _io_in_r_bits_data_T_7 = hit_way ? _io_in_r_bits_data_T_3[63:0] : _io_in_r_bits_data_T_5[63:0]; // @[icache.scala 118:30]
+  wire [63:0] _io_in_r_bits_data_T_14 = rdata >> offset[5:0]; // @[icache.scala 124:37]
+  wire [63:0] _io_in_r_bits_data_T_15 = uncache ? io_mem_r_bits_data : _io_in_r_bits_data_T_14; // @[icache.scala 122:32]
+  wire [63:0] _io_in_r_bits_data_T_16 = en_w & io_mem_r_bits_last ? _io_in_r_bits_data_T_15 : 64'h0; // @[icache.scala 121:30]
+  LFSR_8 lfsr8 ( // @[icache.scala 53:21]
     .clock(lfsr8_clock),
     .reset(lfsr8_reset),
     .io_en(lfsr8_io_en),
     .io_out(lfsr8_io_out)
   );
-  assign io_in_ar_ready = _addr_T | _addr_T_2; // @[icache.scala 125:40]
-  assign io_in_r_valid = _io_in_r_bits_data_T_2 | _state_T_7; // @[icache.scala 126:55]
-  assign io_in_r_bits_data = _addr_T_2 & _addr_T_4 ? _io_in_r_bits_data_T_7 : _io_in_r_bits_data_T_16; // @[icache.scala 116:28]
-  assign io_mem_ar_valid = state == 2'h2; // @[icache.scala 94:28]
-  assign io_mem_ar_bits_addr = _io_mem_ar_bits_addr_T_2[31:0]; // @[icache.scala 93:23]
-  assign io_mem_ar_bits_len = {{7'd0}, _io_mem_ar_bits_len_T}; // @[icache.scala 95:22]
-  assign io_mem_r_ready = 1'h1; // @[icache.scala 100:18]
-  assign io_ram_bits_CEN = ~(_addr_T | _addr_T_3 | _en_w_T); // @[icache.scala 80:21]
-  assign io_ram_bits_WEN = ~en_w; // @[icache.scala 81:21]
-  assign io_ram_bits_BWEN = _io_ram_bits_BWEN_T_4[127:0]; // @[icache.scala 82:19]
-  assign io_ram_bits_A = en_w ? idx : io_in_ar_bits_addr[10:4]; // @[icache.scala 83:22]
-  assign io_ram_bits_D = _io_ram_bits_D_T_3[127:0]; // @[icache.scala 84:16]
-  assign io_ram_bits_WAY = way; // @[icache.scala 85:18]
+  assign io_in_ar_ready = _addr_T | _addr_T_2; // @[icache.scala 126:40]
+  assign io_in_r_valid = _io_in_r_bits_data_T_2 | _state_T_7; // @[icache.scala 127:55]
+  assign io_in_r_bits_data = _addr_T_2 & _addr_T_4 ? _io_in_r_bits_data_T_7 : _io_in_r_bits_data_T_16; // @[icache.scala 117:28]
+  assign io_mem_ar_valid = state == 2'h2; // @[icache.scala 95:28]
+  assign io_mem_ar_bits_addr = _io_mem_ar_bits_addr_T_2[31:0]; // @[icache.scala 94:23]
+  assign io_mem_ar_bits_len = {{7'd0}, _io_mem_ar_bits_len_T}; // @[icache.scala 96:22]
+  assign io_mem_r_ready = 1'h1; // @[icache.scala 101:18]
+  assign io_ram_bits_CEN = ~(_addr_T | _addr_T_3 | _en_w_T); // @[icache.scala 81:21]
+  assign io_ram_bits_WEN = ~en_w; // @[icache.scala 82:21]
+  assign io_ram_bits_BWEN = _io_ram_bits_BWEN_T_4[127:0]; // @[icache.scala 83:19]
+  assign io_ram_bits_A = en_w ? idx : io_in_ar_bits_addr[10:4]; // @[icache.scala 84:22]
+  assign io_ram_bits_D = _io_ram_bits_D_T_3[127:0]; // @[icache.scala 85:16]
+  assign io_ram_bits_WAY = way; // @[icache.scala 86:18]
   assign lfsr8_clock = clock;
   assign lfsr8_reset = reset;
-  assign lfsr8_io_en = state == 2'h2; // @[icache.scala 53:25]
+  assign lfsr8_io_en = state == 2'h2; // @[icache.scala 54:25]
   always @(posedge clock) begin
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_0 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h0 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_0 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h0 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_0 <= _cache_tag_T_5;
         end else begin
           cache_tag_0 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_0 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_0 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_0 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_1 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_1 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_1 <= _cache_tag_T_5;
         end else begin
           cache_tag_1 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_1 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_1 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_1 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_2 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_2 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_2 <= _cache_tag_T_5;
         end else begin
           cache_tag_2 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_2 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_2 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_2 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_3 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_3 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_3 <= _cache_tag_T_5;
         end else begin
           cache_tag_3 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_3 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_3 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_3 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_4 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_4 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_4 <= _cache_tag_T_5;
         end else begin
           cache_tag_4 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_4 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_4 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_4 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_5 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_5 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_5 <= _cache_tag_T_5;
         end else begin
           cache_tag_5 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_5 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_5 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_5 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_6 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_6 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_6 <= _cache_tag_T_5;
         end else begin
           cache_tag_6 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_6 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_6 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_6 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_7 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_7 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_7 <= _cache_tag_T_5;
         end else begin
           cache_tag_7 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_7 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_7 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_7 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_8 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h8 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_8 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h8 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_8 <= _cache_tag_T_5;
         end else begin
           cache_tag_8 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_8 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_8 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_8 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_9 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h9 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_9 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h9 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_9 <= _cache_tag_T_5;
         end else begin
           cache_tag_9 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_9 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_9 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_9 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_10 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'ha == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_10 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'ha == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_10 <= _cache_tag_T_5;
         end else begin
           cache_tag_10 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_10 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_10 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_10 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_11 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'hb == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_11 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'hb == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_11 <= _cache_tag_T_5;
         end else begin
           cache_tag_11 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_11 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_11 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_11 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_12 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'hc == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_12 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'hc == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_12 <= _cache_tag_T_5;
         end else begin
           cache_tag_12 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_12 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_12 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_12 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_13 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'hd == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_13 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'hd == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_13 <= _cache_tag_T_5;
         end else begin
           cache_tag_13 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_13 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_13 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_13 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_14 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'he == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_14 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'he == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_14 <= _cache_tag_T_5;
         end else begin
           cache_tag_14 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_14 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_14 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_14 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_15 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'hf == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_15 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'hf == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_15 <= _cache_tag_T_5;
         end else begin
           cache_tag_15 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_15 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_15 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_15 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_16 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h10 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_16 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h10 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_16 <= _cache_tag_T_5;
         end else begin
           cache_tag_16 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_16 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_16 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_16 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_17 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h11 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_17 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h11 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_17 <= _cache_tag_T_5;
         end else begin
           cache_tag_17 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_17 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_17 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_17 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_18 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h12 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_18 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h12 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_18 <= _cache_tag_T_5;
         end else begin
           cache_tag_18 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_18 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_18 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_18 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_19 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h13 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_19 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h13 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_19 <= _cache_tag_T_5;
         end else begin
           cache_tag_19 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_19 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_19 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_19 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_20 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h14 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_20 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h14 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_20 <= _cache_tag_T_5;
         end else begin
           cache_tag_20 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_20 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_20 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_20 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_21 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h15 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_21 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h15 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_21 <= _cache_tag_T_5;
         end else begin
           cache_tag_21 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_21 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_21 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_21 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_22 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h16 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_22 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h16 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_22 <= _cache_tag_T_5;
         end else begin
           cache_tag_22 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_22 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_22 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_22 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_23 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h17 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_23 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h17 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_23 <= _cache_tag_T_5;
         end else begin
           cache_tag_23 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_23 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_23 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_23 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_24 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h18 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_24 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h18 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_24 <= _cache_tag_T_5;
         end else begin
           cache_tag_24 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_24 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_24 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_24 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_25 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h19 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_25 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h19 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_25 <= _cache_tag_T_5;
         end else begin
           cache_tag_25 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_25 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_25 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_25 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_26 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_26 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_26 <= _cache_tag_T_5;
         end else begin
           cache_tag_26 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_26 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_26 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_26 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_27 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_27 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_27 <= _cache_tag_T_5;
         end else begin
           cache_tag_27 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_27 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_27 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_27 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_28 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_28 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_28 <= _cache_tag_T_5;
         end else begin
           cache_tag_28 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_28 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_28 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_28 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_29 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_29 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_29 <= _cache_tag_T_5;
         end else begin
           cache_tag_29 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_29 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_29 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_29 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_30 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_30 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_30 <= _cache_tag_T_5;
         end else begin
           cache_tag_30 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_30 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_30 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_30 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_31 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h1f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_31 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h1f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_31 <= _cache_tag_T_5;
         end else begin
           cache_tag_31 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_31 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_31 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_31 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_32 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h20 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_32 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h20 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_32 <= _cache_tag_T_5;
         end else begin
           cache_tag_32 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_32 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_32 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_32 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_33 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h21 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_33 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h21 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_33 <= _cache_tag_T_5;
         end else begin
           cache_tag_33 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_33 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_33 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_33 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_34 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h22 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_34 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h22 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_34 <= _cache_tag_T_5;
         end else begin
           cache_tag_34 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_34 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_34 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_34 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_35 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h23 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_35 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h23 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_35 <= _cache_tag_T_5;
         end else begin
           cache_tag_35 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_35 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_35 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_35 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_36 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h24 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_36 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h24 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_36 <= _cache_tag_T_5;
         end else begin
           cache_tag_36 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_36 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_36 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_36 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_37 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h25 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_37 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h25 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_37 <= _cache_tag_T_5;
         end else begin
           cache_tag_37 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_37 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_37 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_37 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_38 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h26 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_38 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h26 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_38 <= _cache_tag_T_5;
         end else begin
           cache_tag_38 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_38 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_38 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_38 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_39 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h27 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_39 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h27 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_39 <= _cache_tag_T_5;
         end else begin
           cache_tag_39 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_39 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_39 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_39 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_40 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h28 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_40 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h28 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_40 <= _cache_tag_T_5;
         end else begin
           cache_tag_40 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_40 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_40 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_40 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_41 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h29 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_41 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h29 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_41 <= _cache_tag_T_5;
         end else begin
           cache_tag_41 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_41 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_41 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_41 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_42 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_42 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_42 <= _cache_tag_T_5;
         end else begin
           cache_tag_42 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_42 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_42 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_42 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_43 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_43 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_43 <= _cache_tag_T_5;
         end else begin
           cache_tag_43 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_43 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_43 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_43 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_44 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_44 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_44 <= _cache_tag_T_5;
         end else begin
           cache_tag_44 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_44 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_44 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_44 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_45 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_45 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_45 <= _cache_tag_T_5;
         end else begin
           cache_tag_45 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_45 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_45 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_45 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_46 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_46 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_46 <= _cache_tag_T_5;
         end else begin
           cache_tag_46 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_46 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_46 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_46 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_47 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h2f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_47 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h2f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_47 <= _cache_tag_T_5;
         end else begin
           cache_tag_47 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_47 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_47 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_47 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_48 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h30 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_48 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h30 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_48 <= _cache_tag_T_5;
         end else begin
           cache_tag_48 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_48 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_48 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_48 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_49 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h31 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_49 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h31 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_49 <= _cache_tag_T_5;
         end else begin
           cache_tag_49 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_49 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_49 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_49 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_50 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h32 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_50 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h32 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_50 <= _cache_tag_T_5;
         end else begin
           cache_tag_50 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_50 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_50 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_50 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_51 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h33 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_51 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h33 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_51 <= _cache_tag_T_5;
         end else begin
           cache_tag_51 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_51 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_51 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_51 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_52 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h34 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_52 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h34 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_52 <= _cache_tag_T_5;
         end else begin
           cache_tag_52 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_52 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_52 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_52 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_53 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h35 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_53 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h35 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_53 <= _cache_tag_T_5;
         end else begin
           cache_tag_53 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_53 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_53 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_53 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_54 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h36 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_54 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h36 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_54 <= _cache_tag_T_5;
         end else begin
           cache_tag_54 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_54 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_54 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_54 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_55 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h37 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_55 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h37 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_55 <= _cache_tag_T_5;
         end else begin
           cache_tag_55 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_55 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_55 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_55 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_56 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h38 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_56 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h38 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_56 <= _cache_tag_T_5;
         end else begin
           cache_tag_56 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_56 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_56 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_56 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_57 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h39 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_57 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h39 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_57 <= _cache_tag_T_5;
         end else begin
           cache_tag_57 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_57 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_57 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_57 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_58 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_58 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_58 <= _cache_tag_T_5;
         end else begin
           cache_tag_58 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_58 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_58 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_58 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_59 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_59 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_59 <= _cache_tag_T_5;
         end else begin
           cache_tag_59 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_59 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_59 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_59 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_60 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_60 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_60 <= _cache_tag_T_5;
         end else begin
           cache_tag_60 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_60 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_60 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_60 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_61 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_61 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_61 <= _cache_tag_T_5;
         end else begin
           cache_tag_61 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_61 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_61 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_61 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_62 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_62 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_62 <= _cache_tag_T_5;
         end else begin
           cache_tag_62 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_62 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_62 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_62 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_63 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h3f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_63 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h3f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_63 <= _cache_tag_T_5;
         end else begin
           cache_tag_63 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_63 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_63 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_63 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_64 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h40 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_64 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h40 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_64 <= _cache_tag_T_5;
         end else begin
           cache_tag_64 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_64 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_64 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_64 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_65 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h41 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_65 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h41 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_65 <= _cache_tag_T_5;
         end else begin
           cache_tag_65 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_65 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_65 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_65 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_66 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h42 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_66 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h42 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_66 <= _cache_tag_T_5;
         end else begin
           cache_tag_66 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_66 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_66 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_66 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_67 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h43 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_67 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h43 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_67 <= _cache_tag_T_5;
         end else begin
           cache_tag_67 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_67 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_67 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_67 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_68 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h44 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_68 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h44 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_68 <= _cache_tag_T_5;
         end else begin
           cache_tag_68 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_68 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_68 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_68 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_69 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h45 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_69 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h45 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_69 <= _cache_tag_T_5;
         end else begin
           cache_tag_69 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_69 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_69 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_69 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_70 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h46 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_70 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h46 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_70 <= _cache_tag_T_5;
         end else begin
           cache_tag_70 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_70 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_70 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_70 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_71 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h47 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_71 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h47 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_71 <= _cache_tag_T_5;
         end else begin
           cache_tag_71 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_71 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_71 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_71 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_72 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h48 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_72 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h48 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_72 <= _cache_tag_T_5;
         end else begin
           cache_tag_72 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_72 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_72 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_72 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_73 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h49 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_73 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h49 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_73 <= _cache_tag_T_5;
         end else begin
           cache_tag_73 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_73 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_73 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_73 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_74 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_74 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_74 <= _cache_tag_T_5;
         end else begin
           cache_tag_74 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_74 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_74 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_74 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_75 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_75 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_75 <= _cache_tag_T_5;
         end else begin
           cache_tag_75 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_75 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_75 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_75 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_76 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_76 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_76 <= _cache_tag_T_5;
         end else begin
           cache_tag_76 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_76 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_76 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_76 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_77 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_77 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_77 <= _cache_tag_T_5;
         end else begin
           cache_tag_77 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_77 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_77 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_77 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_78 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_78 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_78 <= _cache_tag_T_5;
         end else begin
           cache_tag_78 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_78 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_78 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_78 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_79 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h4f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_79 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h4f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_79 <= _cache_tag_T_5;
         end else begin
           cache_tag_79 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_79 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_79 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_79 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_80 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h50 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_80 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h50 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_80 <= _cache_tag_T_5;
         end else begin
           cache_tag_80 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_80 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_80 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_80 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_81 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h51 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_81 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h51 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_81 <= _cache_tag_T_5;
         end else begin
           cache_tag_81 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_81 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_81 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_81 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_82 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h52 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_82 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h52 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_82 <= _cache_tag_T_5;
         end else begin
           cache_tag_82 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_82 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_82 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_82 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_83 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h53 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_83 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h53 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_83 <= _cache_tag_T_5;
         end else begin
           cache_tag_83 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_83 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_83 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_83 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_84 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h54 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_84 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h54 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_84 <= _cache_tag_T_5;
         end else begin
           cache_tag_84 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_84 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_84 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_84 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_85 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h55 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_85 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h55 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_85 <= _cache_tag_T_5;
         end else begin
           cache_tag_85 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_85 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_85 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_85 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_86 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h56 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_86 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h56 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_86 <= _cache_tag_T_5;
         end else begin
           cache_tag_86 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_86 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_86 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_86 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_87 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h57 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_87 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h57 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_87 <= _cache_tag_T_5;
         end else begin
           cache_tag_87 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_87 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_87 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_87 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_88 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h58 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_88 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h58 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_88 <= _cache_tag_T_5;
         end else begin
           cache_tag_88 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_88 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_88 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_88 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_89 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h59 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_89 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h59 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_89 <= _cache_tag_T_5;
         end else begin
           cache_tag_89 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_89 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_89 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_89 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_90 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_90 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_90 <= _cache_tag_T_5;
         end else begin
           cache_tag_90 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_90 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_90 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_90 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_91 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_91 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_91 <= _cache_tag_T_5;
         end else begin
           cache_tag_91 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_91 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_91 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_91 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_92 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_92 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_92 <= _cache_tag_T_5;
         end else begin
           cache_tag_92 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_92 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_92 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_92 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_93 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_93 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_93 <= _cache_tag_T_5;
         end else begin
           cache_tag_93 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_93 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_93 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_93 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_94 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_94 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_94 <= _cache_tag_T_5;
         end else begin
           cache_tag_94 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_94 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_94 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_94 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_95 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h5f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_95 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h5f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_95 <= _cache_tag_T_5;
         end else begin
           cache_tag_95 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_95 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_95 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_95 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_96 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h60 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_96 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h60 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_96 <= _cache_tag_T_5;
         end else begin
           cache_tag_96 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_96 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_96 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_96 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_97 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h61 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_97 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h61 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_97 <= _cache_tag_T_5;
         end else begin
           cache_tag_97 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_97 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_97 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_97 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_98 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h62 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_98 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h62 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_98 <= _cache_tag_T_5;
         end else begin
           cache_tag_98 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_98 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_98 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_98 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_99 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h63 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_99 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h63 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_99 <= _cache_tag_T_5;
         end else begin
           cache_tag_99 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_99 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_99 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_99 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_100 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h64 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_100 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h64 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_100 <= _cache_tag_T_5;
         end else begin
           cache_tag_100 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_100 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_100 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_100 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_101 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h65 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_101 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h65 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_101 <= _cache_tag_T_5;
         end else begin
           cache_tag_101 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_101 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_101 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_101 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_102 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h66 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_102 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h66 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_102 <= _cache_tag_T_5;
         end else begin
           cache_tag_102 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_102 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_102 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_102 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_103 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h67 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_103 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h67 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_103 <= _cache_tag_T_5;
         end else begin
           cache_tag_103 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_103 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_103 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_103 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_104 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h68 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_104 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h68 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_104 <= _cache_tag_T_5;
         end else begin
           cache_tag_104 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_104 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_104 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_104 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_105 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h69 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_105 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h69 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_105 <= _cache_tag_T_5;
         end else begin
           cache_tag_105 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_105 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_105 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_105 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_106 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_106 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_106 <= _cache_tag_T_5;
         end else begin
           cache_tag_106 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_106 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_106 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_106 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_107 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_107 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_107 <= _cache_tag_T_5;
         end else begin
           cache_tag_107 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_107 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_107 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_107 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_108 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_108 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_108 <= _cache_tag_T_5;
         end else begin
           cache_tag_108 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_108 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_108 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_108 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_109 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_109 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_109 <= _cache_tag_T_5;
         end else begin
           cache_tag_109 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_109 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_109 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_109 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_110 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_110 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_110 <= _cache_tag_T_5;
         end else begin
           cache_tag_110 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_110 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_110 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_110 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_111 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h6f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_111 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h6f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_111 <= _cache_tag_T_5;
         end else begin
           cache_tag_111 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_111 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_111 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_111 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_112 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h70 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_112 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h70 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_112 <= _cache_tag_T_5;
         end else begin
           cache_tag_112 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_112 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_112 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_112 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_113 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h71 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_113 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h71 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_113 <= _cache_tag_T_5;
         end else begin
           cache_tag_113 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_113 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_113 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_113 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_114 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h72 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_114 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h72 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_114 <= _cache_tag_T_5;
         end else begin
           cache_tag_114 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_114 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_114 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_114 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_115 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h73 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_115 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h73 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_115 <= _cache_tag_T_5;
         end else begin
           cache_tag_115 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_115 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_115 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_115 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_116 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h74 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_116 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h74 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_116 <= _cache_tag_T_5;
         end else begin
           cache_tag_116 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_116 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_116 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_116 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_117 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h75 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_117 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h75 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_117 <= _cache_tag_T_5;
         end else begin
           cache_tag_117 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_117 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_117 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_117 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_118 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h76 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_118 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h76 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_118 <= _cache_tag_T_5;
         end else begin
           cache_tag_118 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_118 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_118 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_118 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_119 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h77 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_119 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h77 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_119 <= _cache_tag_T_5;
         end else begin
           cache_tag_119 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_119 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_119 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_119 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_120 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h78 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_120 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h78 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_120 <= _cache_tag_T_5;
         end else begin
           cache_tag_120 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_120 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_120 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_120 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_121 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h79 == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_121 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h79 == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_121 <= _cache_tag_T_5;
         end else begin
           cache_tag_121 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_121 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_121 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_121 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_122 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7a == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_122 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7a == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_122 <= _cache_tag_T_5;
         end else begin
           cache_tag_122 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_122 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_122 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_122 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_123 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7b == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_123 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7b == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_123 <= _cache_tag_T_5;
         end else begin
           cache_tag_123 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_123 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_123 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_123 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_124 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7c == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_124 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7c == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_124 <= _cache_tag_T_5;
         end else begin
           cache_tag_124 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_124 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_124 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_124 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_125 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7d == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_125 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7d == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_125 <= _cache_tag_T_5;
         end else begin
           cache_tag_125 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_125 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_125 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_125 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_126 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7e == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_126 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7e == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_126 <= _cache_tag_T_5;
         end else begin
           cache_tag_126 <= _cache_tag_T_7;
         end
-      end else if (7'h7f == idx) begin // @[icache.scala 48:33]
-        cache_tag_126 <= cache_tag_127; // @[icache.scala 48:33]
+      end else if (7'h7f == idx) begin // @[icache.scala 49:33]
+        cache_tag_126 <= cache_tag_127; // @[icache.scala 49:33]
       end else begin
         cache_tag_126 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 28:26]
-      cache_tag_127 <= 42'h0; // @[icache.scala 28:26]
-    end else if (7'h7f == idx) begin // @[icache.scala 67:18]
-      if (_valid_T_2) begin // @[icache.scala 67:24]
-        if (_GEN_1027) begin // @[icache.scala 67:58]
+    if (reset) begin // @[icache.scala 29:26]
+      cache_tag_127 <= 42'h0; // @[icache.scala 29:26]
+    end else if (7'h7f == idx) begin // @[icache.scala 68:18]
+      if (_valid_T_2) begin // @[icache.scala 68:24]
+        if (_GEN_1027) begin // @[icache.scala 68:58]
           cache_tag_127 <= _cache_tag_T_5;
         end else begin
           cache_tag_127 <= _cache_tag_T_7;
         end
-      end else if (!(7'h7f == idx)) begin // @[icache.scala 48:33]
+      end else if (!(7'h7f == idx)) begin // @[icache.scala 49:33]
         cache_tag_127 <= _GEN_126;
       end
     end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_0_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h0 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_0_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_0_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h0 == idx & way) begin // @[icache.scala 66:19]
-      valid_0_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_1_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_1_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_1_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1 == idx & way) begin // @[icache.scala 66:19]
-      valid_1_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_2_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_2_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_2_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2 == idx & way) begin // @[icache.scala 66:19]
-      valid_2_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_3_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_3_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_3_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3 == idx & way) begin // @[icache.scala 66:19]
-      valid_3_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_4_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_4_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_4_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4 == idx & way) begin // @[icache.scala 66:19]
-      valid_4_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_5_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_5_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_5_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5 == idx & way) begin // @[icache.scala 66:19]
-      valid_5_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_6_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_6_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_6_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6 == idx & way) begin // @[icache.scala 66:19]
-      valid_6_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_7_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_7_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_7_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7 == idx & way) begin // @[icache.scala 66:19]
-      valid_7_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_8_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h8 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_8_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_8_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h8 == idx & way) begin // @[icache.scala 66:19]
-      valid_8_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_9_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h9 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_9_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_9_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h9 == idx & way) begin // @[icache.scala 66:19]
-      valid_9_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_10_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'ha == idx & ~way) begin // @[icache.scala 66:19]
-      valid_10_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_10_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'ha == idx & way) begin // @[icache.scala 66:19]
-      valid_10_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_11_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hb == idx & ~way) begin // @[icache.scala 66:19]
-      valid_11_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_11_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hb == idx & way) begin // @[icache.scala 66:19]
-      valid_11_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_12_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hc == idx & ~way) begin // @[icache.scala 66:19]
-      valid_12_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_12_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hc == idx & way) begin // @[icache.scala 66:19]
-      valid_12_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_13_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hd == idx & ~way) begin // @[icache.scala 66:19]
-      valid_13_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_13_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hd == idx & way) begin // @[icache.scala 66:19]
-      valid_13_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_14_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'he == idx & ~way) begin // @[icache.scala 66:19]
-      valid_14_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_14_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'he == idx & way) begin // @[icache.scala 66:19]
-      valid_14_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_15_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hf == idx & ~way) begin // @[icache.scala 66:19]
-      valid_15_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_15_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'hf == idx & way) begin // @[icache.scala 66:19]
-      valid_15_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_16_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h10 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_16_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_16_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h10 == idx & way) begin // @[icache.scala 66:19]
-      valid_16_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_17_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h11 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_17_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_17_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h11 == idx & way) begin // @[icache.scala 66:19]
-      valid_17_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_18_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h12 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_18_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_18_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h12 == idx & way) begin // @[icache.scala 66:19]
-      valid_18_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_19_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h13 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_19_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_19_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h13 == idx & way) begin // @[icache.scala 66:19]
-      valid_19_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_20_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h14 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_20_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_20_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h14 == idx & way) begin // @[icache.scala 66:19]
-      valid_20_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_21_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h15 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_21_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_21_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h15 == idx & way) begin // @[icache.scala 66:19]
-      valid_21_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_22_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h16 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_22_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_22_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h16 == idx & way) begin // @[icache.scala 66:19]
-      valid_22_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_23_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h17 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_23_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_23_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h17 == idx & way) begin // @[icache.scala 66:19]
-      valid_23_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_24_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h18 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_24_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_24_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h18 == idx & way) begin // @[icache.scala 66:19]
-      valid_24_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_25_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h19 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_25_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_25_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h19 == idx & way) begin // @[icache.scala 66:19]
-      valid_25_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_26_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_26_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_26_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1a == idx & way) begin // @[icache.scala 66:19]
-      valid_26_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_27_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_27_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_27_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1b == idx & way) begin // @[icache.scala 66:19]
-      valid_27_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_28_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_28_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_28_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1c == idx & way) begin // @[icache.scala 66:19]
-      valid_28_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_29_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_29_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_29_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1d == idx & way) begin // @[icache.scala 66:19]
-      valid_29_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_30_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_30_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_30_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1e == idx & way) begin // @[icache.scala 66:19]
-      valid_30_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_31_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_31_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_31_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h1f == idx & way) begin // @[icache.scala 66:19]
-      valid_31_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_32_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h20 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_32_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_32_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h20 == idx & way) begin // @[icache.scala 66:19]
-      valid_32_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_33_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h21 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_33_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_33_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h21 == idx & way) begin // @[icache.scala 66:19]
-      valid_33_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_34_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h22 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_34_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_34_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h22 == idx & way) begin // @[icache.scala 66:19]
-      valid_34_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_35_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h23 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_35_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_35_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h23 == idx & way) begin // @[icache.scala 66:19]
-      valid_35_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_36_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h24 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_36_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_36_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h24 == idx & way) begin // @[icache.scala 66:19]
-      valid_36_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_37_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h25 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_37_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_37_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h25 == idx & way) begin // @[icache.scala 66:19]
-      valid_37_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_38_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h26 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_38_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_38_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h26 == idx & way) begin // @[icache.scala 66:19]
-      valid_38_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_39_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h27 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_39_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_39_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h27 == idx & way) begin // @[icache.scala 66:19]
-      valid_39_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_40_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h28 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_40_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_40_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h28 == idx & way) begin // @[icache.scala 66:19]
-      valid_40_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_41_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h29 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_41_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_41_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h29 == idx & way) begin // @[icache.scala 66:19]
-      valid_41_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_42_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_42_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_42_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2a == idx & way) begin // @[icache.scala 66:19]
-      valid_42_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_43_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_43_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_43_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2b == idx & way) begin // @[icache.scala 66:19]
-      valid_43_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_44_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_44_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_44_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2c == idx & way) begin // @[icache.scala 66:19]
-      valid_44_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_45_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_45_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_45_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2d == idx & way) begin // @[icache.scala 66:19]
-      valid_45_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_46_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_46_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_46_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2e == idx & way) begin // @[icache.scala 66:19]
-      valid_46_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_47_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_47_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_47_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h2f == idx & way) begin // @[icache.scala 66:19]
-      valid_47_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_48_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h30 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_48_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_48_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h30 == idx & way) begin // @[icache.scala 66:19]
-      valid_48_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_49_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h31 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_49_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_49_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h31 == idx & way) begin // @[icache.scala 66:19]
-      valid_49_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_50_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h32 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_50_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_50_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h32 == idx & way) begin // @[icache.scala 66:19]
-      valid_50_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_51_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h33 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_51_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_51_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h33 == idx & way) begin // @[icache.scala 66:19]
-      valid_51_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_52_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h34 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_52_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_52_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h34 == idx & way) begin // @[icache.scala 66:19]
-      valid_52_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_53_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h35 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_53_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_53_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h35 == idx & way) begin // @[icache.scala 66:19]
-      valid_53_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_54_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h36 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_54_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_54_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h36 == idx & way) begin // @[icache.scala 66:19]
-      valid_54_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_55_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h37 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_55_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_55_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h37 == idx & way) begin // @[icache.scala 66:19]
-      valid_55_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_56_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h38 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_56_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_56_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h38 == idx & way) begin // @[icache.scala 66:19]
-      valid_56_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_57_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h39 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_57_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_57_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h39 == idx & way) begin // @[icache.scala 66:19]
-      valid_57_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_58_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_58_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_58_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3a == idx & way) begin // @[icache.scala 66:19]
-      valid_58_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_59_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_59_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_59_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3b == idx & way) begin // @[icache.scala 66:19]
-      valid_59_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_60_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_60_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_60_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3c == idx & way) begin // @[icache.scala 66:19]
-      valid_60_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_61_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_61_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_61_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3d == idx & way) begin // @[icache.scala 66:19]
-      valid_61_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_62_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_62_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_62_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3e == idx & way) begin // @[icache.scala 66:19]
-      valid_62_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_63_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_63_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_63_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h3f == idx & way) begin // @[icache.scala 66:19]
-      valid_63_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_64_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h40 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_64_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_64_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h40 == idx & way) begin // @[icache.scala 66:19]
-      valid_64_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_65_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h41 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_65_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_65_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h41 == idx & way) begin // @[icache.scala 66:19]
-      valid_65_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_66_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h42 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_66_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_66_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h42 == idx & way) begin // @[icache.scala 66:19]
-      valid_66_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_67_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h43 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_67_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_67_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h43 == idx & way) begin // @[icache.scala 66:19]
-      valid_67_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_68_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h44 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_68_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_68_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h44 == idx & way) begin // @[icache.scala 66:19]
-      valid_68_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_69_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h45 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_69_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_69_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h45 == idx & way) begin // @[icache.scala 66:19]
-      valid_69_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_70_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h46 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_70_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_70_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h46 == idx & way) begin // @[icache.scala 66:19]
-      valid_70_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_71_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h47 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_71_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_71_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h47 == idx & way) begin // @[icache.scala 66:19]
-      valid_71_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_72_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h48 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_72_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_72_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h48 == idx & way) begin // @[icache.scala 66:19]
-      valid_72_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_73_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h49 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_73_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_73_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h49 == idx & way) begin // @[icache.scala 66:19]
-      valid_73_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_74_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_74_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_74_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4a == idx & way) begin // @[icache.scala 66:19]
-      valid_74_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_75_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_75_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_75_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4b == idx & way) begin // @[icache.scala 66:19]
-      valid_75_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_76_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_76_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_76_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4c == idx & way) begin // @[icache.scala 66:19]
-      valid_76_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_77_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_77_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_77_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4d == idx & way) begin // @[icache.scala 66:19]
-      valid_77_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_78_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_78_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_78_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4e == idx & way) begin // @[icache.scala 66:19]
-      valid_78_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_79_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_79_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_79_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h4f == idx & way) begin // @[icache.scala 66:19]
-      valid_79_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_80_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h50 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_80_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_80_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h50 == idx & way) begin // @[icache.scala 66:19]
-      valid_80_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_81_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h51 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_81_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_81_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h51 == idx & way) begin // @[icache.scala 66:19]
-      valid_81_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_82_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h52 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_82_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_82_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h52 == idx & way) begin // @[icache.scala 66:19]
-      valid_82_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_83_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h53 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_83_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_83_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h53 == idx & way) begin // @[icache.scala 66:19]
-      valid_83_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_84_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h54 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_84_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_84_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h54 == idx & way) begin // @[icache.scala 66:19]
-      valid_84_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_85_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h55 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_85_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_85_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h55 == idx & way) begin // @[icache.scala 66:19]
-      valid_85_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_86_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h56 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_86_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_86_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h56 == idx & way) begin // @[icache.scala 66:19]
-      valid_86_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_87_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h57 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_87_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_87_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h57 == idx & way) begin // @[icache.scala 66:19]
-      valid_87_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_88_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h58 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_88_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_88_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h58 == idx & way) begin // @[icache.scala 66:19]
-      valid_88_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_89_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h59 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_89_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_89_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h59 == idx & way) begin // @[icache.scala 66:19]
-      valid_89_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_90_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_90_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_90_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5a == idx & way) begin // @[icache.scala 66:19]
-      valid_90_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_91_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_91_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_91_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5b == idx & way) begin // @[icache.scala 66:19]
-      valid_91_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_92_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_92_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_92_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5c == idx & way) begin // @[icache.scala 66:19]
-      valid_92_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_93_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_93_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_93_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5d == idx & way) begin // @[icache.scala 66:19]
-      valid_93_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_94_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_94_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_94_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5e == idx & way) begin // @[icache.scala 66:19]
-      valid_94_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_95_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_95_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_95_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h5f == idx & way) begin // @[icache.scala 66:19]
-      valid_95_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_96_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h60 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_96_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_96_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h60 == idx & way) begin // @[icache.scala 66:19]
-      valid_96_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_97_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h61 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_97_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_97_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h61 == idx & way) begin // @[icache.scala 66:19]
-      valid_97_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_98_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h62 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_98_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_98_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h62 == idx & way) begin // @[icache.scala 66:19]
-      valid_98_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_99_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h63 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_99_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_99_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h63 == idx & way) begin // @[icache.scala 66:19]
-      valid_99_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_100_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h64 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_100_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_100_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h64 == idx & way) begin // @[icache.scala 66:19]
-      valid_100_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_101_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h65 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_101_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_101_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h65 == idx & way) begin // @[icache.scala 66:19]
-      valid_101_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_102_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h66 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_102_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_102_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h66 == idx & way) begin // @[icache.scala 66:19]
-      valid_102_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_103_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h67 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_103_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_103_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h67 == idx & way) begin // @[icache.scala 66:19]
-      valid_103_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_104_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h68 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_104_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_104_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h68 == idx & way) begin // @[icache.scala 66:19]
-      valid_104_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_105_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h69 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_105_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_105_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h69 == idx & way) begin // @[icache.scala 66:19]
-      valid_105_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_106_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_106_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_106_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6a == idx & way) begin // @[icache.scala 66:19]
-      valid_106_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_107_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_107_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_107_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6b == idx & way) begin // @[icache.scala 66:19]
-      valid_107_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_108_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_108_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_108_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6c == idx & way) begin // @[icache.scala 66:19]
-      valid_108_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_109_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_109_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_109_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6d == idx & way) begin // @[icache.scala 66:19]
-      valid_109_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_110_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_110_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_110_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6e == idx & way) begin // @[icache.scala 66:19]
-      valid_110_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_111_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_111_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_111_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h6f == idx & way) begin // @[icache.scala 66:19]
-      valid_111_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_112_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h70 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_112_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_112_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h70 == idx & way) begin // @[icache.scala 66:19]
-      valid_112_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_113_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h71 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_113_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_113_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h71 == idx & way) begin // @[icache.scala 66:19]
-      valid_113_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_114_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h72 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_114_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_114_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h72 == idx & way) begin // @[icache.scala 66:19]
-      valid_114_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_115_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h73 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_115_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_115_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h73 == idx & way) begin // @[icache.scala 66:19]
-      valid_115_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_116_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h74 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_116_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_116_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h74 == idx & way) begin // @[icache.scala 66:19]
-      valid_116_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_117_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h75 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_117_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_117_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h75 == idx & way) begin // @[icache.scala 66:19]
-      valid_117_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_118_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h76 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_118_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_118_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h76 == idx & way) begin // @[icache.scala 66:19]
-      valid_118_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_119_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h77 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_119_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_119_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h77 == idx & way) begin // @[icache.scala 66:19]
-      valid_119_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_120_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h78 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_120_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_120_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h78 == idx & way) begin // @[icache.scala 66:19]
-      valid_120_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_121_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h79 == idx & ~way) begin // @[icache.scala 66:19]
-      valid_121_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_121_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h79 == idx & way) begin // @[icache.scala 66:19]
-      valid_121_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_122_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7a == idx & ~way) begin // @[icache.scala 66:19]
-      valid_122_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_122_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7a == idx & way) begin // @[icache.scala 66:19]
-      valid_122_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_123_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7b == idx & ~way) begin // @[icache.scala 66:19]
-      valid_123_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_123_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7b == idx & way) begin // @[icache.scala 66:19]
-      valid_123_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_124_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7c == idx & ~way) begin // @[icache.scala 66:19]
-      valid_124_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_124_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7c == idx & way) begin // @[icache.scala 66:19]
-      valid_124_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_125_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7d == idx & ~way) begin // @[icache.scala 66:19]
-      valid_125_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_125_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7d == idx & way) begin // @[icache.scala 66:19]
-      valid_125_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_126_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7e == idx & ~way) begin // @[icache.scala 66:19]
-      valid_126_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_126_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7e == idx & way) begin // @[icache.scala 66:19]
-      valid_126_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_127_0 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7f == idx & ~way) begin // @[icache.scala 66:19]
-      valid_127_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 29:22]
-      valid_127_1 <= 1'h0; // @[icache.scala 29:22]
-    end else if (7'h7f == idx & way) begin // @[icache.scala 66:19]
-      valid_127_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 66:19]
-    end
-    if (reset) begin // @[icache.scala 34:22]
-      state <= 2'h0; // @[icache.scala 34:22]
+    if (reset) begin // @[icache.scala 30:22]
+      valid_0_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h0 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_0_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_0_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h0 == idx & way) begin // @[icache.scala 67:19]
+      valid_0_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_1_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_1_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_1_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1 == idx & way) begin // @[icache.scala 67:19]
+      valid_1_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_2_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_2_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_2_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2 == idx & way) begin // @[icache.scala 67:19]
+      valid_2_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_3_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_3_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_3_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3 == idx & way) begin // @[icache.scala 67:19]
+      valid_3_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_4_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_4_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_4_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4 == idx & way) begin // @[icache.scala 67:19]
+      valid_4_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_5_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_5_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_5_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5 == idx & way) begin // @[icache.scala 67:19]
+      valid_5_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_6_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_6_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_6_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6 == idx & way) begin // @[icache.scala 67:19]
+      valid_6_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_7_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_7_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_7_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7 == idx & way) begin // @[icache.scala 67:19]
+      valid_7_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_8_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h8 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_8_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_8_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h8 == idx & way) begin // @[icache.scala 67:19]
+      valid_8_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_9_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h9 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_9_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_9_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h9 == idx & way) begin // @[icache.scala 67:19]
+      valid_9_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_10_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'ha == idx & ~way) begin // @[icache.scala 67:19]
+      valid_10_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_10_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'ha == idx & way) begin // @[icache.scala 67:19]
+      valid_10_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_11_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hb == idx & ~way) begin // @[icache.scala 67:19]
+      valid_11_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_11_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hb == idx & way) begin // @[icache.scala 67:19]
+      valid_11_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_12_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hc == idx & ~way) begin // @[icache.scala 67:19]
+      valid_12_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_12_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hc == idx & way) begin // @[icache.scala 67:19]
+      valid_12_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_13_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hd == idx & ~way) begin // @[icache.scala 67:19]
+      valid_13_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_13_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hd == idx & way) begin // @[icache.scala 67:19]
+      valid_13_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_14_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'he == idx & ~way) begin // @[icache.scala 67:19]
+      valid_14_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_14_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'he == idx & way) begin // @[icache.scala 67:19]
+      valid_14_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_15_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hf == idx & ~way) begin // @[icache.scala 67:19]
+      valid_15_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_15_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'hf == idx & way) begin // @[icache.scala 67:19]
+      valid_15_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_16_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h10 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_16_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_16_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h10 == idx & way) begin // @[icache.scala 67:19]
+      valid_16_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_17_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h11 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_17_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_17_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h11 == idx & way) begin // @[icache.scala 67:19]
+      valid_17_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_18_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h12 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_18_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_18_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h12 == idx & way) begin // @[icache.scala 67:19]
+      valid_18_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_19_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h13 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_19_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_19_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h13 == idx & way) begin // @[icache.scala 67:19]
+      valid_19_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_20_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h14 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_20_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_20_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h14 == idx & way) begin // @[icache.scala 67:19]
+      valid_20_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_21_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h15 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_21_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_21_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h15 == idx & way) begin // @[icache.scala 67:19]
+      valid_21_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_22_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h16 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_22_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_22_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h16 == idx & way) begin // @[icache.scala 67:19]
+      valid_22_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_23_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h17 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_23_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_23_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h17 == idx & way) begin // @[icache.scala 67:19]
+      valid_23_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_24_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h18 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_24_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_24_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h18 == idx & way) begin // @[icache.scala 67:19]
+      valid_24_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_25_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h19 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_25_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_25_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h19 == idx & way) begin // @[icache.scala 67:19]
+      valid_25_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_26_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_26_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_26_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1a == idx & way) begin // @[icache.scala 67:19]
+      valid_26_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_27_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_27_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_27_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1b == idx & way) begin // @[icache.scala 67:19]
+      valid_27_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_28_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_28_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_28_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1c == idx & way) begin // @[icache.scala 67:19]
+      valid_28_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_29_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_29_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_29_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1d == idx & way) begin // @[icache.scala 67:19]
+      valid_29_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_30_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_30_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_30_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1e == idx & way) begin // @[icache.scala 67:19]
+      valid_30_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_31_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_31_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_31_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h1f == idx & way) begin // @[icache.scala 67:19]
+      valid_31_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_32_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h20 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_32_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_32_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h20 == idx & way) begin // @[icache.scala 67:19]
+      valid_32_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_33_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h21 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_33_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_33_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h21 == idx & way) begin // @[icache.scala 67:19]
+      valid_33_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_34_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h22 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_34_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_34_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h22 == idx & way) begin // @[icache.scala 67:19]
+      valid_34_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_35_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h23 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_35_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_35_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h23 == idx & way) begin // @[icache.scala 67:19]
+      valid_35_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_36_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h24 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_36_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_36_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h24 == idx & way) begin // @[icache.scala 67:19]
+      valid_36_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_37_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h25 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_37_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_37_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h25 == idx & way) begin // @[icache.scala 67:19]
+      valid_37_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_38_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h26 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_38_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_38_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h26 == idx & way) begin // @[icache.scala 67:19]
+      valid_38_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_39_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h27 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_39_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_39_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h27 == idx & way) begin // @[icache.scala 67:19]
+      valid_39_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_40_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h28 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_40_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_40_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h28 == idx & way) begin // @[icache.scala 67:19]
+      valid_40_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_41_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h29 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_41_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_41_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h29 == idx & way) begin // @[icache.scala 67:19]
+      valid_41_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_42_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_42_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_42_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2a == idx & way) begin // @[icache.scala 67:19]
+      valid_42_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_43_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_43_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_43_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2b == idx & way) begin // @[icache.scala 67:19]
+      valid_43_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_44_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_44_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_44_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2c == idx & way) begin // @[icache.scala 67:19]
+      valid_44_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_45_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_45_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_45_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2d == idx & way) begin // @[icache.scala 67:19]
+      valid_45_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_46_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_46_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_46_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2e == idx & way) begin // @[icache.scala 67:19]
+      valid_46_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_47_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_47_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_47_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h2f == idx & way) begin // @[icache.scala 67:19]
+      valid_47_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_48_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h30 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_48_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_48_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h30 == idx & way) begin // @[icache.scala 67:19]
+      valid_48_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_49_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h31 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_49_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_49_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h31 == idx & way) begin // @[icache.scala 67:19]
+      valid_49_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_50_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h32 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_50_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_50_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h32 == idx & way) begin // @[icache.scala 67:19]
+      valid_50_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_51_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h33 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_51_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_51_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h33 == idx & way) begin // @[icache.scala 67:19]
+      valid_51_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_52_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h34 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_52_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_52_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h34 == idx & way) begin // @[icache.scala 67:19]
+      valid_52_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_53_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h35 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_53_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_53_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h35 == idx & way) begin // @[icache.scala 67:19]
+      valid_53_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_54_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h36 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_54_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_54_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h36 == idx & way) begin // @[icache.scala 67:19]
+      valid_54_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_55_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h37 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_55_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_55_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h37 == idx & way) begin // @[icache.scala 67:19]
+      valid_55_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_56_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h38 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_56_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_56_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h38 == idx & way) begin // @[icache.scala 67:19]
+      valid_56_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_57_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h39 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_57_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_57_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h39 == idx & way) begin // @[icache.scala 67:19]
+      valid_57_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_58_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_58_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_58_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3a == idx & way) begin // @[icache.scala 67:19]
+      valid_58_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_59_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_59_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_59_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3b == idx & way) begin // @[icache.scala 67:19]
+      valid_59_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_60_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_60_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_60_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3c == idx & way) begin // @[icache.scala 67:19]
+      valid_60_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_61_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_61_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_61_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3d == idx & way) begin // @[icache.scala 67:19]
+      valid_61_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_62_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_62_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_62_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3e == idx & way) begin // @[icache.scala 67:19]
+      valid_62_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_63_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_63_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_63_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h3f == idx & way) begin // @[icache.scala 67:19]
+      valid_63_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_64_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h40 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_64_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_64_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h40 == idx & way) begin // @[icache.scala 67:19]
+      valid_64_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_65_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h41 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_65_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_65_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h41 == idx & way) begin // @[icache.scala 67:19]
+      valid_65_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_66_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h42 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_66_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_66_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h42 == idx & way) begin // @[icache.scala 67:19]
+      valid_66_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_67_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h43 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_67_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_67_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h43 == idx & way) begin // @[icache.scala 67:19]
+      valid_67_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_68_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h44 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_68_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_68_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h44 == idx & way) begin // @[icache.scala 67:19]
+      valid_68_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_69_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h45 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_69_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_69_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h45 == idx & way) begin // @[icache.scala 67:19]
+      valid_69_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_70_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h46 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_70_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_70_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h46 == idx & way) begin // @[icache.scala 67:19]
+      valid_70_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_71_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h47 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_71_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_71_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h47 == idx & way) begin // @[icache.scala 67:19]
+      valid_71_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_72_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h48 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_72_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_72_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h48 == idx & way) begin // @[icache.scala 67:19]
+      valid_72_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_73_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h49 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_73_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_73_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h49 == idx & way) begin // @[icache.scala 67:19]
+      valid_73_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_74_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_74_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_74_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4a == idx & way) begin // @[icache.scala 67:19]
+      valid_74_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_75_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_75_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_75_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4b == idx & way) begin // @[icache.scala 67:19]
+      valid_75_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_76_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_76_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_76_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4c == idx & way) begin // @[icache.scala 67:19]
+      valid_76_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_77_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_77_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_77_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4d == idx & way) begin // @[icache.scala 67:19]
+      valid_77_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_78_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_78_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_78_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4e == idx & way) begin // @[icache.scala 67:19]
+      valid_78_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_79_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_79_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_79_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h4f == idx & way) begin // @[icache.scala 67:19]
+      valid_79_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_80_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h50 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_80_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_80_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h50 == idx & way) begin // @[icache.scala 67:19]
+      valid_80_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_81_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h51 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_81_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_81_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h51 == idx & way) begin // @[icache.scala 67:19]
+      valid_81_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_82_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h52 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_82_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_82_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h52 == idx & way) begin // @[icache.scala 67:19]
+      valid_82_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_83_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h53 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_83_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_83_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h53 == idx & way) begin // @[icache.scala 67:19]
+      valid_83_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_84_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h54 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_84_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_84_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h54 == idx & way) begin // @[icache.scala 67:19]
+      valid_84_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_85_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h55 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_85_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_85_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h55 == idx & way) begin // @[icache.scala 67:19]
+      valid_85_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_86_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h56 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_86_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_86_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h56 == idx & way) begin // @[icache.scala 67:19]
+      valid_86_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_87_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h57 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_87_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_87_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h57 == idx & way) begin // @[icache.scala 67:19]
+      valid_87_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_88_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h58 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_88_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_88_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h58 == idx & way) begin // @[icache.scala 67:19]
+      valid_88_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_89_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h59 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_89_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_89_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h59 == idx & way) begin // @[icache.scala 67:19]
+      valid_89_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_90_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_90_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_90_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5a == idx & way) begin // @[icache.scala 67:19]
+      valid_90_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_91_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_91_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_91_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5b == idx & way) begin // @[icache.scala 67:19]
+      valid_91_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_92_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_92_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_92_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5c == idx & way) begin // @[icache.scala 67:19]
+      valid_92_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_93_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_93_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_93_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5d == idx & way) begin // @[icache.scala 67:19]
+      valid_93_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_94_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_94_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_94_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5e == idx & way) begin // @[icache.scala 67:19]
+      valid_94_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_95_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_95_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_95_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h5f == idx & way) begin // @[icache.scala 67:19]
+      valid_95_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_96_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h60 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_96_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_96_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h60 == idx & way) begin // @[icache.scala 67:19]
+      valid_96_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_97_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h61 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_97_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_97_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h61 == idx & way) begin // @[icache.scala 67:19]
+      valid_97_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_98_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h62 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_98_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_98_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h62 == idx & way) begin // @[icache.scala 67:19]
+      valid_98_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_99_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h63 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_99_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_99_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h63 == idx & way) begin // @[icache.scala 67:19]
+      valid_99_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_100_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h64 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_100_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_100_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h64 == idx & way) begin // @[icache.scala 67:19]
+      valid_100_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_101_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h65 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_101_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_101_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h65 == idx & way) begin // @[icache.scala 67:19]
+      valid_101_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_102_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h66 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_102_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_102_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h66 == idx & way) begin // @[icache.scala 67:19]
+      valid_102_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_103_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h67 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_103_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_103_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h67 == idx & way) begin // @[icache.scala 67:19]
+      valid_103_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_104_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h68 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_104_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_104_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h68 == idx & way) begin // @[icache.scala 67:19]
+      valid_104_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_105_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h69 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_105_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_105_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h69 == idx & way) begin // @[icache.scala 67:19]
+      valid_105_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_106_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_106_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_106_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6a == idx & way) begin // @[icache.scala 67:19]
+      valid_106_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_107_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_107_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_107_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6b == idx & way) begin // @[icache.scala 67:19]
+      valid_107_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_108_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_108_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_108_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6c == idx & way) begin // @[icache.scala 67:19]
+      valid_108_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_109_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_109_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_109_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6d == idx & way) begin // @[icache.scala 67:19]
+      valid_109_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_110_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_110_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_110_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6e == idx & way) begin // @[icache.scala 67:19]
+      valid_110_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_111_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_111_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_111_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h6f == idx & way) begin // @[icache.scala 67:19]
+      valid_111_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_112_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h70 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_112_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_112_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h70 == idx & way) begin // @[icache.scala 67:19]
+      valid_112_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_113_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h71 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_113_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_113_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h71 == idx & way) begin // @[icache.scala 67:19]
+      valid_113_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_114_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h72 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_114_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_114_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h72 == idx & way) begin // @[icache.scala 67:19]
+      valid_114_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_115_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h73 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_115_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_115_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h73 == idx & way) begin // @[icache.scala 67:19]
+      valid_115_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_116_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h74 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_116_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_116_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h74 == idx & way) begin // @[icache.scala 67:19]
+      valid_116_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_117_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h75 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_117_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_117_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h75 == idx & way) begin // @[icache.scala 67:19]
+      valid_117_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_118_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h76 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_118_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_118_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h76 == idx & way) begin // @[icache.scala 67:19]
+      valid_118_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_119_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h77 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_119_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_119_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h77 == idx & way) begin // @[icache.scala 67:19]
+      valid_119_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_120_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h78 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_120_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_120_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h78 == idx & way) begin // @[icache.scala 67:19]
+      valid_120_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_121_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h79 == idx & ~way) begin // @[icache.scala 67:19]
+      valid_121_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_121_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h79 == idx & way) begin // @[icache.scala 67:19]
+      valid_121_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_122_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7a == idx & ~way) begin // @[icache.scala 67:19]
+      valid_122_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_122_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7a == idx & way) begin // @[icache.scala 67:19]
+      valid_122_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_123_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7b == idx & ~way) begin // @[icache.scala 67:19]
+      valid_123_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_123_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7b == idx & way) begin // @[icache.scala 67:19]
+      valid_123_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_124_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7c == idx & ~way) begin // @[icache.scala 67:19]
+      valid_124_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_124_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7c == idx & way) begin // @[icache.scala 67:19]
+      valid_124_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_125_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7d == idx & ~way) begin // @[icache.scala 67:19]
+      valid_125_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_125_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7d == idx & way) begin // @[icache.scala 67:19]
+      valid_125_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_126_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7e == idx & ~way) begin // @[icache.scala 67:19]
+      valid_126_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_126_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7e == idx & way) begin // @[icache.scala 67:19]
+      valid_126_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_127_0 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7f == idx & ~way) begin // @[icache.scala 67:19]
+      valid_127_0 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 30:22]
+      valid_127_1 <= 1'h0; // @[icache.scala 30:22]
+    end else if (7'h7f == idx & way) begin // @[icache.scala 67:19]
+      valid_127_1 <= _lfsr8_io_en_T & ~uncache | _GEN_640; // @[icache.scala 67:19]
+    end
+    if (reset) begin // @[icache.scala 35:22]
+      state <= 2'h0; // @[icache.scala 35:22]
     end else if (2'h3 == state) begin // @[Mux.scala 81:58]
-      if (_state_T_5 & io_mem_r_bits_last) begin // @[icache.scala 63:22]
+      if (_state_T_5 & io_mem_r_bits_last) begin // @[icache.scala 64:22]
         state <= 2'h0;
       end else begin
         state <= 2'h3;
       end
     end else if (2'h2 == state) begin // @[Mux.scala 81:58]
-      if (_state_T_3) begin // @[icache.scala 62:22]
+      if (_state_T_3) begin // @[icache.scala 63:22]
         state <= 2'h3;
       end else begin
         state <= 2'h2;
@@ -10673,14 +10669,14 @@ module ICache(
     end else begin
       state <= _state_T;
     end
-    if (reset) begin // @[icache.scala 37:21]
-      addr <= 32'h0; // @[icache.scala 37:21]
-    end else if (state == 2'h0 & req | state == 2'h1 & req & ~miss) begin // @[icache.scala 69:17]
+    if (reset) begin // @[icache.scala 38:21]
+      addr <= 32'h0; // @[icache.scala 38:21]
+    end else if (state == 2'h0 & req | state == 2'h1 & req & ~miss) begin // @[icache.scala 70:17]
       addr <= io_in_ar_bits_addr;
     end
-    if (reset) begin // @[icache.scala 38:24]
-      uncache <= 1'h0; // @[icache.scala 38:24]
-    end else if (_addr_T_6) begin // @[icache.scala 70:17]
+    if (reset) begin // @[icache.scala 39:24]
+      uncache <= 1'h0; // @[icache.scala 39:24]
+    end else if (_addr_T_6) begin // @[icache.scala 71:17]
       uncache <= io_in_ar_bits_addr >= 32'ha0000000;
     end
     if (reset) begin // @[Reg.scala 35:20]
@@ -10688,21 +10684,21 @@ module ICache(
     end else if (miss) begin // @[Reg.scala 36:18]
       way <= lfsr8_io_out[0]; // @[Reg.scala 36:22]
     end
-    if (reset) begin // @[icache.scala 56:20]
-      cnt <= 1'h0; // @[icache.scala 56:20]
-    end else if (_lfsr8_io_en_T) begin // @[icache.scala 74:13]
+    if (reset) begin // @[icache.scala 57:20]
+      cnt <= 1'h0; // @[icache.scala 57:20]
+    end else if (_lfsr8_io_en_T) begin // @[icache.scala 75:13]
       cnt <= addr[3];
-    end else if (_state_T_5) begin // @[icache.scala 75:13]
+    end else if (_state_T_5) begin // @[icache.scala 76:13]
       cnt <= ~cnt;
     end
-    if (reset) begin // @[icache.scala 87:20]
-      flag <= 1'h0; // @[icache.scala 87:20]
+    if (reset) begin // @[icache.scala 88:20]
+      flag <= 1'h0; // @[icache.scala 88:20]
     end else begin
-      flag <= _addr_T | _flag_T_4; // @[icache.scala 89:8]
+      flag <= _addr_T | _flag_T_4; // @[icache.scala 90:8]
     end
-    if (reset) begin // @[icache.scala 88:21]
-      rdata <= 64'h0; // @[icache.scala 88:21]
-    end else if (en_w & flag) begin // @[icache.scala 91:14]
+    if (reset) begin // @[icache.scala 89:21]
+      rdata <= 64'h0; // @[icache.scala 89:21]
+    end else if (en_w & flag) begin // @[icache.scala 92:14]
       rdata <= io_mem_r_bits_data;
     end
   end
@@ -11532,7 +11528,7 @@ end // initial
 `endif
 `endif // SYNTHESIS
 endmodule
-module CacheRAM(
+module ICacheRAM(
   input          clock,
   input          reset,
   output [127:0] io_bits_Q0,
@@ -11694,49 +11690,359 @@ end // initial
 `endif
 `endif // SYNTHESIS
 endmodule
-module AXILite2AXI4(
-  output        io_in_ar_ready,
-  input         io_in_ar_valid,
-  input  [31:0] io_in_ar_bits_addr,
-  output        io_in_r_valid,
-  output [63:0] io_in_r_bits_data,
-  output        io_in_aw_ready,
-  input         io_in_aw_valid,
-  input  [31:0] io_in_aw_bits_addr,
-  output        io_in_w_ready,
-  input         io_in_w_valid,
-  input  [63:0] io_in_w_bits_data,
-  input  [7:0]  io_in_w_bits_strb,
-  output        io_in_b_valid,
-  input         io_mem_ar_ready,
-  output        io_mem_ar_valid,
-  output [31:0] io_mem_ar_bits_addr,
-  input         io_mem_r_valid,
-  input  [63:0] io_mem_r_bits_data,
-  input         io_mem_aw_ready,
-  output        io_mem_aw_valid,
-  output [31:0] io_mem_aw_bits_addr,
-  input         io_mem_w_ready,
-  output        io_mem_w_valid,
-  output [63:0] io_mem_w_bits_data,
-  output [7:0]  io_mem_w_bits_strb,
-  output        io_mem_w_bits_last,
-  input         io_mem_b_valid
+module DCache(
+  input          clock,
+  input          reset,
+  output         io_in_ar_ready,
+  input          io_in_ar_valid,
+  input  [31:0]  io_in_ar_bits_addr,
+  output         io_in_r_valid,
+  output [63:0]  io_in_r_bits_data,
+  output         io_in_aw_ready,
+  input          io_in_aw_valid,
+  input  [31:0]  io_in_aw_bits_addr,
+  output         io_in_w_ready,
+  input          io_in_w_valid,
+  input  [63:0]  io_in_w_bits_data,
+  input  [7:0]   io_in_w_bits_strb,
+  output         io_in_b_valid,
+  input          io_mem_ar_ready,
+  output         io_mem_ar_valid,
+  output [31:0]  io_mem_ar_bits_addr,
+  output         io_mem_r_ready,
+  input          io_mem_r_valid,
+  input  [63:0]  io_mem_r_bits_data,
+  input          io_mem_aw_ready,
+  output         io_mem_aw_valid,
+  output [31:0]  io_mem_aw_bits_addr,
+  input          io_mem_w_ready,
+  output         io_mem_w_valid,
+  output [63:0]  io_mem_w_bits_data,
+  output [7:0]   io_mem_w_bits_strb,
+  output         io_mem_w_bits_last,
+  output         io_mem_b_ready,
+  input          io_mem_b_valid,
+  input  [127:0] io_ram_bits_Q0,
+  input  [127:0] io_ram_bits_Q1,
+  output         io_ram_bits_WEN,
+  output [127:0] io_ram_bits_BWEN,
+  output [6:0]   io_ram_bits_A,
+  output [127:0] io_ram_bits_D,
+  output         io_ram_bits_WAY
 );
-  assign io_in_ar_ready = io_mem_ar_ready; // @[Crossbar.scala 55:18]
-  assign io_in_r_valid = io_mem_r_valid; // @[Crossbar.scala 58:17]
-  assign io_in_r_bits_data = io_mem_r_bits_data; // @[Crossbar.scala 56:21]
-  assign io_in_aw_ready = io_mem_aw_ready; // @[Crossbar.scala 62:18]
-  assign io_in_w_ready = io_mem_w_ready; // @[Crossbar.scala 66:17]
-  assign io_in_b_valid = io_mem_b_valid; // @[Crossbar.scala 68:17]
-  assign io_mem_ar_valid = io_in_ar_valid; // @[Crossbar.scala 54:18]
-  assign io_mem_ar_bits_addr = io_in_ar_bits_addr; // @[Crossbar.scala 53:22]
-  assign io_mem_aw_valid = io_in_aw_valid; // @[Crossbar.scala 61:18]
-  assign io_mem_aw_bits_addr = io_in_aw_bits_addr; // @[Crossbar.scala 60:22]
-  assign io_mem_w_valid = io_in_w_valid; // @[Crossbar.scala 65:17]
-  assign io_mem_w_bits_data = io_in_w_bits_data; // @[Crossbar.scala 63:21]
-  assign io_mem_w_bits_strb = io_in_w_bits_strb; // @[Crossbar.scala 64:21]
-  assign io_mem_w_bits_last = io_in_w_valid; // @[Crossbar.scala 82:22]
+`ifdef RANDOMIZE_REG_INIT
+  reg [63:0] _RAND_0;
+  reg [31:0] _RAND_1;
+  reg [31:0] _RAND_2;
+  reg [31:0] _RAND_3;
+  reg [31:0] _RAND_4;
+  reg [31:0] _RAND_5;
+  reg [31:0] _RAND_6;
+  reg [31:0] _RAND_7;
+  reg [63:0] _RAND_8;
+  reg [31:0] _RAND_9;
+  reg [31:0] _RAND_10;
+  reg [31:0] _RAND_11;
+  reg [31:0] _RAND_12;
+  reg [31:0] _RAND_13;
+`endif // RANDOMIZE_REG_INIT
+  wire  lfsr8_clock; // @[dcache.scala 266:21]
+  wire  lfsr8_reset; // @[dcache.scala 266:21]
+  wire  lfsr8_io_en; // @[dcache.scala 266:21]
+  wire [7:0] lfsr8_io_out; // @[dcache.scala 266:21]
+  reg [41:0] cache_tag_0; // @[dcache.scala 229:26]
+  reg  valid_0_0; // @[dcache.scala 230:22]
+  reg  valid_0_1; // @[dcache.scala 230:22]
+  reg  dirty_0_0; // @[dcache.scala 231:22]
+  reg  dirty_0_1; // @[dcache.scala 231:22]
+  reg [2:0] state; // @[dcache.scala 236:22]
+  reg [2:0] rstate; // @[dcache.scala 237:23]
+  reg [2:0] wstate; // @[dcache.scala 238:23]
+  wire  _req_T = io_in_ar_ready & io_in_ar_valid; // @[Decoupled.scala 52:35]
+  wire  _req_T_1 = io_in_aw_ready & io_in_aw_valid; // @[Decoupled.scala 52:35]
+  wire  req = _req_T | _req_T_1; // @[dcache.scala 239:28]
+  reg [63:0] wdata; // @[dcache.scala 242:22]
+  reg [7:0] wstrb; // @[dcache.scala 243:22]
+  reg  uncache; // @[dcache.scala 244:24]
+  reg  rmode; // @[dcache.scala 255:22]
+  reg  wmode; // @[dcache.scala 256:22]
+  wire  _rmode_T = state == 3'h0; // @[dcache.scala 257:23]
+  wire  _rmode_T_4 = state == 3'h0 ? 1'h0 : rmode; // @[dcache.scala 257:58]
+  wire  _wmode_T_2 = _rmode_T & _req_T_1; // @[dcache.scala 258:35]
+  wire  _wmode_T_4 = _rmode_T ? 1'h0 : wmode; // @[dcache.scala 258:58]
+  wire [1:0] _hit_T_8 = cache_tag_0[41:21] == 21'h0 & valid_0_1 ? 2'h1 : 2'h3; // @[dcache.scala 262:16]
+  wire [1:0] hit = cache_tag_0[20:0] == 21'h0 & valid_0_0 ? 2'h0 : _hit_T_8; // @[dcache.scala 261:16]
+  wire  hit_way = hit[0]; // @[dcache.scala 264:21]
+  wire  _miss_T_2 = state == 3'h1; // @[dcache.scala 265:39]
+  wire  miss = hit[1] & state == 3'h1; // @[dcache.scala 265:29]
+  reg  way; // @[Reg.scala 35:20]
+  wire  _tag_way_T = ~way; // @[dcache.scala 271:22]
+  wire [2:0] _state_T = req ? 3'h1 : 3'h0; // @[dcache.scala 276:22]
+  wire [2:0] _state_T_1 = miss ? 3'h2 : 3'h0; // @[dcache.scala 277:41]
+  wire [2:0] _state_T_2 = uncache ? 3'h0 : _state_T_1; // @[dcache.scala 277:22]
+  wire  _GEN_386 = way ? dirty_0_1 : dirty_0_0; // @[dcache.scala 278:{63,63}]
+  wire [2:0] _state_T_16 = 3'h0 == state ? _state_T : 3'h0; // @[Mux.scala 81:58]
+  wire  _rstate_T = state == 3'h2; // @[dcache.scala 283:26]
+  wire  _rstate_T_1 = io_mem_ar_ready & io_mem_ar_valid; // @[Decoupled.scala 52:35]
+  wire [2:0] _rstate_T_3 = state == 3'h2 & _rstate_T_1 ? 3'h4 : 3'h0; // @[dcache.scala 283:19]
+  wire  _rstate_T_4 = io_mem_r_ready & io_mem_r_valid; // @[Decoupled.scala 52:35]
+  wire [2:0] _rstate_T_5 = _rstate_T_4 ? 3'h5 : 3'h4; // @[dcache.scala 284:20]
+  wire [2:0] _rstate_T_11 = 3'h0 == rstate ? _rstate_T_3 : 3'h0; // @[Mux.scala 81:58]
+  wire  _wstate_T_1 = io_mem_aw_ready & io_mem_aw_valid; // @[Decoupled.scala 52:35]
+  wire  _wstate_T_3 = io_mem_w_ready & io_mem_w_valid; // @[Decoupled.scala 52:35]
+  wire [2:0] _wstate_T_5 = _rstate_T & _wstate_T_1 & _wstate_T_3 ? 3'h4 : 3'h0; // @[dcache.scala 290:19]
+  wire [2:0] _wstate_T_7 = _wstate_T_3 ? 3'h5 : 3'h4; // @[dcache.scala 291:20]
+  wire  _wstate_T_8 = io_mem_b_ready & io_mem_b_valid; // @[Decoupled.scala 52:35]
+  wire [2:0] _wstate_T_13 = 3'h0 == wstate ? _wstate_T_5 : 3'h0; // @[Mux.scala 81:58]
+  wire  _valid_T_1 = ~uncache; // @[dcache.scala 298:46]
+  wire  _valid_T_2 = _rstate_T & ~uncache; // @[dcache.scala 298:43]
+  wire  _GEN_898 = way ? valid_0_1 : valid_0_0; // @[dcache.scala 298:{25,25}]
+  wire [41:0] _cache_tag_T_5 = {cache_tag_0[41:21],21'h0}; // @[Cat.scala 33:92]
+  wire [41:0] _cache_tag_T_7 = {21'h0,cache_tag_0[20:0]}; // @[Cat.scala 33:92]
+  wire  _dirty_T_2 = _miss_T_2 & wmode; // @[dcache.scala 302:46]
+  wire  _dirty_T_3 = ~miss; // @[dcache.scala 302:67]
+  wire  _dirty_T_4 = _miss_T_2 & wmode & ~miss; // @[dcache.scala 302:63]
+  wire  _dirty_T_7 = state == 3'h3; // @[dcache.scala 303:33]
+  wire  _dirty_T_10 = state == 3'h3 ? 1'h0 : _GEN_386; // @[dcache.scala 303:26]
+  wire  _wdata_T_1 = io_in_w_ready & io_in_w_valid; // @[Decoupled.scala 52:35]
+  wire  _wdata_T_2 = _rmode_T & _wdata_T_1; // @[dcache.scala 310:33]
+  wire [63:0] _wstrb_map_T_8 = wstrb == 8'hff ? 64'hffffffffffffffff : 64'h0; // @[dcache.scala 323:20]
+  wire [63:0] _wstrb_map_T_9 = wstrb == 8'hf ? 64'hffffffff : _wstrb_map_T_8; // @[dcache.scala 322:20]
+  wire [63:0] _wstrb_map_T_10 = wstrb == 8'h3 ? 64'hffff : _wstrb_map_T_9; // @[dcache.scala 321:20]
+  wire [63:0] _wstrb_map_T_11 = wstrb == 8'h1 ? 64'hff : _wstrb_map_T_10; // @[dcache.scala 320:19]
+  wire [190:0] _wstrb_map_T_12 = {{127'd0}, _wstrb_map_T_11}; // @[dcache.scala 323:68]
+  wire [190:0] _wdata_map_T = {{127'd0}, wdata}; // @[dcache.scala 326:22]
+  wire  en_w = (_dirty_T_7 | _dirty_T_4) & _valid_T_1; // @[dcache.scala 328:92]
+  wire  _io_ram_bits_BWEN_T_4 = _dirty_T_2 & _valid_T_1; // @[dcache.scala 331:66]
+  wire [127:0] wstrb_map = _wstrb_map_T_12[127:0]; // @[dcache.scala 319:23 320:13]
+  wire [127:0] _io_ram_bits_BWEN_T_5 = ~wstrb_map; // @[dcache.scala 331:81]
+  wire [127:0] wdata_map = _wdata_map_T[127:0]; // @[dcache.scala 325:23 326:13]
+  wire [127:0] _io_ram_bits_D_T_8 = wdata_map & wstrb_map; // @[dcache.scala 335:66]
+  wire [127:0] _io_ram_bits_D_T_10 = wmode ? _io_ram_bits_D_T_8 : 128'h0; // @[dcache.scala 335:22]
+  wire  _rcnt_T = rstate == 3'h0; // @[dcache.scala 340:22]
+  wire [34:0] _io_mem_ar_bits_addr_T_5 = _req_T ? {{3'd0}, io_in_ar_bits_addr} : 35'h0; // @[dcache.scala 348:29]
+  wire  _io_mem_aw_valid_T_5 = wstate == 3'h0; // @[dcache.scala 361:108]
+  wire  _io_mem_w_bits_data_T = wstate == 3'h4; // @[dcache.scala 367:37]
+  wire  _io_in_r_bits_data_T_2 = _miss_T_2 & _dirty_T_3; // @[dcache.scala 375:50]
+  wire [63:0] _io_in_r_bits_data_T_7 = hit_way ? io_ram_bits_Q1[63:0] : io_ram_bits_Q0[63:0]; // @[dcache.scala 376:30]
+  wire [127:0] _io_in_r_bits_data_T_11 = _miss_T_2 & _dirty_T_3 ? {{64'd0}, _io_in_r_bits_data_T_7} : 128'h0; // @[dcache.scala 375:28]
+  wire [127:0] _io_in_r_bits_data_T_12 = uncache ? {{64'd0}, io_mem_r_bits_data} : _io_in_r_bits_data_T_11; // @[dcache.scala 374:28]
+  wire  _io_in_r_valid_T_4 = _io_in_r_bits_data_T_2 | _dirty_T_7; // @[dcache.scala 379:55]
+  LFSR_8 lfsr8 ( // @[dcache.scala 266:21]
+    .clock(lfsr8_clock),
+    .reset(lfsr8_reset),
+    .io_en(lfsr8_io_en),
+    .io_out(lfsr8_io_out)
+  );
+  assign io_in_ar_ready = state == 3'h0; // @[dcache.scala 378:28]
+  assign io_in_r_valid = (_io_in_r_bits_data_T_2 | _dirty_T_7 | _rstate_T_4 & uncache) & rmode; // @[dcache.scala 379:110]
+  assign io_in_r_bits_data = _io_in_r_bits_data_T_12[63:0]; // @[dcache.scala 374:21]
+  assign io_in_aw_ready = state == 3'h0; // @[dcache.scala 383:28]
+  assign io_in_w_ready = state == 3'h0; // @[dcache.scala 384:27]
+  assign io_in_b_valid = (_io_in_r_valid_T_4 | _wstate_T_8 & uncache) & wmode; // @[dcache.scala 382:111]
+  assign io_mem_ar_valid = _req_T | _rstate_T & _rcnt_T; // @[dcache.scala 349:26]
+  assign io_mem_ar_bits_addr = _io_mem_ar_bits_addr_T_5[31:0]; // @[dcache.scala 348:23]
+  assign io_mem_r_ready = 1'h1; // @[dcache.scala 355:18]
+  assign io_mem_aw_valid = _wmode_T_2 | _rstate_T & wstate == 3'h0 & _GEN_386; // @[dcache.scala 361:25]
+  assign io_mem_aw_bits_addr = io_in_aw_bits_addr; // @[dcache.scala 358:30]
+  assign io_mem_w_valid = _wdata_T_2 | _rstate_T & (_io_mem_aw_valid_T_5 | _io_mem_w_bits_data_T) & _GEN_386; // @[dcache.scala 371:24]
+  assign io_mem_w_bits_data = io_in_w_bits_data; // @[dcache.scala 366:28]
+  assign io_mem_w_bits_strb = io_in_w_bits_strb; // @[dcache.scala 369:29]
+  assign io_mem_w_bits_last = _wdata_T_1 | _io_mem_w_bits_data_T; // @[dcache.scala 370:29]
+  assign io_mem_b_ready = 1'h1; // @[dcache.scala 372:18]
+  assign io_ram_bits_WEN = ~en_w; // @[dcache.scala 330:21]
+  assign io_ram_bits_BWEN = _dirty_T_2 & _valid_T_1 ? _io_ram_bits_BWEN_T_5 : 128'h0; // @[dcache.scala 331:25]
+  assign io_ram_bits_A = _rmode_T ? io_in_ar_bits_addr[10:4] : 7'h0; // @[dcache.scala 333:22]
+  assign io_ram_bits_D = _io_ram_bits_BWEN_T_4 ? wdata_map : _io_ram_bits_D_T_10; // @[dcache.scala 334:22]
+  assign io_ram_bits_WAY = hit[0]; // @[dcache.scala 264:21]
+  assign lfsr8_clock = clock;
+  assign lfsr8_reset = reset;
+  assign lfsr8_io_en = hit[1] & state == 3'h1; // @[dcache.scala 265:29]
+  always @(posedge clock) begin
+    if (reset) begin // @[dcache.scala 229:26]
+      cache_tag_0 <= 42'h0; // @[dcache.scala 229:26]
+    end else if (_valid_T_2) begin // @[dcache.scala 299:24]
+      if (_tag_way_T) begin // @[dcache.scala 300:26]
+        cache_tag_0 <= _cache_tag_T_5;
+      end else begin
+        cache_tag_0 <= _cache_tag_T_7;
+      end
+    end
+    if (reset) begin // @[dcache.scala 230:22]
+      valid_0_0 <= 1'h0; // @[dcache.scala 230:22]
+    end else if (~way) begin // @[dcache.scala 298:19]
+      valid_0_0 <= _rstate_T & ~uncache | _GEN_898; // @[dcache.scala 298:19]
+    end
+    if (reset) begin // @[dcache.scala 230:22]
+      valid_0_1 <= 1'h0; // @[dcache.scala 230:22]
+    end else if (way) begin // @[dcache.scala 298:19]
+      valid_0_1 <= _rstate_T & ~uncache | _GEN_898; // @[dcache.scala 298:19]
+    end
+    if (reset) begin // @[dcache.scala 231:22]
+      dirty_0_0 <= 1'h0; // @[dcache.scala 231:22]
+    end else if (~way) begin // @[dcache.scala 302:19]
+      dirty_0_0 <= _miss_T_2 & wmode & ~miss & _valid_T_1 | _dirty_T_10; // @[dcache.scala 302:19]
+    end
+    if (reset) begin // @[dcache.scala 231:22]
+      dirty_0_1 <= 1'h0; // @[dcache.scala 231:22]
+    end else if (way) begin // @[dcache.scala 302:19]
+      dirty_0_1 <= _miss_T_2 & wmode & ~miss & _valid_T_1 | _dirty_T_10; // @[dcache.scala 302:19]
+    end
+    if (reset) begin // @[dcache.scala 236:22]
+      state <= 3'h0; // @[dcache.scala 236:22]
+    end else if (3'h3 == state) begin // @[Mux.scala 81:58]
+      state <= 3'h0;
+    end else if (3'h2 == state) begin // @[Mux.scala 81:58]
+      if (rstate == 3'h6 & (_GEN_386 & wstate == 3'h6 | ~_GEN_386)) begin // @[dcache.scala 278:22]
+        state <= 3'h3;
+      end else begin
+        state <= 3'h2;
+      end
+    end else if (3'h1 == state) begin // @[Mux.scala 81:58]
+      state <= _state_T_2;
+    end else begin
+      state <= _state_T_16;
+    end
+    if (reset) begin // @[dcache.scala 237:23]
+      rstate <= 3'h0; // @[dcache.scala 237:23]
+    end else if (3'h6 == rstate) begin // @[Mux.scala 81:58]
+      if (state != 3'h2) begin // @[dcache.scala 286:19]
+        rstate <= 3'h0;
+      end else begin
+        rstate <= 3'h6;
+      end
+    end else if (3'h5 == rstate) begin // @[Mux.scala 81:58]
+      if (_rstate_T_4) begin // @[dcache.scala 285:20]
+        rstate <= 3'h6;
+      end else begin
+        rstate <= 3'h5;
+      end
+    end else if (3'h4 == rstate) begin // @[Mux.scala 81:58]
+      rstate <= _rstate_T_5;
+    end else begin
+      rstate <= _rstate_T_11;
+    end
+    if (reset) begin // @[dcache.scala 238:23]
+      wstate <= 3'h0; // @[dcache.scala 238:23]
+    end else if (3'h6 == wstate) begin // @[Mux.scala 81:58]
+      if (state != 3'h2) begin // @[dcache.scala 286:19]
+        wstate <= 3'h0;
+      end else begin
+        wstate <= 3'h6;
+      end
+    end else if (3'h5 == wstate) begin // @[Mux.scala 81:58]
+      if (_wstate_T_8) begin // @[dcache.scala 292:20]
+        wstate <= 3'h6;
+      end else begin
+        wstate <= 3'h5;
+      end
+    end else if (3'h4 == wstate) begin // @[Mux.scala 81:58]
+      wstate <= _wstate_T_7;
+    end else begin
+      wstate <= _wstate_T_13;
+    end
+    if (reset) begin // @[dcache.scala 242:22]
+      wdata <= 64'h0; // @[dcache.scala 242:22]
+    end else if (_rmode_T & _wdata_T_1) begin // @[dcache.scala 310:15]
+      wdata <= io_in_w_bits_data;
+    end
+    if (reset) begin // @[dcache.scala 243:22]
+      wstrb <= 8'h0; // @[dcache.scala 243:22]
+    end else if (_wdata_T_2) begin // @[dcache.scala 311:15]
+      wstrb <= io_in_w_bits_strb;
+    end
+    if (reset) begin // @[dcache.scala 244:24]
+      uncache <= 1'h0; // @[dcache.scala 244:24]
+    end else begin
+      uncache <= _rmode_T & req | uncache; // @[dcache.scala 308:10]
+    end
+    if (reset) begin // @[dcache.scala 255:22]
+      rmode <= 1'h0; // @[dcache.scala 255:22]
+    end else begin
+      rmode <= state == 3'h0 & _req_T | _rmode_T_4; // @[dcache.scala 257:9]
+    end
+    if (reset) begin // @[dcache.scala 256:22]
+      wmode <= 1'h0; // @[dcache.scala 256:22]
+    end else begin
+      wmode <= _rmode_T & _req_T_1 | _wmode_T_4; // @[dcache.scala 258:9]
+    end
+    if (reset) begin // @[Reg.scala 35:20]
+      way <= 1'h0; // @[Reg.scala 35:20]
+    end else if (miss) begin // @[Reg.scala 36:18]
+      way <= lfsr8_io_out[0]; // @[Reg.scala 36:22]
+    end
+  end
+// Register and memory initialization
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+  integer initvar;
+`endif
+`ifndef SYNTHESIS
+`ifdef FIRRTL_BEFORE_INITIAL
+`FIRRTL_BEFORE_INITIAL
+`endif
+initial begin
+  `ifdef RANDOMIZE
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      `ifdef RANDOMIZE_DELAY
+        #`RANDOMIZE_DELAY begin end
+      `else
+        #0.002 begin end
+      `endif
+    `endif
+`ifdef RANDOMIZE_REG_INIT
+  _RAND_0 = {2{`RANDOM}};
+  cache_tag_0 = _RAND_0[41:0];
+  _RAND_1 = {1{`RANDOM}};
+  valid_0_0 = _RAND_1[0:0];
+  _RAND_2 = {1{`RANDOM}};
+  valid_0_1 = _RAND_2[0:0];
+  _RAND_3 = {1{`RANDOM}};
+  dirty_0_0 = _RAND_3[0:0];
+  _RAND_4 = {1{`RANDOM}};
+  dirty_0_1 = _RAND_4[0:0];
+  _RAND_5 = {1{`RANDOM}};
+  state = _RAND_5[2:0];
+  _RAND_6 = {1{`RANDOM}};
+  rstate = _RAND_6[2:0];
+  _RAND_7 = {1{`RANDOM}};
+  wstate = _RAND_7[2:0];
+  _RAND_8 = {2{`RANDOM}};
+  wdata = _RAND_8[63:0];
+  _RAND_9 = {1{`RANDOM}};
+  wstrb = _RAND_9[7:0];
+  _RAND_10 = {1{`RANDOM}};
+  uncache = _RAND_10[0:0];
+  _RAND_11 = {1{`RANDOM}};
+  rmode = _RAND_11[0:0];
+  _RAND_12 = {1{`RANDOM}};
+  wmode = _RAND_12[0:0];
+  _RAND_13 = {1{`RANDOM}};
+  way = _RAND_13[0:0];
+`endif // RANDOMIZE_REG_INIT
+  `endif // RANDOMIZE
+end // initial
+`ifdef FIRRTL_AFTER_INITIAL
+`FIRRTL_AFTER_INITIAL
+`endif
+`endif // SYNTHESIS
 endmodule
 module AXI4Arbiter(
   output        io_ifu_ar_ready,
@@ -11878,43 +12184,64 @@ module Crossbar(
   wire [6:0] ICache_io_ram_bits_A; // @[Crossbar.scala 14:22]
   wire [127:0] ICache_io_ram_bits_D; // @[Crossbar.scala 14:22]
   wire  ICache_io_ram_bits_WAY; // @[Crossbar.scala 14:22]
-  wire  CacheRAM_clock; // @[Crossbar.scala 15:25]
-  wire  CacheRAM_reset; // @[Crossbar.scala 15:25]
-  wire [127:0] CacheRAM_io_bits_Q0; // @[Crossbar.scala 15:25]
-  wire [127:0] CacheRAM_io_bits_Q1; // @[Crossbar.scala 15:25]
-  wire  CacheRAM_io_bits_CEN; // @[Crossbar.scala 15:25]
-  wire  CacheRAM_io_bits_WEN; // @[Crossbar.scala 15:25]
-  wire [127:0] CacheRAM_io_bits_BWEN; // @[Crossbar.scala 15:25]
-  wire [6:0] CacheRAM_io_bits_A; // @[Crossbar.scala 15:25]
-  wire [127:0] CacheRAM_io_bits_D; // @[Crossbar.scala 15:25]
-  wire  CacheRAM_io_bits_WAY; // @[Crossbar.scala 15:25]
-  wire  AXILite2AXI4_io_in_ar_ready; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_ar_valid; // @[Crossbar.scala 18:22]
-  wire [31:0] AXILite2AXI4_io_in_ar_bits_addr; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_r_valid; // @[Crossbar.scala 18:22]
-  wire [63:0] AXILite2AXI4_io_in_r_bits_data; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_aw_ready; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_aw_valid; // @[Crossbar.scala 18:22]
-  wire [31:0] AXILite2AXI4_io_in_aw_bits_addr; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_w_ready; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_w_valid; // @[Crossbar.scala 18:22]
-  wire [63:0] AXILite2AXI4_io_in_w_bits_data; // @[Crossbar.scala 18:22]
-  wire [7:0] AXILite2AXI4_io_in_w_bits_strb; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_in_b_valid; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_ar_ready; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_ar_valid; // @[Crossbar.scala 18:22]
-  wire [31:0] AXILite2AXI4_io_mem_ar_bits_addr; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_r_valid; // @[Crossbar.scala 18:22]
-  wire [63:0] AXILite2AXI4_io_mem_r_bits_data; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_aw_ready; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_aw_valid; // @[Crossbar.scala 18:22]
-  wire [31:0] AXILite2AXI4_io_mem_aw_bits_addr; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_w_ready; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_w_valid; // @[Crossbar.scala 18:22]
-  wire [63:0] AXILite2AXI4_io_mem_w_bits_data; // @[Crossbar.scala 18:22]
-  wire [7:0] AXILite2AXI4_io_mem_w_bits_strb; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_w_bits_last; // @[Crossbar.scala 18:22]
-  wire  AXILite2AXI4_io_mem_b_valid; // @[Crossbar.scala 18:22]
+  wire  ICacheRAM_clock; // @[Crossbar.scala 15:25]
+  wire  ICacheRAM_reset; // @[Crossbar.scala 15:25]
+  wire [127:0] ICacheRAM_io_bits_Q0; // @[Crossbar.scala 15:25]
+  wire [127:0] ICacheRAM_io_bits_Q1; // @[Crossbar.scala 15:25]
+  wire  ICacheRAM_io_bits_CEN; // @[Crossbar.scala 15:25]
+  wire  ICacheRAM_io_bits_WEN; // @[Crossbar.scala 15:25]
+  wire [127:0] ICacheRAM_io_bits_BWEN; // @[Crossbar.scala 15:25]
+  wire [6:0] ICacheRAM_io_bits_A; // @[Crossbar.scala 15:25]
+  wire [127:0] ICacheRAM_io_bits_D; // @[Crossbar.scala 15:25]
+  wire  ICacheRAM_io_bits_WAY; // @[Crossbar.scala 15:25]
+  wire  DCache_clock; // @[Crossbar.scala 16:22]
+  wire  DCache_reset; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_ar_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_ar_valid; // @[Crossbar.scala 16:22]
+  wire [31:0] DCache_io_in_ar_bits_addr; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_r_valid; // @[Crossbar.scala 16:22]
+  wire [63:0] DCache_io_in_r_bits_data; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_aw_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_aw_valid; // @[Crossbar.scala 16:22]
+  wire [31:0] DCache_io_in_aw_bits_addr; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_w_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_w_valid; // @[Crossbar.scala 16:22]
+  wire [63:0] DCache_io_in_w_bits_data; // @[Crossbar.scala 16:22]
+  wire [7:0] DCache_io_in_w_bits_strb; // @[Crossbar.scala 16:22]
+  wire  DCache_io_in_b_valid; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_ar_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_ar_valid; // @[Crossbar.scala 16:22]
+  wire [31:0] DCache_io_mem_ar_bits_addr; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_r_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_r_valid; // @[Crossbar.scala 16:22]
+  wire [63:0] DCache_io_mem_r_bits_data; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_aw_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_aw_valid; // @[Crossbar.scala 16:22]
+  wire [31:0] DCache_io_mem_aw_bits_addr; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_w_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_w_valid; // @[Crossbar.scala 16:22]
+  wire [63:0] DCache_io_mem_w_bits_data; // @[Crossbar.scala 16:22]
+  wire [7:0] DCache_io_mem_w_bits_strb; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_w_bits_last; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_b_ready; // @[Crossbar.scala 16:22]
+  wire  DCache_io_mem_b_valid; // @[Crossbar.scala 16:22]
+  wire [127:0] DCache_io_ram_bits_Q0; // @[Crossbar.scala 16:22]
+  wire [127:0] DCache_io_ram_bits_Q1; // @[Crossbar.scala 16:22]
+  wire  DCache_io_ram_bits_WEN; // @[Crossbar.scala 16:22]
+  wire [127:0] DCache_io_ram_bits_BWEN; // @[Crossbar.scala 16:22]
+  wire [6:0] DCache_io_ram_bits_A; // @[Crossbar.scala 16:22]
+  wire [127:0] DCache_io_ram_bits_D; // @[Crossbar.scala 16:22]
+  wire  DCache_io_ram_bits_WAY; // @[Crossbar.scala 16:22]
+  wire  ICacheRAM_1_clock; // @[Crossbar.scala 17:25]
+  wire  ICacheRAM_1_reset; // @[Crossbar.scala 17:25]
+  wire [127:0] ICacheRAM_1_io_bits_Q0; // @[Crossbar.scala 17:25]
+  wire [127:0] ICacheRAM_1_io_bits_Q1; // @[Crossbar.scala 17:25]
+  wire  ICacheRAM_1_io_bits_CEN; // @[Crossbar.scala 17:25]
+  wire  ICacheRAM_1_io_bits_WEN; // @[Crossbar.scala 17:25]
+  wire [127:0] ICacheRAM_1_io_bits_BWEN; // @[Crossbar.scala 17:25]
+  wire [6:0] ICacheRAM_1_io_bits_A; // @[Crossbar.scala 17:25]
+  wire [127:0] ICacheRAM_1_io_bits_D; // @[Crossbar.scala 17:25]
+  wire  ICacheRAM_1_io_bits_WAY; // @[Crossbar.scala 17:25]
   wire  AXI4Arbiter_io_ifu_ar_ready; // @[Crossbar.scala 20:23]
   wire  AXI4Arbiter_io_ifu_ar_valid; // @[Crossbar.scala 20:23]
   wire [31:0] AXI4Arbiter_io_ifu_ar_bits_addr; // @[Crossbar.scala 20:23]
@@ -11981,46 +12308,69 @@ module Crossbar(
     .io_ram_bits_D(ICache_io_ram_bits_D),
     .io_ram_bits_WAY(ICache_io_ram_bits_WAY)
   );
-  CacheRAM CacheRAM ( // @[Crossbar.scala 15:25]
-    .clock(CacheRAM_clock),
-    .reset(CacheRAM_reset),
-    .io_bits_Q0(CacheRAM_io_bits_Q0),
-    .io_bits_Q1(CacheRAM_io_bits_Q1),
-    .io_bits_CEN(CacheRAM_io_bits_CEN),
-    .io_bits_WEN(CacheRAM_io_bits_WEN),
-    .io_bits_BWEN(CacheRAM_io_bits_BWEN),
-    .io_bits_A(CacheRAM_io_bits_A),
-    .io_bits_D(CacheRAM_io_bits_D),
-    .io_bits_WAY(CacheRAM_io_bits_WAY)
+  ICacheRAM ICacheRAM ( // @[Crossbar.scala 15:25]
+    .clock(ICacheRAM_clock),
+    .reset(ICacheRAM_reset),
+    .io_bits_Q0(ICacheRAM_io_bits_Q0),
+    .io_bits_Q1(ICacheRAM_io_bits_Q1),
+    .io_bits_CEN(ICacheRAM_io_bits_CEN),
+    .io_bits_WEN(ICacheRAM_io_bits_WEN),
+    .io_bits_BWEN(ICacheRAM_io_bits_BWEN),
+    .io_bits_A(ICacheRAM_io_bits_A),
+    .io_bits_D(ICacheRAM_io_bits_D),
+    .io_bits_WAY(ICacheRAM_io_bits_WAY)
   );
-  AXILite2AXI4 AXILite2AXI4 ( // @[Crossbar.scala 18:22]
-    .io_in_ar_ready(AXILite2AXI4_io_in_ar_ready),
-    .io_in_ar_valid(AXILite2AXI4_io_in_ar_valid),
-    .io_in_ar_bits_addr(AXILite2AXI4_io_in_ar_bits_addr),
-    .io_in_r_valid(AXILite2AXI4_io_in_r_valid),
-    .io_in_r_bits_data(AXILite2AXI4_io_in_r_bits_data),
-    .io_in_aw_ready(AXILite2AXI4_io_in_aw_ready),
-    .io_in_aw_valid(AXILite2AXI4_io_in_aw_valid),
-    .io_in_aw_bits_addr(AXILite2AXI4_io_in_aw_bits_addr),
-    .io_in_w_ready(AXILite2AXI4_io_in_w_ready),
-    .io_in_w_valid(AXILite2AXI4_io_in_w_valid),
-    .io_in_w_bits_data(AXILite2AXI4_io_in_w_bits_data),
-    .io_in_w_bits_strb(AXILite2AXI4_io_in_w_bits_strb),
-    .io_in_b_valid(AXILite2AXI4_io_in_b_valid),
-    .io_mem_ar_ready(AXILite2AXI4_io_mem_ar_ready),
-    .io_mem_ar_valid(AXILite2AXI4_io_mem_ar_valid),
-    .io_mem_ar_bits_addr(AXILite2AXI4_io_mem_ar_bits_addr),
-    .io_mem_r_valid(AXILite2AXI4_io_mem_r_valid),
-    .io_mem_r_bits_data(AXILite2AXI4_io_mem_r_bits_data),
-    .io_mem_aw_ready(AXILite2AXI4_io_mem_aw_ready),
-    .io_mem_aw_valid(AXILite2AXI4_io_mem_aw_valid),
-    .io_mem_aw_bits_addr(AXILite2AXI4_io_mem_aw_bits_addr),
-    .io_mem_w_ready(AXILite2AXI4_io_mem_w_ready),
-    .io_mem_w_valid(AXILite2AXI4_io_mem_w_valid),
-    .io_mem_w_bits_data(AXILite2AXI4_io_mem_w_bits_data),
-    .io_mem_w_bits_strb(AXILite2AXI4_io_mem_w_bits_strb),
-    .io_mem_w_bits_last(AXILite2AXI4_io_mem_w_bits_last),
-    .io_mem_b_valid(AXILite2AXI4_io_mem_b_valid)
+  DCache DCache ( // @[Crossbar.scala 16:22]
+    .clock(DCache_clock),
+    .reset(DCache_reset),
+    .io_in_ar_ready(DCache_io_in_ar_ready),
+    .io_in_ar_valid(DCache_io_in_ar_valid),
+    .io_in_ar_bits_addr(DCache_io_in_ar_bits_addr),
+    .io_in_r_valid(DCache_io_in_r_valid),
+    .io_in_r_bits_data(DCache_io_in_r_bits_data),
+    .io_in_aw_ready(DCache_io_in_aw_ready),
+    .io_in_aw_valid(DCache_io_in_aw_valid),
+    .io_in_aw_bits_addr(DCache_io_in_aw_bits_addr),
+    .io_in_w_ready(DCache_io_in_w_ready),
+    .io_in_w_valid(DCache_io_in_w_valid),
+    .io_in_w_bits_data(DCache_io_in_w_bits_data),
+    .io_in_w_bits_strb(DCache_io_in_w_bits_strb),
+    .io_in_b_valid(DCache_io_in_b_valid),
+    .io_mem_ar_ready(DCache_io_mem_ar_ready),
+    .io_mem_ar_valid(DCache_io_mem_ar_valid),
+    .io_mem_ar_bits_addr(DCache_io_mem_ar_bits_addr),
+    .io_mem_r_ready(DCache_io_mem_r_ready),
+    .io_mem_r_valid(DCache_io_mem_r_valid),
+    .io_mem_r_bits_data(DCache_io_mem_r_bits_data),
+    .io_mem_aw_ready(DCache_io_mem_aw_ready),
+    .io_mem_aw_valid(DCache_io_mem_aw_valid),
+    .io_mem_aw_bits_addr(DCache_io_mem_aw_bits_addr),
+    .io_mem_w_ready(DCache_io_mem_w_ready),
+    .io_mem_w_valid(DCache_io_mem_w_valid),
+    .io_mem_w_bits_data(DCache_io_mem_w_bits_data),
+    .io_mem_w_bits_strb(DCache_io_mem_w_bits_strb),
+    .io_mem_w_bits_last(DCache_io_mem_w_bits_last),
+    .io_mem_b_ready(DCache_io_mem_b_ready),
+    .io_mem_b_valid(DCache_io_mem_b_valid),
+    .io_ram_bits_Q0(DCache_io_ram_bits_Q0),
+    .io_ram_bits_Q1(DCache_io_ram_bits_Q1),
+    .io_ram_bits_WEN(DCache_io_ram_bits_WEN),
+    .io_ram_bits_BWEN(DCache_io_ram_bits_BWEN),
+    .io_ram_bits_A(DCache_io_ram_bits_A),
+    .io_ram_bits_D(DCache_io_ram_bits_D),
+    .io_ram_bits_WAY(DCache_io_ram_bits_WAY)
+  );
+  ICacheRAM ICacheRAM_1 ( // @[Crossbar.scala 17:25]
+    .clock(ICacheRAM_1_clock),
+    .reset(ICacheRAM_1_reset),
+    .io_bits_Q0(ICacheRAM_1_io_bits_Q0),
+    .io_bits_Q1(ICacheRAM_1_io_bits_Q1),
+    .io_bits_CEN(ICacheRAM_1_io_bits_CEN),
+    .io_bits_WEN(ICacheRAM_1_io_bits_WEN),
+    .io_bits_BWEN(ICacheRAM_1_io_bits_BWEN),
+    .io_bits_A(ICacheRAM_1_io_bits_A),
+    .io_bits_D(ICacheRAM_1_io_bits_D),
+    .io_bits_WAY(ICacheRAM_1_io_bits_WAY)
   );
   AXI4Arbiter AXI4Arbiter ( // @[Crossbar.scala 20:23]
     .io_ifu_ar_ready(AXI4Arbiter_io_ifu_ar_ready),
@@ -12067,24 +12417,24 @@ module Crossbar(
   );
   assign io_in1_r_valid = ICache_io_in_r_valid; // @[Crossbar.scala 22:18 28:9]
   assign io_in1_r_bits_data = ICache_io_in_r_bits_data; // @[Crossbar.scala 22:18 28:9]
-  assign io_in2_ar_ready = AXILite2AXI4_io_in_ar_ready; // @[Crossbar.scala 23:18 39:15]
-  assign io_in2_r_valid = AXILite2AXI4_io_in_r_valid; // @[Crossbar.scala 23:18 39:15]
-  assign io_in2_r_bits_data = AXILite2AXI4_io_in_r_bits_data; // @[Crossbar.scala 23:18 39:15]
-  assign io_in2_aw_ready = AXILite2AXI4_io_in_aw_ready; // @[Crossbar.scala 23:18 39:15]
-  assign io_in2_w_ready = AXILite2AXI4_io_in_w_ready; // @[Crossbar.scala 23:18 39:15]
-  assign io_in2_b_valid = AXILite2AXI4_io_in_b_valid; // @[Crossbar.scala 23:18 39:15]
-  assign io_out_ar_valid = AXI4Arbiter_io_out_ar_valid; // @[Crossbar.scala 44:11]
-  assign io_out_ar_bits_addr = AXI4Arbiter_io_out_ar_bits_addr; // @[Crossbar.scala 44:11]
-  assign io_out_ar_bits_len = AXI4Arbiter_io_out_ar_bits_len; // @[Crossbar.scala 44:11]
-  assign io_out_ar_bits_size = AXI4Arbiter_io_out_ar_bits_size; // @[Crossbar.scala 44:11]
-  assign io_out_ar_bits_id = AXI4Arbiter_io_out_ar_bits_id; // @[Crossbar.scala 44:11]
-  assign io_out_r_ready = AXI4Arbiter_io_out_r_ready; // @[Crossbar.scala 44:11]
-  assign io_out_aw_valid = AXI4Arbiter_io_out_aw_valid; // @[Crossbar.scala 44:11]
-  assign io_out_aw_bits_addr = AXI4Arbiter_io_out_aw_bits_addr; // @[Crossbar.scala 44:11]
-  assign io_out_w_valid = AXI4Arbiter_io_out_w_valid; // @[Crossbar.scala 44:11]
-  assign io_out_w_bits_data = AXI4Arbiter_io_out_w_bits_data; // @[Crossbar.scala 44:11]
-  assign io_out_w_bits_strb = AXI4Arbiter_io_out_w_bits_strb; // @[Crossbar.scala 44:11]
-  assign io_out_w_bits_last = AXI4Arbiter_io_out_w_bits_last; // @[Crossbar.scala 44:11]
+  assign io_in2_ar_ready = DCache_io_in_ar_ready; // @[Crossbar.scala 23:18 34:9]
+  assign io_in2_r_valid = DCache_io_in_r_valid; // @[Crossbar.scala 23:18 34:9]
+  assign io_in2_r_bits_data = DCache_io_in_r_bits_data; // @[Crossbar.scala 23:18 34:9]
+  assign io_in2_aw_ready = DCache_io_in_aw_ready; // @[Crossbar.scala 23:18 34:9]
+  assign io_in2_w_ready = DCache_io_in_w_ready; // @[Crossbar.scala 23:18 34:9]
+  assign io_in2_b_valid = DCache_io_in_b_valid; // @[Crossbar.scala 23:18 34:9]
+  assign io_out_ar_valid = AXI4Arbiter_io_out_ar_valid; // @[Crossbar.scala 48:11]
+  assign io_out_ar_bits_addr = AXI4Arbiter_io_out_ar_bits_addr; // @[Crossbar.scala 48:11]
+  assign io_out_ar_bits_len = AXI4Arbiter_io_out_ar_bits_len; // @[Crossbar.scala 48:11]
+  assign io_out_ar_bits_size = AXI4Arbiter_io_out_ar_bits_size; // @[Crossbar.scala 48:11]
+  assign io_out_ar_bits_id = AXI4Arbiter_io_out_ar_bits_id; // @[Crossbar.scala 48:11]
+  assign io_out_r_ready = AXI4Arbiter_io_out_r_ready; // @[Crossbar.scala 48:11]
+  assign io_out_aw_valid = AXI4Arbiter_io_out_aw_valid; // @[Crossbar.scala 48:11]
+  assign io_out_aw_bits_addr = AXI4Arbiter_io_out_aw_bits_addr; // @[Crossbar.scala 48:11]
+  assign io_out_w_valid = AXI4Arbiter_io_out_w_valid; // @[Crossbar.scala 48:11]
+  assign io_out_w_bits_data = AXI4Arbiter_io_out_w_bits_data; // @[Crossbar.scala 48:11]
+  assign io_out_w_bits_strb = AXI4Arbiter_io_out_w_bits_strb; // @[Crossbar.scala 48:11]
+  assign io_out_w_bits_last = AXI4Arbiter_io_out_w_bits_last; // @[Crossbar.scala 48:11]
   assign ICache_clock = clock;
   assign ICache_reset = reset;
   assign ICache_io_in_ar_valid = io_in1_ar_valid; // @[Crossbar.scala 22:18 27:11]
@@ -12093,48 +12443,60 @@ module Crossbar(
   assign ICache_io_mem_r_valid = AXI4Arbiter_io_ifu_r_valid; // @[Crossbar.scala 30:15]
   assign ICache_io_mem_r_bits_data = AXI4Arbiter_io_ifu_r_bits_data; // @[Crossbar.scala 30:15]
   assign ICache_io_mem_r_bits_last = AXI4Arbiter_io_ifu_r_bits_last; // @[Crossbar.scala 30:15]
-  assign ICache_io_ram_bits_Q0 = CacheRAM_io_bits_Q0; // @[Crossbar.scala 29:15]
-  assign ICache_io_ram_bits_Q1 = CacheRAM_io_bits_Q1; // @[Crossbar.scala 29:15]
-  assign CacheRAM_clock = clock;
-  assign CacheRAM_reset = reset;
-  assign CacheRAM_io_bits_CEN = ICache_io_ram_bits_CEN; // @[Crossbar.scala 29:15]
-  assign CacheRAM_io_bits_WEN = ICache_io_ram_bits_WEN; // @[Crossbar.scala 29:15]
-  assign CacheRAM_io_bits_BWEN = ICache_io_ram_bits_BWEN; // @[Crossbar.scala 29:15]
-  assign CacheRAM_io_bits_A = ICache_io_ram_bits_A; // @[Crossbar.scala 29:15]
-  assign CacheRAM_io_bits_D = ICache_io_ram_bits_D; // @[Crossbar.scala 29:15]
-  assign CacheRAM_io_bits_WAY = ICache_io_ram_bits_WAY; // @[Crossbar.scala 29:15]
-  assign AXILite2AXI4_io_in_ar_valid = io_in2_ar_valid; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_in_ar_bits_addr = io_in2_ar_bits_addr; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_in_aw_valid = io_in2_aw_valid; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_in_aw_bits_addr = io_in2_aw_bits_addr; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_in_w_valid = io_in2_w_valid; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_in_w_bits_data = io_in2_w_bits_data; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_in_w_bits_strb = io_in2_w_bits_strb; // @[Crossbar.scala 23:18 33:11]
-  assign AXILite2AXI4_io_mem_ar_ready = AXI4Arbiter_io_lsu_ar_ready; // @[Crossbar.scala 42:17]
-  assign AXILite2AXI4_io_mem_r_valid = AXI4Arbiter_io_lsu_r_valid; // @[Crossbar.scala 42:17]
-  assign AXILite2AXI4_io_mem_r_bits_data = AXI4Arbiter_io_lsu_r_bits_data; // @[Crossbar.scala 42:17]
-  assign AXILite2AXI4_io_mem_aw_ready = AXI4Arbiter_io_lsu_aw_ready; // @[Crossbar.scala 42:17]
-  assign AXILite2AXI4_io_mem_w_ready = AXI4Arbiter_io_lsu_w_ready; // @[Crossbar.scala 42:17]
-  assign AXILite2AXI4_io_mem_b_valid = AXI4Arbiter_io_lsu_b_valid; // @[Crossbar.scala 42:17]
+  assign ICache_io_ram_bits_Q0 = ICacheRAM_io_bits_Q0; // @[Crossbar.scala 29:15]
+  assign ICache_io_ram_bits_Q1 = ICacheRAM_io_bits_Q1; // @[Crossbar.scala 29:15]
+  assign ICacheRAM_clock = clock;
+  assign ICacheRAM_reset = reset;
+  assign ICacheRAM_io_bits_CEN = ICache_io_ram_bits_CEN; // @[Crossbar.scala 29:15]
+  assign ICacheRAM_io_bits_WEN = ICache_io_ram_bits_WEN; // @[Crossbar.scala 29:15]
+  assign ICacheRAM_io_bits_BWEN = ICache_io_ram_bits_BWEN; // @[Crossbar.scala 29:15]
+  assign ICacheRAM_io_bits_A = ICache_io_ram_bits_A; // @[Crossbar.scala 29:15]
+  assign ICacheRAM_io_bits_D = ICache_io_ram_bits_D; // @[Crossbar.scala 29:15]
+  assign ICacheRAM_io_bits_WAY = ICache_io_ram_bits_WAY; // @[Crossbar.scala 29:15]
+  assign DCache_clock = clock;
+  assign DCache_reset = reset;
+  assign DCache_io_in_ar_valid = io_in2_ar_valid; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_in_ar_bits_addr = io_in2_ar_bits_addr; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_in_aw_valid = io_in2_aw_valid; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_in_aw_bits_addr = io_in2_aw_bits_addr; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_in_w_valid = io_in2_w_valid; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_in_w_bits_data = io_in2_w_bits_data; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_in_w_bits_strb = io_in2_w_bits_strb; // @[Crossbar.scala 23:18 33:11]
+  assign DCache_io_mem_ar_ready = AXI4Arbiter_io_lsu_ar_ready; // @[Crossbar.scala 36:15]
+  assign DCache_io_mem_r_valid = AXI4Arbiter_io_lsu_r_valid; // @[Crossbar.scala 36:15]
+  assign DCache_io_mem_r_bits_data = AXI4Arbiter_io_lsu_r_bits_data; // @[Crossbar.scala 36:15]
+  assign DCache_io_mem_aw_ready = AXI4Arbiter_io_lsu_aw_ready; // @[Crossbar.scala 36:15]
+  assign DCache_io_mem_w_ready = AXI4Arbiter_io_lsu_w_ready; // @[Crossbar.scala 36:15]
+  assign DCache_io_mem_b_valid = AXI4Arbiter_io_lsu_b_valid; // @[Crossbar.scala 36:15]
+  assign DCache_io_ram_bits_Q0 = ICacheRAM_1_io_bits_Q0; // @[Crossbar.scala 35:15]
+  assign DCache_io_ram_bits_Q1 = ICacheRAM_1_io_bits_Q1; // @[Crossbar.scala 35:15]
+  assign ICacheRAM_1_clock = clock;
+  assign ICacheRAM_1_reset = reset;
+  assign ICacheRAM_1_io_bits_CEN = 1'h0; // @[Crossbar.scala 35:15]
+  assign ICacheRAM_1_io_bits_WEN = DCache_io_ram_bits_WEN; // @[Crossbar.scala 35:15]
+  assign ICacheRAM_1_io_bits_BWEN = DCache_io_ram_bits_BWEN; // @[Crossbar.scala 35:15]
+  assign ICacheRAM_1_io_bits_A = DCache_io_ram_bits_A; // @[Crossbar.scala 35:15]
+  assign ICacheRAM_1_io_bits_D = DCache_io_ram_bits_D; // @[Crossbar.scala 35:15]
+  assign ICacheRAM_1_io_bits_WAY = DCache_io_ram_bits_WAY; // @[Crossbar.scala 35:15]
   assign AXI4Arbiter_io_ifu_ar_valid = ICache_io_mem_ar_valid; // @[Crossbar.scala 30:15]
   assign AXI4Arbiter_io_ifu_ar_bits_addr = ICache_io_mem_ar_bits_addr; // @[Crossbar.scala 30:15]
   assign AXI4Arbiter_io_ifu_ar_bits_len = ICache_io_mem_ar_bits_len; // @[Crossbar.scala 30:15]
-  assign AXI4Arbiter_io_lsu_ar_valid = AXILite2AXI4_io_mem_ar_valid; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_ar_bits_addr = AXILite2AXI4_io_mem_ar_bits_addr; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_aw_valid = AXILite2AXI4_io_mem_aw_valid; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_aw_bits_addr = AXILite2AXI4_io_mem_aw_bits_addr; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_w_valid = AXILite2AXI4_io_mem_w_valid; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_w_bits_data = AXILite2AXI4_io_mem_w_bits_data; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_w_bits_strb = AXILite2AXI4_io_mem_w_bits_strb; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_lsu_w_bits_last = AXILite2AXI4_io_mem_w_bits_last; // @[Crossbar.scala 42:17]
-  assign AXI4Arbiter_io_out_ar_ready = io_out_ar_ready; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_r_valid = io_out_r_valid; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_r_bits_data = io_out_r_bits_data; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_r_bits_last = io_out_r_bits_last; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_r_bits_id = io_out_r_bits_id; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_aw_ready = io_out_aw_ready; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_w_ready = io_out_w_ready; // @[Crossbar.scala 44:11]
-  assign AXI4Arbiter_io_out_b_valid = io_out_b_valid; // @[Crossbar.scala 44:11]
+  assign AXI4Arbiter_io_lsu_ar_valid = DCache_io_mem_ar_valid; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_ar_bits_addr = DCache_io_mem_ar_bits_addr; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_aw_valid = DCache_io_mem_aw_valid; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_aw_bits_addr = DCache_io_mem_aw_bits_addr; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_w_valid = DCache_io_mem_w_valid; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_w_bits_data = DCache_io_mem_w_bits_data; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_w_bits_strb = DCache_io_mem_w_bits_strb; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_lsu_w_bits_last = DCache_io_mem_w_bits_last; // @[Crossbar.scala 36:15]
+  assign AXI4Arbiter_io_out_ar_ready = io_out_ar_ready; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_r_valid = io_out_r_valid; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_r_bits_data = io_out_r_bits_data; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_r_bits_last = io_out_r_bits_last; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_r_bits_id = io_out_r_bits_id; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_aw_ready = io_out_aw_ready; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_w_ready = io_out_w_ready; // @[Crossbar.scala 48:11]
+  assign AXI4Arbiter_io_out_b_valid = io_out_b_valid; // @[Crossbar.scala 48:11]
 endmodule
 module top(
   input         clock,

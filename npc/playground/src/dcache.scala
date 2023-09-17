@@ -210,7 +210,7 @@ class DCache extends Module {
     val mem = (new AXI4)
     val ram = Flipped(new ICacheRAM_Bundle)
     //val hitrate = Output(UInt(64.W))
-    //val uncache = Input(UInt(1.W))
+    val uncache = Input(Bool())
   })
   //config
   val cacheCapacity: Int = 4*1024 //4KB
@@ -241,7 +241,6 @@ class DCache extends Module {
   val addr = RegInit(0.U(32.W))  
   val wdata = RegInit(0.U(64.W))
   val wstrb = RegInit(0.U(8.W))
-  val uc = Wire(Bool())
   val uncache = RegInit(false.B)
   val tag = addr(31,offset_width + index_width)
   val offset = addr(offset_width - 1, 0) << 3
@@ -303,12 +302,10 @@ class DCache extends Module {
   dirty(idx)(way) :=  Mux(state === s_lookup && wmode === 1.U && (~miss) && (!uncache),1.U,
                       Mux(state === s_replace, 0.U, dirty(idx)(way)))
 
-  addr := Mux(state === s_idle && io.in.ar.fire &&(!uc),io.in.ar.bits.addr,
-          Mux(state === s_idle && io.in.aw.fire &&(!uc), io.in.aw.bits.addr, addr))
-  uc:=  Mux(state === s_idle && io.in.ar.fire,io.in.ar.bits.addr >= DEVICE_BASE,
-        Mux(state === s_idle && io.in.aw.fire, io.in.aw.bits.addr >= DEVICE_BASE, false.B))
+  addr := Mux(state === s_idle && io.in.ar.fire &&(!io.uncache),io.in.ar.bits.addr,
+          Mux(state === s_idle && io.in.aw.fire &&(!io.uncache), io.in.aw.bits.addr, addr))
 
-  uncache:= Mux(state === s_idle && req,uc,uncache)
+  uncache:= Mux(state === s_idle && req,io.uncache,uncache)
 
   wdata := Mux(state === s_idle && io.in.w.fire , io.in.w.bits.data, wdata)
   wstrb := Mux(state === s_idle && io.in.w.fire, io.in.w.bits.strb, wstrb)
@@ -342,37 +339,36 @@ class DCache extends Module {
   val rcnt = RegInit(0.U(1.W))
   rcnt := Mux(rstate === s_idle, 0.U, Mux(io.mem.r.fire, rcnt + 1.U, rcnt))
 
-  buf := Mux((~io.mem.r.fire) || uncache || uc,buf,
+  buf := Mux((~io.mem.r.fire) || uncache || io.uncache,buf,
          Mux(rcnt === addr(3), Cat(buf(127, 64), io.mem.r.bits.data), Cat(io.mem.r.bits.data, buf(63, 0))))
 
   //val rdata =RegInit(0.U(64.W))
   //rdata :=Mux((state === s_fire1) && io.mem.r.fire,io.mem.r.bits.data,rdata)
   //axi
-  io.mem.ar.bits.addr := Mux((uc && io.in.ar.fire),io.in.ar.bits.addr,addr & ((~0.U(32.W)) << 3.U))
-  io.mem.ar.valid :=  Mux(uc&& io.in.ar.fire,1.U,(state === s_miss) && (rstate === s_idle))
-  io.mem.ar.bits.len := Mux(uc,0.U,1.U) 
+  io.mem.ar.bits.addr := Mux((io.uncache && io.in.ar.fire),io.in.ar.bits.addr,addr & ((~0.U(32.W)) << 3.U))
+  io.mem.ar.valid :=  Mux(io.uncache&& io.in.ar.fire,1.U,(state === s_miss) && (rstate === s_idle))
+  io.mem.ar.bits.len := Mux(io.uncache,0.U,1.U) 
   io.mem.ar.bits.size := 3.U
   io.mem.ar.bits.burst := "b10".U // WRAP
   io.mem.ar.bits.id := io.id
 
   io.mem.r.ready := 1.U
 
-  //printf("%x %x %x\n",uc,uncache,io.in.aw.bits.addr)
-  io.mem.aw.bits.addr :=  Mux((uc && io.in.aw.fire && io.in.w.fire),io.in.aw.bits.addr,(tag_way << index_width | idx) << offset_width)
-  io.mem.aw.bits.len := Mux(uc,0.U,1.U)
+  //printf("%x %x %x\n",io.uncache,uncache,io.in.aw.bits.addr)
+  io.mem.aw.bits.addr :=  Mux(io.uncache,io.in.aw.bits.addr,(tag_way << index_width | idx) << offset_width)
+  io.mem.aw.bits.len := Mux(io.uncache,0.U,1.U)
   io.mem.aw.bits.size := 3.U // 2^3 === 8B
-  io.mem.aw.valid := Mux((state === s_idle) &&uc&& io.in.aw.fire,1.U,(state === s_miss) && (wstate === s_idle) && dirty(idx)(way).asBool)
+  io.mem.aw.valid := Mux((state === s_idle) &&io.uncache&& io.in.aw.fire,1.U,(state === s_miss) && (wstate === s_idle) && dirty(idx)(way).asBool)
   io.mem.aw.bits.id := io.id
   io.mem.aw.bits.burst := 0.U
 
   io.mem.w.bits.id := io.id
-  io.mem.w.bits.data := Mux(((uc) && io.in.w.fire),io.in.w.bits.data,
+  io.mem.w.bits.data := Mux(io.uncache,io.in.w.bits.data,
                         Mux((wstate === s_fire1),Mux( way(0).asBool,cache_data.Q1(127, 64),cache_data.Q0(127, 64)),
                         Mux( way(0).asBool, cache_data.Q1(63,0),cache_data.Q0(63,0))))
-  io.mem.w.bits.strb :=  Mux(((uc) && io.in.w.fire),io.in.w.bits.strb,
-                         Mux(wstate === s_fire1 || (wstate === s_idle && io.mem.w.fire),~(0.U(8.W)),0.U))
-  io.mem.w.bits.last :=  Mux(((uc) && io.in.w.fire),1.U,(wstate === s_fire1))
-  io.mem.w.valid := Mux(((state === s_idle) &&(uc) && io.in.w.fire),1.U,(state === s_miss) && (wstate === s_idle || wstate === s_fire1) && dirty(idx)(way).asBool)
+  io.mem.w.bits.strb :=  Mux(io.uncache,io.in.w.bits.strb,~(0.U(8.W)))
+  io.mem.w.bits.last :=  Mux(((io.uncache) && io.in.w.fire),1.U,(wstate === s_fire1))
+  io.mem.w.valid := Mux(((state === s_idle) &&(io.uncache) && io.in.w.fire),1.U,(state === s_miss) && (wstate === s_idle || wstate === s_fire1) && dirty(idx)(way).asBool)
   io.mem.b.ready :=   1.U//(wstate === s_fire2)
 
   io.in.r.bits.data :=  Mux(uncache,io.mem.r.bits.data,

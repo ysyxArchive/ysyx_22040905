@@ -86,3 +86,25 @@ b: verilog
 	$(shell (echo '0a'; echo '/* verilator lint_off WIDTH */'; echo '.'; echo 'wq') | ed -s $(VSRC_DIR)/top.v )
 
 
+##unit test
+VUNIT_DIR=./unit/vsrc
+
+verilog_unit:
+	mkdir -p $(VUNIT_DIR)
+	mill -i __.test.runMain Elaborate_unit -td $(VUNIT_DIR)
+
+VUNITS = $(shell find $(abspath ./unit/vsrc) -name "*.v")
+CUNITS = $(shell find $(abspath ./unit/csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+UNITNAME = unit
+	
+sim_unit:$(VUNITS) $(CUNITS)
+	verilator  --cc --exe --build --trace \
+ 	--top-module $(UNITNAME) $^ \
+	-LDFLAGS -lreadline \
+	--Mdir ./unit/build/obj_dir 
+	##$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+
+run_unit: sim_unit
+	./unit/build/obj_dir/V$(UNITNAME) 
+
+

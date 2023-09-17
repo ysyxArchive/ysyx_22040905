@@ -35,6 +35,7 @@ class Crossbar extends Module{
     dcache.ram<>dcacheram
     dcache.mem<>arbiter.lsu
     dcache.id := 1.U
+    dcache.uncache :=1.U//(out2.ar.bits.addr >= DEVICE_BASE) || (out2.aw.bits.addr >= DEVICE_BASE)
 
 
     //i_skip.in <> out1

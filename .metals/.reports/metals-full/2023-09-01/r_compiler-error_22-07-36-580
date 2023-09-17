@@ -1,0 +1,129 @@
+java.lang.IndexOutOfBoundsException: 0
+occurred in the presentation compiler.
+
+action parameters:
+offset: 2075
+uri: file://<WORKSPACE>/npc/playground/test/src/Wallace.scala
+text:
+import chisel3._
+import chisel3.util._
+import chiseltest._
+import chisel3.experimental.BundleLiterals._
+import chiseltest.formal._
+import chiseltest.formal.BoundedCheck
+import utest._
+
+class HA extends Module{
+  val io=IO(new Bundle{
+    val in = Input(Vec(2,Bool()))
+    val out = Output(Vec(2,Bool()))
+  })
+
+  io.out(1) := io.in(0) ^ io.in(1)  //cout
+  io.out(0) := io.in(0) & io.out(1) //sum
+  
+}
+
+class FA extends Module{
+  val io=IO(new Bundle{
+    val in = Input(Vec(3,Bool()))
+    val out = Output(Vec(2,Bool()))
+  })
+
+  io.out(1) := (io.in(0) & io.in(1)) | (io.in(2) & (io.in(0) ^ io.in(1))) //cout
+  io.out(0) := io.in(0) ^ io.in(1) ^ io.in(2)                             //sum
+}
+
+class gen_p_i extends Module{
+  val io=IO(new Bundle{
+    val x=Input(Bool())
+    val x_sub=Input(Bool())
+    val sel_negative=Input(Bool())
+    val sel_positive=Input(Bool())
+    val sel_double_negative=Input(Bool())
+    val sel_double_positive=Input(Bool())
+    val p=Output(Bool())
+  })
+
+  io.p := ~(~(io.sel_negative & ~io.x) & ~(io.sel_double_negative & ~io.x_sub) 
+          & ~(io.sel_positive & io.x ) & ~(io.sel_double_positive &  io.x_sub));
+}
+
+class gen_sel extends Module {
+  val io = IO(new Bundle {
+    val src = Input(UInt(3.W))
+    val sel_negative = Output(UInt(1.W))
+    val sel_double_negative = Output(UInt(1.W))
+    val sel_positive = Output(UInt(1.W))
+    val sel_double_positive = Output(UInt(1.W))
+  })
+
+  val (y_add,y,y_sub) = io.src
+
+  val sel_negative = (y_add & (y & ~y_sub | ~y & y_sub)).asUInt()
+  val sel_positive = (~y_add & (y & ~y_sub | ~y & y_sub)).asUInt()
+  val sel_double_negative = (y_add & ~y & ~y_sub).asUInt()
+  val sel_double_positive = (~y_add & y & y_sub).asUInt()
+
+  io.sel_negative := sel_negative
+  io.sel_positive := sel_positive
+  io.sel_double_negative := sel_double_negative
+  io.sel_double_positive := sel_double_positive
+}
+
+class gen_p extends Module{
+  val io=IO(new Bundle{
+    val src=Input(UInt(3.W))
+    val p=Output(UInt(64.W))
+  })
+
+  val sel=Module(new gen_sel).io
+  val p_i=Module(new gen_p_i).io
+
+  sel.src:=io.src
+  for(@@)
+
+
+}
+class Wallace extends Module{
+  val io=IO(new Bundle{
+      val mul_valid = Input(UInt(1.W))         //为高表示输入的数据有效，如果没有新的乘法输入，在乘法被接受的下一个周期要置低
+      val flush= Input(UInt(1.W))              //为高表示取消乘法
+      val mulw= Input(UInt(1.W))               //为高表示是 32 位乘法
+      val mul_signed= Input(UInt(2.W))         //2’b11（signed x signed）；2’b10（signed x unsigned）；2’b00（unsigned x unsigned）；
+      val multiplicand= Input(UInt(64.W))      //被乘数，64 表示乘法器位数
+      val multiplier= Input(UInt(64.W))        //乘数
+      val mul_ready= Output(UInt(1.W))         //为高表示乘法器准备好，表示可以输入数据
+      val out_valid= Output(UInt(1.W))         //为高表示乘法器输出的结果有效
+      val result_hi= Output(UInt(64.W))        //高 64 bits 结果
+      val result_lo= Output(UInt(64.W))        //低 64 bits 结果
+  })
+
+
+
+}
+
+
+
+object Wallace extends TestSuite {
+  val tests: Tests = Tests {
+    test("mytest") {
+      new Formal with HasTestName {
+        def getTestName: String = s"Wallace"
+      }.verify(new Wallace, Seq(BoundedCheck(1)))
+    }
+  }
+}
+
+
+error stacktrace:
+scala.collection.LinearSeqOps.apply(LinearSeq.scala:131)
+	scala.collection.LinearSeqOps.apply$(LinearSeq.scala:128)
+	scala.collection.immutable.List.apply(List.scala:79)
+	dotty.tools.dotc.util.Signatures$.countParams(Signatures.scala:501)
+	dotty.tools.dotc.util.Signatures$.applyCallInfo(Signatures.scala:186)
+	dotty.tools.dotc.util.Signatures$.computeSignatureHelp(Signatures.scala:94)
+	dotty.tools.dotc.util.Signatures$.signatureHelp(Signatures.scala:63)
+	scala.meta.internal.pc.MetalsSignatures$.signatures(MetalsSignatures.scala:17)
+	scala.meta.internal.pc.SignatureHelpProvider$.signatureHelp(SignatureHelpProvider.scala:51)
+	scala.meta.internal.pc.ScalaPresentationCompiler.signatureHelp$$anonfun$1(ScalaPresentationCompiler.scala:371)

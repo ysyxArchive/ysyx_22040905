@@ -11,9 +11,16 @@ Context* __am_irq_handle(Context *c) {
     //printf("%lx\n",c->gpr[17]);
     switch (c->mcause) {
       case 0xb: 
-        if(c->gpr[17]==-1) ev.event = EVENT_YIELD;
-        else ev.event = EVENT_SYSCALL;
-        c->mepc+=4;c->mcause=0; break;
+        if(c->gpr[17]==-1){
+          ev.event = EVENT_YIELD;
+          c->mepc+=4;
+        }
+        else
+          ev.event = EVENT_SYSCALL;
+        //c->mcause=0;
+        break;
+      case 0x8000000000000007: 
+        ev.event = EVENT_IRQ_TIMER; break;
       default: ev.event = EVENT_ERROR; break;
     }
 
@@ -49,4 +56,12 @@ bool ienabled() {
 }
 
 void iset(bool enable) {
+  if(enable){
+    asm_volatile("csrsi mstatus, 8"); //mstatus_MIE
+    set_csr(mie, MIP_MTIP);           //mie_MTIP
+  }
+  else{
+    asm_volatile("csrci mstatus, 8"); //mstatus_MIE
+    clear_csr(mie, MIP_MTIP);         //mie_MTIP
+  }
 }

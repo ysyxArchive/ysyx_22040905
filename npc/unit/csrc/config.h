@@ -2,8 +2,8 @@
 #define __CONFIG_H__
 
 #define HAS_WAVE
-//#define HAS_CLOCK
-//#define HAS_RESET
+#define HAS_CLOCK
+#define HAS_RESET
 
 
 #endif

@@ -74,17 +74,22 @@ void init(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	init(argc, argv);
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		unit->io_mul_valid = 1;
 		unit->io_flush = 0;
 		unit->io_mulw = random()%2;
 		unit->io_mul_signed= random()%4;
-		unit->io_multiplicand= random()%10000;
-		unit->io_multiplier=random()%10000;
-		while(!(unit->io_out_valid)){execute(1);}
-		printf("%x %x %lx %lx %lx %lx\n",unit->io_mulw,unit->io_mul_signed,unit->io_multiplicand,unit->io_multiplier,unit->io_result_hi,unit->io_result_lo);
+		unit->io_multiplicand= random();
+		unit->io_multiplier=random();
+		execute(1);
+		if(unit->io_multiplicand * unit->io_multiplier != ((uint64_t)unit->io_result_hi << 32 | unit->io_result_lo)){
+			if(unit->io_mulw) printf("32位乘法\t"); else printf("64位乘法\t");
+			if(unit->io_mul_signed / 2) printf("signed   X "); else printf("unsigned X ");
+			if(unit->io_mul_signed % 2) printf("signed  "); else printf("unsigned");
 
+			printf("\t%lx * %lx = %lx %lx right = %lx\n",unit->io_multiplicand,unit->io_multiplier,unit->io_result_hi,unit->io_result_lo,unit->io_multiplicand * unit->io_multiplier);
+		}
 	}
 	printf("\n");
 	sim_exit();

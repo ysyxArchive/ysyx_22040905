@@ -34,6 +34,9 @@ wave: image
 verilog: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) b IMG=$(IMAGE)
 
+sim: image
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) sim IMG=$(IMAGE)
+
 compile_run: verilog run
 
 compile_gdb: verilog gdb

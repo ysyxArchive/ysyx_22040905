@@ -8,6 +8,7 @@
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
+#include <time.h>
 // #include<nvboard.h>
 
 VerilatedContext *contextp = NULL;
@@ -18,6 +19,8 @@ Vtop *top = NULL;
 int state = NPC_QUIT;
 uint64_t pc = 0;
 int gdb = 0;
+
+double inst_cnt = 0;
 void dump_ftrace();
 void dump_csr();
 void cpp_break()
@@ -38,6 +41,8 @@ void sim_init()
 
 static void step_and_dump_wave()
 {
+  inst_cnt++;
+
   top->clock = 0;
   top->eval();
 #ifdef HAS_WAVE
@@ -120,6 +125,7 @@ void init(int argc, char *argv[])
   init_disasm("riscv64-pc-linux-gnu");
   load_elf(argv[4]);
   //init_wp_pool();
+  top->io_mul_sel = 1;
   reset();
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
   init_device();
@@ -183,6 +189,12 @@ int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
   init(argc,argv);
+
+  //开始计时
+  clock_t start,finish;
+  double totaltime;
+  start=clock(); 
+
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
@@ -193,8 +205,13 @@ int main(int argc, char *argv[])
     printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
     return -1;
   }
-  printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
-  printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));
+
+  //结束计时
+  finish=clock();
+  totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
+  printf("\033[1;32mtotal time: %f s\nThe number of clock cycles that run in one second is %f\n\033[0m",totaltime,inst_cnt/totaltime);
+  //printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
+  //printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));
   sim_exit();
   //nvboard_quit();
 }

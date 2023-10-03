@@ -59,7 +59,7 @@ int elf_num=0;
 #define func_mnum 131072
 #define shdr_num 2048
 #define sym_num 32768
-#define str_num 232768
+#define str_num 32768
 #define str_len 256
 static struct fun{
   uint64_t begin;

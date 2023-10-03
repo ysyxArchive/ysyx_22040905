@@ -32,6 +32,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
 
+  iset(1);
   // register event handler
   user_handler = handler;
 
@@ -51,4 +52,17 @@ bool ienabled() {
 }
 
 void iset(bool enable) {
+  if(enable){
+//mstatus_MIE
+    asm volatile("csrsi mstatus, 8"); 
+//mie_MTIP
+    asm volatile("li t0, 0x80");
+    asm volatile("csrrs x0,mie, t0");  
+  }
+  else{
+    asm volatile("csrci mstatus, 8"); 
+
+    asm volatile("li t0, 0x80");
+    asm volatile("csrrc x0,mie, t0");  
+  }
 }

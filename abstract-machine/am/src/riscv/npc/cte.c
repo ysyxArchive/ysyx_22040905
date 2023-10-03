@@ -66,7 +66,7 @@ void iset(bool enable) {
   else{
     //asm volatile("csrci mstatus, 8"); 
 
-    asm volatile("li t0, 0x80");
-    asm volatile("csrrc x0,mie, t0");  
+    //asm volatile("li t0, 0x80");
+    //asm volatile("csrrc x0,mie, t0");  
   }
 }

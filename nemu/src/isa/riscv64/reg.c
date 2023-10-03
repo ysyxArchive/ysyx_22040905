@@ -13,7 +13,7 @@ void isa_reg_display() {
   for(int i=0;i<32;i++){
     printf("%s:%016lx\n",reg_name(i,8),gpr(i));
   }
-  printf("cpu.mcause:%016lx\ncpu.mstatus:%016lx\ncpu.mepc:%016lx\n",cpu.mcause,cpu.mstatus, cpu.mepc);
+  printf("cpu.mcause:%016lx\ncpu.mstatus:%016lx\ncpu.mepc:%016lx\ncpu.mip:%016lx\ncpu.mie:%016lx\n",cpu.mcause,cpu.mstatus, cpu.mepc,cpu.mip,cpu.mie);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

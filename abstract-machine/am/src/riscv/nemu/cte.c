@@ -53,16 +53,12 @@ bool ienabled() {
 void iset(bool enable) {
   if(enable){
 //mstatus_MIE
-    //asm volatile("csrsi mstatus, 8"); 
+    asm volatile("csrsi mstatus, 8"); 
 //mie_MTIP
-
-    asm volatile("li t0, 0x80");
-    asm volatile("csrrs zero,mie, t0");  
+    asm volatile("csrrs x0, %0, %1" : : "i"(0x304), "r"(1<<7));
   }
   else{
-    //asm volatile("csrci mstatus, 8"); 
-
-    asm volatile("li t0, 0x80");
-    asm volatile("csrrc x0,mie, t0");  
+    asm volatile("csrci mstatus, 8"); 
+    asm volatile("csrrs x0, %0, %1" : : "i"(0x304), "r"(1<<7));
   }
 }

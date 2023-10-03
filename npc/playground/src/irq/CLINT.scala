@@ -52,7 +52,7 @@ class CLINT extends Module{
     ))
 
     //read
-    val rid=RegInit(0.U(1.W))
+    val rid=RegInit(0.U(4.W))
     val raddr=RegInit(0.U(32.W))
     val rlen=RegInit(0.U(8.W))
     val rsize=RegInit(0.U(3.W))
@@ -83,7 +83,7 @@ class CLINT extends Module{
 
     //printf("%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\n",raddr,rcnt,io.in.ar.fire,io.in.ar.bits.addr,rstate,beatcnt,io.in.r.fire,raddr + (1.U(32.W)<< rsize),lower_bound_addr) 
     //write
-    val wid=RegInit(0.U(1.W))
+    val wid=RegInit(0.U(4.W))
     val waddr = RegInit(0.U(32.W))
     val wlen=RegInit(0.U(8.W))
     val wcnt = RegInit(0.U(8.W))

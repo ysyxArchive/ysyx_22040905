@@ -16,6 +16,7 @@ class top extends Module{
     val wbu=Module(new WBU)
     val gpr=Module(new GPR)
     val csr=Module(new CSR)
+    val sram=Module(new AXI4SRAM)
     val clint=Module(new CLINT)
     val scoreboard=Module(new ScoreBoard)
 

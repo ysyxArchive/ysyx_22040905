@@ -7,9 +7,11 @@
 #define CSRs
 
 #define CSR_MSTATUS 0x300
+#define CSR_MIE 0x304
 #define CSR_MTVEC 0x305
 #define CSR_MEPC 0x341
 #define CSR_MCAUSE 0x342
+#define CSR_MIP 0x344
 
 #endif
 
@@ -22,9 +24,11 @@ static inline uint64_t* get_csr(uint64_t idx){
   switch(idx)
   {
     case CSR_MSTATUS : return &(cpu.mstatus); 
+    case CSR_MIE : return &(cpu.mie);
     case CSR_MTVEC : return &(cpu.mtvec);
     case CSR_MEPC : return &(cpu.mepc);
     case CSR_MCAUSE : return &(cpu.mcause); 
+    case CSR_MIP : return &(cpu.mip);
     default : assert(0);
   }
   //assert(0);

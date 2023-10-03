@@ -58,7 +58,7 @@ bool ienabled() {
 void iset(bool enable) {
   if(enable){
 //mstatus_MIE
-    asm volatile("csrsi mstatus, 8"); 
+    //asm volatile("csrsi mstatus, 8"); 
 //mie_MTIP
     //asm volatile("li t0, 0x80");
     //asm volatile("csrrs x0,mie, t0");  

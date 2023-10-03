@@ -29,10 +29,10 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   if(strcmp(s,"$mepc")==0){
     return cpu.mepc;
   }
-  if(strcmp(s,"mip")==0){
+  if(strcmp(s,"$mip")==0){
     return cpu.mip;
   }
-  if(strcmp(s,"mie")==0){
+  if(strcmp(s,"$mie")==0){
     return cpu.mie;
   }
   for(int i=0;i<32;i++){

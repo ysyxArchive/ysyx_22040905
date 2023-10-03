@@ -25,11 +25,12 @@ int main() {
 
   init_fs();
 
-  yield();
-  init_proc();
-
   // enable timer interrupt
   iset(1);
+
+  yield();
+
+  init_proc();
 
   Log("Finish initialization");
 

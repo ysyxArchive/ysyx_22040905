@@ -18,7 +18,7 @@ class mul extends Module{
       val sel = Input(UInt(1.W))               //0为移位乘法器，1为华莱士树乘法器
   })
   val base_mul = Module(new base_mul).io
-  val wallace_mul = Module(new Wallace).io
+  //val wallace_mul = Module(new Wallace).io
 
   base_mul.mul_valid:=io.mul_valid & (~io.sel)
   base_mul.flush:=io.flush
@@ -27,17 +27,17 @@ class mul extends Module{
   base_mul.multiplicand:=io.multiplicand
   base_mul.multiplier:=io.multiplier
 
-  wallace_mul.mul_valid:=io.mul_valid & io.sel
-  wallace_mul.flush:=io.flush
-  wallace_mul.mulw:=io.mulw
-  wallace_mul.mul_signed:=io.mul_signed
-  wallace_mul.multiplicand:=io.multiplicand
-  wallace_mul.multiplier:=io.multiplier
+  //wallace_mul.mul_valid:=io.mul_valid & io.sel
+  //wallace_mul.flush:=io.flush
+  //wallace_mul.mulw:=io.mulw
+  //wallace_mul.mul_signed:=io.mul_signed
+  //wallace_mul.multiplicand:=io.multiplicand
+  //wallace_mul.multiplier:=io.multiplier
 
-  io.mul_ready:=Mux(io.sel.asBool,wallace_mul.mul_ready,base_mul.mul_ready)
-  io.out_valid:=Mux(io.sel.asBool,wallace_mul.out_valid,base_mul.out_valid)
-  io.result_hi:=Mux(io.sel.asBool,wallace_mul.result_hi,base_mul.result_hi)
-  io.result_lo:=Mux(io.sel.asBool,wallace_mul.result_lo,base_mul.result_lo)
+  io.mul_ready:=base_mul.mul_ready//Mux(io.sel.asBool,wallace_mul.mul_ready,base_mul.mul_ready)
+  io.out_valid:=base_mul.out_valid//Mux(io.sel.asBool,wallace_mul.out_valid,base_mul.out_valid)
+  io.result_hi:=base_mul.result_hi//Mux(io.sel.asBool,wallace_mul.result_hi,base_mul.result_hi)
+  io.result_lo:=base_mul.result_lo//Mux(io.sel.asBool,wallace_mul.result_lo,base_mul.result_lo)
 
   
 }

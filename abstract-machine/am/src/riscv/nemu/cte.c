@@ -51,14 +51,23 @@ bool ienabled() {
 }
 
 void iset(bool enable) {
+  //set bit
   if(enable){
-//mstatus_MIE
-    //asm volatile("csrsi mstatus, 8"); 
-//mie_MTIP
-    asm volatile("csrrs x0, %0, %1" : : "i"(0x304), "r"(1<<7));
+  //mstatus_MIE
+    asm volatile("csrsi mstatus, 8"); 
+  //mie_MTIP
+    asm volatile("csrr t1, mie");
+    asm volatile("ori t1, t1, 0x80");
+    asm volatile("csrw mie, t1");
   }
+  //clear bit
   else{
     asm volatile("csrci mstatus, 8"); 
-    asm volatile("csrrs x0, %0, %1" : : "i"(0x304), "r"(1<<7));
+
+    asm volatile("csrr t1, mie");
+    asm volatile("li t0, 0x80");
+    asm volatile("xor t0, t0, -1");
+    asm volatile("and t1, t1, t0");
+    asm volatile("csrw mie, t1");
   }
 }

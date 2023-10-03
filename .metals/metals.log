@@ -1788,3 +1788,5 @@ WARNING: Unmatched cancel notification for request id 14790
 2023.10.04 02:14:28 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
 2023.10.04 02:15:03 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
 2023.10.04 02:29:29 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/alu/ALU.scala
+2023.10.04 02:59:45 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.04 03:00:00 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala

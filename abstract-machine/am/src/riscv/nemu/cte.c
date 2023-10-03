@@ -56,7 +56,7 @@ void iset(bool enable) {
   //mstatus_MIE
     asm volatile("csrr t1, mstatus");
     asm volatile("ori t1, t1, 0x8");
-    asm volatile("csrw mstatus, t4");
+    asm volatile("csrw mstatus, t1");
   //mie_MTIP
     asm volatile("csrr t1, mie");
     asm volatile("ori t1, t1, 0x80");

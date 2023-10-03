@@ -57,24 +57,26 @@ void iset(bool enable) {
     asm volatile("csrr t1, mstatus");
     asm volatile("ori t1, t1, 0x8");
     asm volatile("csrw mstatus, t1");
+    asm volatile("and t1, t1, ~0x8");
+
   //mie_MTIP
     asm volatile("csrr t1, mie");
     asm volatile("ori t1, t1, 0x80");
     asm volatile("csrw mie, t1");
+    asm volatile("and t1, t1, ~0x80");
 
-    asm volatile("li t1 ,0");
   }
   //clear bit
   else{
     asm volatile("csrr t1, mstatus");
     asm volatile("li t0, 0x8");
-    asm volatile("xor t0, t0, -1");
+    asm volatile("xor t0, t0, -81");
     asm volatile("and t1, t1, t0");
     asm volatile("csrw mstatus, t1");
 
     asm volatile("csrr t1, mie");
     asm volatile("li t0, 0x80");
-    asm volatile("xor t0, t0, -1");
+    asm volatile("xor t0, t0, -81");
     asm volatile("and t1, t1, t0");
     asm volatile("csrw mie, t1");
   }

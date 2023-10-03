@@ -1219,3 +1219,5 @@ java.util.concurrent.TimeoutException
 2023.10.03 15:56:46 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
 2023.10.03 15:56:46 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
 2023.10.03 15:56:46 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Arbiter.scala
+2023.10.03 16:00:08 INFO  Shutting down server
+2023.10.03 16:00:08 INFO  shutting down Metals

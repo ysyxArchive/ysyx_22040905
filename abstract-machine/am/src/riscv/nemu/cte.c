@@ -61,6 +61,8 @@ void iset(bool enable) {
     asm volatile("csrr t1, mie");
     asm volatile("ori t1, t1, 0x80");
     asm volatile("csrw mie, t1");
+
+    asm volatile("li t1 ,0");
   }
   //clear bit
   else{

@@ -27,6 +27,9 @@ int main() {
 
   init_proc();
 
+  // enable timer interrupt
+  iset(1);
+
   Log("Finish initialization");
 
 #ifdef HAS_CTE

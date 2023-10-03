@@ -20,7 +20,7 @@ class mul extends Module{
   val base_mul = Module(new base_mul).io
   //val wallace_mul = Module(new Wallace).io
 
-  base_mul.mul_valid:=io.mul_valid & (~io.sel)
+  base_mul.mul_valid:=io.mul_valid //& (~io.sel)
   base_mul.flush:=io.flush
   base_mul.mulw:=io.mulw
   base_mul.mul_signed:=io.mul_signed

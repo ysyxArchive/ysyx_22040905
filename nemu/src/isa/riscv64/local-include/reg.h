@@ -26,7 +26,7 @@ static inline uint64_t* get_csr(uint64_t idx){
     case CSR_MEPC : return &(cpu.mepc);
     case CSR_MCAUSE : return &(cpu.mcause); 
   }
-  assert(0);
+  //assert(0);
   return 0;
 }
 

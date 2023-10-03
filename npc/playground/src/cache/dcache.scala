@@ -261,11 +261,11 @@ class DCache extends Module {
   val hit = Mux(((cache_tag(idx)(t0l, t0r) === tag) && valid(idx)(0).asBool),0.U(2.W),
             Mux(((cache_tag(idx)(t1l, t1r) === tag) && valid(idx)(1).asBool),1.U(2.W), "b11".U))
  
-  val hit_way =  hit(0)
   val miss = (hit(1).asBool && (state === s_lookup))
   val lfsr8 = Module(new LFSR_8)
   lfsr8.io.en := miss
   val way = RegEnable(lfsr8.io.out(assassociativity_width - 1,0),0.U,miss)
+  val hit_way =  Mux(hit(1).asBool,way(0),hit(0))
 
   val tag_way = Wire(UInt((tag_width).W))
   tag_way := Mux(way === 0.U, cache_tag(idx)(t0l, t0r), (cache_tag(idx)(t1l, t1r)))
@@ -296,11 +296,11 @@ class DCache extends Module {
 
 
   valid(idx)(way) := Mux(state === s_miss & (!uncache),1.U,valid(idx)(way))
-  cache_tag(idx) := Mux(state === s_miss & (!uncache),
+  cache_tag(idx) := Mux((state === s_miss) & (!uncache),
                       Mux(way === 0.U, Cat(cache_tag(idx)(t1l, t1r), tag), Cat(tag, cache_tag(idx)(t0l, t0r))),
                       cache_tag(idx))
-  dirty(idx)(way) :=  Mux(state === s_lookup && wmode === 1.U && (~miss) && (!uncache),1.U,
-                      Mux(state === s_replace, 0.U, dirty(idx)(way)))
+  dirty(idx)(hit_way) :=  Mux(state === s_lookup && wmode === 1.U && (~miss) && (!uncache),1.U,
+                      Mux(state === s_replace, 0.U, dirty(idx)(hit_way)))
 
   addr := Mux(state === s_idle && io.in.ar.fire &&(!io.uncache),io.in.ar.bits.addr,
           Mux(state === s_idle && io.in.aw.fire &&(!io.uncache), io.in.aw.bits.addr, addr))

@@ -237,16 +237,16 @@ class DeviceArbiter extends Module{
 
   //b
   when(io.out2.b.bits.id(1)){
-    io.in.b.bits.id    := io.out1.b.bits.id
-    io.in.b.bits.resp  := io.out1.b.bits.resp
-    io.in.b.valid      := io.out1.b.valid
+    io.in.b.bits.id    := io.out2.b.bits.id
+    io.in.b.bits.resp  := io.out2.b.bits.resp
+    io.in.b.valid      := io.out2.b.valid
 
     io.out1.b.ready    := 0.U
     io.out2.b.ready    := io.in.b.ready
   }.otherwise{
-    io.in.b.bits.id    := io.out2.b.bits.id
-    io.in.b.bits.resp  := io.out2.b.bits.resp
-    io.in.b.valid      := io.out2.b.valid
+    io.in.b.bits.id    := io.out1.b.bits.id
+    io.in.b.bits.resp  := io.out1.b.bits.resp
+    io.in.b.valid      := io.out1.b.valid
     
     io.out1.b.ready    := io.in.b.ready
     io.out2.b.ready    := 0.U

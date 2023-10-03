@@ -56,8 +56,8 @@ void iset(bool enable) {
     //asm volatile("csrsi mstatus, 8"); 
 //mie_MTIP
 
-    //asm volatile("li t0, 0x80");
-    asm volatile("csrrs x0,mie, t0");  
+    asm volatile("li t0, 0x80");
+    //asm volatile("csrrs x0,mie, t0");  
   }
   else{
     //asm volatile("csrci mstatus, 8"); 

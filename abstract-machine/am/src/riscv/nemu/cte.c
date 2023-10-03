@@ -54,7 +54,7 @@ void iset(bool enable) {
   //set bit
   if(enable){
   //mstatus_MIE
-    asm volatile("csrsi mstatus, 8"); 
+    //asm volatile("csrsi mstatus, 8"); 
   //mie_MTIP
     asm volatile("csrr t1, mie");
     asm volatile("ori t1, t1, 0x80");
@@ -62,7 +62,7 @@ void iset(bool enable) {
   }
   //clear bit
   else{
-    asm volatile("csrci mstatus, 8"); 
+    //asm volatile("csrci mstatus, 8"); 
 
     asm volatile("csrr t1, mie");
     asm volatile("li t0, 0x80");

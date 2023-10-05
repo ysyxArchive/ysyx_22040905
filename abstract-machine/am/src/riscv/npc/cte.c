@@ -17,7 +17,7 @@ Context* __am_irq_handle(Context *c) {
         }
         else
           ev.event = EVENT_SYSCALL;
-        //c->mcause=0;
+        c->mcause=0;
         break;
       case 0x8000000000000007: 
         ev.event = EVENT_IRQ_TIMER; break;

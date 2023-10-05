@@ -84,17 +84,17 @@ void exec_once()
 #endif
   step_and_dump_wave();
   device_update();
-#ifdef HAS_DIFFTEST
 
+#ifdef HAS_DIFFTEST
+  if(top->io_timer_diff_skip){
+    difftest_skip_ref();
+  }
   if(t){
     difftest_step(pc, pc);
     t=0;
   }
   if(top->io_valid){
     t=1;
-  }
-  if(top->io_timer_diff_skip){
-    difftest_skip_ref();
   }
 #endif
 

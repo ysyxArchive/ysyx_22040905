@@ -2504,3 +2504,5 @@ Oct 06, 2023 3:05:41 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellat
 WARNING: Unmatched cancel notification for request id 17949
 2023.10.06 03:06:35 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
 2023.10.06 03:06:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.06 03:36:36 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.06 03:39:03 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala

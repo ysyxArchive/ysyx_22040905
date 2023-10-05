@@ -22222,7 +22222,7 @@ module top(
   assign io_valid = wbu_io_valid; // @[top.scala 44:13]
   assign io_hitrate_i = 64'h0; // @[top.scala 54:38]
   assign io_hitrate_d = 64'h0; // @[top.scala 55:38]
-  assign io_timer_diff_skip = clint_io_skip; // @[top.scala 58:24]
+  assign io_timer_diff_skip = clint_io_skip | csr_io_irq; // @[top.scala 58:41]
   assign ifu_clock = clock;
   assign ifu_reset = reset;
   assign ifu_io_pc_dnpc = wbu_io_pc_dnpc; // @[top.scala 26:19]

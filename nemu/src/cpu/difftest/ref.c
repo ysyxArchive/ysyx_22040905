@@ -16,16 +16,28 @@ void difftest_regcpy(void *dut,uint64_t *pc, bool direction) {
   if(direction==DIFFTEST_TO_DUT){
     for(int i=0;i<32;i++){
       *(uint64_t  *)(dut+8*i) = gpr(i);
-      *pc=get_pc();
     }
-    
+    *pc=get_pc();
+    *(uint64_t  *)(dut+8*32) = *(uint64_t  *)get_csr(0x300);
+    *(uint64_t  *)(dut+8*33) = *(uint64_t  *)get_csr(0x304);
+    *(uint64_t  *)(dut+8*34) = *(uint64_t  *)get_csr(0x305);
+    *(uint64_t  *)(dut+8*35) = *(uint64_t  *)get_csr(0x341);
+    *(uint64_t  *)(dut+8*36) = *(uint64_t  *)get_csr(0x342);
+    *(uint64_t  *)(dut+8*37) = *(uint64_t  *)get_csr(0x344);
   }
   else{
     for(int i=0;i<32;i++){
       gpr(i)= *(uint64_t  *)(dut+8*i);
-      change_pc(*pc);
       //printf("%d:%08lx %08lx\n",i,gpr(i),*(uint64_t  *)(dut+8*i));
     }
+      change_pc(*pc);
+      *(uint64_t  *)get_csr(0x300) = *(uint64_t  *)(dut+8*32);
+      *(uint64_t  *)get_csr(0x304) = *(uint64_t  *)(dut+8*33);
+      *(uint64_t  *)get_csr(0x305) = *(uint64_t  *)(dut+8*34);
+      *(uint64_t  *)get_csr(0x341) = *(uint64_t  *)(dut+8*35);
+      *(uint64_t  *)get_csr(0x342) = *(uint64_t  *)(dut+8*36);
+      *(uint64_t  *)get_csr(0x344) = *(uint64_t  *)(dut+8*37);
+ 
   }
 }
 

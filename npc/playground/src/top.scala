@@ -55,5 +55,5 @@ class top extends Module{
     io.hitrate_d:=crossbar.io.hitrate(63,0)
 
     exu.io.mul_sel:= io.mul_sel
-    io.timer_diff_skip := clint.io.skip
+    io.timer_diff_skip := clint.io.skip | csr.io.irq
 }

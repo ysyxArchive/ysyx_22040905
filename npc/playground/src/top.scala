@@ -27,13 +27,15 @@ class top extends Module{
     ifu.io.irq_nextpc:=csr.io.next_pc
     ifu.io.irq:=csr.io.irq
     idu.io.in<>ifu.io.out
+    idu.io.flush<>csr.io.irq
     exu.io.in<>idu.io.out
     exu.io.gpr<>gpr.io.r
     exu.io.csr<>csr.io.r
     csr.io.clint.mtip<>clint.io.mtip
     csr.io.clint.mtime<>clint.io.mtime
+    csr.io.en_mtip<>clint.io.en_mtip
     exu.io.flush<>csr.io.irq
-    exu.io.pc<>csr.io.irq_pc
+    wbu.io.pc_dnpc<>csr.io.irq_pc
     wbu.io.in<>exu.io.out
     wbu.io.gpr<>gpr.io.w
     wbu.io.csr<>csr.io.w

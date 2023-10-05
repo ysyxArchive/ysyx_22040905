@@ -22,7 +22,6 @@ class EXU extends Module{
         val lm=(new AXILite)
         val mul_sel=Input(UInt(1.W))
         val flush = Input(UInt(1.W))
-        val pc = Output(UInt(32.W))
     })
         //flush for two cycles
         val EXE_reg_flush=RegInit(0.U(1.W))
@@ -69,7 +68,6 @@ class EXU extends Module{
             EXE_reg_clearidx:=io.in.bits.clearidx
         }
 
-        io.pc:=EXE_reg_pc
 
         io.out.bits.isJump:=EXE_reg_isJump
         io.out.bits.clearidx:=EXE_reg_clearidx

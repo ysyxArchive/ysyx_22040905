@@ -25,10 +25,6 @@ int main() {
 
   init_fs();
 
-  // enable timer interrupt
-  iset(1);
-
-  yield();
 
   init_proc();
 

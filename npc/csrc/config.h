@@ -3,6 +3,6 @@
 
 #define HAS_WAVE
 #define HAS_TRACE
-//#define HAS_DIFFTEST
+#define HAS_DIFFTEST
 
 #endif

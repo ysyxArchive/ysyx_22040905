@@ -20,12 +20,29 @@ class IDU extends Module{
       val in=Flipped(Decoupled(new ID))
       val out=Decoupled(new EXE)
       val sb=Flipped((new SB_ID)) 
+      val flush=Input(UInt(1.W))
    })
-  val ID_reg_inst=RegEnable(io.in.bits.inst,0.U,io.in.fire)
-  val ID_reg_pc=RegEnable(io.in.bits.pc,0.U,io.in.fire)
-  val ID_reg_valid=RegEnable(1.U,1.U,true.B)
+   //val ID_reg_inst=RegEnable(io.in.bits.inst,0.U,io.in.fire)
+   //val ID_reg_pc=RegEnable(io.in.bits.pc,0.U,io.in.fire)
+   //val ID_reg_valid=RegEnable(1.U,1.U,true.B)
+   //val ID_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
+   val ID_reg_inst=Reg(UInt(32.W))
+   val ID_reg_pc=Reg(UInt(32.W))
+   val ID_reg_valid=Reg(UInt(1.W))
+   val ID_reg_isJump=Reg(UInt(1.W))
 
-   val ID_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
+   when(io.flush.asBool|reset.asBool){
+      ID_reg_inst:=0.U
+      ID_reg_pc:=0.U
+      ID_reg_valid:=0.U
+      ID_reg_isJump:=0.U
+   }.elsewhen(io.in.fire){
+      ID_reg_inst:=io.in.bits.inst
+      ID_reg_pc:=io.in.bits.pc
+      ID_reg_valid:=1.U
+      ID_reg_isJump:=io.in.bits.isJump
+   }
+
    val RAW=Wire(UInt(1.W))
    io.out.bits.isJump:=Mux(~RAW.asBool,ID_reg_isJump,0.U)
    
@@ -35,8 +52,8 @@ class IDU extends Module{
 
 
    state := MuxLookup(state, s_idle, List(
-     s_idle       -> Mux(io.in.fire, s_wait_ready, s_idle),
-     s_wait_ready -> Mux(true.B, s_wait_ready, s_idle)
+     s_idle       -> Mux(io.flush.asBool,s_idle,Mux(io.in.fire, s_wait_ready, s_idle)),
+     s_wait_ready -> Mux(io.flush.asBool,s_idle,Mux(true.B, s_wait_ready, s_idle))
    ))
    val nop=0x0000013.U 
    io.in.ready:= (~RAW) & io.out.ready

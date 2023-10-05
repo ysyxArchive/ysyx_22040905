@@ -147,7 +147,7 @@ class DeviceArbiter extends Module{
     io.out1.ar.bits.id   := 0.U
     io.out1.ar.valid     := 0.U     
 
-    io.out2.ar.bits.id   := Cat(1.U,io.in.ar.bits.id)   
+    io.out2.ar.bits.id   := 3.U   
     io.out2.ar.valid     := io.in.ar.valid     
   
     io.in.ar.ready     := io.out2.ar.ready     
@@ -165,7 +165,7 @@ class DeviceArbiter extends Module{
     io.out1.r.ready     := 0.U
     io.out2.r.ready     := io.in.r.ready
 
-    io.in.r.bits.id      := Cat(0.U(3.W),io.out2.r.bits.id(0)) 
+    io.in.r.bits.id      := io.out2.r.bits.id(0)
     io.in.r.bits.data    := io.out2.r.bits.data
     io.in.r.bits.resp    := io.out2.r.bits.resp
     io.in.r.bits.last    := io.out2.r.bits.last
@@ -195,7 +195,7 @@ class DeviceArbiter extends Module{
     io.out1.aw.bits.id   := 0.U
     io.out1.aw.valid     := 0.U     
 
-    io.out2.aw.bits.id   := Cat(1.U,io.in.aw.bits.id)   
+    io.out2.aw.bits.id   := 3.U   
     io.out2.aw.valid     := io.in.aw.valid     
   
     io.in.aw.ready     := io.out2.aw.ready     
@@ -221,7 +221,7 @@ class DeviceArbiter extends Module{
     io.out1.w.bits.id   := 0.U   
     io.out1.w.valid     := 0.U
 
-    io.out2.w.bits.id   := Cat(1.U,io.in.w.bits.id(0))   
+    io.out2.w.bits.id   := 3.U  
     io.out2.w.valid     := io.in.w.valid
 
     io.in.w.ready     := io.out2.w.ready     
@@ -237,7 +237,7 @@ class DeviceArbiter extends Module{
 
   //b
   when(io.out2.b.bits.id(1)){
-    io.in.b.bits.id    := io.out2.b.bits.id
+    io.in.b.bits.id    := io.out2.b.bits.id(0)
     io.in.b.bits.resp  := io.out2.b.bits.resp
     io.in.b.valid      := io.out2.b.valid
 

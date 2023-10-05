@@ -42,7 +42,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
   // initialize timer interrupt
   outl(0x20004000,1000);
-  outl(0x2000bfff,0);
+  //inl(0x20004000);
   return true;
 }
 
@@ -65,6 +65,9 @@ void iset(bool enable) {
     asm volatile("csrr t1, mstatus");
     asm volatile("ori t1, t1, 0x8");
     asm volatile("csrw mstatus, t1");
+
+  //clear mtime
+    //outl(0x20004000,1000);
 
   //mie_MTIP
     asm volatile("csrr t1, mie");

@@ -27,6 +27,7 @@ class CSRio extends Bundle{
     val irq=Output(UInt(1.W))
     val irq_pc=Input(UInt(32.W))
     val next_pc=Output(UInt(32.W))
+    val en_mtip=Output(UInt(1.W))
 }
 class CSR extends Module{
     val io=IO(new CSRio)
@@ -44,6 +45,7 @@ class CSR extends Module{
     io.irq:=clint_irq
     io.next_pc:=csr(1)(31,0)
 
+    io.en_mtip:=csr(0)(3)  & csr(4)(7)
     map_r:=Mux((io.r.idx_r==="x300".U),0.U,          //mstatus
            Mux((io.r.idx_r==="x305".U),1.U,          //mtvec
            Mux((io.r.idx_r==="x341".U),2.U,          //mepc

@@ -9,6 +9,7 @@ class top extends Module{
         val hitrate_i=Output(UInt(64.W))
         val hitrate_d=Output(UInt(64.W))
         val mul_sel = Input(UInt(1.W)) //0为移位乘法器，1为华莱士树乘法器
+        val timer_diff_skip = Output(UInt(1.W))
     })
     val ifu=Module(new IFU)
     val idu=Module(new IDU)
@@ -54,4 +55,5 @@ class top extends Module{
     io.hitrate_d:=crossbar.io.hitrate(63,0)
 
     exu.io.mul_sel:= io.mul_sel
+    io.timer_diff_skip := clint.io.skip
 }

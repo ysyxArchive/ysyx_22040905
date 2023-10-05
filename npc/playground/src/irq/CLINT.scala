@@ -9,6 +9,7 @@ class CLINT extends Module{
         val mtip = Output(Bool())
         val mtime = Output(UInt(64.W))
         val en_mtip = Input(UInt(1.W))
+        val skip = Output(UInt(1.W))
     })
     //map
     val BASE_ADDRESS = 0x20000000.U
@@ -61,7 +62,7 @@ class CLINT extends Module{
     val rcnt = RegInit(0.U(8.W))
     val beatcnt = RegInit(0.U(8.W))
 
-    rid := Mux(io.in.ar.fire,io.in.ar.bits.id,rid)
+    rid := Mux(io.in.ar.fire,io.in.ar.bits.id,0.U)
     lower_bound_addr:=Mux(io.in.ar.fire,io.in.ar.bits.addr & (((~io.in.ar.bits.len.asTypeOf(UInt(32.W))) << io.in.ar.bits.size )),lower_bound_addr)
     //printf("%x\n",raddr)
     raddr := Mux(io.in.ar.fire ,io.in.ar.bits.addr,
@@ -126,4 +127,6 @@ class CLINT extends Module{
                         0.U))
 
     chisel3.assert((io.in.w.fire && ((io.in.aw.bits.addr === MTIMECMP) || (io.in.aw.bits.addr === MTIME))) || (!io.in.w.fire),"Error: clint_waddr=0x%x\n",io.in.aw.bits.addr)
+    
+    io.skip:=((io.in.aw.bits.addr >= BASE_ADDRESS) & (io.in.aw.bits.addr <= BOUND_ADDRESS)) | ((io.in.ar.bits.addr >= BASE_ADDRESS) & (io.in.ar.bits.addr <= BOUND_ADDRESS))
 }

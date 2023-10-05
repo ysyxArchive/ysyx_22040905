@@ -85,12 +85,16 @@ void exec_once()
   step_and_dump_wave();
   device_update();
 #ifdef HAS_DIFFTEST
+
   if(t){
     difftest_step(pc, pc);
     t=0;
   }
   if(top->io_valid){
     t=1;
+  }
+  if(top->io_timer_diff_skip){
+    difftest_skip_ref();
   }
 #endif
 

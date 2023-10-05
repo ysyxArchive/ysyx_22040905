@@ -20,6 +20,9 @@
 #define FB_ADDR         (MMIO_BASE   + 0x1000000)
 #define AUDIO_SBUF_ADDR (MMIO_BASE   + 0x1200000)
 
+#define TIMER_IRQ_BEGIN   0x20000000
+#define TIMER_IRQ_END    0x2000BFFF
+
 
 typedef uint32_t paddr_t;
 
@@ -106,6 +109,7 @@ void pmem_write(paddr_t addr, int len, uint64_t data) {
 extern "C" void pmem_read(int raddr, long long *rdata) {
   uint64_t addr=((uint64_t)raddr)&((1ull<<32)-1);
   if(addr< 0x80000000) { *rdata=0;return; }
+
   if(addr==RTC_ADDR){
     difftest_skip_ref();
     *rdata=get_time()%(1ll<<32);
@@ -143,6 +147,8 @@ extern "C" void pmem_write(int waddr, long long wdata, char wmask) {
     mask>>=1;
     if(len>8){printf("wmask:%d\nlen:%d\n",mask,len); assert(0);}
   }
+
+
   if(addr==SERIAL_PORT){
     difftest_skip_ref();
     putchar((char)data);

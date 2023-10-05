@@ -2487,3 +2487,20 @@ Oct 06, 2023 1:37:12 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellat
 WARNING: Unmatched cancel notification for request id 17006
 Oct 06, 2023 1:37:15 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
 WARNING: Unmatched cancel notification for request id 17027
+2023.10.06 02:13:29 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+Oct 06, 2023 2:41:35 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 06, 2023 2:42:16 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 06, 2023 3:03:49 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 17378
+2023.10.06 03:03:59 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+Oct 06, 2023 3:04:00 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 17437
+2023.10.06 03:04:08 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+Oct 06, 2023 3:04:16 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 17540
+Oct 06, 2023 3:05:41 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 17949
+2023.10.06 03:06:35 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.06 03:06:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala

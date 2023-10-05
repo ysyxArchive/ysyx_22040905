@@ -40,9 +40,6 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   // register event handler
   user_handler = handler;
 
-  // initialize timer interrupt
-  outl(0x20004000,1000);
-  //inl(0x20004000);
   return true;
 }
 
@@ -61,13 +58,15 @@ bool ienabled() {
 void iset(bool enable) {
   //set bit
   if(enable){
+  // initialize timer interrupt
+    outl(0x20004000,1000);
+    outl(0x2000bff8,0);
+
   //mstatus_MIE
     asm volatile("csrr t1, mstatus");
     asm volatile("ori t1, t1, 0x8");
     asm volatile("csrw mstatus, t1");
 
-  //clear mtime
-    //outl(0x20004000,1000);
 
   //mie_MTIP
     asm volatile("csrr t1, mie");

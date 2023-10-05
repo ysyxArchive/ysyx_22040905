@@ -284,18 +284,19 @@ module IDU(
   wire [19:0] op_hi_lo = {op_hi_lo_hi,op_hi_lo_lo}; // @[IDU.scala 124:13]
   wire [39:0] op_hi = {10'h0,3'h0,op_t_66,op_t_65,op_t_64,op_t_63,op_t_62,op_t_61,op_t_60,op_hi_lo}; // @[IDU.scala 124:13]
   wire [79:0] op = {op_hi,op_lo_hi_hi,op_lo_hi_lo,op_lo_lo_hi,op_lo_lo_lo}; // @[IDU.scala 124:13]
+  wire  _T_3 = io_out_ready & io_out_valid; // @[Decoupled.scala 52:35]
   wire  _typ_t_0_T_30 = op[2] | op[3] | op[7] | op[9] | op[11] | op[14] | op[15] | op[18] | op[19] | op[22] | op[23] |
-    op[28] | op[29] | op[37] | op[38] | op[39]; // @[IDU.scala 138:116]
-  wire  typ_t_0 = _typ_t_0_T_30 | op[40] | op[41] | op[46] | op[47] | op[48] | op[63] | op[64]; // @[IDU.scala 138:165]
-  wire  typ_t_1 = op[24] | op[25]; // @[IDU.scala 139:22]
-  wire  typ_t_2 = op[42] | op[43] | op[44] | op[45]; // @[IDU.scala 140:36]
-  wire  typ_t_3 = op[36]; // @[IDU.scala 141:18]
-  wire  typ_t_4 = op[30] | op[31] | op[32] | op[33] | op[34] | op[35]; // @[IDU.scala 142:50]
+    op[28] | op[29] | op[37] | op[38] | op[39]; // @[IDU.scala 140:116]
+  wire  typ_t_0 = _typ_t_0_T_30 | op[40] | op[41] | op[46] | op[47] | op[48] | op[63] | op[64]; // @[IDU.scala 140:165]
+  wire  typ_t_1 = op[24] | op[25]; // @[IDU.scala 141:22]
+  wire  typ_t_2 = op[42] | op[43] | op[44] | op[45]; // @[IDU.scala 142:36]
+  wire  typ_t_3 = op[36]; // @[IDU.scala 143:18]
+  wire  typ_t_4 = op[30] | op[31] | op[32] | op[33] | op[34] | op[35]; // @[IDU.scala 144:50]
   wire  _typ_t_5_T_30 = op[0] | op[1] | op[4] | op[5] | op[6] | op[8] | op[10] | op[12] | op[13] | op[16] | op[17] | op[
-    20] | op[21] | op[26] | op[27] | op[50]; // @[IDU.scala 143:114]
+    20] | op[21] | op[26] | op[27] | op[50]; // @[IDU.scala 145:114]
   wire  typ_t_5 = _typ_t_5_T_30 | op[51] | op[52] | op[53] | op[54] | op[55] | op[56] | op[57] | op[58] | op[59] | op[60
-    ] | op[61] | op[62]; // @[IDU.scala 143:198]
-  wire [5:0] typ = {typ_t_5,typ_t_4,typ_t_3,typ_t_2,typ_t_1,typ_t_0}; // @[IDU.scala 145:15]
+    ] | op[61] | op[62]; // @[IDU.scala 145:198]
+  wire [5:0] typ = {typ_t_5,typ_t_4,typ_t_3,typ_t_2,typ_t_1,typ_t_0}; // @[IDU.scala 147:15]
   wire [51:0] _io_out_bits_imm_T_3 = ID_reg_inst[31] ? 52'hfffffffffffff : 52'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _io_out_bits_imm_T_5 = {_io_out_bits_imm_T_3,ID_reg_inst[31:20]}; // @[Cat.scala 33:92]
   wire [31:0] _io_out_bits_imm_T_9 = ID_reg_inst[31] ? 32'hffffffff : 32'h0; // @[Bitwise.scala 77:12]
@@ -307,11 +308,10 @@ module IDU(
   wire [50:0] _io_out_bits_imm_T_38 = ID_reg_inst[31] ? 51'h7ffffffffffff : 51'h0; // @[Bitwise.scala 77:12]
   wire [63:0] _io_out_bits_imm_T_47 = {_io_out_bits_imm_T_38,ID_reg_inst[31],ID_reg_inst[7],ID_reg_inst[30:25],
     ID_reg_inst[11:8],1'h0}; // @[Cat.scala 33:92]
-  wire [63:0] _io_out_bits_imm_T_48 = typ[4] ? _io_out_bits_imm_T_47 : 64'h0; // @[IDU.scala 154:25]
-  wire [63:0] _io_out_bits_imm_T_49 = typ[3] ? _io_out_bits_imm_T_34 : _io_out_bits_imm_T_48; // @[IDU.scala 153:25]
-  wire [63:0] _io_out_bits_imm_T_50 = typ[2] ? _io_out_bits_imm_T_21 : _io_out_bits_imm_T_49; // @[IDU.scala 152:25]
-  wire [63:0] _io_out_bits_imm_T_51 = typ[1] ? _io_out_bits_imm_T_13 : _io_out_bits_imm_T_50; // @[IDU.scala 151:25]
-  wire  _io_sb_setidx_T_7 = io_out_ready & io_out_valid; // @[Decoupled.scala 52:35]
+  wire [63:0] _io_out_bits_imm_T_48 = typ[4] ? _io_out_bits_imm_T_47 : 64'h0; // @[IDU.scala 156:25]
+  wire [63:0] _io_out_bits_imm_T_49 = typ[3] ? _io_out_bits_imm_T_34 : _io_out_bits_imm_T_48; // @[IDU.scala 155:25]
+  wire [63:0] _io_out_bits_imm_T_50 = typ[2] ? _io_out_bits_imm_T_21 : _io_out_bits_imm_T_49; // @[IDU.scala 154:25]
+  wire [63:0] _io_out_bits_imm_T_51 = typ[1] ? _io_out_bits_imm_T_13 : _io_out_bits_imm_T_50; // @[IDU.scala 153:25]
   assign io_in_ready = _io_out_bits_isJump_T_1 & io_out_ready; // @[IDU.scala 42:25]
   assign io_out_valid = state & io_in_valid; // @[IDU.scala 43:43]
   assign io_out_bits_pc = _io_out_bits_isJump_T_1 ? ID_reg_pc : 32'h0; // @[IDU.scala 44:23]
@@ -319,15 +319,15 @@ module IDU(
   assign io_out_bits_rs1 = _io_out_bits_isJump_T_1 ? ID_reg_inst[19:15] : 5'h0; // @[IDU.scala 128:24]
   assign io_out_bits_rs2 = _io_out_bits_isJump_T_1 ? ID_reg_inst[24:20] : 5'h0; // @[IDU.scala 129:24]
   assign io_out_bits_rd = _io_out_bits_isJump_T_1 ? ID_reg_inst[11:7] : 5'h0; // @[IDU.scala 127:23]
-  assign io_out_bits_imm = typ[0] ? _io_out_bits_imm_T_5 : _io_out_bits_imm_T_51; // @[IDU.scala 150:25]
+  assign io_out_bits_imm = typ[0] ? _io_out_bits_imm_T_5 : _io_out_bits_imm_T_51; // @[IDU.scala 152:25]
   assign io_out_bits_op = _io_out_bits_isJump_T_1 ? op : 80'h0; // @[IDU.scala 126:23]
-  assign io_out_bits_typ = _io_out_bits_isJump_T_1 ? typ : 6'h0; // @[IDU.scala 147:24]
+  assign io_out_bits_typ = _io_out_bits_isJump_T_1 ? typ : 6'h0; // @[IDU.scala 149:24]
   assign io_out_bits_isJump = ~io_sb_isBusy & ID_reg_isJump; // @[IDU.scala 30:27]
-  assign io_out_bits_clearidx = _io_out_bits_isJump_T_1 ? io_sb_setidx : 5'h0; // @[IDU.scala 161:29]
-  assign io_sb_lookidx1 = typ[0] | typ[2] | typ[4] | typ[5] ? ID_reg_inst[19:15] : 5'h0; // @[IDU.scala 158:23]
-  assign io_sb_lookidx2 = typ[2] | typ[4] | typ[5] ? ID_reg_inst[24:20] : 5'h0; // @[IDU.scala 159:23]
-  assign io_sb_setidx = (typ[0] | typ[1] | typ[3] | typ[5]) & (_io_sb_setidx_T_7 & _ID_reg_inst_T) &
-    _io_out_bits_isJump_T_1 ? ID_reg_inst[11:7] : 5'h0; // @[IDU.scala 160:21]
+  assign io_out_bits_clearidx = _io_out_bits_isJump_T_1 ? io_sb_setidx : 5'h0; // @[IDU.scala 163:29]
+  assign io_sb_lookidx1 = typ[0] | typ[2] | typ[4] | typ[5] ? ID_reg_inst[19:15] : 5'h0; // @[IDU.scala 160:23]
+  assign io_sb_lookidx2 = typ[2] | typ[4] | typ[5] ? ID_reg_inst[24:20] : 5'h0; // @[IDU.scala 161:23]
+  assign io_sb_setidx = (typ[0] | typ[1] | typ[3] | typ[5]) & (_T_3 & _ID_reg_inst_T) & _io_out_bits_isJump_T_1 ?
+    ID_reg_inst[11:7] : 5'h0; // @[IDU.scala 162:21]
   always @(posedge clock) begin
     if (reset) begin // @[Reg.scala 35:20]
       ID_reg_inst <= 32'h0; // @[Reg.scala 35:20]
@@ -349,6 +349,30 @@ module IDU(
     end else begin
       state <= _state_T_4; // @[IDU.scala 37:10]
     end
+    `ifndef SYNTHESIS
+    `ifdef PRINTF_COND
+      if (`PRINTF_COND) begin
+    `endif
+        if (~reset & ~(~(io_out_bits_op == 80'h0 & ID_reg_inst == 32'h0 & _T_3))) begin
+          $fwrite(32'h80000002,
+            "Assertion failed\n    at IDU.scala:131 assert(~(io.out.bits.op===0.U && ID_reg_inst===0.U && io.out.fire))\n"
+            ); // @[IDU.scala 131:10]
+        end
+    `ifdef PRINTF_COND
+      end
+    `endif
+    `endif // SYNTHESIS
+    `ifndef SYNTHESIS
+    `ifdef STOP_COND
+      if (`STOP_COND) begin
+    `endif
+        if (~reset & ~(~(io_out_bits_op == 80'h0 & ID_reg_inst == 32'h0 & _T_3))) begin
+          $fatal; // @[IDU.scala 131:10]
+        end
+    `ifdef STOP_COND
+      end
+    `endif
+    `endif // SYNTHESIS
   end
 // Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN

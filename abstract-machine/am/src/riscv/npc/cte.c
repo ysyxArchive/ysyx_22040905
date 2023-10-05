@@ -13,10 +13,10 @@ Context* __am_irq_handle(Context *c) {
       case 0xb: 
         if(c->gpr[17]==-1){
           ev.event = EVENT_YIELD;
-          c->mepc+=4;
         }
         else
           ev.event = EVENT_SYSCALL;
+        c->mepc+=4;
         c->mcause=0;
         break;
       case 0x8000000000000007: 

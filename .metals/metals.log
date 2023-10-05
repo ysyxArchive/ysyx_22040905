@@ -1978,3 +1978,374 @@ scala.meta.tokenizers.TokenizeException: <input>:131: error: illegal character '
 	at java.lang.Thread.run(Thread.java:833)
 
 2023.10.05 20:45:45 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.05 20:54:37 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 20:56:38 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 21:00:42 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:01:21 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/WBU.scala
+2023.10.05 21:05:59 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:06:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.05 21:08:43 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Oct 05, 2023 9:08:51 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 807
+Oct 05, 2023 9:08:51 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 812
+2023.10.05 21:08:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:11:37 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/WBU.scala
+Oct 05, 2023 9:13:09 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 939
+2023.10.05 21:13:13 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 21:13:38 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 21:15:57 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.05 21:16:17 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.05 21:20:27 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+Oct 05, 2023 9:27:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1203
+Oct 05, 2023 9:27:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1206
+2023.10.05 21:28:16 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:28:27 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:31:12 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.05 21:33:19 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Oct 05, 2023 9:33:37 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1752
+Oct 05, 2023 9:34:08 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1914
+Oct 05, 2023 9:34:08 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1917
+Oct 05, 2023 9:34:15 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1956
+Oct 05, 2023 9:34:17 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1973
+2023.10.05 21:34:20 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Oct 05, 2023 9:35:27 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2109
+2023.10.05 21:35:30 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:35:32 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.10.05 21:35:41 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+Oct 05, 2023 9:38:00 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2547
+2023.10.05 21:38:13 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.10.05 21:38:24 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.10.05 21:42:20 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+scala.meta.tokenizers.TokenizeException: <input>:26: error: Invalid literal number
+        val EXE_reg_pc=dontTouch(RegEnable(Mux(io.flush.asBool,0io.in.bits.pc,0.U,io.in.fire)) 
+                                                               ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.checkNoLetter(LegacyScanner.scala:856)
+	at scala.meta.internal.tokenizers.LegacyScanner.restOfUncertainToken$1(LegacyScanner.scala:900)
+	at scala.meta.internal.tokenizers.LegacyScanner.getNumber(LegacyScanner.scala:908)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchZero$1(LegacyScanner.scala:363)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:365)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.05 21:43:44 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:44:43 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:52:14 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:52:17 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 21:54:18 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Oct 05, 2023 9:58:28 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4952
+2023.10.05 22:03:45 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:05:24 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:07:59 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+scala.meta.tokenizers.TokenizeException: <input>:101: error: Invalid literal number
+        val lsu_finish=RegInit(0U(1.W))
+                               ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.checkNoLetter(LegacyScanner.scala:856)
+	at scala.meta.internal.tokenizers.LegacyScanner.restOfUncertainToken$1(LegacyScanner.scala:900)
+	at scala.meta.internal.tokenizers.LegacyScanner.getNumber(LegacyScanner.scala:908)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchZero$1(LegacyScanner.scala:363)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:365)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.05 22:08:11 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+scala.meta.tokenizers.TokenizeException: <input>:108: error: Invalid literal number
+        lsu_finish := Mux(io.flush.asBool,0io.in.fire & op_rw.asBool,0.U,
+                                          ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.checkNoLetter(LegacyScanner.scala:856)
+	at scala.meta.internal.tokenizers.LegacyScanner.restOfUncertainToken$1(LegacyScanner.scala:900)
+	at scala.meta.internal.tokenizers.LegacyScanner.getNumber(LegacyScanner.scala:908)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchZero$1(LegacyScanner.scala:363)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:365)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+Oct 05, 2023 10:08:27 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6316
+Oct 05, 2023 10:08:39 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6456
+2023.10.05 22:09:05 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:09:17 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:12:15 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+Oct 05, 2023 10:13:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6707
+Oct 05, 2023 10:13:20 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6737
+2023.10.05 22:13:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:14:42 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+Oct 05, 2023 10:14:56 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7069
+2023.10.05 22:15:19 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.05 22:15:27 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+Oct 05, 2023 10:15:29 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7244
+2023.10.05 22:18:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:19:17 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+Oct 05, 2023 10:19:19 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7519
+2023.10.05 22:19:21 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.05 22:19:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:21:06 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 22:21:20 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:21:51 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:22:02 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+Oct 05, 2023 10:24:47 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8385
+2023.10.05 22:25:13 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:26:11 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:26:56 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:27:04 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+Oct 05, 2023 10:27:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8676
+Oct 05, 2023 10:27:47 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8799
+2023.10.05 22:28:26 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.05 22:28:35 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:28:57 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 22:29:28 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 22:29:44 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.05 22:30:58 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:31:05 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+scala.meta.tokenizers.TokenizeException: <input>:51: error: malformed xml literal, expected:
+Expected (char-pred(scala.meta.internal.tokenizers.XmlParser$Xml$$$Lambda$4710/0x0000000801a32160@2f83e252) | [\t\n\r ] | "/>" | ">"):51:33, found ",io.pc_dnp"
+            <io.clearJump.asBool,io.pc_dnpc,
+                                ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.getXml(LegacyScanner.scala:973)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchLT$1(LegacyScanner.scala:330)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:338)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+Oct 05, 2023 10:31:05 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-05/r_compiler-error_22-31-05-552
+2023.10.05 22:31:05 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+scala.meta.tokenizers.TokenizeException: <input>:51: error: malformed xml literal, expected:
+Expected (char-pred(scala.meta.internal.tokenizers.XmlParser$Xml$$$Lambda$4710/0x0000000801a32160@43606ae) | [\t\n\r ] | "/>" | ">"):51:35, found ",io.pc_dnp"
+            <uxio.clearJump.asBool,io.pc_dnpc,
+                                  ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.getXml(LegacyScanner.scala:973)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchLT$1(LegacyScanner.scala:330)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:338)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.05 22:31:06 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+scala.meta.tokenizers.TokenizeException: <input>:51: error: malformed xml literal, expected:
+Expected (char-pred(scala.meta.internal.tokenizers.XmlParser$Xml$$$Lambda$4710/0x0000000801a32160@6b92394a) | [\t\n\r ] | "/>" | ">"):51:33, found ",io.pc_dnp"
+            <io.clearJump.asBool,io.pc_dnpc,
+                                ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.getXml(LegacyScanner.scala:973)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchLT$1(LegacyScanner.scala:330)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:338)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.05 22:31:11 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:31:40 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+scala.meta.tokenizers.TokenizeException: <input>:40: error: Invalid literal number
+    s_idle        -> Mux(Mux(io.irq.asBool,0io.lm.ar.fire, s_wait_rvalid, s_idle),
+                                           ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.checkNoLetter(LegacyScanner.scala:856)
+	at scala.meta.internal.tokenizers.LegacyScanner.restOfUncertainToken$1(LegacyScanner.scala:900)
+	at scala.meta.internal.tokenizers.LegacyScanner.getNumber(LegacyScanner.scala:908)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchZero$1(LegacyScanner.scala:363)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:365)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:246)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1047)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:28)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:511)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.05 22:33:05 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:34:52 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+Oct 05, 2023 10:40:29 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 10017
+2023.10.05 22:40:30 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.05 22:41:12 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:41:12 WARN  Using indexes to guess the definition of io
+2023.10.05 22:41:12 WARN  Using indexes to guess the definition of io
+Oct 05, 2023 10:41:43 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 10102
+2023.10.05 22:42:14 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:42:56 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:46:20 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+Oct 05, 2023 10:57:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 10670
+2023.10.05 22:57:31 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 22:58:37 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.05 23:15:58 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.05 23:21:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.05 23:22:01 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:22:10 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:22:21 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Arbiter.scala
+2023.10.05 23:22:38 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Arbiter.scala
+Oct 05, 2023 11:25:23 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 11382
+2023.10.05 23:25:41 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:26:10 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:26:36 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:27:17 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:28:33 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:28:57 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+Oct 05, 2023 11:28:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 11833
+2023.10.05 23:29:00 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:29:21 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:30:08 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:32:23 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:32:37 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:33:02 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:34:16 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:36:40 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:38:12 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:40:36 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:40:55 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.05 23:46:22 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala

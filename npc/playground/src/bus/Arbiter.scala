@@ -128,7 +128,7 @@ class DeviceArbiter extends Module{
     val out1 = (new AXI4)
     val out2 = (new AXI4)
   })
-  val CLINT_BEGIN = 0x2000000.U
+  val CLINT_BEGIN = 0x20000000.U
   val BYTES_RESERVED = 0xBFFF.U
   val CLINT_END = CLINT_BEGIN + BYTES_RESERVED
 

@@ -10,13 +10,13 @@ class CLINT extends Module{
         val mtime = Output(UInt(64.W))
     })
     //map
-    val BASE_ADDRESS = 0x2000000.U
+    val BASE_ADDRESS = 0x20000000.U
     val BYTES_RESERVED = 0xBFFF.U
     val BOUND_ADDRESS = BASE_ADDRESS + BYTES_RESERVED
 
     val MSIP = BASE_ADDRESS
     val MTIMECMP = BASE_ADDRESS+0x4000.U
-    val MTIME = BASE_ADDRESS+0xBFF8.U
+    val MTIME = BASE_ADDRESS+0xBFFF.U
 
     //Defines the number of clocks cyles required to increment the mtime register by 1.
     val TICK_COUNT = 0x0
@@ -33,7 +33,6 @@ class CLINT extends Module{
 
     val cnt = RegInit(0.U(64.W))
     cnt := Mux(cnt === TICK_COUNT.U, 0.U, cnt + 1.U)
-    mtime := Mux(cnt === TICK_COUNT.U, mtime + 1.U, mtime)
 
     //AXI4
     val rlast = Wire(UInt(1.W))
@@ -115,13 +114,14 @@ class CLINT extends Module{
     //write reg
     val clint_waddr = Wire(UInt(32.W))
     clint_waddr := Mux(io.in.aw.fire,io.in.aw.bits.addr,waddr)
-    mtimecmp := Mux(io.in.w.fire && (waddr === MTIMECMP),io.in.w.bits.data & io.in.w.bits.strb,mtimecmp)
-    mtime := Mux(io.in.w.fire && (waddr === MTIME),io.in.w.bits.data & io.in.w.bits.strb,mtime)
+    mtimecmp := Mux(io.in.w.fire && (io.in.aw.bits.addr === MTIMECMP),io.in.w.bits.data & io.in.w.bits.strb,mtimecmp)
+    mtime := Mux(io.in.w.fire && (io.in.aw.bits.addr === MTIME),io.in.w.bits.data & io.in.w.bits.strb,
+             Mux(cnt === TICK_COUNT.U, mtime + 1.U,mtime))
 
     //read reg
     io.in.r.bits.data :=   Mux(raddr === MTIMECMP,mtimecmp,
                         Mux(raddr === MTIME,mtime,
                         0.U))
 
-    assert((io.in.w.fire && waddr === MTIMECMP && waddr === MTIME) || !io.in.w.fire)
+    chisel3.assert((io.in.w.fire && ((io.in.aw.bits.addr === MTIMECMP) || (io.in.aw.bits.addr === MTIME))) || (!io.in.w.fire),"Error: clint_waddr=0x%x\n",io.in.aw.bits.addr)
 }

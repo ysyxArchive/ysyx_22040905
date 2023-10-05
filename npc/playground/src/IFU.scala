@@ -19,6 +19,8 @@ class IFUBundle extends Bundle{
   val clearJump=Input(UInt(1.W))
   val lm=(new AXILite)
   val out=Decoupled(new ID)
+  val irq_nextpc=Input(UInt(32.W))
+  val irq=Input(UInt(1.W))
   //val flush=Input(UInt(1.W))
 }
 
@@ -35,8 +37,8 @@ class IFU extends Module{
   val IF_reg_pc=RegEnable(next_pc,"x80000000".U(64.W),next_valid.asBool)
 
   state := MuxLookup(state, s_idle, List(
-    s_idle        -> Mux(io.lm.ar.fire, s_wait_rvalid, s_idle),
-    s_wait_rvalid -> Mux(io.lm.r.fire && (~next_valid.asBool), s_idle, s_wait_rvalid),
+    s_idle        -> Mux(io.irq.asBool,s_idle,Mux(io.lm.ar.fire, s_wait_rvalid, s_idle)),
+    s_wait_rvalid -> Mux(io.irq.asBool,s_idle,Mux(io.lm.r.fire && (~next_valid.asBool), s_idle, s_wait_rvalid)),
   ))
   //pre decode
   pre_decode.io.inst:=io.lm.r.bits.data(31,0)
@@ -45,9 +47,10 @@ class IFU extends Module{
               Mux((pre_decode.io.jump & io.out.fire).asBool,0.U,
               IF_reg_valid))
   io.pc:=IF_reg_pc
-  next_pc:= Mux(io.clearJump.asBool,io.pc_dnpc,
+  next_pc:= Mux(io.irq.asBool,io.irq_nextpc,
+            Mux(io.clearJump.asBool,io.pc_dnpc,
             Mux(io.out.fire,IF_reg_pc+4.U,
-            IF_reg_pc))
+            IF_reg_pc)))
 
   io.lm.ar.bits.addr:=next_pc(31,0)
   io.lm.ar.valid:=(~reset.asBool & next_valid )
@@ -63,7 +66,7 @@ class IFU extends Module{
   io.out.bits.inst:=Mux(IF_reg_valid === 1.U,io.lm.r.bits.data(31,0),nop)
   io.out.bits.pc:=Mux(IF_reg_valid === 1.U,IF_reg_pc(31,0),0.U)
   io.out.bits.isJump:=Mux(IF_reg_valid === 1.U,pre_decode.io.jump,0.U)
-  io.out.valid:= io.lm.r.valid ||  (!IF_reg_valid)
+  io.out.valid:= io.lm.r.valid ||  (!IF_reg_valid) || io.irq.asBool
 
   val it=Module(new itrace)
   it.io.en:=io.out.fire & IF_reg_valid

@@ -11,7 +11,7 @@ class Crossbar extends Module{
         val hitrate=Output(UInt(128.W))
     })
     val DEVICE_BASE :UInt = "xa0000000".U 
-    val CLINT_BEGIN = 0x2000000.U
+    val CLINT_BEGIN = 0x20000000.U
     val BYTES_RESERVED = 0xBFFF.U
     val CLINT_END = CLINT_BEGIN + BYTES_RESERVED
 
@@ -32,7 +32,7 @@ class Crossbar extends Module{
     io.hitrate:=0.U//Cat(icache.hitrate,dcache.hitrate)
 
     val clint=Wire(UInt(1.W))
-    clint:=((out2.ar.bits.addr >= CLINT_BEGIN) && (out2.ar.bits.addr <= CLINT_END)) | ((out2.aw.bits.addr >= CLINT_BEGIN) && (out2.aw.bits.addr <= CLINT_END))
+    clint:=((out2.ar.bits.addr >= CLINT_BEGIN) && (out2.ar.bits.addr <= CLINT_END)) || ((out2.aw.bits.addr >= CLINT_BEGIN) && (out2.aw.bits.addr <= CLINT_END))
     //ifu to icache
     io.in1<>out1
     out1<>icache.in

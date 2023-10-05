@@ -128,7 +128,6 @@ class IDU extends Module{
    io.out.bits.rs1:=Mux(~RAW.asBool,ID_reg_inst(19,15) ,0.U)
    io.out.bits.rs2:=Mux(~RAW.asBool,ID_reg_inst(24,20),0.U)
 
-   assert(~(io.out.bits.op===0.U && ID_reg_inst===0.U && io.out.fire))
 
    //io.out.bits.op_r:=op(38)|op(39)|op(40)|op(41)|op(46)|op(47)|op(48)
    //io.out.bits.op_w:=op(42)|op(43)|op(44)|op(45) 

@@ -40,6 +40,9 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   // register event handler
   user_handler = handler;
 
+  // initialize timer interrupt
+  outl(0x20004000,1000);
+  outl(0x2000bfff,0);
   return true;
 }
 

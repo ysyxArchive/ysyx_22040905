@@ -8,18 +8,19 @@ class LSU extends Module{
     val en_r=Input(UInt(1.W))
     val en_w=Input(UInt(1.W))
     val lm=(new AXILite)
+    val flush=Input(UInt(1.W))
   }) 
 
   val s_idle :: s_wait :: s_wait_b :: Nil = Enum(3)
   val rstate = RegInit(s_idle)
   rstate := MuxLookup(rstate, s_idle, List(
-    s_idle  -> Mux(io.lm.ar.fire, s_wait, s_idle),
-    s_wait  -> Mux(io.lm.r.fire, s_idle, s_wait)
+    s_idle  -> Mux(io.flush.asBool,s_idle,Mux(io.lm.ar.fire, s_wait, s_idle)),
+    s_wait  -> Mux(io.flush.asBool,s_idle,Mux(io.lm.r.fire, s_idle, s_wait))
   ))
   val wstate = RegInit(s_idle)
   wstate := MuxLookup(wstate, s_idle, List(
-    s_idle  -> Mux(io.lm.aw.fire & io.lm.w.fire, s_wait, s_idle),
-    s_wait  -> Mux(io.lm.b.fire, s_idle, s_wait)
+    s_idle  -> Mux(io.flush.asBool,s_idle,Mux(io.lm.aw.fire & io.lm.w.fire, s_wait, s_idle)),
+    s_wait  -> Mux(io.flush.asBool,s_idle,Mux(io.lm.b.fire, s_idle, s_wait))
   ))
 
   io.lm.ar.bits.addr:=io.ls.in.bits.raddr

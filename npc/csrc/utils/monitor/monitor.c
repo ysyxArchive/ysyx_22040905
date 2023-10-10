@@ -1,4 +1,4 @@
-#include "../all.h"
+#include "../../all.h"
 #include <assert.h>
 #include <stdio.h>
 #include <elf.h>

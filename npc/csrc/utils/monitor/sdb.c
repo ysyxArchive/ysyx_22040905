@@ -5,7 +5,7 @@
 #include <string.h>
 #include <regex.h>
 #include <assert.h>
-#include "../all.h"
+#include "../../all.h"
 
 void init_regex();
 void init_wp_pool();
@@ -60,8 +60,10 @@ static int cmd_si(char *args)
 
 static int cmd_info(char *args)
 {
-  if (strcmp(args, "r") == 0)
+  if (strcmp(args, "r") == 0){
     dump_gpr();
+    dump_csr();
+  }
   else if (strcmp(args, "w") == 0)
   {
     info_wp();

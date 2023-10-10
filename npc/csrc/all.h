@@ -45,6 +45,7 @@ uint64_t pmem_read(uint32_t addr,int len);
 void pmem_write(uint32_t addr,int len,uint64_t data);
 
 void dump_gpr();
+void dump_csr();
 void dump_itrace();
 void print_itrace();
 void ftrace_add(uint64_t addr,uint64_t dnpc,int d);

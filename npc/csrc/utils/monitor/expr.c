@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "../all.h"
+#include "../../all.h"
 
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_UEQ,TK_AND,TK_D,TK_H,TK_REG,DEREF
@@ -46,7 +46,6 @@ void init_regex() {
   int i;
   char error_msg[128];
   int ret;
-
   for (i = 0; i < NR_REGEX; i ++) {
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {

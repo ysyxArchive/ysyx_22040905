@@ -152,17 +152,19 @@ uint64_t *cpu_csr = NULL;
 extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
   cpu_csr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
-const char *csr_name[4]={
+const char *csr_name[6]={
   "mstatus",
   "mtvec",
   "mepc",
-  "mcause"
+  "mcause",
+  "mie",
+  "mip"
 };
 
 void dump_csr() {
   int i;
-  for (i = 0; i < 4; i++) {
-    printf("pc = %08lx %s = 0x%lx\n",pc,csr_name[i], cpu_csr[i]);
+  for (i = 0; i < 6; i++) {
+    printf("%s = 0x%lx\n",csr_name[i], cpu_csr[i]);
   }
 }
 //itrace

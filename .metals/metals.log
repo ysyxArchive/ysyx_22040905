@@ -2655,3 +2655,8 @@ java.util.concurrent.TimeoutException
 
 2023.10.10 19:34:58 WARN  Build server is not auto-connectable.
 2023.10.10 19:34:58 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.10.10 19:46:29 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.10 19:46:31 INFO  no build target found for /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala. Using presentation compiler with project's scala-library version: 3.3.0
+Oct 10, 2023 7:46:31 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2
+2023.10.10 19:46:33 INFO  time: code lens generation in 1.68s

@@ -61,8 +61,8 @@ void iset(bool enable) {
   //set bit
   if(enable){
   // initialize timer interrupt
-    outl(0x20004000,1000);
-    outl(0x2000bff8,0);
+    //outl(0x20004000,1000);
+    //outl(0x2000bff8,0);
 
   //mstatus_MIE
     asm volatile("csrr t1, mstatus");

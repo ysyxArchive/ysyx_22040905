@@ -22,6 +22,7 @@ enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT };
 
 extern int state;
 extern uint64_t *cpu_gpr;
+extern uint64_t *cpu_csr;
 extern const char *cpu_name[32];
 extern uint64_t pc;
 extern Vtop* top; 

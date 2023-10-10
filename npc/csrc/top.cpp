@@ -74,8 +74,10 @@ void reset()
 }
 uint64_t skip=0;
 int t=0;
+uint64_t pre_pc=0; 
 void exec_once()
 {
+  pre_pc=pc;
   pc = top->io_pc;
 #ifdef HAS_TRACE
   dump_itrace();
@@ -90,7 +92,7 @@ void exec_once()
     difftest_skip_ref();
   }
   if(t){
-    difftest_step(pc, pc);
+    difftest_step(pre_pc, pc);
     t=0;
   }
   if(top->io_valid){

@@ -46,7 +46,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   ref_difftest_memcpy(0x80000000,get_pmem(),get_pmem_size(),DIFFTEST_TO_REF);
   ref_difftest_regcpy(cpu_gpr,&pc, DIFFTEST_TO_REF);
 }
-bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc,uint64_t pcc) {
+bool isa_difftest_checkregs(uint64_t *ref_reg,uint64_t ref_pc,uint64_t pc,uint64_t pcc) {
   int flag=1;
   if(ref_pc!=pcc){
     flag=0;
@@ -54,31 +54,38 @@ bool isa_difftest_checkregs(uint64_t *ref_gpr,uint64_t ref_pc,uint64_t pc,uint64
   }
   for(int i=0;i<32;i++)
   {
-    if(cpu_gpr[i]!=ref_gpr[i]){
+    if(cpu_gpr[i]!=ref_reg[i]){
       flag=0;
-      printf("%s is different after executing instruction at pc = 0x%08lx, right = 0x%016lx, wrong = 0x%016lx, diff = 0x%016lx\n",cpu_name[i], pc, ref_gpr[i], cpu_gpr[i], ref_gpr[i] ^ cpu_gpr[i]);
+      printf("%s is different after executing instruction at pc = 0x%08lx, right = 0x%016lx, wrong = 0x%016lx, diff = 0x%016lx\n",cpu_name[i], pc, ref_reg[i], cpu_gpr[i], ref_reg[i] ^ cpu_gpr[i]);
     }
   }
   if(flag) return true;
   return false;
 }
-void checkregs(uint64_t *ref_gpr,uint64_t ref_pc, uint64_t pc,uint64_t pcc) {
-  if (!isa_difftest_checkregs(ref_gpr, ref_pc,pc,pcc)) {
+void checkregs(uint64_t *ref_reg,uint64_t ref_pc, uint64_t pc,uint64_t pcc) {
+  if (!isa_difftest_checkregs(ref_reg, ref_pc,pc,pcc)) {
     state=NPC_ABORT;
   }
 }
-uint64_t ref_gpr[32];
+uint64_t ref_reg[38];
+uint64_t dut_reg[38];
 uint64_t ref_pc;
 void difftest_step(uint64_t pc,uint64_t pcc) {
+  for(int i=0;i<32;i++){
+    dut_reg[i]=cpu_gpr[i];
+  }
+  for(int i=0;i<6;i++){
+    dut_reg[i+32]=cpu_csr[i];
+  }
   if (is_skip_ref) {
     // to skip the checking of an instruction, just copy the reg state to reference design
-    ref_difftest_regcpy(cpu_gpr,&pcc, DIFFTEST_TO_REF);
+    ref_difftest_regcpy(dut_reg,&pcc, DIFFTEST_TO_REF);
     is_skip_ref --;
     return;
   }
   ref_difftest_exec(1);
-  ref_difftest_regcpy(ref_gpr,&ref_pc, DIFFTEST_TO_DUT);
-  checkregs(ref_gpr,ref_pc,pc, pcc);
+  ref_difftest_regcpy(ref_reg,&ref_pc, DIFFTEST_TO_DUT);
+  checkregs(ref_reg,ref_pc,pc, pcc);
 }
 
 void difftest_skip_ref() {

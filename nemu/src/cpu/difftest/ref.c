@@ -37,6 +37,9 @@ void difftest_regcpy(void *dut,uint64_t *pc, bool direction) {
       *(uint64_t  *)get_csr(0x341) = *(uint64_t  *)(dut+8*35);
       *(uint64_t  *)get_csr(0x342) = *(uint64_t  *)(dut+8*36);
       *(uint64_t  *)get_csr(0x344) = *(uint64_t  *)(dut+8*37);
+
+      //mie
+      printf("%lx\n",*(uint64_t  *)get_csr(0x304));
  
   }
 }

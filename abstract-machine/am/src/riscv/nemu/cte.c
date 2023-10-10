@@ -24,6 +24,7 @@ Context* __am_irq_handle(Context *c) {
       case 0x8000000000000007: 
         ev.event = EVENT_IRQ_TIMER; break;
       default: ev.event = EVENT_ERROR; break;
+    }
 
     c = user_handler(ev, c);
     assert(c != NULL);
@@ -59,6 +60,10 @@ bool ienabled() {
 void iset(bool enable) {
   //set bit
   if(enable){
+  // initialize timer interrupt
+    outl(0x20004000,1000);
+    outl(0x2000bff8,0);
+
   //mstatus_MIE
     asm volatile("csrr t1, mstatus");
     asm volatile("ori t1, t1, 0x8");

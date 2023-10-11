@@ -299,7 +299,7 @@ class DCache extends Module {
   cache_tag(idx) := Mux((state === s_miss) & (!uncache),
                       Mux(way === 0.U, Cat(cache_tag(idx)(t1l, t1r), tag), Cat(tag, cache_tag(idx)(t0l, t0r))),
                       cache_tag(idx))
-  dirty(idx)(hit_way) :=  Mux(state === s_lookup && wmode === 1.U && (~miss) && (!uncache),1.U,
+  dirty(idx)(hit_way) :=  Mux(((state === s_lookup && wmode === 1.U && (!miss))|(state === s_miss && wmode === 1.U))&&(!uncache),1.U,
                       Mux(state === s_replace, 0.U, dirty(idx)(hit_way)))
 
   addr := Mux(state === s_idle && io.in.ar.fire &&(!io.uncache),io.in.ar.bits.addr,

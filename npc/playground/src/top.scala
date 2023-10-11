@@ -23,6 +23,7 @@ class top extends Module{
 
     scoreboard.io.ID<>idu.io.sb
     scoreboard.io.WB<>wbu.io.sb
+    scoreboard.io.flush<>csr.io.irq
     ifu.io.pc_dnpc:=wbu.io.pc_dnpc
     ifu.io.clearJump:=wbu.io.isJump
     ifu.io.irq_nextpc:=csr.io.next_pc

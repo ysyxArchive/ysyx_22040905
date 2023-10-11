@@ -109,8 +109,9 @@ void execute(uint64_t n)
 {
   while (n--)
   {
-    if (state != NPC_RUNNING)
-      return;
+    if (state != NPC_RUNNING){
+      n = (n > 100) ? 100 : n;
+    }
     exec_once();
   }
 }

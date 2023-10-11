@@ -8,6 +8,7 @@
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
+#include <time.h>
 // #include<nvboard.h>
 
 VerilatedContext *contextp = NULL;
@@ -18,6 +19,8 @@ Vtop *top = NULL;
 int state = NPC_QUIT;
 uint64_t pc = 0;
 int gdb = 0;
+
+double inst_cnt = 0;
 void dump_ftrace();
 void dump_csr();
 void cpp_break()
@@ -38,6 +41,8 @@ void sim_init()
 
 static void step_and_dump_wave()
 {
+  inst_cnt++;
+
   top->clock = 0;
   top->eval();
 #ifdef HAS_WAVE
@@ -69,8 +74,10 @@ void reset()
 }
 uint64_t skip=0;
 int t=0;
+uint64_t pre_pc=0; 
 void exec_once()
 {
+  pre_pc=pc;
   pc = top->io_pc;
 #ifdef HAS_TRACE
   dump_itrace();
@@ -79,9 +86,13 @@ void exec_once()
 #endif
   step_and_dump_wave();
   device_update();
+
 #ifdef HAS_DIFFTEST
+  if(top->io_timer_diff_skip){
+    difftest_skip_ref();
+  }
   if(t){
-    difftest_step(pc, pc);
+    difftest_step(pre_pc, pc);
     t=0;
   }
   if(top->io_valid){
@@ -98,8 +109,9 @@ void execute(uint64_t n)
 {
   while (n--)
   {
-    if (state != NPC_RUNNING)
-      return;
+    if (state != NPC_RUNNING){
+      n = (n > 100) ? 100 : n;
+    }
     exec_once();
   }
 }
@@ -120,6 +132,7 @@ void init(int argc, char *argv[])
   init_disasm("riscv64-pc-linux-gnu");
   load_elf(argv[4]);
   //init_wp_pool();
+  top->io_mul_sel = 1;
   reset();
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
   init_device();
@@ -140,17 +153,19 @@ uint64_t *cpu_csr = NULL;
 extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
   cpu_csr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
-const char *csr_name[4]={
+const char *csr_name[6]={
   "mstatus",
   "mtvec",
   "mepc",
-  "mcause"
+  "mcause",
+  "mie",
+  "mip"
 };
 
 void dump_csr() {
   int i;
-  for (i = 0; i < 4; i++) {
-    printf("pc = %08lx %s = 0x%lx\n",pc,csr_name[i], cpu_csr[i]);
+  for (i = 0; i < 6; i++) {
+    printf("%s = 0x%lx\n",csr_name[i], cpu_csr[i]);
   }
 }
 //itrace
@@ -183,6 +198,12 @@ int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
   init(argc,argv);
+
+  //开始计时
+  clock_t start,finish;
+  double totaltime;
+  start=clock(); 
+
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
@@ -193,8 +214,13 @@ int main(int argc, char *argv[])
     printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
     return -1;
   }
-  printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
-  printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));
+
+  //结束计时
+  finish=clock();
+  totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
+  printf("\033[1;32mtotal time: %f s\nThe number of clock cycles that run in one second is %f\n\033[0m",totaltime,inst_cnt/totaltime);
+  //printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
+  //printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));
   sim_exit();
   //nvboard_quit();
 }

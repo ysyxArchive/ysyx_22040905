@@ -22,6 +22,7 @@ enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT };
 
 extern int state;
 extern uint64_t *cpu_gpr;
+extern uint64_t *cpu_csr;
 extern const char *cpu_name[32];
 extern uint64_t pc;
 extern Vtop* top; 
@@ -44,6 +45,7 @@ uint64_t pmem_read(uint32_t addr,int len);
 void pmem_write(uint32_t addr,int len,uint64_t data);
 
 void dump_gpr();
+void dump_csr();
 void dump_itrace();
 void print_itrace();
 void ftrace_add(uint64_t addr,uint64_t dnpc,int d);

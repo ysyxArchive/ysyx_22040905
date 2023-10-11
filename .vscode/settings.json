@@ -21,6 +21,8 @@
         "am.h": "c",
         "isa.h": "c",
         "sdl.h": "c",
-        "host.h": "c"
+        "host.h": "c",
+        "map.h": "c",
+        "alarm.h": "c"
     }
 }

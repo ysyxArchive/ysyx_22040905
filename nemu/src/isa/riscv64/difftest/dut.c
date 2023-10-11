@@ -15,43 +15,4 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 }
 
 void isa_difftest_attach(uint32_t *buf,int *len) {
-  *len=43*4;
-  
-  buf[0]=0x00000713;                             //addi  a4,$0,0
-  buf[1]=(0x737)|(BITS(cpu.mstatus,63,44)<<12);  //lui   a4,num[63,44]
-  buf[2]=(0x713)|(BITS(cpu.mstatus,43,32)<<20);  //addi  a4,a4,num[43,32]
-  buf[3]=0x0c71713;                              //slli a4,a4,0x0c
-  buf[4]=(0x713)|(BITS(cpu.mstatus,31,20)<<20);  //addi  a4,a4,num[31,20]
-  buf[5]=0x0c71713;                              //slli a4,a4,0x0c
-  buf[6]=(0x713)|(BITS(cpu.mstatus,19,8)<<20);   //addi  a4,a4,num[19,8]
-  buf[7]=0x0871713;                              //slli a4,a4,0x08
-  buf[8]=(0x713)|(BITS(cpu.mstatus,7,0)<<20);    //addi  a4,a4,num[7,0]
-  buf[9]=0x30071073;                             //csrrw $0,mstatus,a4
- 
-
-
-  
-  buf[10]=0x00000713;                        //addi  a4,$0,0
-  buf[11]=(0x737)|(BITS(cpu.mepc,63,44)<<12);  //lui   a4,num[63,44]
-  buf[12]=(0x713)|(BITS(cpu.mepc,43,32)<<20);  //addi  a4,a4,num[43,32]
-  buf[13]=0x0c71713;                         //slli a4,a4,0x0c
-  buf[14]=(0x713)|(BITS(cpu.mepc,31,20)<<20);  //addi  a4,a4,num[31,20]
-  buf[15]=0x0c71713;                         //slli a4,a4,0x0c
-  buf[16]=(0x713)|(BITS(cpu.mepc,19,8)<<20);   //addi  a4,a4,num[19,8]
-  buf[17]=0x0871713;                         //slli a4,a4,0x08
-  buf[18]=(0x713)|(BITS(cpu.mepc,7,0)<<20);    //addi  a4,a4,num[7,0]
-  buf[19]=0x34171073;                        //csrrw $0,mepc,a4
-
-  
-  buf[20]=0x00000713;                        //addi  a4,$0,0
-  buf[21]=(0x737)|(BITS(cpu.mcause,63,44)<<12);  //lui   a4,num[63,44]
-  buf[22]=(0x713)|(BITS(cpu.mcause,43,32)<<20);  //addi  a4,a4,num[43,32]
-  buf[23]=0x0c71713;                         //slli a4,a4,0x0c
-  buf[24]=(0x713)|(BITS(cpu.mcause,31,20)<<20);  //addi  a4,a4,num[31,20]
-  buf[25]=0x0c71713;                         //slli a4,a4,0x0c
-  buf[26]=(0x713)|(BITS(cpu.mcause,19,8)<<20);   //addi  a4,a4,num[19,8]
-  buf[27]=0x0871713;                         //slli a4,a4,0x08
-  buf[28]=(0x713)|(BITS(cpu.mcause,7,0)<<20);    //addi  a4,a4,num[7,0]
-  buf[29]=0x34271073;                        //csrrw $0,mcause,a4
-
 }

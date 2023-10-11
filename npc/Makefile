@@ -62,14 +62,14 @@ run: $(BIN)
 	$^
 
 REF=$(NEMU_HOME)/build/riscv64-nemu-interpreter-so
-CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14  -L$(REF) -fPIC -fsanitize=address -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE  
+CFLAGS  += -I/usr/lib/llvm-13/include -std=c++14  -L$(REF) -fPIC -fsanitize=address -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE -O3 
 LDFLAGS += $(shell llvm-config-13 --libs) -L$(REF) -fPIC -fsanitize=address -lSDL2 -lSDL2_image 
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(BUILD_DIR)/*
 	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt $(BUILD_DIR)/mtrace.txt
-	verilator  --cc --exe --build --trace \
+	verilator  --cc --exe --build --trace -j 12\
  	--top-module $(TOPNAME) $^ \
 	-LDFLAGS -lreadline \
 	--Mdir $(OBJ_DIR) \
@@ -84,5 +84,27 @@ wave: runb
 
 b: verilog
 	$(shell (echo '0a'; echo '/* verilator lint_off WIDTH */'; echo '.'; echo 'wq') | ed -s $(VSRC_DIR)/top.v )
+
+
+##unit test
+VUNIT_DIR=./unit/vsrc
+
+verilog_unit:
+	mkdir -p $(VUNIT_DIR)
+	mill -i __.test.runMain Elaborate_unit -td $(VUNIT_DIR)
+
+VUNITS = $(shell find $(abspath ./unit/vsrc) -name "*.v")
+CUNITS = $(shell find $(abspath ./unit/csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+UNITNAME = unit
+	
+sim_unit:$(VUNITS) $(CUNITS)
+	verilator  --cc --exe --build --trace -j\
+ 	--top-module $(UNITNAME) $^ \
+	-LDFLAGS -lreadline \
+	--Mdir ./unit/build/obj_dir 
+	##$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+
+run_unit: sim_unit
+	./unit/build/obj_dir/V$(UNITNAME) 
 
 

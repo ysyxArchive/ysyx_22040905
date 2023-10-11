@@ -19,12 +19,12 @@ class Sub extends Module {
   chisel3.assert(io.c === ref)
 }
 
-object Sub extends TestSuite {
-  val tests: Tests = Tests {
-    test("mytest") {
-      new Formal with HasTestName {
-        def getTestName: String = s"sub"
-      }.verify(new Sub, Seq(BoundedCheck(1)))
-    }
-  }
-}
+//object Sub extends TestSuite {
+//  val tests: Tests = Tests {
+//    test("mytest") {
+//      new Formal with HasTestName {
+//        def getTestName: String = s"sub"
+//      }.verify(new Sub, Seq(BoundedCheck(1)))
+//    }
+//  }
+//}

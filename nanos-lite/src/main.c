@@ -25,6 +25,8 @@ int main() {
 
   init_fs();
 
+  iset(1);
+
   init_proc();
 
   Log("Finish initialization");

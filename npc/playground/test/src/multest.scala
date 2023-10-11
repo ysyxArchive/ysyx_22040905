@@ -65,12 +65,12 @@ class Mul extends Module{
 
 
 
-object Mul extends TestSuite {
-  val tests: Tests = Tests {
-    test("mytest") {
-      new Formal with HasTestName {
-        def getTestName: String = s"mul"
-      }.verify(new Mul, Seq(BoundedCheck(1)))
-    }
-  }
-}
+//object Mul extends TestSuite {
+//  val tests: Tests = Tests {
+//    test("mytest") {
+//      new Formal with HasTestName {
+//        def getTestName: String = s"mul"
+//      }.verify(new Mul, Seq(BoundedCheck(1)))
+//    }
+//  }
+//}

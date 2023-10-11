@@ -10,6 +10,8 @@ typedef struct {
   vaddr_t mstatus;
   vaddr_t mtvec;
   vaddr_t mcause;
+  vaddr_t mie;
+  vaddr_t mip;
 } riscv64_CPU_state;
 
 // decode

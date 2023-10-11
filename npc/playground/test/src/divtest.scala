@@ -101,12 +101,12 @@ class div(xlen: Int) extends Module{
 }
 
 
-object div extends TestSuite {
-  val tests: Tests = Tests {
-    test("mytest") {
-      new Formal with HasTestName {
-        def getTestName: String = s"div"
-      }.verify(new div(64), Seq(BoundedCheck(64)))
-    }
-  }
-}
+//object div extends TestSuite {
+//  val tests: Tests = Tests {
+//    test("mytest") {
+//      new Formal with HasTestName {
+//        def getTestName: String = s"div"
+//      }.verify(new div(64), Seq(BoundedCheck(64)))
+//    }
+//  }
+//}

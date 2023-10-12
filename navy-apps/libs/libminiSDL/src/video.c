@@ -151,31 +151,47 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   assert(dst->format->BitsPerPixel == 8);
 
-  int x = (srcrect == NULL ? 0 : srcrect->x);
-  int y = (srcrect == NULL ? 0 : srcrect->y);
-  int w = (srcrect == NULL ? src->w : srcrect->w);
-  int h = (srcrect == NULL ? src->h : srcrect->h);
+  int x1 = (srcrect == NULL ? 0 : srcrect->x);
+  int y1 = (srcrect == NULL ? 0 : srcrect->y);
+  int w1 = (srcrect == NULL ? src->w : srcrect->w);
+  int h1 = (srcrect == NULL ? src->h : srcrect->h);
   
-  int x1 = (dstrect == NULL ? 0 : dstrect->x);
-  int y1 = (dstrect == NULL ? 0 : dstrect->y);
-  int w1 = (dstrect == NULL ? dst->w : dstrect->w);
-  int h1 = (dstrect == NULL ? dst->h : dstrect->h);
+  int x2 = (dstrect == NULL ? 0 : dstrect->x);
+  int y2 = (dstrect == NULL ? 0 : dstrect->y);
+  int w2 = (dstrect == NULL ? dst->w : dstrect->w);
+  int h2 = (dstrect == NULL ? dst->h : dstrect->h);
 
 
   assert(dstrect);
-  if(w == w1 && h == h1) {
+
+  if(w1 == w2 && h1 == h2) {
     /* The source rectangle and the destination rectangle
      * are of the same size. If that is the case, there
      * is no need to stretch, just copy. */
     SDL_Rect rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = w;
-    rect.h = h;
+    rect.x = x1;
+    rect.y = y1;
+    rect.w = w1;
+    rect.h = h1;
     SDL_BlitSurface(src, &rect, dst, dstrect);
   }
   else{
-    assert(0);
+    //w,h缩放倍数
+    int w = w1 / w2;
+    int h = h1 / h2;
+
+    if (src->format->BitsPerPixel == 32){
+      for(int i=0;i<h1;i+=w)
+        for(int j=0;j<w1;j+=h){
+          ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
+        }
+    }
+    else{
+      for(int i=0;i<h1;i++)
+        for(int j=0;j<w1;j++){
+          (dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
+       }
+    }
   }
 }
 

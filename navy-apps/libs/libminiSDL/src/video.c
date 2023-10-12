@@ -201,6 +201,12 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
           ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i/h+y1)*(src->w)+(j/w+x1)];
         }
     }
+    else{
+      for(int i=0;i<h2;i++)
+        for(int j=0;j<w2;j++){
+          (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[(i/h+y1)*(src->w)+(j/w+x1)];
+       }
+    }
   }
   else{
     printf("%d %d %d %d to %d %d %d %d\n",w1,h1,x1,y1,w2,h2,x2,y2);

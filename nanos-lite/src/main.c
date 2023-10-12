@@ -8,7 +8,6 @@ void init_irq(void);
 void init_fs(void);
 void init_proc(void);
 int main() {
-	while(1);
   extern const char logo[];
   printf("%s", logo);
   Log("'Hello World!' from Nanos-lite");

@@ -145,6 +145,7 @@ SDL_Surface* SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags) {
       DEFAULT_RMASK, DEFAULT_GMASK, DEFAULT_BMASK, DEFAULT_AMASK);
 }
 
+
 void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(src && dst);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
@@ -154,9 +155,15 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int y = (srcrect == NULL ? 0 : srcrect->y);
   int w = (srcrect == NULL ? src->w : srcrect->w);
   int h = (srcrect == NULL ? src->h : srcrect->h);
+  
+  int x1 = (dstrect == NULL ? 0 : dstrect->x);
+  int y1 = (dstrect == NULL ? 0 : dstrect->y);
+  int w1 = (dstrect == NULL ? dst->w : dstrect->w);
+  int h1 = (dstrect == NULL ? dst->h : dstrect->h);
+
 
   assert(dstrect);
-  if(w == dstrect->w && h == dstrect->h) {
+  if(w == w1 && h == h1) {
     /* The source rectangle and the destination rectangle
      * are of the same size. If that is the case, there
      * is no need to stretch, just copy. */
@@ -167,7 +174,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     rect.h = h;
     SDL_BlitSurface(src, &rect, dst, dstrect);
   }
-  else {
+  else{
     assert(0);
   }
 }

@@ -205,9 +205,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       for(int i=0;i<h2;i++){
         for(int j=0;j<w2;j++){
           (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
-          printf("%d %d ",(i+y2)*(dst->w)+(j+x2),((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1);
-       }
-       printf("\n");
+        }
        }
     }
   }

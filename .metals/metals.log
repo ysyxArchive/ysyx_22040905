@@ -3599,3 +3599,17 @@ INFO: Schema "PUBLIC" is up to date. No migration necessary.
 2023.10.12 22:09:14 INFO  Scala CLI: Maintained by the Scala Center and the community.
 2023.10.12 22:09:14 INFO  Scala CLI: '
 2023.10.12 22:09:14 INFO  Scala CLI: For more details, please see '/home/cyh/ysyx-workbench/.scala-build/stacktraces/1697119754-1263518016317034126.log'
+2023.10.12 22:09:29 ERROR Timeout waiting for 'build/initialize' response
+2023.10.12 22:09:29 ERROR Error starting Scala CLI
+java.util.concurrent.TimeoutException
+	at java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1960)
+	at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2095)
+	at scala.meta.internal.metals.BuildServerConnection$.initialize(BuildServerConnection.scala:546)
+	at scala.meta.internal.metals.BuildServerConnection$.$anonfun$fromSockets$1(BuildServerConnection.scala:447)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.12 22:09:29 WARN  Build server is not auto-connectable.
+2023.10.12 22:09:29 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 

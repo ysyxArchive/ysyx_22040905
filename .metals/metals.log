@@ -3591,3 +3591,11 @@ INFO: Schema "PUBLIC" is up to date. No migration necessary.
 2023.10.12 22:09:12 INFO  Scala CLI: Maintained by the Scala Center and the community.
 2023.10.12 22:09:12 INFO  Scala CLI: 
 2023.10.12 22:09:12 INFO  Scala CLI: Starting compilation server
+2023.10.12 22:09:14 INFO  Scala CLI: Error: java.lang.RuntimeException: Fatal error, could not spawn Bloop: failed to parse output: 'bloop v1.5.9-sc-1
+2023.10.12 22:09:14 INFO  Scala CLI: 
+2023.10.12 22:09:14 INFO  Scala CLI: Using Scala v2.12.18 and Zinc v1.9.2
+2023.10.12 22:09:14 INFO  Scala CLI: Running on Java JDK v18-ea (/usr/lib/jvm/java-18-openjdk-amd64)
+2023.10.12 22:09:14 INFO  Scala CLI:   -> Supports debugging user code, Java Debug Interface (JDI) is available.
+2023.10.12 22:09:14 INFO  Scala CLI: Maintained by the Scala Center and the community.
+2023.10.12 22:09:14 INFO  Scala CLI: '
+2023.10.12 22:09:14 INFO  Scala CLI: For more details, please see '/home/cyh/ysyx-workbench/.scala-build/stacktraces/1697119754-1263518016317034126.log'

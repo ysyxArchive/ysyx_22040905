@@ -177,8 +177,8 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   }
   else if(w1 < w2 && h1 < h2){   
   //w,h缩放倍数
-    int w = w1 / w2;
-    int h = h1 / h2;
+    int w = w2 / w1;
+    int h = h2 / h1;
 
     //缩小
     //if (src->format->BitsPerPixel == 32){

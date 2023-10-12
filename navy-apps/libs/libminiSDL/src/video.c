@@ -194,7 +194,6 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     //   }
     //}
 
-    printf("1\n");
     //拉伸
     if(src->format->BitsPerPixel == 32){
       for(int i=0;i<h2;i++)
@@ -203,12 +202,14 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
         }
     }
     else{
-      for(int i=0;i<h2;i++)
+      for(int i=0;i<h2;i++){
         for(int j=0;j<w2;j++){
           (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
+          printf("%d %d ",(i+y2)*(dst->w)+(j+x2),((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1);
+       }
+       printf("\n");
        }
     }
-    printf("2\n");
   }
   else{
     printf("%d %d %d %d to %d %d %d %d\n",w1,h1,x1,y1,w2,h2,x2,y2);

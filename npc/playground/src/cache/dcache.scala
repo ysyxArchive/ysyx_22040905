@@ -209,6 +209,7 @@ class DCache extends Module {
     val id = Input(UInt(1.W))
     val mem = (new AXI4)
     val ram = Flipped(new ICacheRAM_Bundle)
+    val flush = Input(UInt(1.W))
     //val hitrate = Output(UInt(64.W))
     val uncache = Input(Bool())
   })
@@ -273,24 +274,24 @@ class DCache extends Module {
   val cnt = RegInit(0.U(1.W))
 
   state := MuxLookup(state,s_idle,List(
-      s_idle   -> Mux(req, s_lookup, s_idle),
-      s_lookup -> Mux(uncache,s_idle,Mux(miss,s_miss, s_idle)),
-      s_miss   -> Mux((rstate === s_wait) & ((dirty(idx)(way) & (wstate === s_wait)) | (~dirty(idx)(way))).asBool,s_replace,s_miss),
+      s_idle   -> Mux(io.flush.asBool,s_idle,Mux(req, s_lookup, s_idle)),
+      s_lookup -> Mux(io.flush.asBool,s_idle,Mux(uncache,s_idle,Mux(miss,s_miss, s_idle))),
+      s_miss   -> Mux(io.flush.asBool,s_idle,Mux((rstate === s_wait) & ((dirty(idx)(way) & (wstate === s_wait)) | (~dirty(idx)(way))).asBool,s_replace,s_miss)),
       s_replace-> s_idle
     ))
 
   rstate := MuxLookup(rstate,s_idle,List(
-    s_idle  -> Mux(state === s_miss && io.mem.ar.fire,s_fire1,s_idle),
-    s_fire1  -> Mux(io.mem.r.fire,s_fire2,s_fire1),
-    s_fire2  -> Mux(io.mem.r.fire,s_wait,s_fire2),
-    s_wait  -> Mux(state =/= s_miss, s_idle ,s_wait)
+    s_idle  -> Mux(io.flush.asBool,s_idle,Mux(state === s_miss && io.mem.ar.fire,s_fire1,s_idle)),
+    s_fire1  ->Mux(io.flush.asBool,s_idle,Mux(io.mem.r.fire,s_fire2,s_fire1)),
+    s_fire2  ->Mux(io.flush.asBool,s_idle,Mux(io.mem.r.fire,s_wait,s_fire2)),
+    s_wait  -> Mux(io.flush.asBool,s_idle,Mux(state =/= s_miss, s_idle ,s_wait))
   ))
 
   wstate := MuxLookup(wstate,s_idle,List(
-    s_idle  -> Mux(state === s_miss && io.mem.aw.fire && io.mem.w.fire ,s_fire1,s_idle),
-    s_fire1  -> Mux(io.mem.w.fire,s_fire2,s_fire1),
-    s_fire2  -> Mux(io.mem.b.fire,s_wait,s_fire2),
-    s_wait  -> Mux(state =/= s_miss, s_idle ,s_wait)
+    s_idle  -> Mux(io.flush.asBool,s_idle,Mux(state === s_miss && io.mem.aw.fire && io.mem.w.fire ,s_fire1,s_idle)),
+    s_fire1  ->Mux(io.flush.asBool,s_idle,Mux(io.mem.w.fire,s_fire2,s_fire1)),
+    s_fire2  ->Mux(io.flush.asBool,s_idle,Mux(io.mem.b.fire,s_wait,s_fire2)),
+    s_wait  -> Mux(io.flush.asBool,s_idle,Mux(state =/= s_miss, s_idle ,s_wait))
   ))
 
 

@@ -2857,3 +2857,127 @@ java.util.concurrent.TimeoutException
 2023.10.11 20:04:07 WARN  Build server is not auto-connectable.
 2023.10.11 20:04:07 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
 2023.10.11 20:04:07 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/ScoreBoard.scala
+2023.10.11 20:13:03 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.11 20:19:04 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+2023.10.11 20:19:15 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.11 20:19:52 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.10.11 20:19:56 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/SRAM.scala
+2023.10.11 20:19:58 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.11 20:20:00 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/SRAM.scala
+2023.10.11 20:20:27 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+2023.10.11 20:20:28 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/icache.scala
+2023.10.11 20:20:32 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+2023.10.11 20:22:16 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/Elaborate.scala
+2023.10.11 20:22:18 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.11 20:22:46 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/GPR.scala
+2023.10.11 20:22:49 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.11 20:22:50 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/GPR.scala
+2023.10.11 20:22:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/IDU.scala
+2023.10.11 20:23:01 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/LSU.scala
+2023.10.11 20:23:10 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/SRAM.scala
+2023.10.11 20:24:24 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.11 20:24:28 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/WBU.scala
+2023.10.11 20:24:45 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/trace/print_csr.scala
+2023.10.11 20:24:45 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/trace/print_gpr.scala
+2023.10.11 20:24:46 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/trace/print_csr.scala
+2023.10.11 20:24:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/trace/itrace.scala
+2023.10.11 20:24:48 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/ebreak.scala
+2023.10.11 20:24:50 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CSR.scala
+2023.10.11 20:24:50 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.11 20:24:52 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/S011HD1P_X32Y2D128_BW.scala
+2023.10.11 20:24:53 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/LFSR_8.scala
+2023.10.11 20:24:57 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/icache.scala
+2023.10.11 20:24:59 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+2023.10.11 20:24:59 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/CacheRAM.scala
+2023.10.11 20:25:06 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.11 20:25:10 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/AXI4.scala
+2023.10.11 20:25:11 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Arbiter.scala
+2023.10.11 20:25:15 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+2023.10.11 20:25:25 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/icache.scala
+Oct 11, 2023 8:26:50 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1049
+2023.10.11 20:28:01 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/icache.scala
+2023.10.11 20:28:04 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+Oct 11, 2023 8:28:54 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1852
+Oct 11, 2023 8:28:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1859
+Oct 11, 2023 8:28:56 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1867
+Oct 11, 2023 8:28:56 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1869
+2023.10.11 20:28:58 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+2023.10.11 20:29:57 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+2023.10.11 20:31:46 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/icache.scala
+2023.10.11 20:31:50 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.11 20:32:02 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.11 20:32:33 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.11 20:32:41 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+Oct 11, 2023 8:32:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2838
+2023.10.11 20:32:54 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/top.scala
+2023.10.11 20:41:52 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+Oct 11, 2023 8:45:22 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2901
+Oct 11, 2023 8:45:22 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2904
+Oct 11, 2023 8:45:23 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2910
+Oct 11, 2023 8:49:04 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2974
+Oct 11, 2023 8:50:22 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3155
+Oct 11, 2023 8:50:28 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3186
+Oct 11, 2023 8:50:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleNotification
+WARNING: Notification threw an exception: {
+  "jsonrpc": "2.0",
+  "method": "metals/didFocusTextDocument",
+  "params": [
+    "copilot:GitHub%20Copilot%20Suggestions%20for%20CLINT.scala?%5B%22file%3A%2F%2F%2Fhome%2Fcyh%2Fysyx-workbench%2Fnpc%2Fplayground%2Fsrc%2Firq%2FCLINT.scala%22%2C%7B%22prependToCompletion%22%3A%22%22%2C%22appendToCompletion%22%3A%22%22%2C%22indentation%22%3Anull%2C%22completionType%22%3A2%2C%22insertPosition%22%3A%7B%22line%22%3A117%2C%22character%22%3A23%7D%7D%2C%22%22%5D#0"
+  ]
+}
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.lambda$null$0(GenericEndpoint.java:67)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.notify(GenericEndpoint.java:152)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleNotification(RemoteEndpoint.java:220)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:187)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:194)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:119)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.lambda$null$0(GenericEndpoint.java:65)
+	... 11 more
+Caused by: java.nio.file.FileSystemNotFoundException: Provider "copilot" not installed
+	at java.base/java.nio.file.Path.of(Path.java:212)
+	at java.base/java.nio.file.Paths.get(Paths.java:98)
+	at scala.meta.internal.mtags.MtagsEnrichments$XtensionURIMtags.toAbsolutePath(MtagsEnrichments.scala:131)
+	at scala.meta.internal.mtags.MtagsEnrichments$XtensionStringMtags.toAbsolutePath(MtagsEnrichments.scala:187)
+	at scala.meta.internal.metals.MetalsEnrichments$XtensionString.toAbsolutePath(MetalsEnrichments.scala:631)
+	at scala.meta.internal.metals.MetalsEnrichments$XtensionString.toAbsolutePath(MetalsEnrichments.scala:628)
+	at scala.meta.internal.metals.WorkspaceLspService.didFocus(WorkspaceLspService.scala:604)
+	at scala.meta.metals.lsp.DelegatingScalaService.didFocus(DelegatingScalaService.scala:43)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	... 13 more
+
+Oct 11, 2023 8:52:06 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3588
+2023.10.11 20:52:59 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.11 20:53:25 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.11 20:54:42 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+Oct 11, 2023 8:57:14 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4186
+Oct 11, 2023 8:57:30 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4232
+2023.10.11 20:57:48 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.11 20:58:07 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.11 20:58:13 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/irq/CLINT.scala
+2023.10.12 09:37:21 INFO  Shutting down server
+2023.10.12 09:37:21 INFO  shutting down Metals

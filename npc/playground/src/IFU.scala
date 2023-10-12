@@ -43,9 +43,10 @@ class IFU extends Module{
   //pre decode
   pre_decode.io.inst:=io.lm.r.bits.data(31,0)
 
-  next_valid:=Mux(io.clearJump.asBool,1.U,
+  next_valid:=Mux(io.irq.asBool,1.U,
+              Mux(io.clearJump.asBool,1.U,
               Mux((pre_decode.io.jump & io.out.fire).asBool,0.U,
-              IF_reg_valid))
+              IF_reg_valid)))
   io.pc:=IF_reg_pc
   next_pc:= Mux(io.irq.asBool,io.irq_nextpc,
             Mux(io.clearJump.asBool,io.pc_dnpc,

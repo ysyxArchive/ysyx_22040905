@@ -9,6 +9,7 @@ class ICache extends Module {
     val id = Input(UInt(1.W))
     val mem = (new AXI4)
     val ram = Flipped(new ICacheRAM_Bundle)
+    val flush = Input(UInt(1.W))
     //val hitrate = Output(UInt(64.W))
     //val uncache = Input(UInt(1.W))
   })
@@ -57,11 +58,11 @@ class ICache extends Module {
   val cnt = RegInit(0.U(1.W))
 
   state := MuxLookup(state,s_idle,List(
-      s_idle   -> Mux(req, s_lookup, s_idle),
-      s_lookup -> Mux(miss,s_miss,
-                  Mux(req, s_lookup, s_idle)),
-      s_miss   -> Mux(io.mem.ar.fire,s_replace,s_miss),
-      s_replace-> Mux(io.mem.r.fire && io.mem.r.bits.last.asBool,s_idle,s_replace)
+      s_idle   -> Mux(io.flush.asBool,s_idle,Mux(req, s_lookup, s_idle)),
+      s_lookup -> Mux(io.flush.asBool,s_idle,Mux(miss,s_miss,
+                  Mux(req, s_lookup, s_idle))),
+      s_miss   -> Mux(io.flush.asBool,s_idle,Mux(io.mem.ar.fire,s_replace,s_miss)),
+      s_replace-> Mux(io.flush.asBool,s_idle,Mux(io.mem.r.fire && io.mem.r.bits.last.asBool,s_idle,s_replace))
     ))
 
   valid(idx)(way) := Mux(state === s_miss & (!uncache),1.U,valid(idx)(way))

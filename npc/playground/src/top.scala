@@ -50,6 +50,7 @@ class top extends Module{
     crossbar.io.in2<>exu.io.lm
     crossbar.io.out1<>sram.io
     crossbar.io.out2<>clint.io.in
+    crossbar.io.flush<>csr.io.irq
 
 
     io.hitrate_i:=crossbar.io.hitrate(127,64)

@@ -114,10 +114,15 @@ class CLINT extends Module{
     assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))
  
     //write reg
+    val mask = Wire(UInt(64.W))
+    mask := Mux(io.in.w.bits.strb === "b1".U,Fill(8,1.U),
+            Mux(io.in.w.bits.strb === "b11".U,Fill(16,1.U),
+            Mux(io.in.w.bits.strb === "b1111".U,Fill(32,1.U),
+            Mux(io.in.w.bits.strb === "b11111111".U, Fill(64,1.U), 0.U))))
     val clint_waddr = Wire(UInt(32.W))
     clint_waddr := Mux(io.in.aw.fire,io.in.aw.bits.addr,waddr)
-    mtimecmp := Mux(io.in.w.fire && (io.in.aw.bits.addr === MTIMECMP),io.in.w.bits.data & io.in.w.bits.strb,mtimecmp)
-    mtime := Mux(io.in.w.fire && (io.in.aw.bits.addr === MTIME),io.in.w.bits.data & io.in.w.bits.strb,
+    mtimecmp := Mux(io.in.w.fire && (io.in.aw.bits.addr === MTIMECMP),io.in.w.bits.data & mask,mtimecmp)
+    mtime := Mux(io.in.w.fire && (io.in.aw.bits.addr === MTIME),io.in.w.bits.data & mask,
              Mux(~io.en_mtip.asBool, 0.U,
              Mux(cnt === TICK_COUNT.U, mtime + 1.U,mtime)))
 

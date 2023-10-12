@@ -9,6 +9,7 @@ class Crossbar extends Module{
         val out1 = (new AXI4)
         val out2 = (new AXI4)
         val hitrate=Output(UInt(128.W))
+        val flush=Input(UInt(1.W))
     })
     val DEVICE_BASE :UInt = "xa0000000".U 
     val CLINT_BEGIN = 0x20000000.U
@@ -38,12 +39,14 @@ class Crossbar extends Module{
     out1<>icache.in
     icache.ram<>icacheram
     icache.id := 0.U
+    icache.flush:=io.flush
 
     //lsu to dcache
     io.in2<>out2 
     out2<>dcache.in
     dcache.ram<>dcacheram
     dcache.id := 1.U
+    dcache.flush:=io.flush
     dcache.uncache :=(out2.ar.bits.addr >= DEVICE_BASE) || (out2.aw.bits.addr >= DEVICE_BASE) | clint
 
 

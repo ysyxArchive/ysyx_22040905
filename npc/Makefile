@@ -69,7 +69,7 @@ sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(BUILD_DIR)/*
 	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt $(BUILD_DIR)/mtrace.txt
-	verilator  --cc --exe --build --trace -j 12\
+	verilator  --cc --exe --build --trace \
  	--top-module $(TOPNAME) $^ \
 	-LDFLAGS -lreadline \
 	--Mdir $(OBJ_DIR) \
@@ -98,7 +98,7 @@ CUNITS = $(shell find $(abspath ./unit/csrc) -name "*.c" -or -name "*.cc" -or -n
 UNITNAME = unit
 	
 sim_unit:$(VUNITS) $(CUNITS)
-	verilator  --cc --exe --build --trace -j\
+	verilator  --cc --exe --build --trace \
  	--top-module $(UNITNAME) $^ \
 	-LDFLAGS -lreadline \
 	--Mdir ./unit/build/obj_dir 

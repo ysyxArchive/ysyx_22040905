@@ -1,4 +1,4 @@
-#include <sys/time.h>
+#include <time.h>
 #include "../all.h"
 
 static uint64_t boot_time = 0;

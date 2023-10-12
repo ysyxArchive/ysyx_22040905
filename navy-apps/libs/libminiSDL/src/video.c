@@ -180,7 +180,6 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     int w = w1 / w2;
     int h = h1 / h2;
 
-    printf("1\n");
     //缩小
     //if (src->format->BitsPerPixel == 32){
     //  for(int i=0;i<h1;i+=w)
@@ -199,16 +198,15 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     if(src->format->BitsPerPixel == 32){
       for(int i=0;i<h2;i++)
         for(int j=0;j<w2;j++){
-          ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i/h+y1)*(src->w)+(j/w+x1)];
+          ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[((uint32_t)(i/h)+y1)*(src->w)+(uint32_t)(j/w)+x1];
         }
     }
     else{
       for(int i=0;i<h2;i++)
         for(int j=0;j<w2;j++){
-          (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[(i/h+y1)*(src->w)+(j/w+x1)];
+          (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[((uint32_t)(i/h)+y1)*(src->w)+(uint32_t)(j/w)+x1];
        }
     }
-    printf("2\n");
   }
   else{
     printf("%d %d %d %d to %d %d %d %d\n",w1,h1,x1,y1,w2,h2,x2,y2);

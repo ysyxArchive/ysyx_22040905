@@ -3128,3 +3128,5 @@ java.util.concurrent.TimeoutException
 
 2023.10.12 17:06:16 WARN  Build server is not auto-connectable.
 2023.10.12 17:06:16 WARN  no build tool detected in workspace '/home/cyh/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Oct 12, 2023 8:31:26 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

@@ -23,6 +23,7 @@
         "sdl.h": "c",
         "host.h": "c",
         "map.h": "c",
-        "alarm.h": "c"
+        "alarm.h": "c",
+        "time.h": "c"
     }
 }

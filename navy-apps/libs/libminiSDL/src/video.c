@@ -194,6 +194,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     //   }
     //}
 
+    printf("1\n");
     //拉伸
     if(src->format->BitsPerPixel == 32){
       for(int i=0;i<h2;i++)

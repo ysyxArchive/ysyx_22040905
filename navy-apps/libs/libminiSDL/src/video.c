@@ -175,8 +175,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     rect.h = h1;
     SDL_BlitSurface(src, &rect, dst, dstrect);
   }
-  else{
-    //w,h缩放倍数
+  else if(w1 > w2 && h1 > h2){   //w,h缩放倍数
     int w = w1 / w2;
     int h = h1 / h2;
 
@@ -192,6 +191,9 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
           (dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
        }
     }
+  }
+  else{
+    assert(0);
   }
 }
 

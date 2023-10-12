@@ -193,6 +193,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     }
   }
   else{
+    printf("%d %d %d %d %d %d %d %d\n",w1,h1,x1,y1,w2,h2,x2,y2);
     assert(0);
   }
 }

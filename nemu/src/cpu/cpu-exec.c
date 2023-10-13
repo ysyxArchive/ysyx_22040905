@@ -109,6 +109,7 @@ void assert_fail_msg() {
   isa_reg_display();
   statistic();
 #ifdef CONFIG_ITRACE
+printf("1\n");
   char buf[128];
   char * p = buf;
   vaddr_t pc = get_pc();

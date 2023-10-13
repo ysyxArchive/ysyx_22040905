@@ -80,7 +80,7 @@ void change_pc(uint64_t pc){
 static void statistic() {
 #ifdef CONFIG_ITRACE
   switch(nemu_state.state){
-    case NEMU_QUIT: case NEMU_ABORT:  case NEMU_STOP:
+    case NEMU_QUIT: case NEMU_ABORT:  case NEMU_STOP: case NEMU_RUNNING:
       iringbuf_print(); break;
     default: printf("%d\n",nemu_state.state); break;
   }

@@ -108,6 +108,7 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
   statistic();
+#ifdef CONFIG_ITRACE
   char buf[128];
   char * p = buf;
   vaddr_t pc = get_pc();
@@ -128,6 +129,7 @@ void assert_fail_msg() {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, buf + sizeof(buf) - p,
       pc, (uint8_t *)inst_val, ilen); 
+#endif
 }
 
 /* Simulate how the CPU works. */

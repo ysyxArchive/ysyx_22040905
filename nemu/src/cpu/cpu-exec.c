@@ -110,7 +110,7 @@ void cpu_exec(uint64_t n) {
   switch (nemu_state.state)
   {
     case  NEMU_ABORT: case NEMU_QUIT:
-      iringbuf_print(); break;
+      iringbuf_print(); printf("111\n"); break;
     default: printf("%d\n",nemu_state.state); break;
   }
   switch (nemu_state.state) {

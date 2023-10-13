@@ -79,7 +79,11 @@ void change_pc(uint64_t pc){
 }
 static void statistic() {
 #ifdef CONFIG_ITRACE
-    iringbuf_print(); 
+  switch(nemu_state.state){
+    case NEMU_QUIT: case NEMU_ABORT:  case NEMU_STOP:
+      iringbuf_print(); break;
+    default: break;
+  }
 #endif
 
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
@@ -111,12 +115,6 @@ void cpu_exec(uint64_t n) {
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
 
-  switch (nemu_state.state)
-  {
-    case  NEMU_ABORT: 
-      iringbuf_print();  break;
-    default:break;
-  }
   switch (nemu_state.state) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
 

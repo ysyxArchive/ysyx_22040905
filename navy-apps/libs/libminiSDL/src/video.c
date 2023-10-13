@@ -237,6 +237,8 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, int firstcolor
     SDL_UpdateRect(s, 0, 0, 0, 0);
    printf("4\n");
   }  
+  
+   printf("5\n");
 }
 
 static void ConvertPixelsARGB_ABGR(void *dst, void *src, int len) {

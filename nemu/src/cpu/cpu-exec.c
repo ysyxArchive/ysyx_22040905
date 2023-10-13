@@ -78,6 +78,15 @@ void change_pc(uint64_t pc){
   cpu.pc=pc;
 }
 static void statistic() {
+#ifdef CONFIG_ITRACE
+  switch (nemu_state.state)
+  {
+    case  NEMU_ABORT: 
+      iringbuf_print();  break;
+    default:break;
+  }
+#endif
+
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
   Log("host time spent = " NUMBERIC_FMT " us", g_timer);
@@ -109,9 +118,9 @@ void cpu_exec(uint64_t n) {
 
   switch (nemu_state.state)
   {
-    case  NEMU_ABORT: case NEMU_QUIT:
-      iringbuf_print(); printf("111\n"); break;
-    default: printf("%d\n",nemu_state.state); break;
+    case  NEMU_ABORT: 
+      iringbuf_print();  break;
+    default:break;
   }
   switch (nemu_state.state) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;

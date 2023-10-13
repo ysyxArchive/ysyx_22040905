@@ -2,6 +2,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+#include <cpu/ifetch.h>
 #include "../monitor/sdb/sdb.h"
 #include "../isa/riscv64/local-include/reg.h"
 /* The assembly code of instructions executed is only output to the screen
@@ -34,12 +35,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   
 }
 
-static void exec_once(Decode *s, vaddr_t pc) {
-  s->pc = pc;
-  s->snpc = pc;
-  isa_exec_once(s);
-  cpu.pc = s->dnpc;
-#ifdef CONFIG_ITRACE
+static void gen_itrace(Decode *s){
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ": ", s->pc);
   int ilen = s->snpc - s->pc;
@@ -58,7 +54,17 @@ static void exec_once(Decode *s, vaddr_t pc) {
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen); 
  
+}
+static void exec_once(Decode *s, vaddr_t pc) {
+  s->pc = pc;
+  s->snpc = pc;
+  isa_exec_once(s);
+  cpu.pc = s->dnpc;
+
+#ifdef CONFIG_ITRACE
+  gen_itrace(s);
 #endif
+
 }
 
 static void execute(uint64_t n) {
@@ -82,7 +88,9 @@ void change_pc(uint64_t pc){
 static void statistic() {
 #ifdef CONFIG_ITRACE
   switch(nemu_state.state){
-    case NEMU_QUIT: case NEMU_ABORT:  case NEMU_STOP: case NEMU_RUNNING:
+    case NEMU_QUIT: case NEMU_ABORT:  case NEMU_STOP: 
+      iringbuf_print(); break;
+    case NEMU_RUNNING:
       iringbuf_print(); break;
     default: printf("%d\n",nemu_state.state); break;
   }
@@ -99,6 +107,26 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
   statistic();
+  char buf[128];
+  char * p = buf;
+  vaddr_t pc = get_pc();
+  uint64_t inst_val = inst_fetch(&pc, 4);
+  p += snprintf(p, 128, FMT_WORD ": ",pc);
+  int ilen = 4;
+  int i;
+  uint8_t *inst = (uint8_t *)inst_val;
+  for (i = ilen-1; i >=0; i--) {
+    p += snprintf(p, 3, "%02x", inst[i]);
+  }
+  int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
+  int space_len = ilen_max - ilen;
+  if (space_len < 0) space_len = 0;
+  space_len = space_len * 3 + 1;
+  memset(p, ' ', space_len);
+  p += space_len;
+  void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+  disassemble(p, buf + sizeof(buf) - p,
+      pc, (uint8_t *)inst_val, ilen); 
 }
 
 /* Simulate how the CPU works. */
@@ -112,7 +140,7 @@ void cpu_exec(uint64_t n) {
   }
 
   uint64_t timer_start = get_time();
-
+assert_fail_msg() ;
   execute(n);
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;

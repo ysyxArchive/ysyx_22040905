@@ -50,6 +50,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 uint32_t pixels8[400*300];
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&&w==0&&h==0){w=s->w;h=s->h;}
+  printf("%d %d\n",w,h);
   if(s->format->BitsPerPixel==8){
     for(int i=0;i<h;i++)
       for(int j=0;j<w;j++){
@@ -59,9 +60,12 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       uint32_t a=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].a;
       *(pixels8+(i+y)*w+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
     }
+   printf("4\n");
     NDL_DrawRect(pixels8,x,y,w,h);
+   printf("5\n");
   }
   else NDL_DrawRect((uint32_t*)s->pixels,x,y,w,h);
+   printf("6\n");
 }
 
 // APIs below are already implemented.
@@ -222,10 +226,8 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, int firstcolor
   assert(firstcolor == 0);
 
   s->format->palette->ncolors = ncolors;
-   printf("1\n");
   memcpy(s->format->palette->colors, colors, sizeof(SDL_Color) * ncolors);
 
-   printf("2\n");
   if(s->flags & SDL_HWSURFACE) {
     assert(ncolors == 256);
     for (int i = 0; i < ncolors; i ++) {
@@ -233,12 +235,9 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, int firstcolor
       uint8_t g = colors[i].g;
       uint8_t b = colors[i].b;
     }
-   printf("3\n");
     SDL_UpdateRect(s, 0, 0, 0, 0);
-   printf("4\n");
   }  
   
-   printf("5\n");
 }
 
 static void ConvertPixelsARGB_ABGR(void *dst, void *src, int len) {

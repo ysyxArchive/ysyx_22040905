@@ -50,6 +50,7 @@ static void gen_itrace(Decode *s){
   int space_len = ilen_max - ilen;
   if (space_len < 0) space_len = 0;
   space_len = space_len * 3 + 1;
+  printf("%d\n",space_len);
   memset(p, ' ', space_len);
   p += space_len;
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
@@ -63,7 +64,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->snpc = pc;
   isa_exec_once(s);
   cpu.pc = s->dnpc;
-assert_fail_msg() ;
+//assert_fail_msg() ;
   gen_itrace(s);
 
 }
@@ -124,11 +125,8 @@ void assert_fail_msg() {
   int space_len = ilen_max - ilen;
   if (space_len < 0) space_len = 0;
   space_len = space_len * 3 + 1;
-  printf("%d\n",space_len);
   memset(p, ' ', space_len);
-  printf("%s\n",buf);
   p += space_len;
-  printf("%s\n",buf);
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, buf + sizeof(buf) - p,
       pc, (uint8_t *)inst_val, ilen); 

@@ -179,7 +179,6 @@ void iringbuf_print(){
     for(int i=0;i<ir_tail;i++)
       printf("%s\n",iringbuf[i]);
   }
-  printf("\n");
 }
 #else
 void init_iringbuf(){}

@@ -55,11 +55,11 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     for(int i=0;i<h;i++)
       for(int j=0;j<w;j++){
       //printf("%d %d %d %d %d %d\n",x,y,w,h,j,i);
-      uint8_t r=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].r;
-      uint8_t g=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].g;
-      uint8_t b=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].b;
-      uint8_t a=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].a;
-      *(pixels8+(i+y)*w+j+y)=((uint32_t)a<<24)|((uint32_t)r<<16)|((uint32_t)g<<8)|(uint32_t)b;
+      uint32_t r=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].r;
+      uint32_t g=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].g;
+      uint32_t b=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].b;
+      uint32_t a=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].a;
+      *(pixels8+(i+y)*w+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
     }
     NDL_DrawRect(pixels8,x,y,w,h);
   }

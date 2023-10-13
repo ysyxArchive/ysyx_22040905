@@ -164,7 +164,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 
   assert(dstrect);
 
-  if(1 |(w1 == w2 && h1 == h2)) {
+  if(1/*w1 == w2 && h1 == h2*/) {
     /* The source rectangle and the destination rectangle
      * are of the same size. If that is the case, there
      * is no need to stretch, just copy. */

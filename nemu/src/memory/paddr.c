@@ -59,11 +59,11 @@ word_t paddr_read(paddr_t addr, int len) {
 #endif
   if (likely(in_pmem(addr))){ 
 #ifdef CONFIG_CACHE_ENABLED
-   return cache_read(addr,len);
+    return cache_read(addr,len);
 #else
     return pmem_read(addr, len);
 #endif
-}
+  }
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
 
   out_of_bound(addr);

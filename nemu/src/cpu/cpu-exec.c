@@ -124,7 +124,7 @@ void assert_fail_msg() {
   int space_len = ilen_max - ilen;
   if (space_len < 0) space_len = 0;
   space_len = space_len * 3 + 1;
-  printf("%s\n",buf);
+  printf("%d\n",space_len);
   memset(p, ' ', space_len);
   printf("%s\n",buf);
   p += space_len;

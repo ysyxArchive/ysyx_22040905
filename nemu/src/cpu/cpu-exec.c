@@ -120,7 +120,6 @@ void assert_fail_msg() {
   for (i = ilen-1; i >=0; i--) {
     p += snprintf(p, 3, "%02x", inst[i]);
   }
-  printf("%s\n",buf);
   int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
   int space_len = ilen_max - ilen;
   if (space_len < 0) space_len = 0;

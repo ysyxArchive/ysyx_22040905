@@ -59,7 +59,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       uint32_t b=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].b;
       uint32_t a=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].a;
       *(pixels8+(i+y)*w+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
-      printf("%d\n",(i+y)*w+x+j);
+      printf("%d %d %d %d %d %d\n",x,y,w,h,i,j);
     }
     NDL_DrawRect(pixels8,x,y,w,h);
   }

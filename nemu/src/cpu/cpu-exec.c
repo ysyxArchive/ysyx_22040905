@@ -95,6 +95,7 @@ static void statistic() {
       iringbuf_print(); break;
     default: printf("%d\n",nemu_state.state); break;
   }
+  printf("%lx\n",get_pc());
 #endif
 
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));

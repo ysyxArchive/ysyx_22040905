@@ -37,6 +37,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 }
 
 static void gen_itrace(Decode *s){
+#ifdef CONFIG_ITRACE
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ": ", s->pc);
   int ilen = s->snpc - s->pc;
@@ -54,6 +55,7 @@ static void gen_itrace(Decode *s){
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen); 
+#endif
  
 }
 static void exec_once(Decode *s, vaddr_t pc) {
@@ -62,9 +64,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   isa_exec_once(s);
   cpu.pc = s->dnpc;
 
-#ifdef CONFIG_ITRACE
   gen_itrace(s);
-#endif
 
 }
 
@@ -77,7 +77,6 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
-assert_fail_msg() ;
   }
 }
 uint64_t get_pc(){

@@ -112,7 +112,6 @@ static void statistic() {
   if (space_len < 0) space_len = 0;
   space_len = space_len * 3 + 1;
   memset(p, ' ', space_len);
-  printf("%s\n",buf);
   p += space_len;
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, buf + sizeof(buf) - p,

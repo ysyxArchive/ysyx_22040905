@@ -54,7 +54,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(s->format->BitsPerPixel==8){
     for(int i=0;i<h;i++)
       for(int j=0;j<w;j++){
-      printf("%d %d %d %d %d %d\n",x,y,w,h,i,j);
+      printf("%d %d %d %d %d %d\n",x,y,w,h,j,i);
       uint32_t r=(s->format->palette->colors)[s->pixels[i*(s->w)+j]].r;
       uint32_t g=(s->format->palette->colors)[s->pixels[i*(s->w)+j]].g;
       uint32_t b=(s->format->palette->colors)[s->pixels[i*(s->w)+j]].b;

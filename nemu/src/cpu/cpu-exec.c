@@ -113,7 +113,7 @@ void assert_fail_msg() {
   char * p = buf;
   vaddr_t pc = get_pc();
   uint64_t inst_val = inst_fetch(&pc, 4);
-  p += snprintf(p, 128, FMT_WORD ": ",pc);
+  p += snprintf(p, sizeof(buf), FMT_WORD ": ",pc);
   printf("%s\n",buf);
   int ilen = 4;
   int i;

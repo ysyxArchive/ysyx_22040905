@@ -82,7 +82,7 @@ static void statistic() {
   switch(nemu_state.state){
     case NEMU_QUIT: case NEMU_ABORT:  case NEMU_STOP:
       iringbuf_print(); break;
-    default: break;
+    default: printf("%d\n",nemu_state.state); break;
   }
 #endif
 

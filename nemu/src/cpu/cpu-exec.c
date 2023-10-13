@@ -18,6 +18,7 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
+void assert_fail_msg();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -76,6 +77,7 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
+assert_fail_msg() ;
   }
 }
 uint64_t get_pc(){
@@ -140,7 +142,6 @@ void cpu_exec(uint64_t n) {
   }
 
   uint64_t timer_start = get_time();
-assert_fail_msg() ;
   execute(n);
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;

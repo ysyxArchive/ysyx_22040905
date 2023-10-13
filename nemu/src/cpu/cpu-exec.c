@@ -117,7 +117,6 @@ static void statistic() {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, buf + sizeof(buf) - p,
       pc, (uint8_t *)inst_val, ilen); 
-  printf("%s\n",buf);
 
 #endif
 

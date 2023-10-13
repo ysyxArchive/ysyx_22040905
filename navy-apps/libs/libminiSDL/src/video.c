@@ -21,7 +21,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   dstrect->w=w;
   dstrect->h=h;*/
  
-    printf("1\n");
   if (src->format->BitsPerPixel == 32){
     for(int i=0;i<h;i++)
       for(int j=0;j<w;j++){

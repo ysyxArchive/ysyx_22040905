@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Oct 13 09:40:09 2023
+# Make data base, printed on Fri Oct 13 16:26:11 2023
 
 # Variables
 
@@ -372,6 +372,6 @@ all:
 # strcache performance: lookups = 43 / hit rate = 25%
 # hash-table stats:
 # Load=32/8192=0%, Rehash=0, Collisions=0/43=0%
-# Finished Make data base on Fri Oct 13 09:40:09 2023
+# Finished Make data base on Fri Oct 13 16:26:11 2023
 
  

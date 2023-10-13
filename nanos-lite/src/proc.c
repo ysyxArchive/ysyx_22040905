@@ -26,7 +26,23 @@ void init_proc() {
 
   Log("Initializing processes...");
 
-  naive_uload(NULL,"/bin/pal");
+  int choose = 1;
+  switch(choose){
+    case 0: naive_uload(NULL,"/bin/pal"); break;
+    case 1: naive_uload(NULL,"/bin/menu"); break;
+    case 2: naive_uload(NULL,"/bin/fixe-test"); break;
+    case 3: naive_uload(NULL,"/bin/nslider"); break;
+    case 4: naive_uload(NULL,"/bin/timer-test"); break;
+    case 5: naive_uload(NULL,"/bin/bmp-test"); break;
+    case 6: naive_uload(NULL,"/bin/file-test"); break;
+    case 7: naive_uload(NULL,"/bin/hello"); break;
+    case 8: naive_uload(NULL,"/bin/event-test"); break;
+    case 9: naive_uload(NULL,"/bin/bird"); break;
+    case 10: naive_uload(NULL,"/bin/dummy"); break;
+    case 11: naive_uload(NULL,"/bin/nterm"); break;
+    default: assert(0);
+  }
+  
   // load program here
 
 }

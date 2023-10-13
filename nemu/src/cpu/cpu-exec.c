@@ -99,8 +99,8 @@ static void statistic() {
   char buf[128];
   char * p = buf;
   vaddr_t pc = get_pc();
-  uint64_t inst_val = inst_fetch(&pc, 4);
   p += snprintf(p, sizeof(buf), FMT_WORD ": ",pc);
+  uint64_t inst_val = inst_fetch(&pc, 4);
   int ilen = 4;
   int i;
   uint8_t *inst = (uint8_t *)&inst_val;

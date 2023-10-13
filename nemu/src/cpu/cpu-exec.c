@@ -95,21 +95,7 @@ static void statistic() {
       iringbuf_print(); break;
     default: printf("%d\n",nemu_state.state); break;
   }
-  printf("%lx\n",get_pc());
-#endif
 
-  IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
-#define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
-  Log("host time spent = " NUMBERIC_FMT " us", g_timer);
-  Log("total guest instructions = " NUMBERIC_FMT, g_nr_guest_inst);
-  if (g_timer > 0) Log("simulation frequency = " NUMBERIC_FMT " inst/s", g_nr_guest_inst * 1000000 / g_timer);
-  else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
-}
-
-void assert_fail_msg() {
-  isa_reg_display();
-  statistic();
-#ifdef CONFIG_ITRACE
   char buf[128];
   char * p = buf;
   vaddr_t pc = get_pc();
@@ -126,12 +112,26 @@ void assert_fail_msg() {
   if (space_len < 0) space_len = 0;
   space_len = space_len * 3 + 1;
   memset(p, ' ', space_len);
+  printf("%s\n",buf);
   p += space_len;
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, buf + sizeof(buf) - p,
       pc, (uint8_t *)inst_val, ilen); 
   printf("%s\n",buf);
+
 #endif
+
+  IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
+#define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
+  Log("host time spent = " NUMBERIC_FMT " us", g_timer);
+  Log("total guest instructions = " NUMBERIC_FMT, g_nr_guest_inst);
+  if (g_timer > 0) Log("simulation frequency = " NUMBERIC_FMT " inst/s", g_nr_guest_inst * 1000000 / g_timer);
+  else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
+}
+
+void assert_fail_msg() {
+  isa_reg_display();
+  statistic();
 }
 
 /* Simulate how the CPU works. */

@@ -1,4 +1,6 @@
-VSRC_DIR=./vsrc
+PWD= /home/cyh/ysyx-workbench/npc
+
+VSRC_DIR=$(PWD)/vsrc
 test:
 	mill -i __.test
 
@@ -33,11 +35,11 @@ INC_PATH ?=
 VERILATOR = verilator
 VERILATOR_CFLAGS += -MMD --build --cc  \
 -O3 --x-assign fast --x-initial fast --noassert  
-BUILD_DIR = ./build
+BUILD_DIR = $(PWD)/build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 BIN = $(BUILD_DIR)/$(TOPNAME)
-VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
-CSRCSS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+VSRCS = $(shell find $(abspath $(PWD)/vsrc) -name "*.v")
+CSRCSS = $(shell find $(abspath $(PWD)/csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 	
 default: $(BIN)
 	$(shell mkdir -p $(BUILD_DIR))
@@ -69,42 +71,45 @@ sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
 	rm -rf $(BUILD_DIR)/*
 	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt $(BUILD_DIR)/mtrace.txt
-	verilator  --cc --exe --build --trace \
+	verilator  --cc --exe --build --trace --prof-cfuncs \
  	--top-module $(TOPNAME) $^ \
 	-LDFLAGS -lreadline \
 	--Mdir $(OBJ_DIR) \
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 runb: sim
-	./build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(REF)
+	$(PWD)/build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(REF)
 gdb: sim
-	./build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(REF)
+	$(PWD)/build/obj_dir/V$(TOPNAME) $(IMG).bin -g -e $(IMG).elf -d $(REF)
 wave: runb
 	gtkwave wave.vcd	
 
 b: verilog
 	$(shell (echo '0a'; echo '/* verilator lint_off WIDTH */'; echo '.'; echo 'wq') | ed -s $(VSRC_DIR)/top.v )
 
+gprof:
+	gprof $(PWD)/build/obj_dir/V$(TOPNAME) gmon.out > analysis.txt
+	verilator_profcfunc analysis.txt > report.txt
 
 ##unit test
-VUNIT_DIR=./unit/vsrc
+VUNIT_DIR=$(PWD)/unit/vsrc
 
 verilog_unit:
 	mkdir -p $(VUNIT_DIR)
 	mill -i __.test.runMain Elaborate_unit -td $(VUNIT_DIR)
 
-VUNITS = $(shell find $(abspath ./unit/vsrc) -name "*.v")
-CUNITS = $(shell find $(abspath ./unit/csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+VUNITS = $(shell find $(abspath $(PWD)/unit/vsrc) -name "*.v")
+CUNITS = $(shell find $(abspath $(PWD)/unit/csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 UNITNAME = unit
 	
 sim_unit:$(VUNITS) $(CUNITS)
 	verilator  --cc --exe --build --trace \
  	--top-module $(UNITNAME) $^ \
 	-LDFLAGS -lreadline \
-	--Mdir ./unit/build/obj_dir 
+	--Mdir $(PWD)/unit/build/obj_dir 
 	##$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run_unit: sim_unit
-	./unit/build/obj_dir/V$(UNITNAME) 
+	$(PWD)/unit/build/obj_dir/V$(UNITNAME) 
 
 

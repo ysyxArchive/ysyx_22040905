@@ -79,12 +79,7 @@ void change_pc(uint64_t pc){
 }
 static void statistic() {
 #ifdef CONFIG_ITRACE
-  switch (nemu_state.state)
-  {
-    case  NEMU_ABORT: 
-      iringbuf_print();  break;
-    default:break;
-  }
+    iringbuf_print(); 
 #endif
 
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));

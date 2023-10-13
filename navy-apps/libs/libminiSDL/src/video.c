@@ -47,7 +47,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   }
 
 }
-uint32_t pixels8[640*400];
+uint32_t pixels8[800*400];
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&&w==0&&h==0){w=s->w;h=s->h;}
   //printf("%d %d\n",w,h);
@@ -166,7 +166,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 
   assert(dstrect);
 
-  if(1/*w1 == w2 && h1 == h2*/) {
+  if(w1 == w2 && h1 == h2) {
     /* The source rectangle and the destination rectangle
      * are of the same size. If that is the case, there
      * is no need to stretch, just copy. */
@@ -187,7 +187,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     //  for(int i=0;i<h1;i+=w)
     //    for(int j=0;j<w1;j+=h){
     //      ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
-    //    }
+    //    SDL_SoftStretch}
     //}
     //else{
     //  for(int i=0;i<h1;i++)

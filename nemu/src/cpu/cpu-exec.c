@@ -41,7 +41,6 @@ static void gen_itrace(Decode *s){
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ": ", s->pc);
   int ilen = s->snpc - s->pc;
-  printf("%x\n",ilen);
   int i;
   uint8_t *inst = (uint8_t *)&s->isa.inst.val;
   for (i = ilen-1; i >=0; i--) {
@@ -115,10 +114,9 @@ void assert_fail_msg() {
   vaddr_t pc = get_pc();
   uint64_t inst_val = inst_fetch(&pc, 4);
   p += snprintf(p, sizeof(buf), FMT_WORD ": ",pc);
-  printf("%s\n",buf);
   int ilen = 4;
   int i;
-  uint8_t *inst = (uint8_t *)inst_val;
+  uint8_t *inst = (uint8_t *)&inst_val;
   for (i = ilen-1; i >=0; i--) {
     p += snprintf(p, 3, "%02x", inst[i]);
   }

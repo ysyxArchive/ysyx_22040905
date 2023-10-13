@@ -41,6 +41,7 @@ static void gen_itrace(Decode *s){
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ": ", s->pc);
   int ilen = s->snpc - s->pc;
+  printf("%d\n",ilen);
   int i;
   uint8_t *inst = (uint8_t *)&s->isa.inst.val;
   for (i = ilen-1; i >=0; i--) {
@@ -50,7 +51,6 @@ static void gen_itrace(Decode *s){
   int space_len = ilen_max - ilen;
   if (space_len < 0) space_len = 0;
   space_len = space_len * 3 + 1;
-  printf("%d\n",space_len);
   memset(p, ' ', space_len);
   p += space_len;
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);

@@ -26,6 +26,7 @@ void init_proc() {
 
   Log("Initializing processes...");
 
+  // load program here
   int choose = 0;
   switch(choose){
     case 0: naive_uload(NULL,"/bin/pal"); break;
@@ -43,7 +44,8 @@ void init_proc() {
     default: assert(0);
   }
   
-  // load program here
+
+  Log("Finish\n");
 
 }
 

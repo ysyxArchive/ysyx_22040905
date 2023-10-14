@@ -7,6 +7,7 @@ typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long  uint64_t;
+typedef unsigned long long ull;
 
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 #define BITMASK(bits) ((1ull << (bits)) - 1)

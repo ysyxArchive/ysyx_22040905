@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Oct 13 22:07:43 2023
+# Make data base, printed on Sat Oct 14 12:28:47 2023
 
 # Variables
 
@@ -112,7 +112,7 @@ MAKEFILE_LIST := Makefile
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 309871
+VSCODE_PID = 5416
 # environment
 SDKMAN_DIR = /home/cyh/.sdkman
 # environment
@@ -120,7 +120,7 @@ XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1627,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/1627
+SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1636,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/1636
 # automatic
 *F = $(notdir $*)
 # environment
@@ -176,7 +176,7 @@ LC_TIME = en_US.UTF-8
 # makefile (from 'Makefile', line 9)
 YSYX_HOME = $(NEMU_HOME)/..
 # environment
-INVOCATION_ID = b49499b9246446309a2bec2ceb98af38
+INVOCATION_ID = 6ab485bac39c44c5a8ccf4db6344beb7
 # makefile (from 'Makefile', line 10)
 WORK_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 # environment
@@ -210,7 +210,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := _default
 # environment
-SYSTEMD_EXEC_PID = 1684
+SYSTEMD_EXEC_PID = 1681
 # environment
 NAVY_HOME = /home/cyh/ysyx-workbench/navy-apps
 # environment
@@ -226,13 +226,13 @@ VCS_HOME = /home/cyh/synopsys/vcs/O-2018.09-SP2
 # makefile (from 'Makefile', line 17)
 git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
 # environment
-MANAGERPID = 1235
+MANAGERPID = 1256
 # environment
 VCS_MX_HOME = /home/cyh/synopsys/vcs-mx/O-2018.09-SP2
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 309871
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5416
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -246,7 +246,7 @@ DVE_HOME = /home/cyh/synopsys/vcs/O-2018.09-SP2
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:42087
+JOURNAL_STREAM = 8:24932
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -279,13 +279,13 @@ XDG_MENU_PREFIX = gnome-
 GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = en_US.UTF-8
- 
-make: *** No rule to make target 'all'.  Stop.
-
 # variable set hash-table stats:
 # Load=133/1024=13%, Rehash=0, Collisions=6/163=4%
 
 # Pattern-specific Variable Values
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 
 # No pattern-specific variable values.
 
@@ -372,6 +372,6 @@ all:
 # strcache performance: lookups = 43 / hit rate = 25%
 # hash-table stats:
 # Load=32/8192=0%, Rehash=0, Collisions=0/43=0%
-# Finished Make data base on Fri Oct 13 22:07:43 2023
+# Finished Make data base on Sat Oct 14 12:28:47 2023
 
  

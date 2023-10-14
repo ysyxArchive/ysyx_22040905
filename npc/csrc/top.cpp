@@ -3,29 +3,36 @@
 #include <assert.h>
 #include <verilated.h>
 #include "../build/obj_dir/Vtop.h"
-#include <verilated_vcd_c.h>
 #include <svdpi.h>
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
 #include <time.h>
+
+#ifdef HAS_TRACE
+#include <verilated_vcd_c.h>
+VerilatedVcdC *tfp = NULL;
+VerilatedContext *contextp = NULL;
+
+void dump_ftrace();
+#endif
 // #include<nvboard.h>
 
-VerilatedContext *contextp = NULL;
-VerilatedVcdC *tfp = NULL;
-typedef unsigned long long ull;
 Vtop *top = NULL;
 // void nvboard_bind_all_pins(Vtop* top);
 int state = NPC_QUIT;
 uint64_t pc = 0;
 int gdb = 0;
 
+#ifdef HAS_PERF
 //计时
 clock_t start,finish;
 double totaltime;
 
-double inst_cnt = 0;
-void dump_ftrace();
+uint64_t cyc_num = 0;
+uint64_t inst_num = 0;
+#endif
+
 void dump_csr();
 void cpp_break()
 {
@@ -33,9 +40,9 @@ void cpp_break()
 }
 void sim_init()
 {
-  contextp = new VerilatedContext;
   top = new Vtop;
 #ifdef HAS_WAVE
+  contextp = new VerilatedContext;
   tfp = new VerilatedVcdC;
   contextp->traceEverOn(true);
   top->trace(tfp, 0);
@@ -45,7 +52,9 @@ void sim_init()
 
 static void step_and_dump_wave()
 {
-  inst_cnt++;
+#ifdef HAS_PERF
+  cyc_num++;
+#endif
 
   top->clock = 0;
   top->eval();
@@ -105,6 +114,9 @@ void exec_once()
     t=1;
   }
 #endif
+#ifdef HAS_PERF
+  inst_num++;
+#endif
 
 #ifdef HAS_TRACE
   dump_ftrace();
@@ -141,8 +153,11 @@ void init(int argc, char *argv[])
   //init_wp_pool();
   top->io_mul_sel = 1;
   reset();
+#ifdef HAS_DIFFTEST
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
+#endif
   init_device();
+
 }
 //print gpr
 uint64_t *cpu_gpr = NULL;
@@ -175,7 +190,7 @@ void dump_csr() {
     printf("%s = 0x%lx\n",csr_name[i], cpu_csr[i]);
   }
 }
-//itrace
+#ifdef HAS_TRACE
 uint64_t *cpu_itrace = NULL;
 extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
   cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dncp inst valid
@@ -201,6 +216,8 @@ void dump_ftrace(){
     else ftrace_add(pc,cpu_itrace[0],1);
   }
 }
+#endif
+
 int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
@@ -212,7 +229,6 @@ int main(int argc, char *argv[])
   else exec();
 
   //结束计时
-  finish=clock();
   totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
   printf("\033[1;32mtotal time: %f s\nFreq:%f Hz\n",totaltime,inst_cnt/totaltime);
 

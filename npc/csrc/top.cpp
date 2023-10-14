@@ -49,8 +49,8 @@ void sim_init()
 #endif
   top = new Vtop;
 #ifdef HAS_WAVE
-  top->trace(tfp, 0);
   contextp->traceEverOn(true);
+  top->trace(tfp, 0);
   tfp->open("wave.vcd");
 #endif
 }
@@ -134,7 +134,7 @@ void execute(uint64_t n)
   while (n--)
   {
     if (state != NPC_RUNNING){
-      n = (n > 100) ? 100 : n;
+      n = 0;//(n > 100) ? 100 : n;
     }
     exec_once();
   }

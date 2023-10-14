@@ -4551,3 +4551,4 @@ Oct 14, 2023 8:48:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellat
 WARNING: Unmatched cancel notification for request id 10042
 2023.10.14 20:48:37 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
 2023.10.14 21:00:52 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.14 21:52:44 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala

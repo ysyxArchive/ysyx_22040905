@@ -39,5 +39,6 @@ void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
   Log("Jump to entry = %p", (uintptr_t *)entry);
   ((void(*)())entry) ();
+  printf("Should not reach here.\n");
 }
 

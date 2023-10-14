@@ -44,9 +44,6 @@ void init_proc() {
     default: assert(0);
   }
   
-
-  Log("Finish\n");
-
 }
 
 Context* schedule(Context *prev) {

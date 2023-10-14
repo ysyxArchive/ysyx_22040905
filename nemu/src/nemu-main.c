@@ -1,4 +1,4 @@
-#define NDEBUG
+//#define NDEBUG
 #include <common.h>
 
 void init_monitor(int, char *[]);

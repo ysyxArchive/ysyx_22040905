@@ -33,6 +33,7 @@ double totaltime;
 
 uint64_t cyc_num = 0;
 uint64_t inst_num = 0;
+
 #endif
 
 void dump_csr();

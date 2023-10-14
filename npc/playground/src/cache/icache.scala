@@ -10,7 +10,7 @@ class ICache extends Module {
     val mem = (new AXI4)
     val ram = Flipped(new ICacheRAM_Bundle)
     val flush = Input(UInt(1.W))
-    //val hitrate = Output(UInt(64.W))
+    val hitrate = Output(UInt(64.W))
     //val uncache = Input(UInt(1.W))
   })
   //config
@@ -131,5 +131,13 @@ class ICache extends Module {
   io.in.b.valid := 0.U
   io.in.aw.ready := 0.U
   io.in.w.ready := 0.U
+
+  val hit_num=RegInit(0.U(32.W))
+  val inst_num=RegInit(0.U(32.W))
+
+  hit_num := Mux((state === s_lookup) && (~miss),hit_num + 1.U,hit_num)
+  inst_num := Mux((io.in.ar.fire| io.in.aw.fire),inst_num + 1.U,inst_num)
+
+  io.hitrate := Cat(inst_num, hit_num);
 }
 

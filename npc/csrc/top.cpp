@@ -20,6 +20,10 @@ int state = NPC_QUIT;
 uint64_t pc = 0;
 int gdb = 0;
 
+//计时
+clock_t start,finish;
+double totaltime;
+
 double inst_cnt = 0;
 void dump_ftrace();
 void dump_csr();
@@ -30,9 +34,9 @@ void cpp_break()
 void sim_init()
 {
   contextp = new VerilatedContext;
-  tfp = new VerilatedVcdC;
   top = new Vtop;
 #ifdef HAS_WAVE
+  tfp = new VerilatedVcdC;
   contextp->traceEverOn(true);
   top->trace(tfp, 0);
   tfp->open("wave.vcd");
@@ -61,7 +65,9 @@ static void step_and_dump_wave()
 void sim_exit()
 {
   // step_and_dump_wave();
+#ifdef HAS_WAVE
   tfp->close();
+#endif
 }
 
 void reset()
@@ -118,6 +124,7 @@ void execute(uint64_t n)
 
 void exec()
 {
+  start=clock(); 
   // printf("\n\n\n\n");
   execute(-1);
 }
@@ -199,10 +206,7 @@ int main(int argc, char *argv[])
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
   init(argc,argv);
 
-  //开始计时
-  clock_t start,finish;
-  double totaltime;
-  start=clock(); 
+
 
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
@@ -210,9 +214,9 @@ int main(int argc, char *argv[])
   //结束计时
   finish=clock();
   totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
-  printf("\033[1;32mtotal time: %f s\nFreq:%f Hz\n\033[0m",totaltime,inst_cnt/totaltime);
-  //printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
-  //printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));
+  printf("\033[1;32mtotal time: %f s\nFreq:%f Hz\n",totaltime,inst_cnt/totaltime);
+
+  printf("ICache:%f% \nDCache:%f% \n\033[0m",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32)*100.0,(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32)*100.0);
   sim_exit();
   //nvboard_quit();
 

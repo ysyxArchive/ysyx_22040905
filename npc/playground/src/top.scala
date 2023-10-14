@@ -53,9 +53,12 @@ class top extends Module{
     crossbar.io.flush<>csr.io.irq
 
 
-    io.hitrate_i:=crossbar.io.hitrate(127,64)
-    io.hitrate_d:=crossbar.io.hitrate(63,0)
+    io.hitrate_i:=crossbar.io.hitrate_i
+    io.hitrate_d:=crossbar.io.hitrate_d
 
     exu.io.mul_sel:= io.mul_sel
     io.timer_diff_skip := clint.io.skip | csr.io.irq
+
+    io.hitrate_i := crossbar.io.hitrate_i
+    io.hitrate_d := crossbar.io.hitrate_d
 }

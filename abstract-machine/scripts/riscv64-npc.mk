@@ -32,7 +32,7 @@ wave: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) wave IMG=$(IMAGE)
 
 verilog: image
-	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) b IMG=$(IMAGE)
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) verilog IMG=$(IMAGE)
 
 sim: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) sim IMG=$(IMAGE)

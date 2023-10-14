@@ -37,6 +37,9 @@ verilog: image
 sim: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) sim IMG=$(IMAGE)
 
+gprof: image
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) gprof IMG=$(IMAGE)
+
 compile_run: verilog run
 
 compile_gdb: verilog gdb

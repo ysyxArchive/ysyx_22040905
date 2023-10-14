@@ -8,6 +8,7 @@ verilog:
 	$(call git_commit, "generate verilog")
 	mkdir -p $(VSRC_DIR)
 	mill -i __.test.runMain Elaborate -td $(VSRC_DIR)
+	python3 $(PWD)/split_module.py
 
 help:
 	mill -i __.test.runMain Elaborate --help
@@ -65,8 +66,8 @@ run: $(BIN)
 
 REF=$(NEMU_HOME)/build/riscv64-nemu-interpreter-so
 CFLAGS  += -I/usr/lib/llvm-12/include -std=c++14  -L$(REF) -fPIC -fsanitize=address -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE -O3 
-LDFLAGS += $(shell llvm-config-12 --libs) -L$(REF) -fPIC -fsanitize=address -lSDL2 -lSDL2_image 
-VERILATOR_FLAG = --cc --exe --build ## --trace --prof-cfuncs
+LDFLAGS += $(shell llvm-config-12 --libs) -L$(REF) -fPIC -fsanitize=address -lSDL2 -lSDL2_image -lreadline
+VERILATOR_FLAG = --cc --exe --build  -O3 --x-assign fast --x-initial fast --noassert ## --trace --prof-cfuncs
 
 sim: $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
@@ -74,9 +75,9 @@ sim: $(VSRCS) $(CSRCSS)
 	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt $(BUILD_DIR)/mtrace.txt
 	verilator  $(VERILATOR_FLAG) \
  	--top-module $(TOPNAME) $^ \
-	-LDFLAGS -lreadline \
 	--Mdir $(OBJ_DIR) \
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+
 
 runb: sim
 	$(PWD)/build/obj_dir/V$(TOPNAME) $(IMG).bin -b -e $(IMG).elf -d $(REF)
@@ -88,8 +89,8 @@ wave: runb
 ##b: verilog
 ##	$(shell (echo '0a'; echo '/* verilator lint_off WIDTH */'; echo '.'; echo 'wq') | ed -s $(VSRC_DIR)/top.v )
 
-gprof:
-	gprof $(PWD)/build/obj_dir/V$(TOPNAME) gmon.out > analysis.txt
+gprof:  
+	gprof $(PWD)/build/obj_dir/V$(TOPNAME)  gmon.out > analysis.txt
 	verilator_profcfunc analysis.txt > report.txt
 
 ##unit test
@@ -106,7 +107,6 @@ UNITNAME = unit
 sim_unit:$(VUNITS) $(CUNITS)
 	verilator  --cc --exe --build --trace \
  	--top-module $(UNITNAME) $^ \
-	-LDFLAGS -lreadline \
 	--Mdir $(PWD)/unit/build/obj_dir 
 	##$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 

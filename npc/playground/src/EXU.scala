@@ -192,24 +192,25 @@ class EXU extends Module{
                         Mux(EXE_reg_op(64),io.csr.val_r,
                         src2))))))
         alu.io.op  :=   Mux(EXE_reg_op(0)|EXE_reg_op(1)|EXE_reg_op(2)|EXE_reg_op(3)|EXE_reg_op(24)|EXE_reg_op(25)|EXE_reg_op(36)|EXE_reg_op(37)|EXE_reg_op(38)|EXE_reg_op(39)|EXE_reg_op(40)|EXE_reg_op(41)|EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45)|EXE_reg_op(46)|EXE_reg_op(47)|EXE_reg_op(48),1.U, //add
-                        Mux(EXE_reg_op(4)|EXE_reg_op(5),2.U,//sub
-                        Mux(EXE_reg_op(6)|EXE_reg_op(7),4.U,//and
-                        Mux(EXE_reg_op(8)|EXE_reg_op(9)|EXE_reg_op(64),8.U,//or
-                        Mux(EXE_reg_op(10)|EXE_reg_op(11),16.U,//xor
-                        Mux(EXE_reg_op(12)|EXE_reg_op(13)|EXE_reg_op(14)|EXE_reg_op(15),32.U,//sll
-                        Mux(EXE_reg_op(20)|EXE_reg_op(21)|EXE_reg_op(22)|EXE_reg_op(23),64.U,//srl
-                        Mux(EXE_reg_op(16)|EXE_reg_op(17)|EXE_reg_op(18)|EXE_reg_op(19),128.U,//sra
-                        Mux(EXE_reg_op(26)|EXE_reg_op(28)|EXE_reg_op(32)|EXE_reg_op(34),256.U,//slt
-                        Mux(EXE_reg_op(27)|EXE_reg_op(29)|EXE_reg_op(33)|EXE_reg_op(35),512.U,//sltu
-                        Mux(EXE_reg_op(30)|EXE_reg_op(31),2048.U,  //eql
-                        Mux(EXE_reg_op(50)|EXE_reg_op(51)|EXE_reg_op(53),4096.U,  //u*u
-                        Mux(EXE_reg_op(52),8192.U,            //s*s
-                        Mux(EXE_reg_op(54),16384.U,           //s*u
-                        Mux(EXE_reg_op(55)|EXE_reg_op(56),32768.U,             //s/s
-                        Mux(EXE_reg_op(57)|EXE_reg_op(58),65536.U,             //u/u
-                        Mux(EXE_reg_op(59)|EXE_reg_op(60),131072.U,            //s%s
-                        Mux(EXE_reg_op(61)|EXE_reg_op(62),262144.U,            //u%u
+                        Mux(EXE_reg_op(4)|EXE_reg_op(5),(1<<1).U,//sub
+                        Mux(EXE_reg_op(6)|EXE_reg_op(7),(1<<2).U,//and
+                        Mux(EXE_reg_op(8)|EXE_reg_op(9)|EXE_reg_op(64),(1<<3).U,//or
+                        Mux(EXE_reg_op(10)|EXE_reg_op(11),(1<<4).U,//xor
+                        Mux(EXE_reg_op(12)|EXE_reg_op(13)|EXE_reg_op(14)|EXE_reg_op(15),(1<<5).U,//sll
+                        Mux(EXE_reg_op(20)|EXE_reg_op(21)|EXE_reg_op(22)|EXE_reg_op(23),(1<<6).U,//srl
+                        Mux(EXE_reg_op(16)|EXE_reg_op(17)|EXE_reg_op(18)|EXE_reg_op(19),(1<<7).U,//sra
+                        Mux(EXE_reg_op(26)|EXE_reg_op(28)|EXE_reg_op(32)|EXE_reg_op(34),(1<<8).U,//slt
+                        Mux(EXE_reg_op(27)|EXE_reg_op(29)|EXE_reg_op(33)|EXE_reg_op(35),(1<<9).U,//sltu
+                        Mux(EXE_reg_op(30)|EXE_reg_op(31),(1<<11).U,  //eql
+                        Mux(EXE_reg_op(50)|EXE_reg_op(51)|EXE_reg_op(53),(1<<12).U,  //u*u
+                        Mux(EXE_reg_op(52),(1<<13).U,            //s*s
+                        Mux(EXE_reg_op(54),(1<<14).U,           //s*u
+                        Mux(EXE_reg_op(55)|EXE_reg_op(56),(1<<15).U,             //s/s
+                        Mux(EXE_reg_op(57)|EXE_reg_op(58),(1<<16).U,             //u/u
+                        Mux(EXE_reg_op(59)|EXE_reg_op(60),(1<<17).U,            //s%s
+                        Mux(EXE_reg_op(61)|EXE_reg_op(62),(1<<18).U,            //u%u
                         0.U))))))))))))))))))
+                        
   
         //next pc
         val next_pc_src1=Wire(UInt(64.W))

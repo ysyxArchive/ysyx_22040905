@@ -9,14 +9,16 @@
 #include "all.h"
 #include <time.h>
 
-#ifdef HAS_TRACE
+#ifdef HAS_WAVE
 #include <verilated_vcd_c.h>
-VerilatedVcdC *tfp = NULL;
 VerilatedContext *contextp = NULL;
-
-void dump_ftrace();
+VerilatedVcdC *tfp = NULL;
 #endif
+
 // #include<nvboard.h>
+#ifdef HAS_TRACE
+  void dump_ftrace();
+#endif
 
 Vtop *top = NULL;
 // void nvboard_bind_all_pins(Vtop* top);
@@ -40,12 +42,14 @@ void cpp_break()
 }
 void sim_init()
 {
-  top = new Vtop;
 #ifdef HAS_WAVE
   contextp = new VerilatedContext;
   tfp = new VerilatedVcdC;
-  contextp->traceEverOn(true);
+#endif
+  top = new Vtop;
+#ifdef HAS_WAVE
   top->trace(tfp, 0);
+  contextp->traceEverOn(true);
   tfp->open("wave.vcd");
 #endif
 }
@@ -115,8 +119,9 @@ void exec_once()
   }
 #endif
 #ifdef HAS_PERF
-  inst_num++;
+  if(top->io_valid) inst_num++;
 #endif
+
 
 #ifdef HAS_TRACE
   dump_ftrace();
@@ -139,6 +144,7 @@ void exec()
   start=clock(); 
   // printf("\n\n\n\n");
   execute(-1);
+  finish=clock();
 }
 void init(int argc, char *argv[])
 {
@@ -216,6 +222,9 @@ void dump_ftrace(){
     else ftrace_add(pc,cpu_itrace[0],1);
   }
 }
+#else
+extern "C" void set_itrace_ptr(const svOpenArrayHandle r){}
+
 #endif
 
 int main(int argc, char *argv[])
@@ -228,11 +237,13 @@ int main(int argc, char *argv[])
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
-  //结束计时
+#ifdef HAS_PERF
+  //计时
   totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
-  printf("\033[1;32mtotal time: %f s\nFreq:%f Hz\n",totaltime,inst_cnt/totaltime);
+  printf("\033[1;32mtotal time: %f s\ntotol instructions: %ld \nFreq:%f Hz\nInst:%f inst/s\nIPC:%f\n",totaltime,inst_num,cyc_num/totaltime,inst_num/totaltime,inst_num/(double)cyc_num);
 
-  printf("ICache:%f% \nDCache:%f% \n\033[0m",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32)*100.0,(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32)*100.0);
+  printf("ICache:%f%% \nDCache:%f%% \n\033[0m",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32)*100.0,(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32)*100.0);
+#endif
   sim_exit();
   //nvboard_quit();
 

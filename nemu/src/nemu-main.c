@@ -1,4 +1,4 @@
-//#define NDEBUG
+#define NDEBUG
 #include <common.h>
 
 void init_monitor(int, char *[]);
@@ -7,6 +7,7 @@ void engine_start();
 int is_exit_status_bad();
 
 int main(int argc, char *argv[]) {
+  assert(0);
   /* Initialize the monitor. */
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();

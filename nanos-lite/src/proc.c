@@ -27,7 +27,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
-  int choose = 10;
+  int choose = 0;
   switch(choose){
     case 0: naive_uload(NULL,"/bin/pal"); break;
     case 1: naive_uload(NULL,"/bin/menu"); break;

@@ -12,7 +12,7 @@ void vga_update_screen();
 void device_update() {
 static uint64_t last = 0;
   uint64_t now = get_time();
-  if (now - last < 1000000 / TIMER_HZ) {
+  if (now - last < 60 / TIMER_HZ) {
     return;
   }
   last = now;
@@ -30,7 +30,7 @@ static uint64_t last = 0;
       case SDL_KEYUP: {
         uint8_t k = event.key.keysym.scancode;
         bool is_keydown = (event.key.type == SDL_KEYDOWN);
-        //send_key(k, is_keydown);
+        send_key(k, is_keydown);
         break;
       }
       default: break;
@@ -47,5 +47,5 @@ void init_device() {
   //ioe_init();
 
   init_vga();
-  //init_i8042();
+  init_i8042();
 }

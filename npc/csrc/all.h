@@ -73,3 +73,9 @@ uint64_t get_time();
   ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \
     ioe_write(reg, &__io_param); })
 #endif
+
+#define MAP(c, f) c(f)
+#define concat_temp(x, y) x ## y
+#define concat(x, y) concat_temp(x, y)
+
+

@@ -4562,3 +4562,17 @@ WARNING: Unmatched cancel notification for request id 10578
 2023.10.15 15:11:08 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
 2023.10.15 15:12:27 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
 2023.10.15 15:13:47 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/cache/dcache.scala
+Oct 15, 2023 3:50:04 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 15, 2023 3:51:58 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 15, 2023 3:54:50 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 15, 2023 4:26:19 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 15, 2023 4:26:31 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 15, 2023 4:26:39 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Oct 15, 2023 4:26:56 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

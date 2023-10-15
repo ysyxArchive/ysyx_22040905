@@ -24,6 +24,14 @@
         "host.h": "c",
         "map.h": "c",
         "alarm.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "random": "c",
+        "utils.h": "c",
+        "functional": "c",
+        "regex": "c",
+        "difftest.h": "c",
+        "difftest-def.h": "c",
+        "common.h": "c",
+        "macro.h": "c"
     }
 }

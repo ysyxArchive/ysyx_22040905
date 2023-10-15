@@ -99,28 +99,11 @@ void *memset(void *s, int c, size_t n) {
   //panic("Not implemented");
   int* t = (int *)s;
 
-  int loop_cnt = n >> 2;
-  int rem = n & 3;
   
-  printf("%d %d\n",loop_cnt,rem);
-  while(loop_cnt --){
+  while(n --){
     *t = c;
     t ++;
   }
-  if(rem){
-    char *d = (char *)t;
-    while(rem --){
-      *d = (char)c;
-      printf("%d\n",c);
-      printf("%d\n",*d);
-      d ++;
-    }
-  }
-  for(int i=0;i<(n-1)/4+1;i++){
-    printf("%d",((int *)s)[i]);
-  }
-  putch('\n');
-  printf("%d\n",c);
   return s;
 }
 

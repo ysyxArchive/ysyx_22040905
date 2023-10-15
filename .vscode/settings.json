@@ -33,6 +33,9 @@
         "difftest-def.h": "c",
         "common.h": "c",
         "macro.h": "c",
-        "stop_token": "c"
+        "stop_token": "c",
+        "fstream": "c",
+        "ranges": "c",
+        "tuple": "c"
     }
 }

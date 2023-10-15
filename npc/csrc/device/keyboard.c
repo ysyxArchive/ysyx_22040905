@@ -77,7 +77,7 @@ void init_i8042() {
 uint32_t get_kbd(){
   i8042_data_io_handler();
   //print key_name
-  if(i8042_data_port_base[0]  != _KEY_NONE)
-    printf("%s\n",names[i8042_data_port_base[0] & ~KEYDOWN_MASK]);
+  //if(i8042_data_port_base[0]  != _KEY_NONE)
+  //  printf("%s\n",names[i8042_data_port_base[0] & ~KEYDOWN_MASK]);
   return i8042_data_port_base[0];
 }  

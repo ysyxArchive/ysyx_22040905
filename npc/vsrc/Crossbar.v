@@ -119,7 +119,6 @@ module Crossbar(
   wire  DCache_io_mem_ar_ready; // @[Crossbar.scala 24:22]
   wire  DCache_io_mem_ar_valid; // @[Crossbar.scala 24:22]
   wire [31:0] DCache_io_mem_ar_bits_addr; // @[Crossbar.scala 24:22]
-  wire [7:0] DCache_io_mem_ar_bits_len; // @[Crossbar.scala 24:22]
   wire  DCache_io_mem_r_ready; // @[Crossbar.scala 24:22]
   wire  DCache_io_mem_r_valid; // @[Crossbar.scala 24:22]
   wire [63:0] DCache_io_mem_r_bits_data; // @[Crossbar.scala 24:22]
@@ -142,7 +141,6 @@ module Crossbar(
   wire  DCache_io_ram_bits_WAY; // @[Crossbar.scala 24:22]
   wire  DCache_io_flush; // @[Crossbar.scala 24:22]
   wire [63:0] DCache_io_hitrate; // @[Crossbar.scala 24:22]
-  wire  DCache_io_uncache; // @[Crossbar.scala 24:22]
   wire  ICacheRAM_1_clock; // @[Crossbar.scala 25:25]
   wire  ICacheRAM_1_reset; // @[Crossbar.scala 25:25]
   wire [127:0] ICacheRAM_1_io_bits_Q0; // @[Crossbar.scala 25:25]
@@ -163,7 +161,6 @@ module Crossbar(
   wire  CacheArbiter_io_lsu_ar_ready; // @[Crossbar.scala 26:23]
   wire  CacheArbiter_io_lsu_ar_valid; // @[Crossbar.scala 26:23]
   wire [31:0] CacheArbiter_io_lsu_ar_bits_addr; // @[Crossbar.scala 26:23]
-  wire [7:0] CacheArbiter_io_lsu_ar_bits_len; // @[Crossbar.scala 26:23]
   wire  CacheArbiter_io_lsu_r_valid; // @[Crossbar.scala 26:23]
   wire [63:0] CacheArbiter_io_lsu_r_bits_data; // @[Crossbar.scala 26:23]
   wire  CacheArbiter_io_lsu_aw_ready; // @[Crossbar.scala 26:23]
@@ -259,8 +256,6 @@ module Crossbar(
   wire  DeviceArbiter_io_out2_b_ready; // @[Crossbar.scala 27:24]
   wire  DeviceArbiter_io_out2_b_valid; // @[Crossbar.scala 27:24]
   wire [3:0] DeviceArbiter_io_out2_b_bits_id; // @[Crossbar.scala 27:24]
-  wire  clint = io_in2_ar_bits_addr >= 32'h20000000 & io_in2_ar_bits_addr <= 32'h2000bfff | io_in2_aw_bits_addr >= 32'h20000000
-     & io_in2_aw_bits_addr <= 32'h2000bfff; // @[Crossbar.scala 37:85]
   ICache ICache ( // @[Crossbar.scala 22:22]
     .clock(ICache_clock),
     .reset(ICache_reset),
@@ -319,7 +314,6 @@ module Crossbar(
     .io_mem_ar_ready(DCache_io_mem_ar_ready),
     .io_mem_ar_valid(DCache_io_mem_ar_valid),
     .io_mem_ar_bits_addr(DCache_io_mem_ar_bits_addr),
-    .io_mem_ar_bits_len(DCache_io_mem_ar_bits_len),
     .io_mem_r_ready(DCache_io_mem_r_ready),
     .io_mem_r_valid(DCache_io_mem_r_valid),
     .io_mem_r_bits_data(DCache_io_mem_r_bits_data),
@@ -341,8 +335,7 @@ module Crossbar(
     .io_ram_bits_D(DCache_io_ram_bits_D),
     .io_ram_bits_WAY(DCache_io_ram_bits_WAY),
     .io_flush(DCache_io_flush),
-    .io_hitrate(DCache_io_hitrate),
-    .io_uncache(DCache_io_uncache)
+    .io_hitrate(DCache_io_hitrate)
   );
   ICacheRAM ICacheRAM_1 ( // @[Crossbar.scala 25:25]
     .clock(ICacheRAM_1_clock),
@@ -367,7 +360,6 @@ module Crossbar(
     .io_lsu_ar_ready(CacheArbiter_io_lsu_ar_ready),
     .io_lsu_ar_valid(CacheArbiter_io_lsu_ar_valid),
     .io_lsu_ar_bits_addr(CacheArbiter_io_lsu_ar_bits_addr),
-    .io_lsu_ar_bits_len(CacheArbiter_io_lsu_ar_bits_len),
     .io_lsu_r_valid(CacheArbiter_io_lsu_r_valid),
     .io_lsu_r_bits_data(CacheArbiter_io_lsu_r_bits_data),
     .io_lsu_aw_ready(CacheArbiter_io_lsu_aw_ready),
@@ -540,7 +532,6 @@ module Crossbar(
   assign DCache_io_ram_bits_Q0 = ICacheRAM_1_io_bits_Q0; // @[Crossbar.scala 48:15]
   assign DCache_io_ram_bits_Q1 = ICacheRAM_1_io_bits_Q1; // @[Crossbar.scala 48:15]
   assign DCache_io_flush = io_flush; // @[Crossbar.scala 50:17]
-  assign DCache_io_uncache = io_in2_ar_bits_addr >= 32'ha0000000 | io_in2_aw_bits_addr >= 32'ha0000000 | clint; // @[Crossbar.scala 51:95]
   assign ICacheRAM_1_clock = clock;
   assign ICacheRAM_1_reset = reset;
   assign ICacheRAM_1_io_bits_CEN = 1'h0; // @[Crossbar.scala 48:15]
@@ -554,7 +545,6 @@ module Crossbar(
   assign CacheArbiter_io_ifu_ar_bits_len = ICache_io_mem_ar_bits_len; // @[Crossbar.scala 54:16]
   assign CacheArbiter_io_lsu_ar_valid = DCache_io_mem_ar_valid; // @[Crossbar.scala 55:16]
   assign CacheArbiter_io_lsu_ar_bits_addr = DCache_io_mem_ar_bits_addr; // @[Crossbar.scala 55:16]
-  assign CacheArbiter_io_lsu_ar_bits_len = DCache_io_mem_ar_bits_len; // @[Crossbar.scala 55:16]
   assign CacheArbiter_io_lsu_aw_valid = DCache_io_mem_aw_valid; // @[Crossbar.scala 55:16]
   assign CacheArbiter_io_lsu_aw_bits_addr = DCache_io_mem_aw_bits_addr; // @[Crossbar.scala 55:16]
   assign CacheArbiter_io_lsu_w_valid = DCache_io_mem_w_valid; // @[Crossbar.scala 55:16]

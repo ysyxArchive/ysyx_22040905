@@ -9,6 +9,7 @@ module CacheArbiter(
   output        io_lsu_ar_ready,
   input         io_lsu_ar_valid,
   input  [31:0] io_lsu_ar_bits_addr,
+  input  [7:0]  io_lsu_ar_bits_len,
   output        io_lsu_r_valid,
   output [63:0] io_lsu_r_bits_data,
   output        io_lsu_aw_ready,
@@ -45,6 +46,7 @@ module CacheArbiter(
   wire [1:0] rstate = io_out_r_bits_id == 4'h1 ? 2'h2 : 2'h1; // @[Arbiter.scala 18:16]
   wire [3:0] _GEN_0 = arstate == 2'h2 ? 4'h1 : 4'h0; // @[Arbiter.scala 29:33 30:25 39:25]
   wire [31:0] _GEN_1 = arstate == 2'h2 ? io_lsu_ar_bits_addr : 32'h0; // @[Arbiter.scala 29:33 31:25 40:25]
+  wire [7:0] _GEN_2 = arstate == 2'h2 ? io_lsu_ar_bits_len : 8'h0; // @[Arbiter.scala 29:33 32:25 41:25]
   wire [2:0] _GEN_3 = arstate == 2'h2 ? 3'h3 : 3'h0; // @[Arbiter.scala 29:33 33:25 42:25]
   wire  _GEN_5 = arstate == 2'h2 & io_lsu_ar_valid; // @[Arbiter.scala 29:33 35:25 44:25]
   wire  _GEN_7 = arstate == 2'h2 & io_out_ar_ready; // @[Arbiter.scala 29:33 37:25 46:25]
@@ -63,7 +65,7 @@ module CacheArbiter(
   assign io_lsu_b_valid = io_out_b_valid; // @[Arbiter.scala 119:23]
   assign io_out_ar_valid = arstate == 2'h1 ? io_ifu_ar_valid : _GEN_5; // @[Arbiter.scala 20:26 26:25]
   assign io_out_ar_bits_addr = arstate == 2'h1 ? io_ifu_ar_bits_addr : _GEN_1; // @[Arbiter.scala 20:26 22:25]
-  assign io_out_ar_bits_len = arstate == 2'h1 ? io_ifu_ar_bits_len : 8'h0; // @[Arbiter.scala 20:26 23:25]
+  assign io_out_ar_bits_len = arstate == 2'h1 ? io_ifu_ar_bits_len : _GEN_2; // @[Arbiter.scala 20:26 23:25]
   assign io_out_ar_bits_size = arstate == 2'h1 ? 3'h3 : _GEN_3; // @[Arbiter.scala 20:26 24:25]
   assign io_out_ar_bits_id = arstate == 2'h1 ? 4'h0 : _GEN_0; // @[Arbiter.scala 20:26 21:25]
   assign io_out_r_ready = rstate == 2'h1 | _T_3; // @[Arbiter.scala 49:25 62:27]

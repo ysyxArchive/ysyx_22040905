@@ -48,7 +48,7 @@ class Crossbar extends Module{
     dcache.ram<>dcacheram
     dcache.id := 1.U
     dcache.flush:=io.flush
-    dcache.uncache :=1.U//(out2.ar.bits.addr >= DEVICE_BASE) || (out2.aw.bits.addr >= DEVICE_BASE) | clint
+    dcache.uncache :=(out2.ar.bits.addr >= DEVICE_BASE) || (out2.aw.bits.addr >= DEVICE_BASE) | clint
 
     //cache to arbiter
     arbiter.ifu<>icache.mem

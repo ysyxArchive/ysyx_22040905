@@ -117,6 +117,7 @@ void *memset(void *s, int c, size_t n) {
     printf("%c",((char *)s)[i]);
   }
   putch('\n');
+  printf("%d\n",c);
   return s;
 }
 

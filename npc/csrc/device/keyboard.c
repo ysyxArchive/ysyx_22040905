@@ -15,10 +15,18 @@ f(UP) f(DOWN) f(LEFT) f(RIGHT) f(INSERT) f(DELETE) f(HOME) f(END) f(PAGEUP) f(PA
 
 #define _KEY_NAME(k) _KEY_##k,
 
+
 enum {
   _KEY_NONE = 0,
   MAP(_KEYS, _KEY_NAME)
 };
+
+#define NAMEINIT(k)  [ _KEY_##k ] = #k,
+static const char *names[] = {
+  [ _KEY_NONE ] = "NONE",
+  _KEYS(NAMEINIT)
+};
+
 
 #define SDL_KEYMAP(k) keymap[concat(SDL_SCANCODE_, k)] = concat(_KEY_, k);
 static uint32_t keymap[256] = {};
@@ -68,5 +76,8 @@ void init_i8042() {
 
 uint32_t get_kbd(){
   i8042_data_io_handler();
+  //print key_name
+  if(i8042_data_port_base[0]  != _KEY_NONE)
+    printf("%s\n",names[i8042_data_port_base[0] & ~KEYDOWN_MASK]);
   return i8042_data_port_base[0];
 }  

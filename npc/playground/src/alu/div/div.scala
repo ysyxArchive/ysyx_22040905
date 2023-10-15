@@ -34,8 +34,8 @@ class div(xlen: Int) extends Module{
 
   val sub =Wire(UInt((xlen+1).W)) 
 
-  val dividend_sign = io.dividend(xlen-1)
-  val divisor_sign = io.divisor(xlen-1)
+  val dividend_sign = io.dividend(xlen-1) & is_dividing_signed
+  val divisor_sign = io.divisor(xlen-1) & is_dividing_signed
   val quotient_sign = RegInit(false.B)
   val remainder_sign = RegInit(false.B)
   val out_valid = RegInit(false.B)
@@ -84,6 +84,9 @@ class div(xlen: Int) extends Module{
     out_valid := false.B
   }
 
+  //when(out_valid){
+  //  printf("dividend: %x, divisor: %x, quotient: %x, remainder: %x, divw: %x, div_signed: %x\n", io.dividend, io.divisor, io.quotient, io.remainder,io.divw,io.div_signed)
+  //}
   //printf("%d %x %x %x %x %x\n",shift_count,dividend,divisor,quotient,remainder,dividend(2*xlen-1, xlen))
 
   io.out_valid := out_valid

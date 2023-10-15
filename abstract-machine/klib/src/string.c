@@ -100,14 +100,9 @@ void *memset(void *s, int c, size_t n) {
   char* t = (char *)s;
 
   
-  while(n > 4){
-    *(int *)t = c;
-    t += 4;
-    n--;
-  }
-  while(n--){
+  while(n --){
     *t = c;
-    t++;
+    t ++;
   }
   return s;
 }

@@ -113,8 +113,8 @@ void *memset(void *s, int c, size_t n) {
       d ++;
     }
   }
-  for(int i=0;i<n;i++){
-    printf("%c",((char *)s)[i]);
+  for(int i=0;i<n/4;i++){
+    printf("%c",((int *)s)[i]);
   }
   putch('\n');
   printf("%d\n",c);

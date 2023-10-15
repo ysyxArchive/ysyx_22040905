@@ -97,11 +97,11 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 
 void *memset(void *s, int c, size_t n) {
   //panic("Not implemented");
-  int* t = (int *)s;
+  char* t = (char *)s;
 
   
   while(n --){
-    *t = c;
+    *t = (char)c;
     t ++;
   }
   return s;

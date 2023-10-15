@@ -55,9 +55,7 @@ void send_key(uint8_t scancode, bool is_keydown) {
 
 static uint32_t *i8042_data_port_base = NULL;
 
-static void i8042_data_io_handler(uint32_t offset, int len, bool is_write) {
-  assert(!is_write);
-  assert(offset == 0);
+static void i8042_data_io_handler() {
   i8042_data_port_base[0] = key_dequeue();
 }
 
@@ -67,3 +65,8 @@ void init_i8042() {
   i8042_data_port_base[0] = _KEY_NONE;
   init_keymap();
 }
+
+uint32_t get_kbd(){
+  i8042_data_io_handler();
+  return i8042_data_port_base[0];
+}  

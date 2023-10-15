@@ -62,8 +62,9 @@ uint32_t screen_size();
 void write_vmem(uint32_t addr, int len, uint64_t data); 
 uint64_t get_vgactl_addr(uint32_t raddr);
 void write_vgactl_addr(uint32_t addr,int len,uint64_t data);
-
+uint32_t get_kbd();
 uint64_t get_time();
+
 #define io_read(reg) \
   ({ reg##_T __io_param; \
     ioe_read(reg, &__io_param); \
@@ -77,5 +78,6 @@ uint64_t get_time();
 #define MAP(c, f) c(f)
 #define concat_temp(x, y) x ## y
 #define concat(x, y) concat_temp(x, y)
+
 
 

@@ -32,6 +32,7 @@
         "difftest.h": "c",
         "difftest-def.h": "c",
         "common.h": "c",
-        "macro.h": "c"
+        "macro.h": "c",
+        "stop_token": "c"
     }
 }

@@ -110,7 +110,9 @@ extern "C" void pmem_read(int raddr, long long *rdata) {
   uint64_t addr=((uint64_t)raddr)&((1ull<<32)-1);
   if(addr< 0x80000000) { *rdata=0;return; }
 
-  if(addr==RTC_ADDR){
+  if(addr<DEVICE_BASE)
+     *rdata=(long long)pmem_read((((uint64_t)addr)), 8);
+  else if(addr==RTC_ADDR){
     difftest_skip_ref();
     *rdata=get_time()%(1ll<<32);
     //return;
@@ -125,7 +127,11 @@ extern "C" void pmem_read(int raddr, long long *rdata) {
     *rdata=get_vgactl_addr(addr);
     //return;
   }
-  else *rdata=(long long)pmem_read((((uint64_t)addr)), 8);
+  else if(addr == KBD_ADDR){
+    difftest_skip_ref();
+    *rdata=get_kbd();
+    //return;
+  }
 #ifdef HAS_TRACE
   FILE *fp;
   fp=fopen("build/mtrace.txt","a");

@@ -102,6 +102,7 @@ void *memset(void *s, int c, size_t n) {
   int loop_cnt = n >> 2;
   int rem = n & 3;
   
+  printf("%d %d\n",loop_cnt,rem);
   while(loop_cnt --){
     *t = c;
     t ++;

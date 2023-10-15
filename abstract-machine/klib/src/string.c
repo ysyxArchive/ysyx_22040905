@@ -122,13 +122,32 @@ void *memmove(void *dst, const void *src, size_t n) {
   return dst;
 }
 
+
 void *memcpy(void *out, const void *in, size_t n) {
   //panic("Not implemented");
   if(out == NULL || in == NULL) return NULL;
-  char *out1=(char *)out;
-  char *in1=(char *)in;
-  while(n--)
-    *out1++=*in1++;
+
+  int* out1 = (int *)out;
+  int* in1 = (int *)in;
+
+
+  int loop_cnt = n >> 2;
+  int rem = n & 3;
+  
+  while(loop_cnt --){
+    *out1 = *in1;
+    out1 ++;
+    in1 ++;
+  }
+  if(rem){
+    char *s = (char *)out1;
+    char *t = (char *)in1;
+    while(rem --){
+      *s = *t;
+      s ++;
+      t ++;
+    }
+  }
   return out;
 } 
 

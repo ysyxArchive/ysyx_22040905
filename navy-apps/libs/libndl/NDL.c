@@ -87,14 +87,12 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
-  printf("NDL_Init\n");
   gettimeofday(&tv,&tz);
   begin_msec=tv.tv_sec*1000+tv.tv_usec/1000;
   fb=open("/dev/fb",O_WRONLY);
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  printf("NDL_Init done\n");
   return 0;
 }
 

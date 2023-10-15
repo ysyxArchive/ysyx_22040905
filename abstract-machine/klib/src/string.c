@@ -107,7 +107,7 @@ void *memset(void *s, int c, size_t n) {
     t ++;
   }
   if(rem){
-    char *d = (char *)s;
+    char *d = (char *)t;
     while(rem --){
       *d = (char)c;
       d ++;

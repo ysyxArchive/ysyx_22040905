@@ -111,8 +111,8 @@ void *memset(void *s, int c, size_t n) {
     char *d = (char *)t;
     while(rem --){
       *d = (char)c;
-      printf("%c\n",c);
-      printf("%c\n",*d);
+      printf("%d\n",c);
+      printf("%d\n",*d);
       d ++;
     }
   }

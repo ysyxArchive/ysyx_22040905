@@ -129,26 +129,13 @@ void *memcpy(void *out, const void *in, size_t n) {
   //panic("Not implemented");
   if(out == NULL || in == NULL) return NULL;
 
-  int* out1 = (int *)out;
-  int* in1 = (int *)in;
+  char *out1=(char *)out;
+  char *in1=(char *)in;
 
-
-  int loop_cnt = n >> 2;
-  int rem = n & 3;
-  
-  while(loop_cnt --){
+  while(n --){
     *out1 = *in1;
     out1 ++;
     in1 ++;
-  }
-  if(rem){
-    char *s = (char *)out1;
-    char *t = (char *)in1;
-    while(rem --){
-      *s = *t;
-      s ++;
-      t ++;
-    }
   }
   return out;
 } 

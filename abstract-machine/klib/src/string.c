@@ -97,11 +97,23 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 
 void *memset(void *s, int c, size_t n) {
   //panic("Not implemented");
-  const unsigned char uc = c;
-	unsigned char *su;
-	for(su = s;0 < n;++su,--n)
-		*su = uc;
-	return s;
+  int* t = (int *)s;
+
+  int loop_cnt = n >> 2;
+  int rem = n & 3;
+  
+  while(loop_cnt --){
+    *t = c;
+    t ++;
+  }
+  if(rem){
+    char *d = (char *)s;
+    while(rem --){
+      *d = (char)c;
+      d ++;
+    }
+  }
+  return s;
 }
 
 void *memmove(void *dst, const void *src, size_t n) {

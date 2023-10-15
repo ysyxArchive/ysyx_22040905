@@ -116,7 +116,7 @@ void *memset(void *s, int c, size_t n) {
       d ++;
     }
   }
-  for(int i=0;i<n/4;i++){
+  for(int i=0;i<(n-1)/4+1;i++){
     printf("%d",((int *)s)[i]);
   }
   putch('\n');

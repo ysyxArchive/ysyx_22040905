@@ -12,7 +12,7 @@ void vga_update_screen();
 void device_update() {
 static uint64_t last = 0;
   uint64_t now = get_time();
-  if (now - last < 12000 / TIMER_HZ) {
+  if (now - last < 1200 / TIMER_HZ) {
     return;
   }
   last = now;

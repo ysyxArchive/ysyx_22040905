@@ -5025,3 +5025,6 @@ WARNING: Unmatched cancel notification for request id 1793
 2023.10.15 22:39:02 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
 2023.10.15 22:39:12 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
 2023.10.15 23:34:27 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+2023.10.16 00:22:42 WARN  no build target for: /home/cyh/ysyx-workbench/npc/playground/src/bus/Crossbar.scala
+Oct 16, 2023 12:23:11 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2283

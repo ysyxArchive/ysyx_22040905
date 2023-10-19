@@ -64,6 +64,7 @@ uint64_t get_vgactl_addr(uint32_t raddr);
 void write_vgactl_addr(uint32_t addr,int len,uint64_t data);
 uint32_t get_kbd();
 uint64_t get_time();
+void init_time();
 
 #define io_read(reg) \
   ({ reg##_T __io_param; \

@@ -151,6 +151,7 @@ void init(int argc, char *argv[])
 {
   state = NPC_RUNNING;
   sim_init();
+  init_time();
   // nvboard_bind_all_pins(&dut);
   // nvboard_init();
   pmem_init(argv[1]);

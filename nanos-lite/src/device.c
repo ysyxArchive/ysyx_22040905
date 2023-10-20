@@ -44,7 +44,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   strcpy((char *)buf,buff);
   return lenn;
 }
-uint8_t pixels[400*300*4];
+uint8_t pixels[800*600*4];
 AM_GPU_FBDRAW_T ctl;
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //printf("%d\n",offset);
@@ -59,7 +59,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   ctl.h=((offset+len)/4-1)/cfg.width-ctl.y+1;
   ctl.w=((offset+len)/4-1)%cfg.width+1-ctl.x;
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
-  if(!(ctl.y<300&&ctl.x<400&&(ctl.h+ctl.y)<=300&&(ctl.w+ctl.x)<=400)){
+  if(!(ctl.y<600&&ctl.x<800&&(ctl.h+ctl.y)<=600&&(ctl.w+ctl.x)<=800)){
     printf("x:%d y:%d w:%d h:%d\n",ctl.x,ctl.y,ctl.w,ctl.h);
     assert(0);
   }

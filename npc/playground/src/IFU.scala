@@ -50,8 +50,9 @@ class IFU extends Module{
   io.pc:=IF_reg_pc
   next_pc:= Mux(io.irq.asBool,io.irq_nextpc,
             Mux(io.clearJump.asBool,io.pc_dnpc,
-            Mux(io.out.fire,IF_reg_pc+4.U,
-            IF_reg_pc)))
+            Mux(io.out.fire,
+              Mux(pre_decode.io.jal.asBool,IF_reg_pc+pre_decode.io.jal_off,IF_reg_pc+4.U),
+              IF_reg_pc)))
 
   io.lm.ar.bits.addr:=next_pc(31,0)
   io.lm.ar.valid:=(~reset.asBool & next_valid )
@@ -81,9 +82,11 @@ class Pre_Decode extends Module{
   val io=IO(new Bundle{
     val inst=Input(UInt(32.W))
     val jump=Output(UInt(1.W))
+    val jal=Output(UInt(1.W))
+    val jal_off=Output(UInt(32.W))
   })
   val inst=io.inst
-  io.jump:=(inst(6,0)==="b1101111".U)                          |  //jal,J
+  io.jump:= 
            (inst(6,0)==="b1100111".U)&(inst(14,12)==="b000".U) |  //jalr,I
            (inst(6,0)==="b1100011".U)&(inst(14,12)==="b000".U) |  //beq,B
            (inst(6,0)==="b1100011".U)&(inst(14,12)==="b001".U) |  //bne,B
@@ -94,4 +97,7 @@ class Pre_Decode extends Module{
            (inst==="b00000000000000000000000001110011".U)      |  //ecall,N
            (inst==="b00110000001000000000000001110011".U)      |  //mret,N
            (inst==="b00000000000100000000000001110011".U)         //ebreak,N
+
+  io.jal:=(inst(6,0)==="b1101111".U)                              //jal,J
+  io.jal_off:=Cat(Fill(43,inst(31)),Cat(inst(31),Cat(inst(19,12),Cat(inst(20),Cat(inst(30,21),0.U))))) //sext(offset)
 }

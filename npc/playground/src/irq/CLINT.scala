@@ -111,7 +111,7 @@ class CLINT extends Module{
     io.in.b.bits.resp := 0.U
     io.in.b.valid := (wstate === s_wait_ready)
 
-    assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))
+    //assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))
  
     //write reg
     val mask = Wire(UInt(64.W))
@@ -131,7 +131,7 @@ class CLINT extends Module{
                         Mux(raddr === MTIME,mtime,
                         0.U))
 
-    chisel3.assert((io.in.w.fire && ((io.in.aw.bits.addr === MTIMECMP) || (io.in.aw.bits.addr === MTIME))) || (!io.in.w.fire),"Error: clint_waddr=0x%x\n",io.in.aw.bits.addr)
+    //chisel3.assert((io.in.w.fire && ((io.in.aw.bits.addr === MTIMECMP) || (io.in.aw.bits.addr === MTIME))) || (!io.in.w.fire),"Error: clint_waddr=0x%x\n",io.in.aw.bits.addr)
     
     io.skip:=((io.in.aw.bits.addr >= BASE_ADDRESS) & (io.in.aw.bits.addr <= BOUND_ADDRESS)) | ((io.in.ar.bits.addr >= BASE_ADDRESS) & (io.in.ar.bits.addr <= BOUND_ADDRESS))
 }

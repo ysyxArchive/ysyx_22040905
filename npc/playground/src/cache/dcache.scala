@@ -13,7 +13,7 @@ class DCache extends Module {
     val uncache = Input(Bool())
   })
   //config
-  val cacheCapacity: Int = 4*1024 //4KB
+  val cacheCapacity: Int = 4*1024/64 //4KB
   val cacheAssociativity: Int = 2 //二路
   val cacheLineSize: Int  = 16    //16B
   val DEVICE_BASE :UInt = "xa0000000".U 

@@ -14,7 +14,7 @@ class ICache extends Module {
     //val uncache = Input(UInt(1.W))
   })
   //config
-  val cacheCapacity: Int = 4*1024 //4KB
+  val cacheCapacity: Int = 4*1024/64 //4KB
   val cacheAssociativity: Int = 2 //二路
   val cacheLineSize: Int  = 16    //16B
   val DEVICE_BASE :UInt = "xa0000000".U 

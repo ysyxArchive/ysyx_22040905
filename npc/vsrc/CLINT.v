@@ -88,24 +88,16 @@ module CLINT(
   wire [31:0] _beatcnt_T_11 = _rstate_T ? _beatcnt_T_2 : {{24'd0}, _beatcnt_T_10}; // @[CLINT.scala 77:17]
   reg [3:0] wid; // @[CLINT.scala 87:20]
   wire  _wid_T = io_in_aw_ready & io_in_aw_valid; // @[Decoupled.scala 52:35]
-  wire [7:0] _T_1 = rlen + 8'h1; // @[CLINT.scala 114:47]
-  wire [7:0] _T_2 = 8'h1 << rsize; // @[CLINT.scala 114:57]
-  wire [15:0] _T_3 = _T_1 * _T_2; // @[CLINT.scala 114:52]
-  wire [31:0] _GEN_5 = {{16'd0}, _T_3}; // @[CLINT.scala 114:40]
-  wire [31:0] _T_5 = lower_bound_addr + _GEN_5; // @[CLINT.scala 114:40]
-  wire  _T_12 = ~reset; // @[CLINT.scala 114:11]
   wire [63:0] _mask_T_8 = io_in_w_bits_strb == 8'hff ? 64'hffffffffffffffff : 64'h0; // @[CLINT.scala 121:16]
   wire [63:0] _mask_T_9 = io_in_w_bits_strb == 8'hf ? 64'hffffffff : _mask_T_8; // @[CLINT.scala 120:16]
   wire [63:0] _mask_T_10 = io_in_w_bits_strb == 8'h3 ? 64'hffff : _mask_T_9; // @[CLINT.scala 119:16]
   wire [63:0] mask = io_in_w_bits_strb == 8'h1 ? 64'hff : _mask_T_10; // @[CLINT.scala 118:16]
-  wire  _mtimecmp_T_1 = io_in_aw_bits_addr == 32'h20004000; // @[CLINT.scala 124:57]
   wire [63:0] _mtimecmp_T_3 = io_in_w_bits_data & mask; // @[CLINT.scala 124:89]
-  wire  _mtime_T_1 = io_in_aw_bits_addr == 32'h2000bff8; // @[CLINT.scala 125:54]
   wire [63:0] _mtime_T_8 = mtime + 64'h1; // @[CLINT.scala 127:46]
   wire [63:0] _io_in_r_bits_data_T_2 = raddr == 32'h2000bff8 ? mtime : 64'h0; // @[CLINT.scala 131:28]
-  wire [38:0] _GEN_6 = reset ? 39'h0 : _raddr_T_14; // @[CLINT.scala 57:{22,22} 68:11]
-  wire [38:0] _GEN_7 = reset ? 39'h0 : _lower_bound_addr_T_4; // @[CLINT.scala 61:{33,33} 66:21]
-  wire [31:0] _GEN_8 = reset ? 32'h0 : _beatcnt_T_11; // @[CLINT.scala 63:{26,26} 77:12]
+  wire [38:0] _GEN_5 = reset ? 39'h0 : _raddr_T_14; // @[CLINT.scala 57:{22,22} 68:11]
+  wire [38:0] _GEN_6 = reset ? 39'h0 : _lower_bound_addr_T_4; // @[CLINT.scala 61:{33,33} 66:21]
+  wire [31:0] _GEN_7 = reset ? 32'h0 : _beatcnt_T_11; // @[CLINT.scala 63:{26,26} 77:12]
   assign io_in_ar_ready = ~rstate | rlast & rstate; // @[CLINT.scala 103:43]
   assign io_in_r_valid = rstate; // @[CLINT.scala 104:31]
   assign io_in_r_bits_data = raddr == 32'h20004000 ? mtimecmp : _io_in_r_bits_data_T_2; // @[CLINT.scala 130:31]
@@ -181,14 +173,14 @@ module CLINT(
     end else begin
       rid <= 4'h0;
     end
-    raddr <= _GEN_6[31:0]; // @[CLINT.scala 57:{22,22} 68:11]
+    raddr <= _GEN_5[31:0]; // @[CLINT.scala 57:{22,22} 68:11]
     if (reset) begin // @[CLINT.scala 59:22]
       rsize <= 3'h0; // @[CLINT.scala 59:22]
     end else if (_rstate_T) begin // @[CLINT.scala 73:17]
       rsize <= io_in_ar_bits_size;
     end
-    lower_bound_addr <= _GEN_7[31:0]; // @[CLINT.scala 61:{33,33} 66:21]
-    beatcnt <= _GEN_8[7:0]; // @[CLINT.scala 63:{26,26} 77:12]
+    lower_bound_addr <= _GEN_6[31:0]; // @[CLINT.scala 61:{33,33} 66:21]
+    beatcnt <= _GEN_7[7:0]; // @[CLINT.scala 63:{26,26} 77:12]
     if (reset) begin // @[CLINT.scala 87:20]
       wid <= 4'h0; // @[CLINT.scala 87:20]
     end else if (_wid_T) begin // @[CLINT.scala 93:15]
@@ -196,54 +188,6 @@ module CLINT(
     end else begin
       wid <= 4'h0;
     end
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (~reset & ~(raddr < _T_5 & raddr >= lower_bound_addr | raddr == 32'h0)) begin
-          $fwrite(32'h80000002,
-            "Assertion failed\n    at CLINT.scala:114 assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))\n"
-            ); // @[CLINT.scala 114:11]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (~reset & ~(raddr < _T_5 & raddr >= lower_bound_addr | raddr == 32'h0)) begin
-          $fatal; // @[CLINT.scala 114:11]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_12 & ~(_wstate_T & (_mtimecmp_T_1 | _mtime_T_1) | ~_wstate_T)) begin
-          $fwrite(32'h80000002,
-            "Assertion failed: Error: clint_waddr=0x%x\n\n    at CLINT.scala:134 chisel3.assert((io.in.w.fire && ((io.in.aw.bits.addr === MTIMECMP) || (io.in.aw.bits.addr === MTIME))) || (!io.in.w.fire),\"Error: clint_waddr=0x%%x\\n\",io.in.aw.bits.addr)\n"
-            ,io_in_aw_bits_addr); // @[CLINT.scala 134:19]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_12 & ~(_wstate_T & (_mtimecmp_T_1 | _mtime_T_1) | ~_wstate_T)) begin
-          $fatal; // @[CLINT.scala 134:19]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
   end
 // Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN

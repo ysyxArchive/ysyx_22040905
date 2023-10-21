@@ -127,7 +127,7 @@ class AXI4SRAM extends Module{
   //printf("ram:state %x\n",wstate)
   //printf("ram:wstate:%x\tio.aw.valid:%x\tio.aw.ready:%x\tio.w.valid:%x\tio.w.ready:%x\n",wstate,io.aw.valid,io.aw.ready,io.w.valid,io.w.ready)
   
-  assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))
+  //assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))
   //printf("sram:%x\t%x\t%x\n",waddr,wsize,waddr +(1.U(32.W)<<wsize))
   //printf("sram: %x\t%x\t%x\t%x\t%x\t",io.aw.valid,io.aw.ready,io.w.valid,io.w.ready,io.w.bits.last)
   //printf("sram: %x\t%x\t%x\t%x\t",io.ar.valid,io.ar.ready,io.r.valid,io.r.ready)

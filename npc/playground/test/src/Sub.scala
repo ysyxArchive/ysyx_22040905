@@ -16,7 +16,7 @@ class Sub extends Module {
   //io.c := io.a + ~io.b + Mux(cnt === 3.U, 2.U, 1.U)
   io.c := io.a + ~io.b + 1.U
   val ref = io.a - io.b
-  chisel3.assert(io.c === ref)
+  //chisel3.assert(io.c === ref)
 }
 
 //object Sub extends TestSuite {

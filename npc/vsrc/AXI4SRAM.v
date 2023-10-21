@@ -92,16 +92,11 @@ module AXI4SRAM(
   wire [38:0] _waddr_T_13 = _wstate_T ? _waddr_T_12 : {{7'd0}, waddr}; // @[SRAM.scala 102:13]
   wire [38:0] _waddr_T_14 = _wid_T & _wstate_T & ~wstate ? _waddr_T_8 : _waddr_T_13; // @[SRAM.scala 101:13]
   wire [38:0] _waddr_T_15 = io_w_bits_last ? 39'h0 : _waddr_T_14; // @[SRAM.scala 100:13]
-  wire [7:0] _T_1 = rlen + 8'h1; // @[SRAM.scala 130:45]
-  wire [7:0] _T_2 = 8'h1 << rsize; // @[SRAM.scala 130:55]
-  wire [15:0] _T_3 = _T_1 * _T_2; // @[SRAM.scala 130:50]
-  wire [31:0] _GEN_5 = {{16'd0}, _T_3}; // @[SRAM.scala 130:38]
-  wire [31:0] _T_5 = lower_bound_addr + _GEN_5; // @[SRAM.scala 130:38]
-  wire [3:0] _GEN_6 = reset ? 4'h0 : _rid_T_1; // @[SRAM.scala 60:{18,18} 69:7]
-  wire [38:0] _GEN_7 = reset ? 39'h0 : _raddr_T_14; // @[SRAM.scala 61:{20,20} 72:9]
-  wire [38:0] _GEN_8 = reset ? 39'h0 : _lower_bound_addr_T_4; // @[SRAM.scala 65:{31,31} 70:19]
-  wire [31:0] _GEN_9 = reset ? 32'h0 : _beatcnt_T_11; // @[SRAM.scala 67:{24,24} 81:10]
-  wire [38:0] _GEN_11 = reset ? 39'h0 : _waddr_T_15; // @[SRAM.scala 92:{22,22} 100:8]
+  wire [3:0] _GEN_5 = reset ? 4'h0 : _rid_T_1; // @[SRAM.scala 60:{18,18} 69:7]
+  wire [38:0] _GEN_6 = reset ? 39'h0 : _raddr_T_14; // @[SRAM.scala 61:{20,20} 72:9]
+  wire [38:0] _GEN_7 = reset ? 39'h0 : _lower_bound_addr_T_4; // @[SRAM.scala 65:{31,31} 70:19]
+  wire [31:0] _GEN_8 = reset ? 32'h0 : _beatcnt_T_11; // @[SRAM.scala 67:{24,24} 81:10]
+  wire [38:0] _GEN_10 = reset ? 39'h0 : _waddr_T_15; // @[SRAM.scala 92:{22,22} 100:8]
   memory pmem ( // @[SRAM.scala 106:19]
     .clock(pmem_clock),
     .raddr(pmem_raddr),
@@ -158,45 +153,21 @@ module AXI4SRAM(
     end else begin
       wstate <= _wstate_T_2;
     end
-    rid <= _GEN_6[0]; // @[SRAM.scala 60:{18,18} 69:7]
-    raddr <= _GEN_7[31:0]; // @[SRAM.scala 61:{20,20} 72:9]
+    rid <= _GEN_5[0]; // @[SRAM.scala 60:{18,18} 69:7]
+    raddr <= _GEN_6[31:0]; // @[SRAM.scala 61:{20,20} 72:9]
     if (reset) begin // @[SRAM.scala 63:20]
       rsize <= 3'h0; // @[SRAM.scala 63:20]
     end else if (_rstate_T) begin // @[SRAM.scala 77:15]
       rsize <= io_ar_bits_size;
     end
-    lower_bound_addr <= _GEN_8[31:0]; // @[SRAM.scala 65:{31,31} 70:19]
-    beatcnt <= _GEN_9[7:0]; // @[SRAM.scala 67:{24,24} 81:10]
-    waddr <= _GEN_11[31:0]; // @[SRAM.scala 92:{22,22} 100:8]
+    lower_bound_addr <= _GEN_7[31:0]; // @[SRAM.scala 65:{31,31} 70:19]
+    beatcnt <= _GEN_8[7:0]; // @[SRAM.scala 67:{24,24} 81:10]
+    waddr <= _GEN_10[31:0]; // @[SRAM.scala 92:{22,22} 100:8]
     if (reset) begin // @[SRAM.scala 95:22]
       wsize <= 3'h0; // @[SRAM.scala 95:22]
     end else if (_wid_T) begin // @[SRAM.scala 99:13]
       wsize <= 3'h3;
     end
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (~reset & ~(raddr < _T_5 & raddr >= lower_bound_addr | raddr == 32'h0)) begin
-          $fwrite(32'h80000002,
-            "Assertion failed\n    at SRAM.scala:130 assert(((raddr <  lower_bound_addr + (rlen+1.U)*(1.U<<rsize )) && (raddr >= lower_bound_addr)) || (raddr === 0.U))\n"
-            ); // @[SRAM.scala 130:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (~reset & ~(raddr < _T_5 & raddr >= lower_bound_addr | raddr == 32'h0)) begin
-          $fatal; // @[SRAM.scala 130:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
   end
 // Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN

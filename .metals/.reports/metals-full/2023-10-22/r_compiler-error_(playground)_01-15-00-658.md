@@ -1,3 +1,13 @@
+file://<WORKSPACE>/npc/playground/src/EXU.scala
+### java.lang.StringIndexOutOfBoundsException: Range [1476, 1476 + -11) out of bounds for length 13904
+
+occurred in the presentation compiler.
+
+action parameters:
+offset: 1476
+uri: file://<WORKSPACE>/npc/playground/src/EXU.scala
+text:
+```scala
 import chisel3._
 import chisel3.util._
 import chisel3.stage._
@@ -37,10 +47,36 @@ class EXU extends Module{
         val EXE_reg_imm=RegEnable(io.in.bits.imm,0.U(64.W),io.in.fire)
         val EXE_reg_op=RegEnable(io.in.bits.op,0.U(80.W),io.in.fire)
         val EXE_reg_typ=RegEnable(io.in.bits.typ,0.U(6.W),io.in.fire)
+        val EXE_reg_valid=RegEnable()@@,0.U(1.W),io.in.fire)
         val EXE_reg_isJump=RegEnable(io.in.bits.isJump,0.U(1.W),io.in.fire)
         val EXE_reg_clearidx=RegEnable(io.in.bits.clearidx,0.U(5.W),io.in.fire)
-        val EXE_reg_valid=RegInit(1.U(1.W))
 
+
+        when(flush.asBool|reset.asBool){
+            EXE_reg_pc:=0.U
+            EXE_reg_inst:=0.U
+            EXE_reg_rs1:=0.U
+            EXE_reg_rs2:=0.U
+            EXE_reg_rd:=0.U
+            EXE_reg_imm:=0.U
+            EXE_reg_op:=0.U
+            EXE_reg_typ:=0.U
+            EXE_reg_valid:=0.U
+            EXE_reg_isJump:=0.U
+            EXE_reg_clearidx:=0.U
+        }.elsewhen(io.in.fire){
+            EXE_reg_pc:=io.in.bits.pc
+            EXE_reg_inst:=io.in.bits.inst
+            EXE_reg_rs1:=io.in.bits.rs1
+            EXE_reg_rs2:=io.in.bits.rs2
+            EXE_reg_rd:=io.in.bits.rd
+            EXE_reg_imm:=io.in.bits.imm
+            EXE_reg_op:=io.in.bits.op
+            EXE_reg_typ:=io.in.bits.typ
+            EXE_reg_valid:=1.U
+            EXE_reg_isJump:=io.in.bits.isJump
+            EXE_reg_clearidx:=io.in.bits.clearidx
+        }
 
 
         io.out.bits.isJump:=EXE_reg_isJump
@@ -239,3 +275,35 @@ class EXU extends Module{
         io.out.bits.inst:=EXE_reg_inst
         io.out.bits.pc:=EXE_reg_pc
 }
+```
+
+
+
+#### Error stacktrace:
+
+```
+java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:55)
+	java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:52)
+	java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	java.base/jdk.internal.util.Preconditions.outOfBoundsCheckFromIndexSize(Preconditions.java:118)
+	java.base/jdk.internal.util.Preconditions.checkFromIndexSize(Preconditions.java:397)
+	java.base/java.lang.String.checkBoundsOffCount(String.java:4577)
+	java.base/java.lang.String.rangeCheck(String.java:306)
+	java.base/java.lang.String.<init>(String.java:302)
+	scala.tools.nsc.interactive.Global.typeCompletions$1(Global.scala:1224)
+	scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1262)
+	scala.meta.internal.pc.SignatureHelpProvider.$anonfun$treeSymbol$1(SignatureHelpProvider.scala:390)
+	scala.Option.map(Option.scala:242)
+	scala.meta.internal.pc.SignatureHelpProvider.treeSymbol(SignatureHelpProvider.scala:388)
+	scala.meta.internal.pc.SignatureHelpProvider$MethodCall$.unapply(SignatureHelpProvider.scala:205)
+	scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.visit(SignatureHelpProvider.scala:316)
+	scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:310)
+	scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.fromTree(SignatureHelpProvider.scala:279)
+	scala.meta.internal.pc.SignatureHelpProvider.signatureHelp(SignatureHelpProvider.scala:27)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$signatureHelp$1(ScalaPresentationCompiler.scala:282)
+```
+#### Short summary: 
+
+java.lang.StringIndexOutOfBoundsException: Range [1476, 1476 + -11) out of bounds for length 13904

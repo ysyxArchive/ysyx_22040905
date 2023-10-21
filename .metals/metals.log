@@ -5606,3 +5606,47 @@ WARNING: Unmatched cancel notification for request id 676
 2023.10.21 22:24:30 INFO  time: compiled playground in 1.22s
 Oct 21, 2023 10:24:52 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
 WARNING: Unmatched cancel notification for request id 737
+2023.10.22 01:00:22 INFO  compiling playground (1 scala source)
+2023.10.22 01:00:24 INFO  time: compiled playground in 1.28s
+2023.10.22 01:01:31 INFO  compiling playground (1 scala source)
+2023.10.22 01:01:33 INFO  time: compiled playground in 2.58s
+2023.10.22 01:02:06 INFO  compiling playground (1 scala source)
+2023.10.22 01:02:07 INFO  time: compiled playground in 1.53s
+2023.10.22 01:03:55 INFO  compiling playground (1 scala source)
+2023.10.22 01:03:56 INFO  time: compiled playground in 1.57s
+2023.10.22 01:04:09 INFO  compiling playground (1 scala source)
+2023.10.22 01:04:10 INFO  time: compiled playground in 1.3s
+Oct 22, 2023 1:06:37 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Oct 22, 2023 1:08:25 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 929
+Oct 22, 2023 1:08:55 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_01-08-55-033.md
+Oct 22, 2023 1:08:55 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 958
+2023.10.22 01:09:01 INFO  compiling playground (1 scala source)
+2023.10.22 01:09:03 INFO  time: compiled playground in 1.72s
+2023.10.22 01:10:18 INFO  compiling playground (1 scala source)
+Oct 22, 2023 1:10:19 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1247
+Oct 22, 2023 1:10:19 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1250
+2023.10.22 01:10:20 INFO  time: compiled playground in 1.94s
+2023.10.22 01:10:51 INFO  compiling playground (1 scala source)
+2023.10.22 01:10:53 INFO  time: compiled playground in 1.64s
+2023.10.22 01:14:50 INFO  compiling playground (1 scala source)
+2023.10.22 01:14:50 INFO  time: compiled playground in 0.55s
+Oct 22, 2023 1:15:00 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_01-15-00-658.md
+Oct 22, 2023 1:15:01 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2053
+2023.10.22 01:15:03 INFO  compiling playground (1 scala source)
+2023.10.22 01:15:05 INFO  time: compiled playground in 1.93s
+2023.10.22 01:15:42 INFO  compiling playground (1 scala source)
+2023.10.22 01:15:44 INFO  time: compiled playground in 1.68s
+Oct 22, 2023 1:16:10 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2468
+2023.10.22 01:16:26 INFO  compiling playground (1 scala source)
+2023.10.22 01:16:28 INFO  time: compiled playground in 1.56s
+2023.10.22 01:24:35 INFO  compiling playground (1 scala source)
+2023.10.22 01:24:36 INFO  time: compiled playground in 1.58s

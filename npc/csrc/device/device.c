@@ -9,13 +9,19 @@ void init_i8042();
 
 void send_key(uint8_t, bool);
 void vga_update_screen();
+int cnt =0;
 void device_update() {
-static uint64_t last = 0;
-  uint64_t now = get_time();
-  if (now - last < 1200000) {
+  //static uint64_t last = 0;
+  //uint64_t now = get_time();
+  //if (now - last < 1200000) {
+  //  return;
+  //}
+  //last = now;
+
+  if(cnt++ < 100000){
     return;
   }
-  last = now;
+  cnt = 0;
 
   vga_update_screen();
 

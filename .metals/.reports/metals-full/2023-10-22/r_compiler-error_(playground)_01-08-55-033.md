@@ -1,3 +1,13 @@
+file://<WORKSPACE>/npc/playground/src/EXU.scala
+### java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)
+
+occurred in the presentation compiler.
+
+action parameters:
+offset: 7533
+uri: file://<WORKSPACE>/npc/playground/src/EXU.scala
+text:
+```scala
 import chisel3._
 import chisel3.util._
 import chisel3.stage._
@@ -29,18 +39,44 @@ class EXU extends Module{
         val flush = Wire(UInt(1.W))
         flush := EXE_reg_flush | io.flush
 
-        val EXE_reg_pc=dontTouch(RegEnable(io.in.bits.pc,0.U(32.W),io.in.fire))
-        val EXE_reg_inst=dontTouch(RegEnable(io.in.bits.inst,0.U(32.W),io.in.fire))
-        val EXE_reg_rs1=RegEnable(io.in.bits.rs1,0.U(5.W),io.in.fire)
-        val EXE_reg_rs2=RegEnable(io.in.bits.rs2,0.U(5.W),io.in.fire)
-        val EXE_reg_rd=RegEnable(io.in.bits.rd,0.U(5.W),io.in.fire)
-        val EXE_reg_imm=RegEnable(io.in.bits.imm,0.U(64.W),io.in.fire)
-        val EXE_reg_op=RegEnable(io.in.bits.op,0.U(80.W),io.in.fire)
-        val EXE_reg_typ=RegEnable(io.in.bits.typ,0.U(6.W),io.in.fire)
-        val EXE_reg_isJump=RegEnable(io.in.bits.isJump,0.U(1.W),io.in.fire)
-        val EXE_reg_clearidx=RegEnable(io.in.bits.clearidx,0.U(5.W),io.in.fire)
-        val EXE_reg_valid=RegInit(1.U(1.W))
+        val EXE_reg_pc=dontTouch(Reg(UInt(32.W)))
+        val EXE_reg_inst=dontTouch(Reg(UInt(32.W)))
+        val EXE_reg_rs1=Reg(UInt(5.W))
+        val EXE_reg_rs2=Reg(UInt(5.W))
+        val EXE_reg_rd=Reg(UInt(5.W))
+        val EXE_reg_imm=Reg(UInt(64.W))
+        val EXE_reg_op=Reg(UInt(80.W))
+        val EXE_reg_typ=Reg(UInt(6.W))
+        val EXE_reg_valid=Reg(UInt(1.W))
+        val EXE_reg_isJump=Reg(UInt(1.W))
+        val EXE_reg_clearidx=Reg(UInt(5.W))
 
+
+        when(flush.asBool|reset.asBool){
+            EXE_reg_pc:=0.U
+            EXE_reg_inst:=0.U
+            EXE_reg_rs1:=0.U
+            EXE_reg_rs2:=0.U
+            EXE_reg_rd:=0.U
+            EXE_reg_imm:=0.U
+            EXE_reg_op:=0.U
+            EXE_reg_typ:=0.U
+            EXE_reg_valid:=0.U
+            EXE_reg_isJump:=0.U
+            EXE_reg_clearidx:=0.U
+        }.elsewhen(io.in.fire){
+            EXE_reg_pc:=io.in.bits.pc
+            EXE_reg_inst:=io.in.bits.inst
+            EXE_reg_rs1:=io.in.bits.rs1
+            EXE_reg_rs2:=io.in.bits.rs2
+            EXE_reg_rd:=io.in.bits.rd
+            EXE_reg_imm:=io.in.bits.imm
+            EXE_reg_op:=io.in.bits.op
+            EXE_reg_typ:=io.in.bits.typ
+            EXE_reg_valid:=1.U
+            EXE_reg_isJump:=io.in.bits.isJump
+            EXE_reg_clearidx:=io.in.bits.clearidx
+        }
 
 
         io.out.bits.isJump:=EXE_reg_isJump
@@ -109,14 +145,14 @@ class EXU extends Module{
         alu_result:=Mux(io.out.fire,alu.io.result,alu_res)
 
         io.in.ready:= io.out.ready & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout)
-        io.out.valid:=(state === s_wait_next) & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout) & (~flush.asBool) & EXE_reg_valid
+        io.out.valid:=(state === s_wait_next) & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout) & (~flush.asBool)
 
         //lsu
         lsu.io.flush:=flush
         lsu.io.en_r:=op_r
         lsu.io.en_w:=op_w
         lsu.io.ls.out.ready:=io.out.ready
-        lsu.io.ls.in.valid:=(state === s_wait_next) &(~lsu_finish) & EXE_reg_valid
+        lsu.io.ls.in.valid:=(state === s_wait_next) &(~lsu_finish)
         lsu.io.ls.in.bits.raddr:=Mux(EXE_reg_op(38)|EXE_reg_op(39)|EXE_reg_op(40)|EXE_reg_op(41)|EXE_reg_op(46)|EXE_reg_op(47)|EXE_reg_op(48),alu.io.result,0.U)
         lsu.io.ls.in.bits.waddr:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),alu.io.result,0.U)
         lsu.io.ls.in.bits.wdata:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),io.gpr.val_r2,0.U)
@@ -152,7 +188,7 @@ class EXU extends Module{
         //alu
 
         alu.io.mul_sel:=io.mul_sel
-        alu.io.validin:=(state === s_wait_next) & (op_mul | op_div) &(~alu_finish)&alu_valid&EXE_reg_valid
+        alu.io.validin:=(state === s_wait_next) & (op_mul | op_div) &(~alu_finish)&alu_valid&EX@@
         alu.io.flush:=flush
         alu.io.src1:=   Mux(EXE_reg_op(13)|EXE_reg_op(21)|EXE_reg_op(23)|EXE_reg_op(56)|EXE_reg_op(58)|EXE_reg_op(60)|EXE_reg_op(62),Cat(Fill(32,0.U),src1(31,0)),
                         Mux(EXE_reg_op(17)|EXE_reg_op(19),Cat(Fill(32,src1(31)),src1(31,0)),
@@ -239,3 +275,96 @@ class EXU extends Module{
         io.out.bits.inst:=EXE_reg_inst
         io.out.bits.pc:=EXE_reg_pc
 }
+```
+
+
+
+#### Error stacktrace:
+
+```
+scala.collection.mutable.ArrayBuffer.apply(ArrayBuffer.scala:98)
+	scala.reflect.internal.Types$Type.findMemberInternal$1(Types.scala:1030)
+	scala.reflect.internal.Types$Type.findMember(Types.scala:1035)
+	scala.reflect.internal.Types$Type.memberBasedOnName(Types.scala:661)
+	scala.reflect.internal.Types$Type.member(Types.scala:625)
+	scala.tools.nsc.typechecker.Contexts$SymbolLookup.apply(Contexts.scala:1401)
+	scala.tools.nsc.typechecker.Contexts$Context.lookupSymbol(Contexts.scala:1283)
+	scala.tools.nsc.typechecker.Typers$Typer.typedIdent$2(Typers.scala:5470)
+	scala.tools.nsc.typechecker.Typers$Typer.typedIdentOrWildcard$1(Typers.scala:5522)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5983)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typed1$41(Typers.scala:5074)
+	scala.tools.nsc.typechecker.Typers$Typer.silent(Typers.scala:698)
+	scala.tools.nsc.typechecker.Typers$Typer.normalTypedApply$1(Typers.scala:5076)
+	scala.tools.nsc.typechecker.Typers$Typer.typedApply$1(Typers.scala:5104)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5985)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.computeType(Typers.scala:6130)
+	scala.tools.nsc.typechecker.Namers$Namer.assignTypeToTree(Namers.scala:1127)
+	scala.tools.nsc.typechecker.Namers$Namer.valDefSig(Namers.scala:1745)
+	scala.tools.nsc.typechecker.Namers$Namer.memberSig(Namers.scala:1930)
+	scala.tools.nsc.typechecker.Namers$Namer.typeSig(Namers.scala:1880)
+	scala.tools.nsc.typechecker.Namers$Namer$ValTypeCompleter.completeImpl(Namers.scala:944)
+	scala.tools.nsc.typechecker.Namers$Namer$AccessorTypeCompleter.completeImpl(Namers.scala:968)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete(Namers.scala:2078)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete$(Namers.scala:2076)
+	scala.tools.nsc.typechecker.Namers$TypeCompleterBase.complete(Namers.scala:2071)
+	scala.reflect.internal.Symbols$Symbol.completeInfo(Symbols.scala:1561)
+	scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1533)
+	scala.reflect.internal.Symbols$Symbol.tpe_$times(Symbols.scala:1516)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedBlock$2(Typers.scala:2543)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedBlock$2$adapted(Typers.scala:2541)
+	scala.collection.immutable.List.exists(List.scala:395)
+	scala.tools.nsc.typechecker.Typers$Typer.matchesVisibleMember$1(Typers.scala:2541)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedBlock$3(Typers.scala:2551)
+	scala.reflect.internal.Scopes$Scope.foreach(Scopes.scala:455)
+	scala.tools.nsc.typechecker.Typers$Typer.typedBlock(Typers.scala:2547)
+	scala.tools.nsc.typechecker.Typers$Typer.typedOutsidePatternMode$1(Typers.scala:5960)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5995)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedArg(Typers.scala:3428)
+	scala.tools.nsc.typechecker.Typers$Typer.handlePolymorphicCall$1(Typers.scala:3827)
+	scala.tools.nsc.typechecker.Typers$Typer.doTypedApply(Typers.scala:3846)
+	scala.tools.nsc.typechecker.Typers$Typer.normalTypedApply$1(Typers.scala:5095)
+	scala.tools.nsc.typechecker.Typers$Typer.typedApply$1(Typers.scala:5104)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5985)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.computeType(Typers.scala:6130)
+	scala.tools.nsc.typechecker.Namers$Namer.assignTypeToTree(Namers.scala:1127)
+	scala.tools.nsc.typechecker.Namers$Namer.valDefSig(Namers.scala:1745)
+	scala.tools.nsc.typechecker.Namers$Namer.memberSig(Namers.scala:1930)
+	scala.tools.nsc.typechecker.Namers$Namer.typeSig(Namers.scala:1880)
+	scala.tools.nsc.typechecker.Namers$Namer$ValTypeCompleter.completeImpl(Namers.scala:944)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete(Namers.scala:2078)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete$(Namers.scala:2076)
+	scala.tools.nsc.typechecker.Namers$TypeCompleterBase.complete(Namers.scala:2071)
+	scala.reflect.internal.Symbols$Symbol.completeInfo(Symbols.scala:1561)
+	scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1533)
+	scala.reflect.internal.Symbols$Symbol.initialize(Symbols.scala:1722)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5625)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:2064)
+	scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1895)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5951)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5634)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5954)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:117)
+	scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:459)
+	scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1349)
+	scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1342)
+	scala.tools.nsc.interactive.Global.typeCheck(Global.scala:680)
+	scala.meta.internal.pc.PcCollector.<init>(PcCollector.scala:29)
+	scala.meta.internal.pc.PcDocumentHighlightProvider.<init>(PcDocumentHighlightProvider.scala:11)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$documentHighlight$1(ScalaPresentationCompiler.scala:340)
+```
+#### Short summary: 
+
+java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)

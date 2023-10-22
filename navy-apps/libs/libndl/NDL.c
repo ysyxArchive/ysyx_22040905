@@ -22,8 +22,9 @@ static uint32_t begin_msec;
 
 uint32_t NDL_GetTicks() {//ms
   gettimeofday(&tv,&tz);
-  //return tv.tv_usec/1000+tv.tv_sec*1000-begin_msec;
-  return  tv.tv_usec/1000+((tv.tv_sec<<3)|(tv.tv_sec<<5)|(tv.tv_sec<<6)|(tv.tv_sec<<7)|(tv.tv_sec<<8)|(tv.tv_sec<<9))-begin_msec;
+  assert(tv.tv_sec*1000 == ((tv.tv_sec<<3)|(tv.tv_sec<<5)|(tv.tv_sec<<6)|(tv.tv_sec<<7)|(tv.tv_sec<<8)|(tv.tv_sec<<9)));
+  return tv.tv_usec/1000+tv.tv_sec*1000-begin_msec;
+  //return  tv.tv_usec/1000+((tv.tv_sec<<3)|(tv.tv_sec<<5)|(tv.tv_sec<<6)|(tv.tv_sec<<7)|(tv.tv_sec<<8)|(tv.tv_sec<<9))-begin_msec;
 }
 
 int NDL_PollEvent(char *buf, int len) {

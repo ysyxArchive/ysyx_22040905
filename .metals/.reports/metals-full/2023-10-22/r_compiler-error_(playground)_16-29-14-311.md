@@ -1,3 +1,12 @@
+file://<WORKSPACE>/npc/playground/src/EXU.scala
+### java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)
+
+occurred in the presentation compiler.
+
+action parameters:
+uri: file://<WORKSPACE>/npc/playground/src/EXU.scala
+text:
+```scala
 import chisel3._
 import chisel3.util._
 import chisel3.stage._
@@ -24,10 +33,7 @@ class EXU extends Module{
         val flush = Input(UInt(1.W))
         val bypass_idx = Input(UInt(5.W))
         val bypass_data = Input(UInt(64.W))
-        val p_error=Output(UInt(1.W)) //为高表示预测错误
     })
-
-        io.p_error:=io.out.fire & (io.out.bits.pc_dnpc =/= io.in.bits.pc)
 
         //flush for two cycles
         val EXE_reg_flush=RegInit(0.U(1.W))
@@ -36,8 +42,8 @@ class EXU extends Module{
         flush := EXE_reg_flush | io.flush
 
         //bypass
-        val gpr_val_r1 = Mux((io.bypass_idx === io.gpr.idx_r1) && (io.bypass_idx =/= 0.U),io.bypass_data,io.gpr.val_r1)
-        val gpr_val_r2 = Mux((io.bypass_idx === io.gpr.idx_r2) && (io.bypass_idx =/= 0.U),io.bypass_data,io.gpr.val_r2)
+        val gpr_val_r1 = Mux((io.bypass_idx === io.gpr.idx_r1) && io,io.bypass_data,io.gpr.val_r1)
+        val gpr_val_r2 = Mux((io.bypass_idx === io.gpr.idx_r2) && io,io.bypass_data,io.gpr.val_r2)
 
         val EXE_reg_pc=dontTouch(RegEnable(io.in.bits.pc,0.U(32.W),io.in.fire))
         val EXE_reg_inst=dontTouch(RegEnable(io.in.bits.inst,0.U(32.W),io.in.fire))
@@ -211,8 +217,6 @@ class EXU extends Module{
                       Mux(EXE_reg_op(37),src2,
                       4.U))))))))
         next_pc_sum:=next_pc_src1+next_pc_src2
-
-
   
         //to wbu
         io.out.bits.gpr.en_w:=Mux(flush.asBool,0.U,Mux((EXE_reg_typ(0)|EXE_reg_typ(1)|EXE_reg_typ(3)|EXE_reg_typ(5)),1.U,0.U))
@@ -248,8 +252,92 @@ class EXU extends Module{
         io.out.bits.pc_dnpc:=Mux(EXE_reg_op(65)|EXE_reg_op(66),io.csr.val_r,
                              Mux(EXE_reg_op(37),next_pc_sum&(~(1.U(64.W))),
                              next_pc_sum))
-        
         io.out.bits.inst:=EXE_reg_inst
         io.out.bits.pc:=EXE_reg_pc
 
 }
+```
+
+
+
+#### Error stacktrace:
+
+```
+scala.collection.mutable.ArrayBuffer.apply(ArrayBuffer.scala:98)
+	scala.reflect.internal.Types$Type.findMemberInternal$1(Types.scala:1030)
+	scala.reflect.internal.Types$Type.findMember(Types.scala:1035)
+	scala.reflect.internal.Types$Type.memberBasedOnName(Types.scala:661)
+	scala.reflect.internal.Types$Type.nonLocalMember(Types.scala:652)
+	scala.tools.nsc.typechecker.Typers$Typer.member(Typers.scala:669)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typed1$57(Typers.scala:5259)
+	scala.tools.nsc.typechecker.Typers$Typer.typedSelect$1(Typers.scala:5259)
+	scala.tools.nsc.typechecker.Typers$Typer.typedSelectOrSuperCall$1(Typers.scala:5411)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5986)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedSelect$1(Typers.scala:5267)
+	scala.tools.nsc.typechecker.Typers$Typer.typedSelectOrSuperCall$1(Typers.scala:5411)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5986)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedArg(Typers.scala:3428)
+	scala.tools.nsc.typechecker.Typers$Typer.typedArg0$1(Typers.scala:3536)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$doTypedApply$7(Typers.scala:3555)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$doTypedApply$6(Typers.scala:3534)
+	scala.tools.nsc.typechecker.Contexts$Context.savingUndeterminedTypeParams(Contexts.scala:537)
+	scala.tools.nsc.typechecker.Typers$Typer.handleOverloaded$1(Typers.scala:3531)
+	scala.tools.nsc.typechecker.Typers$Typer.doTypedApply(Typers.scala:3583)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typed1$28(Typers.scala:5009)
+	scala.tools.nsc.typechecker.Typers$Typer.silent(Typers.scala:698)
+	scala.tools.nsc.typechecker.Typers$Typer.tryTypedApply$1(Typers.scala:5009)
+	scala.tools.nsc.typechecker.Typers$Typer.normalTypedApply$1(Typers.scala:5093)
+	scala.tools.nsc.typechecker.Typers$Typer.typedApply$1(Typers.scala:5104)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5985)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedArg(Typers.scala:3428)
+	scala.tools.nsc.typechecker.Typers$Typer.handlePolymorphicCall$1(Typers.scala:3827)
+	scala.tools.nsc.typechecker.Typers$Typer.doTypedApply(Typers.scala:3846)
+	scala.tools.nsc.typechecker.Typers$Typer.normalTypedApply$1(Typers.scala:5095)
+	scala.tools.nsc.typechecker.Typers$Typer.typedApply$1(Typers.scala:5104)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5985)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.computeType(Typers.scala:6130)
+	scala.tools.nsc.typechecker.Namers$Namer.assignTypeToTree(Namers.scala:1127)
+	scala.tools.nsc.typechecker.Namers$Namer.valDefSig(Namers.scala:1745)
+	scala.tools.nsc.typechecker.Namers$Namer.memberSig(Namers.scala:1930)
+	scala.tools.nsc.typechecker.Namers$Namer.typeSig(Namers.scala:1880)
+	scala.tools.nsc.typechecker.Namers$Namer$ValTypeCompleter.completeImpl(Namers.scala:944)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete(Namers.scala:2078)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete$(Namers.scala:2076)
+	scala.tools.nsc.typechecker.Namers$TypeCompleterBase.complete(Namers.scala:2071)
+	scala.reflect.internal.Symbols$Symbol.completeInfo(Symbols.scala:1561)
+	scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1533)
+	scala.reflect.internal.Symbols$Symbol.initialize(Symbols.scala:1722)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5625)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:2064)
+	scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1895)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5951)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5634)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5954)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:117)
+	scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:459)
+	scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1349)
+	scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1342)
+	scala.tools.nsc.interactive.Global.typeCheck(Global.scala:680)
+	scala.meta.internal.pc.PcCollector.<init>(PcCollector.scala:29)
+	scala.meta.internal.pc.PcSemanticTokensProvider$Collector$.<init>(PcSemanticTokensProvider.scala:18)
+	scala.meta.internal.pc.PcSemanticTokensProvider.Collector$lzycompute$1(PcSemanticTokensProvider.scala:18)
+	scala.meta.internal.pc.PcSemanticTokensProvider.Collector(PcSemanticTokensProvider.scala:18)
+	scala.meta.internal.pc.PcSemanticTokensProvider.provide(PcSemanticTokensProvider.scala:71)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$semanticTokens$1(ScalaPresentationCompiler.scala:157)
+```
+#### Short summary: 
+
+java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)

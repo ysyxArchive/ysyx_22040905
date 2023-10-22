@@ -18,7 +18,7 @@ void device_update() {
   //}
   //last = now;
 
-  if(cnt++ < 100000){
+  if(cnt++ < 300){
     return;
   }
   cnt = 0;

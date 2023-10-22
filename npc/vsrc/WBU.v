@@ -14,7 +14,6 @@ module WBU(
   input  [63:0] io_in_bits_csr_no,
   input  [63:0] io_in_bits_csr_epc,
   input         io_in_bits_isJump,
-  input  [4:0]  io_in_bits_clearidx,
   output [4:0]  io_gpr_idx_w,
   output        io_gpr_en_w,
   output [63:0] io_gpr_val_w,
@@ -26,7 +25,8 @@ module WBU(
   output [63:0] io_pc_dnpc,
   output        io_valid,
   output        io_isJump,
-  output [4:0]  io_sb_clearidx
+  output [4:0]  io_bypass_idx,
+  output [63:0] io_bypass_data
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
@@ -42,11 +42,10 @@ module WBU(
   reg [31:0] _RAND_10;
   reg [31:0] _RAND_11;
   reg [31:0] _RAND_12;
-  reg [31:0] _RAND_13;
 `endif // RANDOMIZE_REG_INIT
   wire  _WB_reg_pc_T = io_in_ready & io_in_valid; // @[Decoupled.scala 52:35]
   reg [31:0] WB_reg_pc; // @[Reg.scala 19:16]
-  wire  _WB_reg_pc_dnpc_T_2 = _WB_reg_pc_T & io_in_bits_pc_dnpc != 64'h4; // @[WBU.scala 17:78]
+  wire  _WB_reg_pc_dnpc_T_2 = _WB_reg_pc_T & io_in_bits_pc_dnpc != 64'h4; // @[WBU.scala 19:78]
   reg [31:0] WB_reg_pc_dnpc; // @[Reg.scala 35:20]
   wire [63:0] _GEN_2 = _WB_reg_pc_dnpc_T_2 ? io_in_bits_pc_dnpc : {{32'd0}, WB_reg_pc_dnpc}; // @[Reg.scala 36:18 35:20 36:22]
   reg  WB_reg_gpr_en_w; // @[Reg.scala 19:16]
@@ -57,25 +56,25 @@ module WBU(
   reg [63:0] WB_reg_csr_val_w; // @[Reg.scala 19:16]
   reg [63:0] WB_reg_csr_no; // @[Reg.scala 19:16]
   reg [63:0] WB_reg_csr_epc; // @[Reg.scala 19:16]
-  wire  _WB_reg_valid_T_2 = _WB_reg_pc_T & io_in_bits_pc != 32'h0; // @[WBU.scala 26:43]
+  wire  _WB_reg_valid_T_2 = _WB_reg_pc_T & io_in_bits_pc != 32'h0; // @[WBU.scala 28:43]
   reg  WB_reg_valid; // @[Reg.scala 35:20]
   reg  WB_reg_isJump; // @[Reg.scala 35:20]
-  reg [4:0] WB_reg_clearidx; // @[Reg.scala 35:20]
-  reg  state; // @[WBU.scala 32:24]
+  reg  state; // @[WBU.scala 34:24]
   wire [63:0] _GEN_14 = reset ? 64'h80000000 : _GEN_2; // @[Reg.scala 35:{20,20}]
-  assign io_in_ready = 1'h1; // @[WBU.scala 39:16]
-  assign io_gpr_idx_w = WB_reg_gpr_idx_w; // @[WBU.scala 42:17]
-  assign io_gpr_en_w = WB_reg_gpr_en_w & state; // @[WBU.scala 41:34]
-  assign io_gpr_val_w = WB_reg_gpr_val_w; // @[WBU.scala 43:17]
-  assign io_csr_en_w = WB_reg_csr_en_w & state; // @[WBU.scala 45:34]
-  assign io_csr_idx_w = WB_reg_csr_idx_w; // @[WBU.scala 46:17]
-  assign io_csr_val_w = WB_reg_csr_val_w; // @[WBU.scala 47:17]
-  assign io_csr_no = state ? WB_reg_csr_no : 64'h0; // @[WBU.scala 48:19]
-  assign io_csr_epc = WB_reg_csr_epc; // @[WBU.scala 49:15]
-  assign io_pc_dnpc = {{32'd0}, WB_reg_pc_dnpc}; // @[WBU.scala 51:15]
-  assign io_valid = WB_reg_valid; // @[WBU.scala 52:13]
-  assign io_isJump = WB_reg_isJump & state; // @[WBU.scala 37:30]
-  assign io_sb_clearidx = state ? WB_reg_clearidx : 5'h0; // @[WBU.scala 54:24]
+  assign io_in_ready = 1'h1; // @[WBU.scala 41:16]
+  assign io_gpr_idx_w = WB_reg_gpr_idx_w; // @[WBU.scala 44:17]
+  assign io_gpr_en_w = WB_reg_gpr_en_w & state; // @[WBU.scala 43:34]
+  assign io_gpr_val_w = WB_reg_gpr_val_w; // @[WBU.scala 45:17]
+  assign io_csr_en_w = WB_reg_csr_en_w & state; // @[WBU.scala 47:34]
+  assign io_csr_idx_w = WB_reg_csr_idx_w; // @[WBU.scala 48:17]
+  assign io_csr_val_w = WB_reg_csr_val_w; // @[WBU.scala 49:17]
+  assign io_csr_no = state ? WB_reg_csr_no : 64'h0; // @[WBU.scala 50:19]
+  assign io_csr_epc = WB_reg_csr_epc; // @[WBU.scala 51:15]
+  assign io_pc_dnpc = {{32'd0}, WB_reg_pc_dnpc}; // @[WBU.scala 53:15]
+  assign io_valid = WB_reg_valid; // @[WBU.scala 54:13]
+  assign io_isJump = WB_reg_isJump & state; // @[WBU.scala 39:30]
+  assign io_bypass_idx = WB_reg_gpr_en_w ? WB_reg_gpr_idx_w : 5'h0; // @[WBU.scala 60:25]
+  assign io_bypass_data = WB_reg_gpr_val_w; // @[WBU.scala 61:20]
   always @(posedge clock) begin
     if (_WB_reg_pc_T) begin // @[Reg.scala 20:18]
       WB_reg_pc <= io_in_bits_pc; // @[Reg.scala 20:22]
@@ -115,15 +114,10 @@ module WBU(
     end else if (_WB_reg_pc_T) begin // @[Reg.scala 36:18]
       WB_reg_isJump <= io_in_bits_isJump; // @[Reg.scala 36:22]
     end
-    if (reset) begin // @[Reg.scala 35:20]
-      WB_reg_clearidx <= 5'h0; // @[Reg.scala 35:20]
-    end else if (_WB_reg_pc_T) begin // @[Reg.scala 36:18]
-      WB_reg_clearidx <= io_in_bits_clearidx; // @[Reg.scala 36:22]
-    end
-    if (reset) begin // @[WBU.scala 32:24]
-      state <= 1'h0; // @[WBU.scala 32:24]
+    if (reset) begin // @[WBU.scala 34:24]
+      state <= 1'h0; // @[WBU.scala 34:24]
     end else if (state) begin // @[Mux.scala 81:58]
-      if (~_WB_reg_pc_T) begin // @[WBU.scala 35:26]
+      if (~_WB_reg_pc_T) begin // @[WBU.scala 37:26]
         state <= 1'h0;
       end else begin
         state <= 1'h1;
@@ -193,9 +187,7 @@ initial begin
   _RAND_11 = {1{`RANDOM}};
   WB_reg_isJump = _RAND_11[0:0];
   _RAND_12 = {1{`RANDOM}};
-  WB_reg_clearidx = _RAND_12[4:0];
-  _RAND_13 = {1{`RANDOM}};
-  state = _RAND_13[0:0];
+  state = _RAND_12[0:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

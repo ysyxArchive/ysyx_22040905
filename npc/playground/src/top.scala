@@ -27,9 +27,11 @@ class top extends Module{
     ifu.io.pc_dnpc:=wbu.io.pc_dnpc
     ifu.io.clearJump:=wbu.io.isJump
     ifu.io.irq_nextpc:=csr.io.next_pc
-    ifu.io.irq:=csr.io.irq
+    ifu.io.irq:=csr.io.irq | exu.io.p_error
+    ifu.io.real_pc:=exu.io.out.bits.pc_dnpc
+    ifu.io.p_error:=exu.io.p_error
     idu.io.in<>ifu.io.out
-    idu.io.flush<>csr.io.irq
+    idu.io.flush:=(csr.io.irq | exu.io.p_error)
     exu.io.in<>idu.io.out
     exu.io.gpr<>gpr.io.r
     exu.io.csr<>csr.io.r
@@ -61,4 +63,8 @@ class top extends Module{
 
     io.hitrate_i := crossbar.io.hitrate_i
     io.hitrate_d := crossbar.io.hitrate_d
+
+    //bypass
+    exu.io.bypass_idx := wbu.io.bypass_idx
+    exu.io.bypass_data := wbu.io.bypass_data
 }

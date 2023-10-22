@@ -23,6 +23,8 @@ module top(
   wire  ifu_io_out_bits_isJump; // @[top.scala 14:19]
   wire [31:0] ifu_io_irq_nextpc; // @[top.scala 14:19]
   wire  ifu_io_irq; // @[top.scala 14:19]
+  wire [31:0] ifu_io_real_pc; // @[top.scala 14:19]
+  wire  ifu_io_p_error; // @[top.scala 14:19]
   wire  idu_clock; // @[top.scala 15:19]
   wire  idu_reset; // @[top.scala 15:19]
   wire  idu_io_in_ready; // @[top.scala 15:19]
@@ -41,11 +43,6 @@ module top(
   wire [79:0] idu_io_out_bits_op; // @[top.scala 15:19]
   wire [5:0] idu_io_out_bits_typ; // @[top.scala 15:19]
   wire  idu_io_out_bits_isJump; // @[top.scala 15:19]
-  wire [4:0] idu_io_out_bits_clearidx; // @[top.scala 15:19]
-  wire [4:0] idu_io_sb_lookidx1; // @[top.scala 15:19]
-  wire [4:0] idu_io_sb_lookidx2; // @[top.scala 15:19]
-  wire [4:0] idu_io_sb_setidx; // @[top.scala 15:19]
-  wire  idu_io_sb_isBusy; // @[top.scala 15:19]
   wire  idu_io_flush; // @[top.scala 15:19]
   wire  exu_clock; // @[top.scala 16:19]
   wire  exu_reset; // @[top.scala 16:19]
@@ -60,7 +57,6 @@ module top(
   wire [79:0] exu_io_in_bits_op; // @[top.scala 16:19]
   wire [5:0] exu_io_in_bits_typ; // @[top.scala 16:19]
   wire  exu_io_in_bits_isJump; // @[top.scala 16:19]
-  wire [4:0] exu_io_in_bits_clearidx; // @[top.scala 16:19]
   wire  exu_io_out_valid; // @[top.scala 16:19]
   wire [31:0] exu_io_out_bits_pc; // @[top.scala 16:19]
   wire [63:0] exu_io_out_bits_pc_dnpc; // @[top.scala 16:19]
@@ -73,7 +69,6 @@ module top(
   wire [63:0] exu_io_out_bits_csr_no; // @[top.scala 16:19]
   wire [63:0] exu_io_out_bits_csr_epc; // @[top.scala 16:19]
   wire  exu_io_out_bits_isJump; // @[top.scala 16:19]
-  wire [4:0] exu_io_out_bits_clearidx; // @[top.scala 16:19]
   wire [4:0] exu_io_gpr_idx_r1; // @[top.scala 16:19]
   wire [4:0] exu_io_gpr_idx_r2; // @[top.scala 16:19]
   wire  exu_io_gpr_en_r1; // @[top.scala 16:19]
@@ -97,6 +92,9 @@ module top(
   wire [7:0] exu_io_lm_w_bits_strb; // @[top.scala 16:19]
   wire  exu_io_lm_b_valid; // @[top.scala 16:19]
   wire  exu_io_flush; // @[top.scala 16:19]
+  wire [4:0] exu_io_bypass_idx; // @[top.scala 16:19]
+  wire [63:0] exu_io_bypass_data; // @[top.scala 16:19]
+  wire  exu_io_p_error; // @[top.scala 16:19]
   wire  wbu_clock; // @[top.scala 17:19]
   wire  wbu_reset; // @[top.scala 17:19]
   wire  wbu_io_in_ready; // @[top.scala 17:19]
@@ -112,7 +110,6 @@ module top(
   wire [63:0] wbu_io_in_bits_csr_no; // @[top.scala 17:19]
   wire [63:0] wbu_io_in_bits_csr_epc; // @[top.scala 17:19]
   wire  wbu_io_in_bits_isJump; // @[top.scala 17:19]
-  wire [4:0] wbu_io_in_bits_clearidx; // @[top.scala 17:19]
   wire [4:0] wbu_io_gpr_idx_w; // @[top.scala 17:19]
   wire  wbu_io_gpr_en_w; // @[top.scala 17:19]
   wire [63:0] wbu_io_gpr_val_w; // @[top.scala 17:19]
@@ -124,7 +121,8 @@ module top(
   wire [63:0] wbu_io_pc_dnpc; // @[top.scala 17:19]
   wire  wbu_io_valid; // @[top.scala 17:19]
   wire  wbu_io_isJump; // @[top.scala 17:19]
-  wire [4:0] wbu_io_sb_clearidx; // @[top.scala 17:19]
+  wire [4:0] wbu_io_bypass_idx; // @[top.scala 17:19]
+  wire [63:0] wbu_io_bypass_data; // @[top.scala 17:19]
   wire  gpr_clock; // @[top.scala 18:19]
   wire  gpr_reset; // @[top.scala 18:19]
   wire [4:0] gpr_io_r_idx_r1; // @[top.scala 18:19]
@@ -202,80 +200,72 @@ module top(
   wire  clint_io_mtip; // @[top.scala 21:21]
   wire  clint_io_en_mtip; // @[top.scala 21:21]
   wire  clint_io_skip; // @[top.scala 21:21]
-  wire  scoreboard_clock; // @[top.scala 22:26]
-  wire  scoreboard_reset; // @[top.scala 22:26]
-  wire [4:0] scoreboard_io_ID_lookidx1; // @[top.scala 22:26]
-  wire [4:0] scoreboard_io_ID_lookidx2; // @[top.scala 22:26]
-  wire [4:0] scoreboard_io_ID_setidx; // @[top.scala 22:26]
-  wire  scoreboard_io_ID_isBusy; // @[top.scala 22:26]
-  wire [4:0] scoreboard_io_WB_clearidx; // @[top.scala 22:26]
-  wire  scoreboard_io_flush; // @[top.scala 22:26]
-  wire  crossbar_clock; // @[top.scala 48:24]
-  wire  crossbar_reset; // @[top.scala 48:24]
-  wire  crossbar_io_in1_ar_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_in1_ar_bits_addr; // @[top.scala 48:24]
-  wire  crossbar_io_in1_r_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_in1_r_bits_data; // @[top.scala 48:24]
-  wire  crossbar_io_in2_ar_ready; // @[top.scala 48:24]
-  wire  crossbar_io_in2_ar_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_in2_ar_bits_addr; // @[top.scala 48:24]
-  wire  crossbar_io_in2_r_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_in2_r_bits_data; // @[top.scala 48:24]
-  wire  crossbar_io_in2_aw_ready; // @[top.scala 48:24]
-  wire  crossbar_io_in2_aw_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_in2_aw_bits_addr; // @[top.scala 48:24]
-  wire  crossbar_io_in2_w_ready; // @[top.scala 48:24]
-  wire  crossbar_io_in2_w_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_in2_w_bits_data; // @[top.scala 48:24]
-  wire [7:0] crossbar_io_in2_w_bits_strb; // @[top.scala 48:24]
-  wire  crossbar_io_in2_b_valid; // @[top.scala 48:24]
-  wire  crossbar_io_out1_ar_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out1_ar_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_out1_ar_bits_addr; // @[top.scala 48:24]
-  wire [7:0] crossbar_io_out1_ar_bits_len; // @[top.scala 48:24]
-  wire [2:0] crossbar_io_out1_ar_bits_size; // @[top.scala 48:24]
-  wire [3:0] crossbar_io_out1_ar_bits_id; // @[top.scala 48:24]
-  wire  crossbar_io_out1_r_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out1_r_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_out1_r_bits_data; // @[top.scala 48:24]
-  wire  crossbar_io_out1_r_bits_last; // @[top.scala 48:24]
-  wire [3:0] crossbar_io_out1_r_bits_id; // @[top.scala 48:24]
-  wire  crossbar_io_out1_aw_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out1_aw_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_out1_aw_bits_addr; // @[top.scala 48:24]
-  wire  crossbar_io_out1_w_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out1_w_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_out1_w_bits_data; // @[top.scala 48:24]
-  wire [7:0] crossbar_io_out1_w_bits_strb; // @[top.scala 48:24]
-  wire  crossbar_io_out1_w_bits_last; // @[top.scala 48:24]
-  wire  crossbar_io_out1_b_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out1_b_valid; // @[top.scala 48:24]
-  wire  crossbar_io_out2_ar_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out2_ar_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_out2_ar_bits_addr; // @[top.scala 48:24]
-  wire [7:0] crossbar_io_out2_ar_bits_len; // @[top.scala 48:24]
-  wire [2:0] crossbar_io_out2_ar_bits_size; // @[top.scala 48:24]
-  wire [3:0] crossbar_io_out2_ar_bits_id; // @[top.scala 48:24]
-  wire  crossbar_io_out2_r_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out2_r_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_out2_r_bits_data; // @[top.scala 48:24]
-  wire  crossbar_io_out2_r_bits_last; // @[top.scala 48:24]
-  wire [3:0] crossbar_io_out2_r_bits_id; // @[top.scala 48:24]
-  wire  crossbar_io_out2_aw_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out2_aw_valid; // @[top.scala 48:24]
-  wire [31:0] crossbar_io_out2_aw_bits_addr; // @[top.scala 48:24]
-  wire [3:0] crossbar_io_out2_aw_bits_id; // @[top.scala 48:24]
-  wire  crossbar_io_out2_w_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out2_w_valid; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_out2_w_bits_data; // @[top.scala 48:24]
-  wire [7:0] crossbar_io_out2_w_bits_strb; // @[top.scala 48:24]
-  wire  crossbar_io_out2_w_bits_last; // @[top.scala 48:24]
-  wire  crossbar_io_out2_b_ready; // @[top.scala 48:24]
-  wire  crossbar_io_out2_b_valid; // @[top.scala 48:24]
-  wire [3:0] crossbar_io_out2_b_bits_id; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_hitrate_i; // @[top.scala 48:24]
-  wire [63:0] crossbar_io_hitrate_d; // @[top.scala 48:24]
-  wire  crossbar_io_flush; // @[top.scala 48:24]
+  wire  crossbar_clock; // @[top.scala 50:24]
+  wire  crossbar_reset; // @[top.scala 50:24]
+  wire  crossbar_io_in1_ar_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_in1_ar_bits_addr; // @[top.scala 50:24]
+  wire  crossbar_io_in1_r_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_in1_r_bits_data; // @[top.scala 50:24]
+  wire  crossbar_io_in2_ar_ready; // @[top.scala 50:24]
+  wire  crossbar_io_in2_ar_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_in2_ar_bits_addr; // @[top.scala 50:24]
+  wire  crossbar_io_in2_r_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_in2_r_bits_data; // @[top.scala 50:24]
+  wire  crossbar_io_in2_aw_ready; // @[top.scala 50:24]
+  wire  crossbar_io_in2_aw_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_in2_aw_bits_addr; // @[top.scala 50:24]
+  wire  crossbar_io_in2_w_ready; // @[top.scala 50:24]
+  wire  crossbar_io_in2_w_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_in2_w_bits_data; // @[top.scala 50:24]
+  wire [7:0] crossbar_io_in2_w_bits_strb; // @[top.scala 50:24]
+  wire  crossbar_io_in2_b_valid; // @[top.scala 50:24]
+  wire  crossbar_io_out1_ar_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out1_ar_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_out1_ar_bits_addr; // @[top.scala 50:24]
+  wire [7:0] crossbar_io_out1_ar_bits_len; // @[top.scala 50:24]
+  wire [2:0] crossbar_io_out1_ar_bits_size; // @[top.scala 50:24]
+  wire [3:0] crossbar_io_out1_ar_bits_id; // @[top.scala 50:24]
+  wire  crossbar_io_out1_r_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out1_r_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_out1_r_bits_data; // @[top.scala 50:24]
+  wire  crossbar_io_out1_r_bits_last; // @[top.scala 50:24]
+  wire [3:0] crossbar_io_out1_r_bits_id; // @[top.scala 50:24]
+  wire  crossbar_io_out1_aw_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out1_aw_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_out1_aw_bits_addr; // @[top.scala 50:24]
+  wire  crossbar_io_out1_w_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out1_w_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_out1_w_bits_data; // @[top.scala 50:24]
+  wire [7:0] crossbar_io_out1_w_bits_strb; // @[top.scala 50:24]
+  wire  crossbar_io_out1_w_bits_last; // @[top.scala 50:24]
+  wire  crossbar_io_out1_b_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out1_b_valid; // @[top.scala 50:24]
+  wire  crossbar_io_out2_ar_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out2_ar_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_out2_ar_bits_addr; // @[top.scala 50:24]
+  wire [7:0] crossbar_io_out2_ar_bits_len; // @[top.scala 50:24]
+  wire [2:0] crossbar_io_out2_ar_bits_size; // @[top.scala 50:24]
+  wire [3:0] crossbar_io_out2_ar_bits_id; // @[top.scala 50:24]
+  wire  crossbar_io_out2_r_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out2_r_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_out2_r_bits_data; // @[top.scala 50:24]
+  wire  crossbar_io_out2_r_bits_last; // @[top.scala 50:24]
+  wire [3:0] crossbar_io_out2_r_bits_id; // @[top.scala 50:24]
+  wire  crossbar_io_out2_aw_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out2_aw_valid; // @[top.scala 50:24]
+  wire [31:0] crossbar_io_out2_aw_bits_addr; // @[top.scala 50:24]
+  wire [3:0] crossbar_io_out2_aw_bits_id; // @[top.scala 50:24]
+  wire  crossbar_io_out2_w_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out2_w_valid; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_out2_w_bits_data; // @[top.scala 50:24]
+  wire [7:0] crossbar_io_out2_w_bits_strb; // @[top.scala 50:24]
+  wire  crossbar_io_out2_w_bits_last; // @[top.scala 50:24]
+  wire  crossbar_io_out2_b_ready; // @[top.scala 50:24]
+  wire  crossbar_io_out2_b_valid; // @[top.scala 50:24]
+  wire [3:0] crossbar_io_out2_b_bits_id; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_hitrate_i; // @[top.scala 50:24]
+  wire [63:0] crossbar_io_hitrate_d; // @[top.scala 50:24]
+  wire  crossbar_io_flush; // @[top.scala 50:24]
   IFU ifu ( // @[top.scala 14:19]
     .clock(ifu_clock),
     .reset(ifu_reset),
@@ -291,7 +281,9 @@ module top(
     .io_out_bits_inst(ifu_io_out_bits_inst),
     .io_out_bits_isJump(ifu_io_out_bits_isJump),
     .io_irq_nextpc(ifu_io_irq_nextpc),
-    .io_irq(ifu_io_irq)
+    .io_irq(ifu_io_irq),
+    .io_real_pc(ifu_io_real_pc),
+    .io_p_error(ifu_io_p_error)
   );
   IDU idu ( // @[top.scala 15:19]
     .clock(idu_clock),
@@ -312,11 +304,6 @@ module top(
     .io_out_bits_op(idu_io_out_bits_op),
     .io_out_bits_typ(idu_io_out_bits_typ),
     .io_out_bits_isJump(idu_io_out_bits_isJump),
-    .io_out_bits_clearidx(idu_io_out_bits_clearidx),
-    .io_sb_lookidx1(idu_io_sb_lookidx1),
-    .io_sb_lookidx2(idu_io_sb_lookidx2),
-    .io_sb_setidx(idu_io_sb_setidx),
-    .io_sb_isBusy(idu_io_sb_isBusy),
     .io_flush(idu_io_flush)
   );
   EXU exu ( // @[top.scala 16:19]
@@ -333,7 +320,6 @@ module top(
     .io_in_bits_op(exu_io_in_bits_op),
     .io_in_bits_typ(exu_io_in_bits_typ),
     .io_in_bits_isJump(exu_io_in_bits_isJump),
-    .io_in_bits_clearidx(exu_io_in_bits_clearidx),
     .io_out_valid(exu_io_out_valid),
     .io_out_bits_pc(exu_io_out_bits_pc),
     .io_out_bits_pc_dnpc(exu_io_out_bits_pc_dnpc),
@@ -346,7 +332,6 @@ module top(
     .io_out_bits_csr_no(exu_io_out_bits_csr_no),
     .io_out_bits_csr_epc(exu_io_out_bits_csr_epc),
     .io_out_bits_isJump(exu_io_out_bits_isJump),
-    .io_out_bits_clearidx(exu_io_out_bits_clearidx),
     .io_gpr_idx_r1(exu_io_gpr_idx_r1),
     .io_gpr_idx_r2(exu_io_gpr_idx_r2),
     .io_gpr_en_r1(exu_io_gpr_en_r1),
@@ -369,7 +354,10 @@ module top(
     .io_lm_w_bits_data(exu_io_lm_w_bits_data),
     .io_lm_w_bits_strb(exu_io_lm_w_bits_strb),
     .io_lm_b_valid(exu_io_lm_b_valid),
-    .io_flush(exu_io_flush)
+    .io_flush(exu_io_flush),
+    .io_bypass_idx(exu_io_bypass_idx),
+    .io_bypass_data(exu_io_bypass_data),
+    .io_p_error(exu_io_p_error)
   );
   WBU wbu ( // @[top.scala 17:19]
     .clock(wbu_clock),
@@ -387,7 +375,6 @@ module top(
     .io_in_bits_csr_no(wbu_io_in_bits_csr_no),
     .io_in_bits_csr_epc(wbu_io_in_bits_csr_epc),
     .io_in_bits_isJump(wbu_io_in_bits_isJump),
-    .io_in_bits_clearidx(wbu_io_in_bits_clearidx),
     .io_gpr_idx_w(wbu_io_gpr_idx_w),
     .io_gpr_en_w(wbu_io_gpr_en_w),
     .io_gpr_val_w(wbu_io_gpr_val_w),
@@ -399,7 +386,8 @@ module top(
     .io_pc_dnpc(wbu_io_pc_dnpc),
     .io_valid(wbu_io_valid),
     .io_isJump(wbu_io_isJump),
-    .io_sb_clearidx(wbu_io_sb_clearidx)
+    .io_bypass_idx(wbu_io_bypass_idx),
+    .io_bypass_data(wbu_io_bypass_data)
   );
   GPR gpr ( // @[top.scala 18:19]
     .clock(gpr_clock),
@@ -486,17 +474,7 @@ module top(
     .io_en_mtip(clint_io_en_mtip),
     .io_skip(clint_io_skip)
   );
-  ScoreBoard scoreboard ( // @[top.scala 22:26]
-    .clock(scoreboard_clock),
-    .reset(scoreboard_reset),
-    .io_ID_lookidx1(scoreboard_io_ID_lookidx1),
-    .io_ID_lookidx2(scoreboard_io_ID_lookidx2),
-    .io_ID_setidx(scoreboard_io_ID_setidx),
-    .io_ID_isBusy(scoreboard_io_ID_isBusy),
-    .io_WB_clearidx(scoreboard_io_WB_clearidx),
-    .io_flush(scoreboard_io_flush)
-  );
-  Crossbar crossbar ( // @[top.scala 48:24]
+  Crossbar crossbar ( // @[top.scala 50:24]
     .clock(crossbar_clock),
     .reset(crossbar_reset),
     .io_in1_ar_valid(crossbar_io_in1_ar_valid),
@@ -564,153 +542,147 @@ module top(
     .io_hitrate_d(crossbar_io_hitrate_d),
     .io_flush(crossbar_io_flush)
   );
-  assign io_pc = wbu_io_pc_dnpc; // @[top.scala 46:10]
-  assign io_valid = wbu_io_valid; // @[top.scala 45:13]
-  assign io_hitrate_i = crossbar_io_hitrate_i; // @[top.scala 62:18]
-  assign io_hitrate_d = crossbar_io_hitrate_d; // @[top.scala 63:18]
-  assign io_timer_diff_skip = clint_io_skip | csr_io_irq; // @[top.scala 60:41]
+  assign io_pc = wbu_io_pc_dnpc; // @[top.scala 48:10]
+  assign io_valid = wbu_io_valid; // @[top.scala 47:13]
+  assign io_hitrate_i = crossbar_io_hitrate_i; // @[top.scala 64:18]
+  assign io_hitrate_d = crossbar_io_hitrate_d; // @[top.scala 65:18]
+  assign io_timer_diff_skip = clint_io_skip | csr_io_irq; // @[top.scala 62:41]
   assign ifu_clock = clock;
   assign ifu_reset = reset;
   assign ifu_io_pc_dnpc = wbu_io_pc_dnpc; // @[top.scala 27:19]
   assign ifu_io_clearJump = wbu_io_isJump; // @[top.scala 28:21]
-  assign ifu_io_lm_r_valid = crossbar_io_in1_r_valid; // @[top.scala 49:20]
-  assign ifu_io_lm_r_bits_data = crossbar_io_in1_r_bits_data; // @[top.scala 49:20]
-  assign ifu_io_out_ready = idu_io_in_ready; // @[top.scala 31:14]
+  assign ifu_io_lm_r_valid = crossbar_io_in1_r_valid; // @[top.scala 51:20]
+  assign ifu_io_lm_r_bits_data = crossbar_io_in1_r_bits_data; // @[top.scala 51:20]
+  assign ifu_io_out_ready = idu_io_in_ready; // @[top.scala 33:14]
   assign ifu_io_irq_nextpc = csr_io_next_pc; // @[top.scala 29:22]
-  assign ifu_io_irq = csr_io_irq; // @[top.scala 30:15]
+  assign ifu_io_irq = csr_io_irq | exu_io_p_error; // @[top.scala 30:28]
+  assign ifu_io_real_pc = exu_io_out_bits_pc_dnpc[31:0]; // @[top.scala 31:19]
+  assign ifu_io_p_error = exu_io_p_error; // @[top.scala 32:19]
   assign idu_clock = clock;
   assign idu_reset = reset;
-  assign idu_io_in_valid = ifu_io_out_valid; // @[top.scala 31:14]
-  assign idu_io_in_bits_pc = ifu_io_out_bits_pc; // @[top.scala 31:14]
-  assign idu_io_in_bits_inst = ifu_io_out_bits_inst; // @[top.scala 31:14]
-  assign idu_io_in_bits_isJump = ifu_io_out_bits_isJump; // @[top.scala 31:14]
-  assign idu_io_out_ready = exu_io_in_ready; // @[top.scala 33:14]
-  assign idu_io_sb_isBusy = scoreboard_io_ID_isBusy; // @[top.scala 24:21]
-  assign idu_io_flush = csr_io_irq; // @[top.scala 32:17]
+  assign idu_io_in_valid = ifu_io_out_valid; // @[top.scala 33:14]
+  assign idu_io_in_bits_pc = ifu_io_out_bits_pc; // @[top.scala 33:14]
+  assign idu_io_in_bits_inst = ifu_io_out_bits_inst; // @[top.scala 33:14]
+  assign idu_io_in_bits_isJump = ifu_io_out_bits_isJump; // @[top.scala 33:14]
+  assign idu_io_out_ready = exu_io_in_ready; // @[top.scala 35:14]
+  assign idu_io_flush = csr_io_irq | exu_io_p_error; // @[top.scala 34:31]
   assign exu_clock = clock;
   assign exu_reset = reset;
-  assign exu_io_in_valid = idu_io_out_valid; // @[top.scala 33:14]
-  assign exu_io_in_bits_pc = idu_io_out_bits_pc; // @[top.scala 33:14]
-  assign exu_io_in_bits_inst = idu_io_out_bits_inst; // @[top.scala 33:14]
-  assign exu_io_in_bits_rs1 = idu_io_out_bits_rs1; // @[top.scala 33:14]
-  assign exu_io_in_bits_rs2 = idu_io_out_bits_rs2; // @[top.scala 33:14]
-  assign exu_io_in_bits_rd = idu_io_out_bits_rd; // @[top.scala 33:14]
-  assign exu_io_in_bits_imm = idu_io_out_bits_imm; // @[top.scala 33:14]
-  assign exu_io_in_bits_op = idu_io_out_bits_op; // @[top.scala 33:14]
-  assign exu_io_in_bits_typ = idu_io_out_bits_typ; // @[top.scala 33:14]
-  assign exu_io_in_bits_isJump = idu_io_out_bits_isJump; // @[top.scala 33:14]
-  assign exu_io_in_bits_clearidx = idu_io_out_bits_clearidx; // @[top.scala 33:14]
-  assign exu_io_gpr_val_r1 = gpr_io_r_val_r1; // @[top.scala 34:15]
-  assign exu_io_gpr_val_r2 = gpr_io_r_val_r2; // @[top.scala 34:15]
-  assign exu_io_csr_val_r = csr_io_r_val_r; // @[top.scala 35:15]
-  assign exu_io_lm_ar_ready = crossbar_io_in2_ar_ready; // @[top.scala 50:20]
-  assign exu_io_lm_r_valid = crossbar_io_in2_r_valid; // @[top.scala 50:20]
-  assign exu_io_lm_r_bits_data = crossbar_io_in2_r_bits_data; // @[top.scala 50:20]
-  assign exu_io_lm_aw_ready = crossbar_io_in2_aw_ready; // @[top.scala 50:20]
-  assign exu_io_lm_w_ready = crossbar_io_in2_w_ready; // @[top.scala 50:20]
-  assign exu_io_lm_b_valid = crossbar_io_in2_b_valid; // @[top.scala 50:20]
-  assign exu_io_flush = csr_io_irq; // @[top.scala 39:17]
+  assign exu_io_in_valid = idu_io_out_valid; // @[top.scala 35:14]
+  assign exu_io_in_bits_pc = idu_io_out_bits_pc; // @[top.scala 35:14]
+  assign exu_io_in_bits_inst = idu_io_out_bits_inst; // @[top.scala 35:14]
+  assign exu_io_in_bits_rs1 = idu_io_out_bits_rs1; // @[top.scala 35:14]
+  assign exu_io_in_bits_rs2 = idu_io_out_bits_rs2; // @[top.scala 35:14]
+  assign exu_io_in_bits_rd = idu_io_out_bits_rd; // @[top.scala 35:14]
+  assign exu_io_in_bits_imm = idu_io_out_bits_imm; // @[top.scala 35:14]
+  assign exu_io_in_bits_op = idu_io_out_bits_op; // @[top.scala 35:14]
+  assign exu_io_in_bits_typ = idu_io_out_bits_typ; // @[top.scala 35:14]
+  assign exu_io_in_bits_isJump = idu_io_out_bits_isJump; // @[top.scala 35:14]
+  assign exu_io_gpr_val_r1 = gpr_io_r_val_r1; // @[top.scala 36:15]
+  assign exu_io_gpr_val_r2 = gpr_io_r_val_r2; // @[top.scala 36:15]
+  assign exu_io_csr_val_r = csr_io_r_val_r; // @[top.scala 37:15]
+  assign exu_io_lm_ar_ready = crossbar_io_in2_ar_ready; // @[top.scala 52:20]
+  assign exu_io_lm_r_valid = crossbar_io_in2_r_valid; // @[top.scala 52:20]
+  assign exu_io_lm_r_bits_data = crossbar_io_in2_r_bits_data; // @[top.scala 52:20]
+  assign exu_io_lm_aw_ready = crossbar_io_in2_aw_ready; // @[top.scala 52:20]
+  assign exu_io_lm_w_ready = crossbar_io_in2_w_ready; // @[top.scala 52:20]
+  assign exu_io_lm_b_valid = crossbar_io_in2_b_valid; // @[top.scala 52:20]
+  assign exu_io_flush = csr_io_irq; // @[top.scala 41:17]
+  assign exu_io_bypass_idx = wbu_io_bypass_idx; // @[top.scala 68:23]
+  assign exu_io_bypass_data = wbu_io_bypass_data; // @[top.scala 69:24]
   assign wbu_clock = clock;
   assign wbu_reset = reset;
-  assign wbu_io_in_valid = exu_io_out_valid; // @[top.scala 41:14]
-  assign wbu_io_in_bits_pc = exu_io_out_bits_pc; // @[top.scala 41:14]
-  assign wbu_io_in_bits_pc_dnpc = exu_io_out_bits_pc_dnpc; // @[top.scala 41:14]
-  assign wbu_io_in_bits_gpr_idx_w = exu_io_out_bits_gpr_idx_w; // @[top.scala 41:14]
-  assign wbu_io_in_bits_gpr_en_w = exu_io_out_bits_gpr_en_w; // @[top.scala 41:14]
-  assign wbu_io_in_bits_gpr_val_w = exu_io_out_bits_gpr_val_w; // @[top.scala 41:14]
-  assign wbu_io_in_bits_csr_en_w = exu_io_out_bits_csr_en_w; // @[top.scala 41:14]
-  assign wbu_io_in_bits_csr_idx_w = exu_io_out_bits_csr_idx_w; // @[top.scala 41:14]
-  assign wbu_io_in_bits_csr_val_w = exu_io_out_bits_csr_val_w; // @[top.scala 41:14]
-  assign wbu_io_in_bits_csr_no = exu_io_out_bits_csr_no; // @[top.scala 41:14]
-  assign wbu_io_in_bits_csr_epc = exu_io_out_bits_csr_epc; // @[top.scala 41:14]
-  assign wbu_io_in_bits_isJump = exu_io_out_bits_isJump; // @[top.scala 41:14]
-  assign wbu_io_in_bits_clearidx = exu_io_out_bits_clearidx; // @[top.scala 41:14]
+  assign wbu_io_in_valid = exu_io_out_valid; // @[top.scala 43:14]
+  assign wbu_io_in_bits_pc = exu_io_out_bits_pc; // @[top.scala 43:14]
+  assign wbu_io_in_bits_pc_dnpc = exu_io_out_bits_pc_dnpc; // @[top.scala 43:14]
+  assign wbu_io_in_bits_gpr_idx_w = exu_io_out_bits_gpr_idx_w; // @[top.scala 43:14]
+  assign wbu_io_in_bits_gpr_en_w = exu_io_out_bits_gpr_en_w; // @[top.scala 43:14]
+  assign wbu_io_in_bits_gpr_val_w = exu_io_out_bits_gpr_val_w; // @[top.scala 43:14]
+  assign wbu_io_in_bits_csr_en_w = exu_io_out_bits_csr_en_w; // @[top.scala 43:14]
+  assign wbu_io_in_bits_csr_idx_w = exu_io_out_bits_csr_idx_w; // @[top.scala 43:14]
+  assign wbu_io_in_bits_csr_val_w = exu_io_out_bits_csr_val_w; // @[top.scala 43:14]
+  assign wbu_io_in_bits_csr_no = exu_io_out_bits_csr_no; // @[top.scala 43:14]
+  assign wbu_io_in_bits_csr_epc = exu_io_out_bits_csr_epc; // @[top.scala 43:14]
+  assign wbu_io_in_bits_isJump = exu_io_out_bits_isJump; // @[top.scala 43:14]
   assign gpr_clock = clock;
   assign gpr_reset = reset;
-  assign gpr_io_r_idx_r1 = exu_io_gpr_idx_r1; // @[top.scala 34:15]
-  assign gpr_io_r_idx_r2 = exu_io_gpr_idx_r2; // @[top.scala 34:15]
-  assign gpr_io_r_en_r1 = exu_io_gpr_en_r1; // @[top.scala 34:15]
-  assign gpr_io_r_en_r2 = exu_io_gpr_en_r2; // @[top.scala 34:15]
-  assign gpr_io_w_idx_w = wbu_io_gpr_idx_w; // @[top.scala 42:15]
-  assign gpr_io_w_en_w = wbu_io_gpr_en_w; // @[top.scala 42:15]
-  assign gpr_io_w_val_w = wbu_io_gpr_val_w; // @[top.scala 42:15]
+  assign gpr_io_r_idx_r1 = exu_io_gpr_idx_r1; // @[top.scala 36:15]
+  assign gpr_io_r_idx_r2 = exu_io_gpr_idx_r2; // @[top.scala 36:15]
+  assign gpr_io_r_en_r1 = exu_io_gpr_en_r1; // @[top.scala 36:15]
+  assign gpr_io_r_en_r2 = exu_io_gpr_en_r2; // @[top.scala 36:15]
+  assign gpr_io_w_idx_w = wbu_io_gpr_idx_w; // @[top.scala 44:15]
+  assign gpr_io_w_en_w = wbu_io_gpr_en_w; // @[top.scala 44:15]
+  assign gpr_io_w_val_w = wbu_io_gpr_val_w; // @[top.scala 44:15]
   assign csr_clock = clock;
   assign csr_reset = reset;
-  assign csr_io_r_idx_r = exu_io_csr_idx_r; // @[top.scala 35:15]
-  assign csr_io_r_en_r = exu_io_csr_en_r; // @[top.scala 35:15]
-  assign csr_io_w_en_w = wbu_io_csr_en_w; // @[top.scala 43:15]
-  assign csr_io_w_idx_w = wbu_io_csr_idx_w; // @[top.scala 43:15]
-  assign csr_io_w_val_w = wbu_io_csr_val_w; // @[top.scala 43:15]
-  assign csr_io_w_no = wbu_io_csr_no; // @[top.scala 43:15]
-  assign csr_io_w_epc = wbu_io_csr_epc; // @[top.scala 43:15]
-  assign csr_io_clint_mtip = clint_io_mtip; // @[top.scala 36:22]
-  assign csr_io_irq_pc = wbu_io_pc_dnpc[31:0]; // @[top.scala 40:19]
+  assign csr_io_r_idx_r = exu_io_csr_idx_r; // @[top.scala 37:15]
+  assign csr_io_r_en_r = exu_io_csr_en_r; // @[top.scala 37:15]
+  assign csr_io_w_en_w = wbu_io_csr_en_w; // @[top.scala 45:15]
+  assign csr_io_w_idx_w = wbu_io_csr_idx_w; // @[top.scala 45:15]
+  assign csr_io_w_val_w = wbu_io_csr_val_w; // @[top.scala 45:15]
+  assign csr_io_w_no = wbu_io_csr_no; // @[top.scala 45:15]
+  assign csr_io_w_epc = wbu_io_csr_epc; // @[top.scala 45:15]
+  assign csr_io_clint_mtip = clint_io_mtip; // @[top.scala 38:22]
+  assign csr_io_irq_pc = wbu_io_pc_dnpc[31:0]; // @[top.scala 42:19]
   assign sram_clock = clock;
   assign sram_reset = reset;
-  assign sram_io_ar_valid = crossbar_io_out1_ar_valid; // @[top.scala 51:21]
-  assign sram_io_ar_bits_addr = crossbar_io_out1_ar_bits_addr; // @[top.scala 51:21]
-  assign sram_io_ar_bits_len = crossbar_io_out1_ar_bits_len; // @[top.scala 51:21]
-  assign sram_io_ar_bits_size = crossbar_io_out1_ar_bits_size; // @[top.scala 51:21]
-  assign sram_io_ar_bits_id = crossbar_io_out1_ar_bits_id; // @[top.scala 51:21]
-  assign sram_io_r_ready = crossbar_io_out1_r_ready; // @[top.scala 51:21]
-  assign sram_io_aw_valid = crossbar_io_out1_aw_valid; // @[top.scala 51:21]
-  assign sram_io_aw_bits_addr = crossbar_io_out1_aw_bits_addr; // @[top.scala 51:21]
-  assign sram_io_w_valid = crossbar_io_out1_w_valid; // @[top.scala 51:21]
-  assign sram_io_w_bits_data = crossbar_io_out1_w_bits_data; // @[top.scala 51:21]
-  assign sram_io_w_bits_strb = crossbar_io_out1_w_bits_strb; // @[top.scala 51:21]
-  assign sram_io_w_bits_last = crossbar_io_out1_w_bits_last; // @[top.scala 51:21]
-  assign sram_io_b_ready = crossbar_io_out1_b_ready; // @[top.scala 51:21]
+  assign sram_io_ar_valid = crossbar_io_out1_ar_valid; // @[top.scala 53:21]
+  assign sram_io_ar_bits_addr = crossbar_io_out1_ar_bits_addr; // @[top.scala 53:21]
+  assign sram_io_ar_bits_len = crossbar_io_out1_ar_bits_len; // @[top.scala 53:21]
+  assign sram_io_ar_bits_size = crossbar_io_out1_ar_bits_size; // @[top.scala 53:21]
+  assign sram_io_ar_bits_id = crossbar_io_out1_ar_bits_id; // @[top.scala 53:21]
+  assign sram_io_r_ready = crossbar_io_out1_r_ready; // @[top.scala 53:21]
+  assign sram_io_aw_valid = crossbar_io_out1_aw_valid; // @[top.scala 53:21]
+  assign sram_io_aw_bits_addr = crossbar_io_out1_aw_bits_addr; // @[top.scala 53:21]
+  assign sram_io_w_valid = crossbar_io_out1_w_valid; // @[top.scala 53:21]
+  assign sram_io_w_bits_data = crossbar_io_out1_w_bits_data; // @[top.scala 53:21]
+  assign sram_io_w_bits_strb = crossbar_io_out1_w_bits_strb; // @[top.scala 53:21]
+  assign sram_io_w_bits_last = crossbar_io_out1_w_bits_last; // @[top.scala 53:21]
+  assign sram_io_b_ready = crossbar_io_out1_b_ready; // @[top.scala 53:21]
   assign clint_clock = clock;
   assign clint_reset = reset;
-  assign clint_io_in_ar_valid = crossbar_io_out2_ar_valid; // @[top.scala 52:21]
-  assign clint_io_in_ar_bits_addr = crossbar_io_out2_ar_bits_addr; // @[top.scala 52:21]
-  assign clint_io_in_ar_bits_len = crossbar_io_out2_ar_bits_len; // @[top.scala 52:21]
-  assign clint_io_in_ar_bits_size = crossbar_io_out2_ar_bits_size; // @[top.scala 52:21]
-  assign clint_io_in_ar_bits_id = crossbar_io_out2_ar_bits_id; // @[top.scala 52:21]
-  assign clint_io_in_r_ready = crossbar_io_out2_r_ready; // @[top.scala 52:21]
-  assign clint_io_in_aw_valid = crossbar_io_out2_aw_valid; // @[top.scala 52:21]
-  assign clint_io_in_aw_bits_addr = crossbar_io_out2_aw_bits_addr; // @[top.scala 52:21]
-  assign clint_io_in_aw_bits_id = crossbar_io_out2_aw_bits_id; // @[top.scala 52:21]
-  assign clint_io_in_w_valid = crossbar_io_out2_w_valid; // @[top.scala 52:21]
-  assign clint_io_in_w_bits_data = crossbar_io_out2_w_bits_data; // @[top.scala 52:21]
-  assign clint_io_in_w_bits_strb = crossbar_io_out2_w_bits_strb; // @[top.scala 52:21]
-  assign clint_io_in_w_bits_last = crossbar_io_out2_w_bits_last; // @[top.scala 52:21]
-  assign clint_io_in_b_ready = crossbar_io_out2_b_ready; // @[top.scala 52:21]
-  assign clint_io_en_mtip = csr_io_en_mtip; // @[top.scala 38:19]
-  assign scoreboard_clock = clock;
-  assign scoreboard_reset = reset;
-  assign scoreboard_io_ID_lookidx1 = idu_io_sb_lookidx1; // @[top.scala 24:21]
-  assign scoreboard_io_ID_lookidx2 = idu_io_sb_lookidx2; // @[top.scala 24:21]
-  assign scoreboard_io_ID_setidx = idu_io_sb_setidx; // @[top.scala 24:21]
-  assign scoreboard_io_WB_clearidx = wbu_io_sb_clearidx; // @[top.scala 25:21]
-  assign scoreboard_io_flush = csr_io_irq; // @[top.scala 26:24]
+  assign clint_io_in_ar_valid = crossbar_io_out2_ar_valid; // @[top.scala 54:21]
+  assign clint_io_in_ar_bits_addr = crossbar_io_out2_ar_bits_addr; // @[top.scala 54:21]
+  assign clint_io_in_ar_bits_len = crossbar_io_out2_ar_bits_len; // @[top.scala 54:21]
+  assign clint_io_in_ar_bits_size = crossbar_io_out2_ar_bits_size; // @[top.scala 54:21]
+  assign clint_io_in_ar_bits_id = crossbar_io_out2_ar_bits_id; // @[top.scala 54:21]
+  assign clint_io_in_r_ready = crossbar_io_out2_r_ready; // @[top.scala 54:21]
+  assign clint_io_in_aw_valid = crossbar_io_out2_aw_valid; // @[top.scala 54:21]
+  assign clint_io_in_aw_bits_addr = crossbar_io_out2_aw_bits_addr; // @[top.scala 54:21]
+  assign clint_io_in_aw_bits_id = crossbar_io_out2_aw_bits_id; // @[top.scala 54:21]
+  assign clint_io_in_w_valid = crossbar_io_out2_w_valid; // @[top.scala 54:21]
+  assign clint_io_in_w_bits_data = crossbar_io_out2_w_bits_data; // @[top.scala 54:21]
+  assign clint_io_in_w_bits_strb = crossbar_io_out2_w_bits_strb; // @[top.scala 54:21]
+  assign clint_io_in_w_bits_last = crossbar_io_out2_w_bits_last; // @[top.scala 54:21]
+  assign clint_io_in_b_ready = crossbar_io_out2_b_ready; // @[top.scala 54:21]
+  assign clint_io_en_mtip = csr_io_en_mtip; // @[top.scala 40:19]
   assign crossbar_clock = clock;
   assign crossbar_reset = reset;
-  assign crossbar_io_in1_ar_valid = ifu_io_lm_ar_valid; // @[top.scala 49:20]
-  assign crossbar_io_in1_ar_bits_addr = ifu_io_lm_ar_bits_addr; // @[top.scala 49:20]
-  assign crossbar_io_in2_ar_valid = exu_io_lm_ar_valid; // @[top.scala 50:20]
-  assign crossbar_io_in2_ar_bits_addr = exu_io_lm_ar_bits_addr; // @[top.scala 50:20]
-  assign crossbar_io_in2_aw_valid = exu_io_lm_aw_valid; // @[top.scala 50:20]
-  assign crossbar_io_in2_aw_bits_addr = exu_io_lm_aw_bits_addr; // @[top.scala 50:20]
-  assign crossbar_io_in2_w_valid = exu_io_lm_w_valid; // @[top.scala 50:20]
-  assign crossbar_io_in2_w_bits_data = exu_io_lm_w_bits_data; // @[top.scala 50:20]
-  assign crossbar_io_in2_w_bits_strb = exu_io_lm_w_bits_strb; // @[top.scala 50:20]
-  assign crossbar_io_out1_ar_ready = sram_io_ar_ready; // @[top.scala 51:21]
-  assign crossbar_io_out1_r_valid = sram_io_r_valid; // @[top.scala 51:21]
-  assign crossbar_io_out1_r_bits_data = sram_io_r_bits_data; // @[top.scala 51:21]
-  assign crossbar_io_out1_r_bits_last = sram_io_r_bits_last; // @[top.scala 51:21]
-  assign crossbar_io_out1_r_bits_id = sram_io_r_bits_id; // @[top.scala 51:21]
-  assign crossbar_io_out1_aw_ready = sram_io_aw_ready; // @[top.scala 51:21]
-  assign crossbar_io_out1_w_ready = sram_io_w_ready; // @[top.scala 51:21]
-  assign crossbar_io_out1_b_valid = sram_io_b_valid; // @[top.scala 51:21]
-  assign crossbar_io_out2_ar_ready = clint_io_in_ar_ready; // @[top.scala 52:21]
-  assign crossbar_io_out2_r_valid = clint_io_in_r_valid; // @[top.scala 52:21]
-  assign crossbar_io_out2_r_bits_data = clint_io_in_r_bits_data; // @[top.scala 52:21]
-  assign crossbar_io_out2_r_bits_last = clint_io_in_r_bits_last; // @[top.scala 52:21]
-  assign crossbar_io_out2_r_bits_id = clint_io_in_r_bits_id; // @[top.scala 52:21]
-  assign crossbar_io_out2_aw_ready = clint_io_in_aw_ready; // @[top.scala 52:21]
-  assign crossbar_io_out2_w_ready = clint_io_in_w_ready; // @[top.scala 52:21]
-  assign crossbar_io_out2_b_valid = clint_io_in_b_valid; // @[top.scala 52:21]
-  assign crossbar_io_out2_b_bits_id = clint_io_in_b_bits_id; // @[top.scala 52:21]
-  assign crossbar_io_flush = csr_io_irq; // @[top.scala 53:22]
+  assign crossbar_io_in1_ar_valid = ifu_io_lm_ar_valid; // @[top.scala 51:20]
+  assign crossbar_io_in1_ar_bits_addr = ifu_io_lm_ar_bits_addr; // @[top.scala 51:20]
+  assign crossbar_io_in2_ar_valid = exu_io_lm_ar_valid; // @[top.scala 52:20]
+  assign crossbar_io_in2_ar_bits_addr = exu_io_lm_ar_bits_addr; // @[top.scala 52:20]
+  assign crossbar_io_in2_aw_valid = exu_io_lm_aw_valid; // @[top.scala 52:20]
+  assign crossbar_io_in2_aw_bits_addr = exu_io_lm_aw_bits_addr; // @[top.scala 52:20]
+  assign crossbar_io_in2_w_valid = exu_io_lm_w_valid; // @[top.scala 52:20]
+  assign crossbar_io_in2_w_bits_data = exu_io_lm_w_bits_data; // @[top.scala 52:20]
+  assign crossbar_io_in2_w_bits_strb = exu_io_lm_w_bits_strb; // @[top.scala 52:20]
+  assign crossbar_io_out1_ar_ready = sram_io_ar_ready; // @[top.scala 53:21]
+  assign crossbar_io_out1_r_valid = sram_io_r_valid; // @[top.scala 53:21]
+  assign crossbar_io_out1_r_bits_data = sram_io_r_bits_data; // @[top.scala 53:21]
+  assign crossbar_io_out1_r_bits_last = sram_io_r_bits_last; // @[top.scala 53:21]
+  assign crossbar_io_out1_r_bits_id = sram_io_r_bits_id; // @[top.scala 53:21]
+  assign crossbar_io_out1_aw_ready = sram_io_aw_ready; // @[top.scala 53:21]
+  assign crossbar_io_out1_w_ready = sram_io_w_ready; // @[top.scala 53:21]
+  assign crossbar_io_out1_b_valid = sram_io_b_valid; // @[top.scala 53:21]
+  assign crossbar_io_out2_ar_ready = clint_io_in_ar_ready; // @[top.scala 54:21]
+  assign crossbar_io_out2_r_valid = clint_io_in_r_valid; // @[top.scala 54:21]
+  assign crossbar_io_out2_r_bits_data = clint_io_in_r_bits_data; // @[top.scala 54:21]
+  assign crossbar_io_out2_r_bits_last = clint_io_in_r_bits_last; // @[top.scala 54:21]
+  assign crossbar_io_out2_r_bits_id = clint_io_in_r_bits_id; // @[top.scala 54:21]
+  assign crossbar_io_out2_aw_ready = clint_io_in_aw_ready; // @[top.scala 54:21]
+  assign crossbar_io_out2_w_ready = clint_io_in_w_ready; // @[top.scala 54:21]
+  assign crossbar_io_out2_b_valid = clint_io_in_b_valid; // @[top.scala 54:21]
+  assign crossbar_io_out2_b_bits_id = clint_io_in_b_bits_id; // @[top.scala 54:21]
+  assign crossbar_io_flush = csr_io_irq; // @[top.scala 55:22]
 endmodule

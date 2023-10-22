@@ -5650,3 +5650,322 @@ WARNING: Unmatched cancel notification for request id 2468
 2023.10.22 01:16:28 INFO  time: compiled playground in 1.56s
 2023.10.22 01:24:35 INFO  compiling playground (1 scala source)
 2023.10.22 01:24:36 INFO  time: compiled playground in 1.58s
+Oct 22, 2023 3:38:31 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3073
+2023.10.22 15:38:48 INFO  compiling playground (1 scala source)
+2023.10.22 15:38:49 INFO  time: compiled playground in 1.73s
+2023.10.22 15:38:49 INFO  compiling playground (1 scala source)
+2023.10.22 15:38:49 INFO  time: compiled playground in 0.57s
+Oct 22, 2023 3:41:37 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3315
+2023.10.22 15:41:57 INFO  compiling playground (1 scala source)
+2023.10.22 15:41:57 INFO  time: compiled playground in 0.32s
+Oct 22, 2023 3:42:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3566
+Oct 22, 2023 3:42:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3567
+2023.10.22 15:42:14 INFO  compiling playground (1 scala source)
+2023.10.22 15:42:15 INFO  time: compiled playground in 1.56s
+2023.10.22 15:43:15 INFO  compiling playground (1 scala source)
+2023.10.22 15:43:17 INFO  time: compiled playground in 1.43s
+2023.10.22 15:43:17 INFO  compiling playground (1 scala source)
+2023.10.22 15:43:17 INFO  time: compiled playground in 0.58s
+Oct 22, 2023 3:48:04 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3711
+Oct 22, 2023 3:48:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3740
+2023.10.22 15:55:01 INFO  compiling playground (1 scala source)
+2023.10.22 15:55:01 INFO  time: compiled playground in 0.11s
+Oct 22, 2023 3:55:58 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4367
+Oct 22, 2023 3:56:03 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4413
+Oct 22, 2023 3:56:03 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4417
+2023.10.22 15:56:36 INFO  compiling playground (1 scala source)
+2023.10.22 15:56:36 INFO  time: compiled playground in 0.11s
+2023.10.22 15:56:52 INFO  compiling playground (1 scala source)
+2023.10.22 15:56:52 INFO  time: compiled playground in 0.68s
+2023.10.22 15:56:52 INFO  compiling playground (1 scala source)
+2023.10.22 15:56:53 INFO  time: compiled playground in 0.66s
+Oct 22, 2023 4:00:27 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4724
+2023.10.22 16:00:32 INFO  compiling playground (1 scala source)
+2023.10.22 16:00:34 INFO  time: compiled playground in 1.95s
+Oct 22, 2023 4:08:23 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4845
+Oct 22, 2023 4:08:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4992
+2023.10.22 16:08:46 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+scala.meta.tokenizers.TokenizeException: <input>:246: error: unclosed quoted identifier
+        val gpr_val_r1 = `io.gpr.val_r1
+                         ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.getBackquotedIdent(LegacyScanner.scala:489)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:337)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:211)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1011)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:30)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:539)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.22 16:08:53 INFO  compiling playground (1 scala source)
+2023.10.22 16:08:55 INFO  time: compiled playground in 1.55s
+2023.10.22 16:11:08 INFO  compiling playground (1 scala source)
+2023.10.22 16:11:10 INFO  time: compiled playground in 1.65s
+2023.10.22 16:14:20 INFO  compiling playground (1 scala source)
+2023.10.22 16:14:20 INFO  time: compiled playground in 0.34s
+2023.10.22 16:14:29 INFO  compiling playground (1 scala source)
+2023.10.22 16:14:31 INFO  time: compiled playground in 1.8s
+Oct 22, 2023 4:14:57 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5917
+2023.10.22 16:15:15 INFO  compiling playground (1 scala source)
+2023.10.22 16:15:15 INFO  time: compiled playground in 0.61s
+2023.10.22 16:15:23 INFO  compiling playground (1 scala source)
+2023.10.22 16:15:24 INFO  time: compiled playground in 1.45s
+2023.10.22 16:15:24 INFO  compiling playground (1 scala source)
+2023.10.22 16:15:24 INFO  time: compiled playground in 0.57s
+Oct 22, 2023 4:16:03 PM scala.meta.internal.pc.CompletionProvider expected$1
+WARNING: Range [14144, 14144 + -23) out of bounds for length 14151
+Oct 22, 2023 4:16:04 PM scala.meta.internal.pc.CompletionProvider expected$1
+WARNING: Range [14145, 14145 + -23) out of bounds for length 14152
+2023.10.22 16:16:05 INFO  compiling playground (1 scala source)
+2023.10.22 16:16:07 INFO  time: compiled playground in 1.52s
+2023.10.22 16:18:05 INFO  compiling playground (1 scala source)
+2023.10.22 16:18:07 INFO  time: compiled playground in 1.76s
+Oct 22, 2023 4:29:14 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_16-29-14-311.md
+Oct 22, 2023 4:29:14 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_16-29-14-311.md
+2023.10.22 16:29:14 WARN  Could not find semantic tokens for: file:///home/cyh/ysyx-workbench/npc/playground/src/EXU.scala
+2023.10.22 16:29:28 INFO  compiling playground (1 scala source)
+2023.10.22 16:29:30 INFO  time: compiled playground in 1.67s
+Oct 22, 2023 4:40:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6769
+Oct 22, 2023 4:40:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6780
+Oct 22, 2023 4:40:47 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6786
+Oct 22, 2023 4:40:48 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6813
+Oct 22, 2023 4:41:11 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_16-41-11-884.md
+Oct 22, 2023 4:41:11 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_16-41-11-884.md
+2023.10.22 16:41:27 INFO  compiling playground (1 scala source)
+2023.10.22 16:41:27 INFO  time: compiled playground in 0.92s
+Oct 22, 2023 4:42:33 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_16-42-33-144.md
+Oct 22, 2023 4:42:33 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_16-42-33-144.md
+Oct 22, 2023 4:42:33 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7152
+2023.10.22 16:42:41 INFO  compiling playground (1 scala source)
+2023.10.22 16:42:41 INFO  time: compiled playground in 0.96s
+2023.10.22 16:45:37 INFO  compiling playground (1 scala source)
+2023.10.22 16:45:38 INFO  time: compiled playground in 1.01s
+2023.10.22 16:48:32 INFO  compiling playground (1 scala source)
+2023.10.22 16:48:33 INFO  time: compiled playground in 1.02s
+Oct 22, 2023 5:07:54 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7797
+Oct 22, 2023 5:24:10 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7872
+2023.10.22 17:25:15 INFO  compiling playground (1 scala source)
+2023.10.22 17:25:15 INFO  time: compiled playground in 0.83s
+2023.10.22 17:53:10 INFO  compiling playground (1 scala source)
+2023.10.22 17:53:11 INFO  time: compiled playground in 1.71s
+2023.10.22 17:53:50 INFO  compiling playground (1 scala source)
+2023.10.22 17:53:50 INFO  time: compiled playground in 0.91s
+Oct 22, 2023 5:55:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8310
+Oct 22, 2023 5:55:15 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8320
+Oct 22, 2023 5:55:16 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8324
+Oct 22, 2023 5:55:20 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8342
+Oct 22, 2023 5:59:41 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8439
+2023.10.22 18:02:25 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+scala.meta.tokenizers.TokenizeException: <input>:105: error: Invalid literal number
+ux(typ(4Cat(Fill(51,ID_reg_inst(31)),Cat(ID_reg_inst(31),Cat(ID_reg_inst(7),Cat(ID_reg_inst(30,25),Cat(ID_reg_inst(11,8),0.U))))),     //B
+       ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.checkNoLetter(LegacyScanner.scala:820)
+	at scala.meta.internal.tokenizers.LegacyScanner.restOfUncertainToken$1(LegacyScanner.scala:864)
+	at scala.meta.internal.tokenizers.LegacyScanner.getNumber(LegacyScanner.scala:872)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:335)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:211)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1011)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:30)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:539)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+Oct 22, 2023 6:02:26 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8571
+Oct 22, 2023 6:02:26 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8573
+Oct 22, 2023 6:02:26 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 8577
+2023.10.22 18:03:26 INFO  compiling playground (1 scala source)
+2023.10.22 18:03:26 INFO  time: compiled playground in 0.17s
+2023.10.22 18:03:37 INFO  compiling playground (1 scala source)
+2023.10.22 18:03:37 INFO  time: compiled playground in 0.2s
+2023.10.22 18:03:42 INFO  compiling playground (1 scala source)
+2023.10.22 18:03:42 INFO  time: compiled playground in 0.16s
+2023.10.22 18:04:09 INFO  compiling playground (1 scala source)
+2023.10.22 18:04:09 INFO  time: compiled playground in 0.85s
+2023.10.22 18:04:25 INFO  compiling playground (1 scala source)
+2023.10.22 18:04:25 INFO  time: compiled playground in 0.8s
+2023.10.22 18:06:41 INFO  compiling playground (1 scala source)
+2023.10.22 18:06:41 INFO  time: compiled playground in 0.15s
+2023.10.22 18:08:18 INFO  compiling playground (1 scala source)
+2023.10.22 18:08:18 INFO  time: compiled playground in 0.16s
+2023.10.22 18:09:01 INFO  compiling playground (1 scala source)
+2023.10.22 18:09:01 INFO  time: compiled playground in 0.15s
+2023.10.22 18:10:24 INFO  compiling playground (1 scala source)
+2023.10.22 18:10:24 INFO  time: compiled playground in 0.14s
+2023.10.22 18:11:29 INFO  compiling playground (1 scala source)
+2023.10.22 18:11:29 INFO  time: compiled playground in 0.14s
+2023.10.22 18:12:03 INFO  compiling playground (1 scala source)
+2023.10.22 18:12:03 INFO  time: compiled playground in 0.84s
+2023.10.22 18:12:10 INFO  compiling playground (1 scala source)
+2023.10.22 18:12:10 INFO  time: compiled playground in 0.8s
+2023.10.22 18:13:41 INFO  compiling playground (1 scala source)
+2023.10.22 18:13:41 INFO  time: compiled playground in 0.81s
+Oct 22, 2023 6:14:25 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_18-14-25-861.md
+Oct 22, 2023 6:14:37 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_18-14-37-001.md
+2023.10.22 18:14:42 INFO  compiling playground (1 scala source)
+2023.10.22 18:14:42 INFO  time: compiled playground in 0.89s
+2023.10.22 18:15:58 INFO  compiling playground (1 scala source)
+2023.10.22 18:15:59 INFO  time: compiled playground in 1.05s
+2023.10.22 18:29:18 INFO  compiling playground (1 scala source)
+2023.10.22 18:29:19 INFO  time: compiled playground in 1.39s
+Oct 22, 2023 6:31:04 PM scala.meta.internal.pc.CompletionProvider expected$1
+WARNING: Range [3814, 3814 + -61) out of bounds for length 3859
+Oct 22, 2023 6:31:05 PM scala.meta.internal.pc.CompletionProvider expected$1
+WARNING: Range [3815, 3815 + -61) out of bounds for length 3860
+2023.10.22 18:31:06 INFO  compiling playground (1 scala source)
+2023.10.22 18:31:06 INFO  time: compiled playground in 0.88s
+2023.10.22 18:31:36 ERROR Failed to tokenize input for semantic tokens for /home/cyh/ysyx-workbench/npc/playground/src/IFU.scala
+scala.meta.tokenizers.TokenizeException: <input>:111: error: Invalid literal number
+  io.j:=0jal | (b & inst(31))  //inst(31)为符号位,为1时为负数,表示向后跳转，预测此时跳转
+        ^
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:23)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter.syntaxError$(Reporter.scala:25)
+	at scala.meta.internal.tokenizers.Reporter$$anon$1.syntaxError(Reporter.scala:33)
+	at scala.meta.internal.tokenizers.LegacyScanner.checkNoLetter(LegacyScanner.scala:820)
+	at scala.meta.internal.tokenizers.LegacyScanner.restOfUncertainToken$1(LegacyScanner.scala:864)
+	at scala.meta.internal.tokenizers.LegacyScanner.getNumber(LegacyScanner.scala:872)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchZero$1(LegacyScanner.scala:330)
+	at scala.meta.internal.tokenizers.LegacyScanner.fetchToken(LegacyScanner.scala:332)
+	at scala.meta.internal.tokenizers.LegacyScanner.nextToken(LegacyScanner.scala:211)
+	at scala.meta.internal.tokenizers.LegacyScanner.foreach(LegacyScanner.scala:1011)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.uncachedTokenize(ScalametaTokenizer.scala:24)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.$anonfun$tokenize$1(ScalametaTokenizer.scala:17)
+	at scala.collection.concurrent.TrieMap.getOrElseUpdate(TrieMap.scala:962)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer.tokenize(ScalametaTokenizer.scala:17)
+	at scala.meta.internal.tokenizers.ScalametaTokenizer$$anon$2.apply(ScalametaTokenizer.scala:332)
+	at scala.meta.tokenizers.Api$XtensionTokenizeDialectInput.tokenize(Api.scala:25)
+	at scala.meta.tokenizers.Api$XtensionTokenizeInputLike.tokenize(Api.scala:14)
+	at scala.meta.internal.metals.SemanticTokensProvider$.getTokens(SemanticTokensProvider.scala:30)
+	at scala.meta.internal.metals.SemanticTokensProvider$.provide(SemanticTokensProvider.scala:89)
+	at scala.meta.internal.metals.Compilers.$anonfun$semanticTokens$3(Compilers.scala:539)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.22 18:31:38 INFO  compiling playground (1 scala source)
+2023.10.22 18:31:38 INFO  time: compiled playground in 1s
+Oct 22, 2023 6:39:12 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 11565
+2023.10.22 18:39:14 INFO  compiling playground (1 scala source)
+2023.10.22 18:39:15 INFO  time: compiled playground in 1.38s
+2023.10.22 18:39:33 INFO  compiling playground (1 scala source)
+2023.10.22 18:39:35 INFO  time: compiled playground in 1.58s
+2023.10.22 18:45:23 INFO  compiling playground (1 scala source)
+Oct 22, 2023 6:45:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 11966
+2023.10.22 18:45:24 INFO  time: compiled playground in 1.41s
+2023.10.22 18:45:24 INFO  compiling playground (1 scala source)
+2023.10.22 18:45:24 INFO  time: compiled playground in 0.59s
+Oct 22, 2023 6:45:43 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 12090
+Oct 22, 2023 6:45:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 12189
+Oct 22, 2023 6:46:21 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 12332
+2023.10.22 18:46:30 INFO  compiling playground (1 scala source)
+2023.10.22 18:46:30 INFO  time: compiled playground in 0.33s
+2023.10.22 18:47:18 INFO  compiling playground (1 scala source)
+2023.10.22 18:47:20 INFO  time: compiled playground in 1.51s
+2023.10.22 18:47:20 INFO  compiling playground (1 scala source)
+2023.10.22 18:47:20 INFO  time: compiled playground in 0.65s
+2023.10.22 18:47:30 INFO  compiling playground (1 scala source)
+2023.10.22 18:47:32 INFO  time: compiled playground in 1.67s
+2023.10.22 18:47:32 INFO  compiling playground (1 scala source)
+2023.10.22 18:47:32 INFO  time: compiled playground in 0.55s
+2023.10.22 18:49:04 INFO  compiling playground (1 scala source)
+2023.10.22 18:49:04 INFO  time: compiled playground in 89ms
+2023.10.22 18:49:33 INFO  compiling playground (1 scala source)
+2023.10.22 18:49:33 INFO  time: compiled playground in 80ms
+2023.10.22 18:49:51 INFO  compiling playground (2 scala sources)
+2023.10.22 18:49:51 INFO  time: compiled playground in 0.99s
+2023.10.22 18:50:06 INFO  compiling playground (1 scala source)
+2023.10.22 18:50:06 INFO  time: compiled playground in 0.86s
+2023.10.22 18:50:06 INFO  compiling playground (1 scala source)
+2023.10.22 18:50:08 INFO  time: compiled playground in 0.62s
+2023.10.22 18:52:31 INFO  compiling playground (1 scala source)
+2023.10.22 18:52:31 INFO  time: compiled playground in 0.85s
+Oct 22, 2023 6:52:38 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 13457
+Oct 22, 2023 6:52:43 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 13500
+Oct 22, 2023 6:52:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 13505
+Oct 22, 2023 6:52:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 13506
+Oct 22, 2023 6:52:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 13507
+2023.10.22 18:52:46 INFO  compiling playground (1 scala source)
+2023.10.22 18:52:46 INFO  time: compiled playground in 0.81s
+2023.10.22 18:54:00 INFO  compiling playground (1 scala source)
+2023.10.22 18:54:00 INFO  time: compiled playground in 0.58s

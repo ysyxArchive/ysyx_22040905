@@ -71,8 +71,9 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   }
   int k=y*canvas_w;
   for(int i=0;i<h;i++){
-    lseek(fb,((i+y)*canvas_w+x)*4,SEEK_SET);
+    lseek(fb,(k+x)*4,SEEK_SET);
     assert(0!=write(fb,pixels+(i+y)*w+x, sizeof(uint32_t)*w));
+    k+=canvas_w;
   }
 
 }

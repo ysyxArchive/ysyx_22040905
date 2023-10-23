@@ -203,38 +203,38 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   }
   else if(w1 < w2 && h1 < h2){   
     assert(0);
-  //w,h缩放倍数
-    int w = w2 / w1;
-    int h = h2 / h1;
+  ////w,h缩放倍数
+  //  int w = w2 / w1;
+  //  int h = h2 / h1;
 
-    //缩小
-    //if (src->format->BitsPerPixel == 32){
-    //  for(int i=0;i<h1;i+=w)
-    //    for(int j=0;j<w1;j+=h){
-    //      ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
-    //    SDL_SoftStretch}
-    //}
-    //else{
-    //  for(int i=0;i<h1;i++)
-    //    for(int j=0;j<w1;j++){
-    //      (dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
-    //   }
-    //}
+  ////缩小
+  //  if (src->format->BitsPerPixel == 32){
+  //    for(int i=0;i<h1;i+=w)
+  //      for(int j=0;j<w1;j+=h){
+  //        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
+  //      SDL_SoftStretch}
+  //  }
+  //  else{
+  //    for(int i=0;i<h1;i++)
+  //      for(int j=0;j<w1;j++){
+  //        (dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
+  //     }
+  //  }
 
-    //拉伸
-    if(src->format->BitsPerPixel == 32){
-      for(int i=0;i<h2;i++)
-        for(int j=0;j<w2;j++){
-          ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
-        }
-    }
-    else{
-      for(int i=0;i<h2;i++){
-        for(int j=0;j<w2;j++){
-          (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
-        }
-       }
-    }
+  //  //拉伸
+  //  if(src->format->BitsPerPixel == 32){
+  //    for(int i=0;i<h2;i++)
+  //      for(int j=0;j<w2;j++){
+  //        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
+  //      }
+  //  }
+  //  else{
+  //    for(int i=0;i<h2;i++){
+  //      for(int j=0;j<w2;j++){
+  //        (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
+  //      }
+  //     }
+  //  }
   }
   else{
     printf("%d %d %d %d to %d %d %d %d\n",w1,h1,x1,y1,w2,h2,x2,y2);

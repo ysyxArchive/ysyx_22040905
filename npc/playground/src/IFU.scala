@@ -23,6 +23,9 @@ class IFUBundle extends Bundle{
   val irq=Input(UInt(1.W))
   val real_pc=Input(UInt(32.W))
   val p_error=Input(UInt(1.W))
+  val B_num=Output(UInt(64.W))
+  val B_Error=Output(UInt(64.W))
+  val block_num=Output(UInt(64.W))
   //val b_inst=Output(UInt(1.W))
   //val flush=Input(UInt(1.W))
 }
@@ -37,7 +40,7 @@ class IFU extends Module{
   val pre_decode =Module(new Pre_Decode)
   val next_pc=Wire(UInt(64.W))
   val IF_reg_valid=RegEnable(next_valid,1.U,true.B)
-  val IF_reg_pc=RegEnable(next_pc,"x80000000".U(64.W),next_valid.asBool)
+  val IF_reg_pc=RegEnable(next_pc,"x80000000".U(64.W),io.p_error.asBool|next_valid.asBool)
 
   state := MuxLookup(state, s_idle, List(
     s_idle        -> Mux(io.irq.asBool,s_idle,Mux(io.lm.ar.fire, s_wait_rvalid, s_idle)),
@@ -46,10 +49,9 @@ class IFU extends Module{
   //pre decode
   pre_decode.io.inst:=io.lm.r.bits.data(31,0)
 
-  next_valid:=Mux(io.irq.asBool,1.U,
-              Mux(io.clearJump.asBool,1.U,
+  next_valid:=Mux(io.irq.asBool|io.clearJump.asBool|io.p_error.asBool,1.U,
               Mux((pre_decode.io.jump & io.out.fire).asBool,0.U,
-              IF_reg_valid)))
+              IF_reg_valid))
   io.pc:=IF_reg_pc
   next_pc:= Mux(io.irq.asBool,io.irq_nextpc,
             Mux(io.p_error.asBool,io.real_pc,
@@ -80,6 +82,20 @@ class IFU extends Module{
   it.io.pc:=IF_reg_pc(31,0)
 
 
+  //分支预测率
+  val B_num=RegInit(0.U(64.W))
+  val B_Error=RegInit(0.U(64.W))
+
+  B_num := Mux(io.out.fire & pre_decode.io.j.asBool,B_num+1.U,B_num)
+  B_Error := Mux(io.p_error.asBool,B_Error+1.U,B_Error)
+
+  io.B_num := B_num
+  io.B_Error := B_Error
+
+  //阻塞指令数
+  val block_num=RegInit(0.U(64.W))
+  block_num:=Mux(io.out.fire & pre_decode.io.jump.asBool,block_num+1.U,block_num)
+  io.block_num:=block_num
 }
 
 class Pre_Decode extends Module{

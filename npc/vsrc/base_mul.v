@@ -21,8 +21,8 @@ module base_mul(
   reg  state; // @[base_mul.scala 21:24]
   reg [7:0] cnt; // @[base_mul.scala 44:22]
   reg [5:0] mulBits; // @[base_mul.scala 31:26]
-  wire [7:0] _GEN_0 = {{2'd0}, mulBits}; // @[base_mul.scala 58:18]
-  wire  last = cnt == _GEN_0; // @[base_mul.scala 58:18]
+  wire [7:0] _GEN_0 = {{2'd0}, mulBits}; // @[base_mul.scala 60:18]
+  wire  last = cnt == _GEN_0; // @[base_mul.scala 60:18]
   wire  _next_valid_T_1 = ~state; // @[base_mul.scala 34:47]
   wire  next_valid = io_mul_valid & ~state; // @[base_mul.scala 34:38]
   reg [128:0] a; // @[base_mul.scala 41:20]
@@ -40,16 +40,16 @@ module base_mul(
   wire [64:0] _b_T_5 = {_a_T_3[0],io_multiplier}; // @[Cat.scala 33:92]
   wire [64:0] _b_T_6 = {1'h0,io_multiplier}; // @[Cat.scala 33:92]
   wire [64:0] _b_T_7 = io_mul_signed[0] ? _b_T_5 : _b_T_6; // @[base_mul.scala 53:12]
-  wire [7:0] _cnt_T_2 = cnt + 8'h1; // @[base_mul.scala 56:35]
-  wire [129:0] _GEN_4 = {{1'd0}, a}; // @[base_mul.scala 59:32]
-  wire [129:0] _s_T_3 = result - _GEN_4; // @[base_mul.scala 59:32]
-  wire [129:0] _s_T_6 = result + _GEN_4; // @[base_mul.scala 60:24]
-  wire [6:0] _io_out_valid_T = mulBits + 6'h1; // @[base_mul.scala 64:36]
-  wire [7:0] _GEN_6 = {{1'd0}, _io_out_valid_T}; // @[base_mul.scala 64:25]
-  wire [129:0] _GEN_8 = reset ? 130'h0 : _a_T_9; // @[base_mul.scala 41:{20,20} 46:7]
-  assign io_mul_ready = ~state; // @[base_mul.scala 65:27]
-  assign io_out_valid = cnt == _GEN_6; // @[base_mul.scala 64:25]
-  assign io_result_lo = result[63:0]; // @[base_mul.scala 66:26]
+  wire [7:0] _cnt_T_5 = cnt + 8'h1; // @[base_mul.scala 58:17]
+  wire [129:0] _GEN_5 = {{1'd0}, a}; // @[base_mul.scala 61:32]
+  wire [129:0] _s_T_3 = result - _GEN_5; // @[base_mul.scala 61:32]
+  wire [129:0] _s_T_6 = result + _GEN_5; // @[base_mul.scala 62:24]
+  wire [6:0] _io_out_valid_T = mulBits + 6'h1; // @[base_mul.scala 66:36]
+  wire [7:0] _GEN_7 = {{1'd0}, _io_out_valid_T}; // @[base_mul.scala 66:25]
+  wire [129:0] _GEN_9 = reset ? 130'h0 : _a_T_9; // @[base_mul.scala 41:{20,20} 46:7]
+  assign io_mul_ready = ~state; // @[base_mul.scala 67:27]
+  assign io_out_valid = cnt == _GEN_7; // @[base_mul.scala 66:25]
+  assign io_result_lo = result[63:0]; // @[base_mul.scala 68:26]
   always @(posedge clock) begin
     if (reset) begin // @[base_mul.scala 21:24]
       state <= 1'h0; // @[base_mul.scala 21:24]
@@ -68,17 +68,19 @@ module base_mul(
     end
     if (reset) begin // @[base_mul.scala 44:22]
       cnt <= 8'h0; // @[base_mul.scala 44:22]
-    end else if (state) begin // @[base_mul.scala 56:14]
-      cnt <= _cnt_T_2;
-    end else begin
+    end else if (_next_valid_T_1) begin // @[base_mul.scala 56:16]
       cnt <= 8'h0;
+    end else if (b == 129'h0 & cnt != _GEN_0) begin // @[base_mul.scala 57:16]
+      cnt <= {{2'd0}, mulBits};
+    end else begin
+      cnt <= _cnt_T_5;
     end
     if (reset) begin // @[base_mul.scala 31:26]
       mulBits <= 6'h0; // @[base_mul.scala 31:26]
     end else if (_next_valid_T_1 & io_mul_valid) begin // @[base_mul.scala 39:19]
       mulBits <= 6'h3f;
     end
-    a <= _GEN_8[128:0]; // @[base_mul.scala 41:{20,20} 46:7]
+    a <= _GEN_9[128:0]; // @[base_mul.scala 41:{20,20} 46:7]
     if (reset) begin // @[base_mul.scala 42:20]
       b <= 129'h0; // @[base_mul.scala 42:20]
     end else if (state) begin // @[base_mul.scala 51:12]
@@ -88,10 +90,10 @@ module base_mul(
     end
     if (reset) begin // @[base_mul.scala 43:25]
       result <= 130'h0; // @[base_mul.scala 43:25]
-    end else if (state) begin // @[base_mul.scala 62:16]
-      if (last & b[0]) begin // @[base_mul.scala 59:11]
+    end else if (state) begin // @[base_mul.scala 64:16]
+      if (last & b[0]) begin // @[base_mul.scala 61:11]
         result <= _s_T_3;
-      end else if (b[0]) begin // @[base_mul.scala 60:12]
+      end else if (b[0]) begin // @[base_mul.scala 62:12]
         result <= _s_T_6;
       end
     end else begin

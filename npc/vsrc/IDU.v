@@ -170,7 +170,7 @@ module IDU(
   wire [63:0] _io_out_bits_imm_T_50 = typ[2] ? _io_out_bits_imm_T_21 : _io_out_bits_imm_T_49; // @[IDU.scala 172:25]
   wire [63:0] _io_out_bits_imm_T_51 = typ[1] ? _io_out_bits_imm_T_13 : _io_out_bits_imm_T_50; // @[IDU.scala 171:25]
   assign io_in_ready = io_out_ready; // @[IDU.scala 61:25]
-  assign io_out_valid = state & io_in_valid; // @[IDU.scala 62:43]
+  assign io_out_valid = state & io_in_valid & ~io_flush; // @[IDU.scala 62:57]
   assign io_out_bits_pc = ID_reg_pc; // @[IDU.scala 63:23]
   assign io_out_bits_inst = ID_reg_inst; // @[IDU.scala 64:25]
   assign io_out_bits_rs1 = ID_reg_inst[19:15]; // @[IDU.scala 147:48]

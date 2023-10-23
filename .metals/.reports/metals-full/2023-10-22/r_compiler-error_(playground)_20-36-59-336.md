@@ -1,3 +1,13 @@
+file://<WORKSPACE>/npc/playground/src/cache/icache.scala
+### java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)
+
+occurred in the presentation compiler.
+
+action parameters:
+offset: 5232
+uri: file://<WORKSPACE>/npc/playground/src/cache/icache.scala
+text:
+```scala
 import chisel3._
 import chisel3.util._
 import chisel3.stage._
@@ -124,7 +134,7 @@ class ICache extends Module {
                               io.mem.r.bits.data,
                               rdata >> offset(offset_width + 1, 0)),
                             0.U))
-  io.in.ar.ready := (state === s_idle) | ((state === s_lookup) && (~miss))
+  io.in.ar.ready := (state === s_idle) | ((state === s_lookup) && (~m@@))
   io.in.r.valid := (((state === s_lookup) && (~miss)) || (io.mem.r.fire && io.mem.r.bits.last.asBool))
   io.in.r.bits.resp := 0.U
   io.in.b.bits.resp := 0.U
@@ -141,3 +151,67 @@ class ICache extends Module {
   io.hitrate := Cat(inst_num, hit_num);
 }
 
+
+```
+
+
+
+#### Error stacktrace:
+
+```
+scala.collection.mutable.ArrayBuffer.apply(ArrayBuffer.scala:98)
+	scala.reflect.internal.Types$Type.findMemberInternal$1(Types.scala:1030)
+	scala.reflect.internal.Types$Type.findMember(Types.scala:1035)
+	scala.reflect.internal.Types$Type.memberBasedOnName(Types.scala:661)
+	scala.reflect.internal.Types$Type.member(Types.scala:625)
+	scala.tools.nsc.typechecker.Contexts$SymbolLookup.apply(Contexts.scala:1401)
+	scala.tools.nsc.typechecker.Contexts$Context.lookupSymbol(Contexts.scala:1283)
+	scala.tools.nsc.typechecker.Typers$Typer.typedIdent$2(Typers.scala:5470)
+	scala.tools.nsc.typechecker.Typers$Typer.typedIdentOrWildcard$1(Typers.scala:5522)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5983)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typed1$41(Typers.scala:5074)
+	scala.tools.nsc.typechecker.Typers$Typer.silent(Typers.scala:698)
+	scala.tools.nsc.typechecker.Typers$Typer.normalTypedApply$1(Typers.scala:5076)
+	scala.tools.nsc.typechecker.Typers$Typer.typedApply$1(Typers.scala:5104)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5985)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.computeType(Typers.scala:6130)
+	scala.tools.nsc.typechecker.Namers$Namer.assignTypeToTree(Namers.scala:1127)
+	scala.tools.nsc.typechecker.Namers$Namer.valDefSig(Namers.scala:1745)
+	scala.tools.nsc.typechecker.Namers$Namer.memberSig(Namers.scala:1930)
+	scala.tools.nsc.typechecker.Namers$Namer.typeSig(Namers.scala:1880)
+	scala.tools.nsc.typechecker.Namers$Namer$ValTypeCompleter.completeImpl(Namers.scala:944)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete(Namers.scala:2078)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete$(Namers.scala:2076)
+	scala.tools.nsc.typechecker.Namers$TypeCompleterBase.complete(Namers.scala:2071)
+	scala.reflect.internal.Symbols$Symbol.completeInfo(Symbols.scala:1561)
+	scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1533)
+	scala.reflect.internal.Symbols$Symbol.initialize(Symbols.scala:1722)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5625)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:2064)
+	scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1895)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5951)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5634)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5954)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:117)
+	scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:459)
+	scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1349)
+	scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1342)
+	scala.tools.nsc.interactive.Global.typeCheck(Global.scala:680)
+	scala.meta.internal.pc.PcCollector.<init>(PcCollector.scala:29)
+	scala.meta.internal.pc.PcDocumentHighlightProvider.<init>(PcDocumentHighlightProvider.scala:11)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$documentHighlight$1(ScalaPresentationCompiler.scala:340)
+```
+#### Short summary: 
+
+java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)

@@ -5969,3 +5969,211 @@ WARNING: Unmatched cancel notification for request id 13507
 2023.10.22 18:52:46 INFO  time: compiled playground in 0.81s
 2023.10.22 18:54:00 INFO  compiling playground (1 scala source)
 2023.10.22 18:54:00 INFO  time: compiled playground in 0.58s
+Oct 22, 2023 7:54:47 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 13749
+2023.10.22 19:54:54 INFO  compiling playground (1 scala source)
+2023.10.22 19:54:54 INFO  time: compiled playground in 0.13s
+2023.10.22 19:55:00 INFO  compiling playground (1 scala source)
+2023.10.22 19:55:00 INFO  time: compiled playground in 0.86s
+2023.10.22 20:04:20 INFO  compiling playground (1 scala source)
+2023.10.22 20:04:20 INFO  time: compiled playground in 0.83s
+2023.10.22 20:10:22 INFO  compiling playground (1 scala source)
+2023.10.22 20:10:23 INFO  time: compiled playground in 1.36s
+2023.10.22 20:10:30 INFO  compiling playground (1 scala source)
+2023.10.22 20:10:31 INFO  time: compiled playground in 1.48s
+Oct 22, 2023 8:18:00 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+2023.10.22 20:18:11 INFO  compiling playground (1 scala source)
+2023.10.22 20:18:13 INFO  time: compiled playground in 1.65s
+2023.10.22 20:18:52 INFO  compiling playground (1 scala source)
+2023.10.22 20:18:54 INFO  time: compiled playground in 1.77s
+Oct 22, 2023 8:36:59 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-36-59-336.md
+Oct 22, 2023 8:36:59 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-36-59-336.md
+Oct 22, 2023 8:36:59 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-36-59-632.md
+Oct 22, 2023 8:36:59 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-36-59-632.md
+2023.10.22 20:36:59 WARN  Could not find semantic tokens for: file:///home/cyh/ysyx-workbench/npc/playground/src/cache/icache.scala
+Oct 22, 2023 8:36:59 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-36-59-790.md
+Oct 22, 2023 8:36:59 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-36-59-790.md
+2023.10.22 20:37:01 INFO  compiling playground (1 scala source)
+2023.10.22 20:37:01 INFO  time: compiled playground in 0.9s
+2023.10.22 20:50:16 INFO  compiling playground (1 scala source)
+2023.10.22 20:50:16 INFO  time: compiled playground in 0.11s
+2023.10.22 20:50:27 INFO  compiling playground (1 scala source)
+2023.10.22 20:50:27 INFO  time: compiled playground in 0.63s
+2023.10.22 20:50:27 INFO  compiling playground (1 scala source)
+2023.10.22 20:50:27 INFO  time: compiled playground in 74ms
+2023.10.22 20:50:53 INFO  compiling playground (2 scala sources)
+2023.10.22 20:50:53 INFO  time: compiled playground in 0.78s
+2023.10.22 20:51:01 INFO  compiling playground (1 scala source)
+2023.10.22 20:51:01 INFO  time: compiled playground in 0.59s
+Oct 22, 2023 8:55:49 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15293
+Oct 22, 2023 8:55:49 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15294
+Oct 22, 2023 8:55:49 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15298
+Oct 22, 2023 8:55:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15346
+Oct 22, 2023 8:55:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15347
+Oct 22, 2023 8:55:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15351
+Oct 22, 2023 8:56:09 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15413
+Oct 22, 2023 8:56:40 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-56-40-261.md
+Oct 22, 2023 8:56:40 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-22/r_compiler-error_(playground)_20-56-40-261.md
+Oct 22, 2023 8:56:57 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15605
+Oct 22, 2023 8:56:58 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15625
+Oct 22, 2023 8:56:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 15641
+2023.10.22 20:57:15 INFO  compiling playground (1 scala source)
+2023.10.22 20:57:15 INFO  time: compiled playground in 0.15s
+2023.10.22 20:57:28 INFO  compiling playground (1 scala source)
+2023.10.22 20:57:28 INFO  time: compiled playground in 0.9s
+2023.10.22 20:57:44 INFO  compiling playground (1 scala source)
+2023.10.22 20:57:44 INFO  time: compiled playground in 0.86s
+2023.10.22 20:58:00 INFO  compiling playground (1 scala source)
+2023.10.22 20:58:00 INFO  time: compiled playground in 0.89s
+2023.10.22 20:58:18 INFO  compiling playground (1 scala source)
+2023.10.22 20:58:18 INFO  time: compiled playground in 0.63s
+2023.10.22 20:58:43 INFO  compiling playground (1 scala source)
+2023.10.22 20:58:43 INFO  time: compiled playground in 0.64s
+Oct 22, 2023 11:23:38 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 16369
+Oct 22, 2023 11:23:39 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 16377
+Oct 22, 2023 11:23:39 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 16379
+Oct 22, 2023 11:23:42 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 16400
+2023.10.22 23:24:35 INFO  compiling playground (1 scala source)
+2023.10.22 23:24:35 INFO  time: compiled playground in 0.17s
+2023.10.22 23:24:42 INFO  compiling playground (1 scala source)
+2023.10.22 23:24:42 INFO  time: compiled playground in 0.18s
+2023.10.22 23:24:54 INFO  compiling playground (1 scala source)
+2023.10.22 23:24:56 INFO  time: compiled playground in 1.17s
+Oct 22, 2023 11:36:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 16638
+2023.10.22 23:37:48 INFO  compiling playground (1 scala source)
+2023.10.22 23:37:49 INFO  time: compiled playground in 1.06s
+2023.10.22 23:38:02 INFO  compiling playground (1 scala source)
+2023.10.22 23:38:03 INFO  time: compiled playground in 1.13s
+2023.10.22 23:38:19 INFO  compiling playground (1 scala source)
+2023.10.22 23:38:21 INFO  time: compiled playground in 1.23s
+2023.10.22 23:38:35 INFO  compiling playground (1 scala source)
+2023.10.22 23:38:35 INFO  time: compiled playground in 0.8s
+Oct 22, 2023 11:38:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 17078
+2023.10.22 23:39:13 INFO  compiling playground (1 scala source)
+2023.10.22 23:39:14 INFO  time: compiled playground in 1.3s
+2023.10.23 11:13:03 INFO  Shut down connection with build server.
+2023.10.23 18:49:23 INFO  Started: Metals version 1.1.0 in folders '/home/cyh/ysyx-workbench' for client Visual Studio Code 1.79.2.
+2023.10.23 18:49:25 INFO  Attempting to connect to the build server...
+2023.10.23 18:49:25 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.23 18:49:25 INFO  skipping build import with status 'Installed'
+2023.10.23 18:49:25 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.23 18:49:25 INFO  time: Connected to build server in 0.59s
+2023.10.23 18:49:25 INFO  Connected to Build server: Bloop v1.5.11
+2023.10.23 18:49:25 INFO  time: Imported build in 0.12s
+2023.10.23 18:49:30 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
+2023.10.23 18:49:30 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
+2023.10.23 18:49:30 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
+2023.10.23 18:49:30 INFO  time: indexed workspace in 4.51s
+Oct 23, 2023 7:28:10 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 45
+Oct 23, 2023 7:28:37 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 210
+Oct 23, 2023 7:29:28 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: java.lang.StringIndexOutOfBoundsException: Range [1902, 1909) out of bounds for length 1908
+java.util.concurrent.CompletionException: java.lang.StringIndexOutOfBoundsException: Range [1902, 1909) out of bounds for length 1908
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:332)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:347)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:708)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:2162)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:40)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.StringIndexOutOfBoundsException: Range [1902, 1909) out of bounds for length 1908
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:55)
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:52)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckFromToIndex(Preconditions.java:112)
+	at java.base/jdk.internal.util.Preconditions.checkFromToIndex(Preconditions.java:349)
+	at java.base/java.lang.String.checkBoundsBeginEnd(String.java:4589)
+	at java.base/java.lang.String.substring(String.java:2703)
+	at scala.meta.internal.metals.codeactions.FlatMapToForComprehensionCodeAction.getIndentForPos(FlatMapToForComprehensionCodeAction.scala:677)
+	at scala.meta.internal.metals.codeactions.FlatMapToForComprehensionCodeAction.$anonfun$contribute$4(FlatMapToForComprehensionCodeAction.scala:57)
+	at scala.Option.map(Option.scala:242)
+	at scala.meta.internal.metals.codeactions.FlatMapToForComprehensionCodeAction.$anonfun$contribute$3(FlatMapToForComprehensionCodeAction.scala:53)
+	at scala.Option.flatMap(Option.scala:283)
+	at scala.meta.internal.metals.codeactions.FlatMapToForComprehensionCodeAction.$anonfun$contribute$2(FlatMapToForComprehensionCodeAction.scala:52)
+	at scala.Option.flatMap(Option.scala:283)
+	at scala.meta.internal.metals.codeactions.FlatMapToForComprehensionCodeAction.$anonfun$contribute$1(FlatMapToForComprehensionCodeAction.scala:51)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:687)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	... 3 more
+
+Oct 23, 2023 7:29:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 533
+2023.10.23 19:29:50 INFO  compiling playground (1 scala source)
+2023.10.23 19:29:50 INFO  time: compiled playground in 0.54s
+2023.10.23 19:29:50 INFO  compiling playground (1 scala source)
+2023.10.23 19:29:52 INFO  time: compiled playground in 1.02s
+2023.10.23 19:30:07 INFO  compiling playground (1 scala source)
+2023.10.23 19:30:07 INFO  time: compiled playground in 0.56s
+Oct 23, 2023 7:32:29 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 631
+2023.10.23 19:33:03 INFO  compiling playground (1 scala source)
+2023.10.23 19:33:03 INFO  time: compiled playground in 0.71s
+2023.10.23 19:33:03 INFO  compiling playground (1 scala source)
+2023.10.23 19:33:05 INFO  time: compiled playground in 0.86s
+2023.10.23 19:34:02 INFO  compiling playground (1 scala source)
+2023.10.23 19:34:02 INFO  time: compiled playground in 0.88s
+2023.10.23 19:34:02 INFO  compiling playground (1 scala source)
+2023.10.23 19:34:05 INFO  time: compiled playground in 2.09s
+2023.10.23 19:34:41 INFO  compiling playground (1 scala source)
+2023.10.23 19:34:44 INFO  time: compiled playground in 2.12s
+2023.10.23 19:34:44 INFO  compiling playground (1 scala source)
+2023.10.23 19:34:44 INFO  time: compiled playground in 0.62s
+2023.10.23 19:35:13 INFO  compiling playground (1 scala source)
+2023.10.23 19:35:13 INFO  time: compiled playground in 0.68s
+Oct 23, 2023 7:45:39 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1335
+Oct 23, 2023 7:46:26 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-23/r_compiler-error_(playground)_19-46-26-555.md
+Oct 23, 2023 7:46:26 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report /home/cyh/ysyx-workbench/.metals/.reports/metals-full/2023-10-23/r_compiler-error_(playground)_19-46-26-555.md
+2023.10.23 19:46:34 INFO  compiling playground (1 scala source)
+2023.10.23 19:46:34 INFO  time: compiled playground in 0.71s
+2023.10.23 19:46:44 INFO  compiling playground.test (1 scala source)
+2023.10.23 19:46:44 INFO  time: compiled playground.test in 0.66s
+2023.10.23 19:47:47 INFO  compiling playground.test (1 scala source)
+2023.10.23 19:47:47 INFO  time: compiled playground.test in 0.4s
+Oct 23, 2023 7:53:51 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Oct 23, 2023 7:54:05 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+2023.10.23 19:54:12 INFO  compiling playground (1 scala source)
+2023.10.23 19:54:12 INFO  time: compiled playground in 0.72s
+Oct 23, 2023 8:07:18 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2011
+2023.10.23 20:07:24 INFO  compiling playground (1 scala source)
+2023.10.23 20:07:26 INFO  time: compiled playground in 2.17s
+2023.10.23 20:09:31 INFO  compiling playground (1 scala source)
+2023.10.23 20:09:33 INFO  time: compiled playground in 2.69s

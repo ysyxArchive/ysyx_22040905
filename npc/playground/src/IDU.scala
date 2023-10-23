@@ -59,7 +59,7 @@ class IDU extends Module{
    ))
    val nop=0x0000013.U 
    io.in.ready:= (~RAW) & io.out.ready
-   io.out.valid:=(state === s_wait_ready) & io.in.valid
+   io.out.valid:=(state === s_wait_ready) & io.in.valid & (~io.flush.asBool)
    io.out.bits.pc:=Mux(~RAW.asBool,ID_reg_pc,0.U)
    io.out.bits.inst:=Mux(~RAW.asBool,ID_reg_inst,nop)
 

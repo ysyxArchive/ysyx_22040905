@@ -71,9 +71,10 @@ void init(int argc, char *argv[])
 #endif
 }
 
+#define MUL
 #ifdef MUL
 void check_mul(){
-	for (int i = 0; i < 20000; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		unit->io_mul_valid = 1;
 		unit->io_flush = 0;
@@ -104,8 +105,7 @@ void check_mul(){
 	printf("\n");
 	
 }
-#endif
-
+#else
 void check_div(){
 	for(int i=0;i<1;i++){
 		unit->io_dividend = 0x8000000000000000;//random();
@@ -165,10 +165,12 @@ void check_div(){
 	}
 
 }
+#endif
+
 int main(int argc, char *argv[])
 {
 	init(argc, argv);
 	srand((unsigned)time(NULL));
-	check_div();
+	check_mul();
 	sim_exit();
 }

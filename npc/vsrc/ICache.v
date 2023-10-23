@@ -124,7 +124,7 @@ module ICache(
     .io_en(lfsr8_io_en),
     .io_out(lfsr8_io_out)
   );
-  assign io_in_ar_ready = _addr_T | _addr_T_2; // @[icache.scala 127:40]
+  assign io_in_ar_ready = _addr_T | _io_in_r_bits_data_T_2; // @[icache.scala 127:40]
   assign io_in_r_valid = _io_in_r_bits_data_T_2 | _state_T_14; // @[icache.scala 128:55]
   assign io_in_r_bits_data = _addr_T_2 & _addr_T_4 ? _io_in_r_bits_data_T_7 : _io_in_r_bits_data_T_16; // @[icache.scala 118:28]
   assign io_mem_ar_valid = state == 2'h2; // @[icache.scala 96:28]

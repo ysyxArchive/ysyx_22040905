@@ -53,7 +53,9 @@ class base_mul extends Module{
         Mux(io.mul_signed(0),Cat(io.multiplicand(mulbits),io.multiplier),
         Cat(0.U,io.multiplier))))
     
-    cnt:= Mux(state === s_wait,cnt+1.U,0.U);
+    cnt:=   Mux(state =/= s_wait,0.U,
+            Mux((b === 0.U) &&(cnt =/= mulBits),mulBits,
+            cnt + 1.U))
 
     last := (cnt === mulBits)
     s:=Mux(last && b(0),result - a,

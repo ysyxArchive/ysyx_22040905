@@ -10,6 +10,11 @@ class top extends Module{
         val hitrate_d=Output(UInt(64.W))
         val mul_sel = Input(UInt(1.W)) //0为移位乘法器，1为华莱士树乘法器
         val timer_diff_skip = Output(UInt(1.W))
+        val B_num=Output(UInt(64.W))
+        val B_Error=Output(UInt(64.W))
+        val block_num=Output(UInt(64.W))
+        val mul_num = Output(UInt(64.W))
+        val div_num = Output(UInt(64.W))
     })
     val ifu=Module(new IFU)
     val idu=Module(new IDU)
@@ -27,7 +32,7 @@ class top extends Module{
     ifu.io.pc_dnpc:=wbu.io.pc_dnpc
     ifu.io.clearJump:=wbu.io.isJump
     ifu.io.irq_nextpc:=csr.io.next_pc
-    ifu.io.irq:=csr.io.irq | exu.io.p_error
+    ifu.io.irq:=csr.io.irq 
     ifu.io.real_pc:=exu.io.out.bits.pc_dnpc
     ifu.io.p_error:=exu.io.p_error
     idu.io.in<>ifu.io.out
@@ -52,7 +57,8 @@ class top extends Module{
     crossbar.io.in2<>exu.io.lm
     crossbar.io.out1<>sram.io
     crossbar.io.out2<>clint.io.in
-    crossbar.io.flush<>csr.io.irq
+    crossbar.io.flush_i:=csr.io.irq|exu.io.p_error
+    crossbar.io.flush_d:=csr.io.irq
 
 
     io.hitrate_i:=crossbar.io.hitrate_i
@@ -67,4 +73,15 @@ class top extends Module{
     //bypass
     exu.io.bypass_idx := wbu.io.bypass_idx
     exu.io.bypass_data := wbu.io.bypass_data
+
+    //分支预测率
+    io.B_num := ifu.io.B_num
+    io.B_Error := ifu.io.B_Error
+
+    //阻塞指令数
+    io.block_num := ifu.io.block_num
+
+    //乘除法指令数
+    io.mul_num := exu.io.mul_num
+    io.div_num := exu.io.div_num
 }

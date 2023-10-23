@@ -244,7 +244,15 @@ int main(int argc, char *argv[])
   totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
   printf("\033[1;32mtotal time: %f s\ntotol instructions: %ld \nFreq:%f Hz\nInst:%f inst/s\nIPC:%f\n",totaltime,inst_num,cyc_num/totaltime,inst_num/totaltime,inst_num/(double)cyc_num);
 
-  printf("ICache:%f%% \nDCache:%f%% \n\033[0m",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32)*100.0,(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32)*100.0);
+  printf("ICache:%f%% \nDCache:%f%% \n",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32)*100.0,(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32)*100.0);
+  
+  printf("Branch_inst:%ld\n",top->io_B_num);
+  printf("Prediction error:%ld\n",top->io_B_Error);
+  printf("Branch prediction rate:%f%% \n",(top->io_B_num-top->io_B_Error)*100.0/top->io_B_num);
+  printf("Block instruction num:%ld\n",top->io_block_num);
+  printf("mul:%ld\ndiv:%ld\n",top->io_mul_num,top->io_div_num);
+
+  printf("\033[0m");
 #endif
   sim_exit();
   //nvboard_quit();

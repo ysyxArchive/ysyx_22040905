@@ -14,7 +14,13 @@ class div(xlen: Int) extends Module{
         val out_valid = Output(Bool())          //为高表示除法器输出了有效结果
         val quotient = Output(UInt(xlen.W))     //商
         val remainder = Output(UInt(xlen.W))     //余数
+        val div_num = Output(UInt(64.W))
     })
+  val div_num = RegInit(0.U(64.W))
+  when(io.div_valid===1.U){
+    div_num := div_num + 1.U
+  } 
+  io.div_num := div_num
 
   val dividend_abs = Mux(io.div_signed && io.dividend(xlen-1).asBool(), 
                          (~io.dividend).asUInt + 1.U, io.dividend)

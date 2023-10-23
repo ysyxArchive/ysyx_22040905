@@ -14,7 +14,10 @@ class ALU extends Module{
         val busy =Output(UInt(1.W))
         val flush=Input(UInt(1.W))
         val mul_sel=Input(UInt(1.W))
+        val mul_num = Output(UInt(64.W))
+        val div_num = Output(UInt(64.W))
     })
+
     val adder_a=Wire(UInt(64.W))
     val adder_b=Wire(UInt(64.W))
     val adder_cin=Wire(UInt(1.W))
@@ -79,4 +82,6 @@ class ALU extends Module{
     //when((io.op(15)|io.op(16)|io.op(17)|io.op(18))){
     //    printf("%x\n",io.result)
     //}
+    io.mul_num := mul.mul_num
+    io.div_num := div.div_num
 }

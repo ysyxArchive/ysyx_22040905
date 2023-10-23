@@ -25,9 +25,10 @@ class EXU extends Module{
         val bypass_idx = Input(UInt(5.W))
         val bypass_data = Input(UInt(64.W))
         val p_error=Output(UInt(1.W)) //为高表示预测错误
+        val mul_num = Output(UInt(64.W))
+        val div_num = Output(UInt(64.W))
     })
 
-        io.p_error:=io.out.fire & (io.out.bits.pc_dnpc =/= io.in.bits.pc)
 
         //flush for two cycles
         val EXE_reg_flush=RegInit(0.U(1.W))
@@ -52,6 +53,9 @@ class EXU extends Module{
         val EXE_reg_valid=RegInit(1.U(1.W))
 
 
+
+        //分支预测错误
+        io.p_error:=io.out.fire & (io.out.bits.pc_dnpc =/= io.in.bits.pc) & (EXE_reg_pc =/= 0.U) & (~EXE_reg_isJump)
 
         io.out.bits.isJump:=EXE_reg_isJump
         io.out.bits.clearidx:=EXE_reg_clearidx
@@ -251,5 +255,9 @@ class EXU extends Module{
         
         io.out.bits.inst:=EXE_reg_inst
         io.out.bits.pc:=EXE_reg_pc
+
+
+        io.mul_num:=alu.io.mul_num
+        io.div_num:=alu.io.div_num
 
 }

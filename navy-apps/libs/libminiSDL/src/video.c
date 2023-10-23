@@ -34,18 +34,25 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     y2=dstrect->y;
   }
   //h=200;w=320;x1=0;x2=0;y1=0;y2=0;
- 
+  int i1=y1*(dst->w);
+  int i2=y2*(dst->w);
   if (src->format->BitsPerPixel == 32){
-    for(int i=0;i<h;i++)
+    for(int i=0;i<h;i++){
       for(int j=0;j< w;j++){
-        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
+        ((uint32_t *)dst->pixels)[i2+(j+x2)]=((uint32_t *)src->pixels)[i1+(j+x1)];
       }
+      i1+=dst->w;
+      i2+=dst->w;
+    }
   }
   else{
-    for(int i=0;i<h;i++)
+    for(int i=0;i<h;i++){
       for(int j=0;j<w;j++){
-        (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
-     }
+        (dst->pixels)[i2+(j+x2)]=(src->pixels)[i1+(j+x1)];
+      }
+      i1+=dst->w;
+      i2+=dst->w;
+    }
   }
 }
 
@@ -65,15 +72,18 @@ uint32_t pixels8[400*300];
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&&w==0&&h==0){w=s->w;h=s->h;}
   //printf("%d %d\n",w,h);
+  int k=y*(s->w);
   if(s->format->BitsPerPixel==8){
-    for(int i=0;i<h;i++)
+    for(int i=0;i<h;i++){
       for(int j=0;j<w;j++){
       //printf("%d %d %d %d %d %d\n",x,y,w,h,j,i);
-      uint32_t r=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].r;
-      uint32_t g=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].g;
-      uint32_t b=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].b;
-      uint32_t a=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].a;
+      uint32_t r=(s->format->palette->colors)[s->pixels[k+j+x]].r;
+      uint32_t g=(s->format->palette->colors)[s->pixels[k+j+x]].g;
+      uint32_t b=(s->format->palette->colors)[s->pixels[k+j+x]].b;
+      uint32_t a=(s->format->palette->colors)[s->pixels[k+j+x]].a;
       *(pixels8+(i+y)*w+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
+      }
+      k+=s->w;
     }
     NDL_DrawRect(pixels8,x,y,w,h);
   }
@@ -192,6 +202,7 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     SDL_BlitSurface(src, &rect, dst, dstrect);
   }
   else if(w1 < w2 && h1 < h2){   
+    assert(0);
   //w,h缩放倍数
     int w = w2 / w1;
     int h = h2 / h1;

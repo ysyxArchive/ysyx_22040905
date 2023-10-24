@@ -1,0 +1,801 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Mon Aug  1 20:44:51 2022
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+NO_AT_BRIDGE = 1
+# environment
+GNOME_SHELL_SESSION_MODE = ubuntu
+# environment
+SSH_AGENT_LAUNCHER = gnome-keyring
+# environment
+SNAP_INSTANCE_KEY = 
+# environment
+GJS_DEBUG_OUTPUT = stderr
+# environment
+NEMU_HOME = /home/cyh/ysyx-workbench/nemu
+# environment
+LC_NAME = en_US.UTF-8
+# environment
+LC_NUMERIC = en_US.UTF-8
+# environment
+VSCODE_CWD = /home/cyh/ysyx-workbench/npc
+# makefile (from 'Makefile', line 50)
+INCFLAGS = $(addprefix -I, $(INC_PATH))
+# environment
+LC_ADDRESS = en_US.UTF-8
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# makefile (from 'Makefile', line 43)
+SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
+# environment
+VSCODE_GIT_ASKPASS_EXTRA_ARGS = --ms-enable-electron-run-as-node
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+SNAP_INSTANCE_NAME = code
+# makefile (from 'Makefile', line 38)
+OBJ_DIR = $(BUILD_DIR)/obj_dir
+# environment
+GDK_PIXBUF_MODULEDIR = /snap/code/102/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+# makefile (from 'Makefile', line 48)
+CSRCS = $(CSRCSS) $(SRC_AUTO_BIND)
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/cyh/ysyx-workbench/npc
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# environment
+OLDPWD = /home/cyh/ysyx-workbench
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/cyh/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.A2F5P1
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# makefile
+CURDIR := /home/cyh/ysyx-workbench/npc
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 11)
+NVBOARD_ARCHIVE = $(NVBOARD_BUILD_DIR)/nvboard.a
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 5)
+INC_PATH = $(NVBOARD_INC)
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 3)
+NVBOARD_SRCS := /home/cyh/ysyx-workbench/nvboard/src/nvboard.cpp /home/cyh/ysyx-workbench/nvboard/src/keyboard.cpp /home/cyh/ysyx-workbench/nvboard/src/render.cpp /home/cyh/ysyx-workbench/nvboard/src/vga.cpp /home/cyh/ysyx-workbench/nvboard/src/event.cpp /home/cyh/ysyx-workbench/nvboard/src/component.cpp
+# environment
+WAYLAND_DISPLAY = wayland-0
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 8)
+NVBOARD_OBJS := /home/cyh/ysyx-workbench/nvboard/build/nvboard.o /home/cyh/ysyx-workbench/nvboard/build/keyboard.o /home/cyh/ysyx-workbench/nvboard/build/render.o /home/cyh/ysyx-workbench/nvboard/build/vga.o /home/cyh/ysyx-workbench/nvboard/build/event.o /home/cyh/ysyx-workbench/nvboard/build/component.o
+# environment
+GIT_ASKPASS = /snap/code/102/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/build/component.d', line 1)
+MAKEFILE_LIST := Makefile /home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk /home/cyh/ysyx-workbench/nvboard/build/nvboard.d /home/cyh/ysyx-workbench/nvboard/build/keyboard.d /home/cyh/ysyx-workbench/nvboard/build/render.d /home/cyh/ysyx-workbench/nvboard/build/vga.d /home/cyh/ysyx-workbench/nvboard/build/event.d /home/cyh/ysyx-workbench/nvboard/build/component.d
+# makefile (from 'Makefile', line 33)
+VERILATOR = verilator
+# environment
+SNAP_REEXEC = 
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_PID = 2871
+# environment
+SDKMAN_DIR = /home/cyh/.sdkman
+# environment
+XDG_SESSION_TYPE = wayland
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
+# environment
+SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1265,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/1265
+# automatic
+*F = $(notdir $*)
+# environment
+NVBOARD_HOME = /home/cyh/ysyx-workbench/nvboard
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 4)
+NVBOARD_INC = $(NVBOARD_HOME)/include
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=fcitx
+# makefile (from 'Makefile', line 34)
+VERILATOR_CFLAGS = -MMD --build --cc -O3 --x-assign fast --x-initial fast --noassert 
+# environment
+NPC_HOME = /home/cyh/ysyx-workbench/npc
+# environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 1
+# makefile (from 'Makefile', line 30)
+TOPNAME = top
+# environment
+MAKELEVEL := 0
+# environment
+IM_CONFIG_CHECK_ENV = 1
+# default
+MAKE = $(MAKE_COMMAND)
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 2)
+NVBOARD_SRC = $(NVBOARD_HOME)/src
+# environment
+SNAP_COOKIE = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
+# environment
+PATH = /usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+# default
+MAKEFILES := 
+# environment
+VSCODE_GIT_IPC_HANDLE = /run/user/1000/vscode-git-c9ee844961.sock
+# environment
+LANGUAGE = en
+# environment
+VSCODE_GIT_ASKPASS_NODE = /snap/code/102/usr/share/code/code
+# environment
+ 
+LC_MONETARY = en_US.UTF-8
+# automatic
+^F = $(notdir $^)
+# environment
+SNAP_USER_COMMON = /home/cyh/snap/code/common
+# environment
+LC_TIME = en_US.UTF-8
+# environment
+VSCODE_GIT_ASKPASS_MAIN = /snap/code/102/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+# environment
+SNAP = /snap/code/102
+# environment
+INVOCATION_ID = e1b1d6671f5644a8b088b91029718a53
+# environment
+SNAP_REVISION = 102
+# environment
+SNAP_REAL_HOME = /home/cyh
+# environment
+USERNAME = cyh
+# environment
+TERM_PROGRAM = vscode
+# environment
+GNOME_SETUP_DISPLAY = :1
+# environment
+LC_TELEPHONE = en_US.UTF-8
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# automatic
+?F = $(notdir $?)
+# environment
+GTK_IM_MODULE = fcitx
+# environment
+XDG_CURRENT_DESKTOP = Unity
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+# automatic
++F = $(notdir $+)
+# environment
+DESKTOP_SESSION = ubuntu
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = Unity
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+CLUTTER_IM_MODULE = fcitx
+# environment
+LOGNAME = cyh
+# makefile (from 'Makefile', line 47)
+CSRCSS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /var/lib/snapd/desktop/applications/code_code.desktop
+# environment
+SNAP_ARCH = amd64
+# makefile
+.DEFAULT_GOAL := test
+# environment
+SYSTEMD_EXEC_PID = 1295
+# environment
+DISPLAY = :0
+# environment
+USER = cyh
+# environment
+GTK_MODULES = gail:atk-bridge
+# makefile (from 'Makefile', line 46)
+VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
+# default
+MAKE_VERSION := 4.3
+# 'override' directive
+.SHELLSTATUS := 0
+# environment
+DISABLE_WAYLAND = 1
+# environment
+SNAP_DATA = /var/snap/code/102
+# environment
+SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 7)
+NVBOARD_BUILD_DIR = $(NVBOARD_HOME)/build
+# makefile (from 'Makefile', line 52)
+LDFLAGS = -lSDL2 -lSDL2_image
+# environment
+MANAGERPID = 1120
+# environment
+LC_MEASUREMENT = en_US.UTF-8
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2820
+# makefile (from 'Makefile', line 1)
+VSRC_DIR = ./vsrc
+# environment
+LC_PAPER = en_US.UTF-8
+# makefile (from 'Makefile', line 39)
+BIN = $(BUILD_DIR)/$(TOPNAME)
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# makefile (from 'Makefile', line 51)
+CFLAGS = $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
+# environment
+COLORTERM = truecolor
+# environment
+GDK_PIXBUF_MODULE_FILE = /home/cyh/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# environment
+JOURNAL_STREAM = 8:26377
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# makefile (from 'Makefile', line 37)
+BUILD_DIR = ./build
+# environment
+HOME = /home/cyh
+# environment
+QT_IM_MODULE = fcitx
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-917a263f-1.69.2-main.sock
+# environment
+TERM = xterm-256color
+# environment
+SNAP_NAME = code
+# environment
+GSETTINGS_SCHEMA_DIR = /snap/code/102/usr/share/glib-2.0/schemas
+# environment
+IM_CONFIG_PHASE = 1
+# environment
+PAPERSIZE = letter
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# environment
+SNAP_VERSION = 3b889b09
+# environment
+AM_HOME = /home/cyh/ysyx-workbench/abstract-machine
+# default
+SUFFIXES := 
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+SNAP_COMMON = /var/snap/code/common
+# makefile (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 12)
+CXXFLAGS = -MMD -O3
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# environment
+SNAP_USER_DATA = /home/cyh/snap/code/102
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+TERM_PROGRAM_VERSION = 1.69.2
+# makefile (from 'Makefile', line 31)
+NXDC_FILES = constr/top.nxdc
+# environment
+GDMSESSION = ubuntu
+# environment
+LC_IDENTIFICATION = en_US.UTF-8
+# environment
+SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
+# variable set hash-table stats:
+# Load=169/1024=17%, Rehash=0, Collisions=24/284=8%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 66311, inode 1704054): 20 files, no impossibilities.
+# /home/cyh/ysyx-workbench/nvboard/src (device 66311, inode 1712930): No files, no impossibilities so far.
+
+# 20 files, no impossibilities in 2 directories.
+
+# Implicit Rules
+
+/home/cyh/ysyx-workbench/nvboard/build/%.o: /home/cyh/ysyx-workbench/nvboard/src/%.cpp
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+# 1 implicit rules, 0 (0.0%) terminal.
+# Files
+
+/home/cyh/ysyx-workbench/nvboard/build/render.o: /home/cyh/ysyx-workbench/nvboard/src/render.cpp /home/cyh/ysyx-workbench/nvboard/src/render.cpp /home/cyh/ysyx-workbench/nvboard/include/render.h /home/cyh/ysyx-workbench/nvboard/include/configs.h /home/cyh/ysyx-workbench/nvboard/include/component.h /home/cyh/ysyx-workbench/nvboard/include/constrs.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'render'
+#  Last modified 2022-03-17 16:42:23.312984029
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/src/nvboard.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nvboard/build/nvboard.o: /home/cyh/ysyx-workbench/nvboard/src/nvboard.cpp /home/cyh/ysyx-workbench/nvboard/src/nvboard.cpp /home/cyh/ysyx-workbench/nvboard/include/nvboard.h /home/cyh/ysyx-workbench/nvboard/include/configs.h /home/cyh/ysyx-workbench/nvboard/include/constrs.h /home/cyh/ysyx-workbench/nvboard/include/render.h /home/cyh/ysyx-workbench/nvboard/include/component.h /home/cyh/ysyx-workbench/nvboard/include/vga.h /home/cyh/ysyx-workbench/nvboard/include/keyboard.h /home/cyh/ysyx-workbench/nvboard/include/at_scancode.h /home/cyh/ysyx-workbench/nvboard/include/macro.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'nvboard'
+#  Last modified 2022-03-17 16:42:22.056081817
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+compile:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	mill -i __.compile
+
+# Not a target:
+/home/cyh/ysyx-workbench/npc/csrc/top.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-01 20:25:38.982991006
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/src/keyboard.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+sim: /home/cyh/ysyx-workbench/npc/vsrc/top.v /home/cyh/ysyx-workbench/npc/csrc/top.cpp
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 65):
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	rm -rf $(BUILD_DIR)/*
+	verilator --build -Wall --cc --exe --trace\
+		--top-module $(TOPNAME) $^ \
+	   	$(addprefix -CFLAGS , $(CFLAGS)) \
+	    --Mdir $(OBJ_DIR) ##-o $(abspath $(BIN))
+	ls -l ./build/obj_dir
+	./build/obj_dir/V$(TOPNAME)
+	gtkwave wave.vcd
+
+/home/cyh/ysyx-workbench/nvboard/build/vga.o: /home/cyh/ysyx-workbench/nvboard/src/vga.cpp /home/cyh/ysyx-workbench/nvboard/src/vga.cpp /home/cyh/ysyx-workbench/nvboard/include/vga.h /home/cyh/ysyx-workbench/nvboard/include/component.h /home/cyh/ysyx-workbench/nvboard/include/constrs.h /home/cyh/ysyx-workbench/nvboard/include/nvboard.h /home/cyh/ysyx-workbench/nvboard/include/configs.h /home/cyh/ysyx-workbench/nvboard/include/render.h /home/cyh/ysyx-workbench/nvboard/include/keyboard.h /home/cyh/ysyx-workbench/nvboard/include/at_scancode.h /home/cyh/ysyx-workbench/nvboard/include/macro.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'vga'
+#  Last modified 2022-03-17 16:42:23.781315309
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/src/vga.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nvboard/build/event.o: /home/cyh/ysyx-workbench/nvboard/src/event.cpp /home/cyh/ysyx-workbench/nvboard/src/event.cpp /home/cyh/ysyx-workbench/nvboard/include/component.h /home/cyh/ysyx-workbench/nvboard/include/constrs.h /home/cyh/ysyx-workbench/nvboard/include/keyboard.h /home/cyh/ysyx-workbench/nvboard/include/nvboard.h /home/cyh/ysyx-workbench/nvboard/include/configs.h /home/cyh/ysyx-workbench/nvboard/include/render.h /home/cyh/ysyx-workbench/nvboard/include/vga.h /home/cyh/ysyx-workbench/nvboard/include/at_scancode.h /home/cyh/ysyx-workbench/nvboard/include/macro.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'event'
+#  Last modified 2022-03-17 16:42:24.345710113
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+ 
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+default: build/top
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/build/vga.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:42:23.773309645
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/src/event.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nvboard/build/nvboard.a: /home/cyh/ysyx-workbench/nvboard/build/nvboard.o /home/cyh/ysyx-workbench/nvboard/build/keyboard.o /home/cyh/ysyx-workbench/nvboard/build/render.o /home/cyh/ysyx-workbench/nvboard/build/vga.o /home/cyh/ysyx-workbench/nvboard/build/event.o /home/cyh/ysyx-workbench/nvboard/build/component.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-03-17 16:42:25.034187822
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 21):
+	@echo + AR "->" $(shell realpath $@ --relative-to $(NVBOARD_HOME))
+	@ar rcs $(NVBOARD_ARCHIVE) $(NVBOARD_OBJS)
+
+checkformat:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 23):
+	mill -i __.checkFormat
+
+verilog:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 6):
+	$(call git_commit, "generate verilog")
+	mkdir -p $(VSRC_DIR)
+	mill -i __.test.runMain Elaborate -td $(VSRC_DIR)
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-12 23:54:14.878385747
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/src/component.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/build/nvboard.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:42:22.04007027
+#  File has been updated.
+#  Successfully updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 26):
+	-rm -rf $(VSRC_DIR)
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/keyboard.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/nvboard.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/constrs.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/npc/vsrc/top.v:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-01 20:27:34.23984728
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/macro.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/build/event.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:42:24.333701775
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/vga.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: default
+#  Phony target (prerequisite of .PHONY).
+#  Command line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/npc/build/auto_bind.cpp: constr/top.nxdc
+#  Implicit rule search has not been done.
+#  Last modified 2022-08-01 20:27:36.843877065
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 45):
+	python3 ~/ysyx-workbench/nvboard/scripts/auto_pin_bind.py $^ $@
+
+run: build/top
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 62):
+	$^
+
+build/top: /home/cyh/ysyx-workbench/npc/vsrc/top.v /home/cyh/ysyx-workbench/npc/csrc/top.cpp /home/cyh/ysyx-workbench/npc/build/auto_bind.cpp /home/cyh/ysyx-workbench/nvboard/build/nvboard.a
+#  Implicit rule search has not been done.
+#  Last modified 2022-08-01 20:33:25.186224068
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 54):
+	rm -rf $(OBJ_DIR)
+	$(VERILATOR) $(VERILATOR_CFLAGS) \
+		--top-module $(TOPNAME) $^ \
+		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
+		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/at_scancode.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+nvboard-archive: /home/cyh/ysyx-workbench/nvboard/build/nvboard.a
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+help:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 11):
+	mill -i __.test.runMain Elaborate --help
+
+test:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 3):
+	mill -i __.test
+
+/home/cyh/ysyx-workbench/nvboard/build/keyboard.o: /home/cyh/ysyx-workbench/nvboard/src/keyboard.cpp /home/cyh/ysyx-workbench/nvboard/src/keyboard.cpp /home/cyh/ysyx-workbench/nvboard/include/keyboard.h /home/cyh/ysyx-workbench/nvboard/include/nvboard.h /home/cyh/ysyx-workbench/nvboard/include/configs.h /home/cyh/ysyx-workbench/nvboard/include/constrs.h /home/cyh/ysyx-workbench/nvboard/include/render.h /home/cyh/ysyx-workbench/nvboard/include/component.h /home/cyh/ysyx-workbench/nvboard/include/vga.h /home/cyh/ysyx-workbench/nvboard/include/at_scancode.h /home/cyh/ysyx-workbench/nvboard/include/macro.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'keyboard'
+#  Last modified 2022-03-17 16:42:22.596471547
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/src/render.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/configs.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.145448559
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nvboard/build/component.o: /home/cyh/ysyx-workbench/nvboard/src/component.cpp /home/cyh/ysyx-workbench/nvboard/src/component.cpp /home/cyh/ysyx-workbench/nvboard/include/nvboard.h /home/cyh/ysyx-workbench/nvboard/include/configs.h /home/cyh/ysyx-workbench/nvboard/include/constrs.h /home/cyh/ysyx-workbench/nvboard/include/render.h /home/cyh/ysyx-workbench/nvboard/include/component.h /home/cyh/ysyx-workbench/nvboard/include/vga.h /home/cyh/ysyx-workbench/nvboard/include/keyboard.h /home/cyh/ysyx-workbench/nvboard/include/at_scancode.h /home/cyh/ysyx-workbench/nvboard/include/macro.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'component'
+#  Last modified 2022-03-17 16:42:25.026182361
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 15):
+	@echo + CXX "->" NVBOARD_HOME/$(shell realpath $< --relative-to $(NVBOARD_HOME))
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -I$(NVBOARD_INC) -c -o $@ $<
+
+reformat:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 20):
+	mill -i __.reformat
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/build/keyboard.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:42:22.588465774
+#  File has been updated.
+#  Successfully updated.
+
+nvboard-clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nvboard/scripts/nvboard.mk', line 32):
+	rm -rf $(NVBOARD_BUILD_DIR)
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/build/render.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:42:23.304978366
+#  File has been updated.
+#  Successfully updated.
+
+.PHONY: test verilog help compile bsp reformat checkformat clean all sim run nvboard-archive nvboard-clean
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+ 
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/component.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+constr/top.nxdc:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 17:07:45.098640307
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/include/render.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:00:31.141446279
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nvboard/build/component.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-17 16:42:25.0181769
+#  File has been updated.
+#  Successfully updated.
+
+bsp:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
+	mill -i mill.bsp.BSP/install
+
+# files hash-table stats:
+# Load=52/1024=5%, Rehash=0, Collisions=0/179=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 82 / storage = 2208 B / avg = 26 B
+# current buf: size = 8162 B / used = 2208 B / count = 82 / avg = 26 B
+
+# strcache performance: lookups = 199 / hit rate = 58%
+# hash-table stats:
+# Load=82/8192=1%, Rehash=0, Collisions=0/199=0%
+# Finished Make data base on Mon Aug  1 20:44:51 2022
+
+ 

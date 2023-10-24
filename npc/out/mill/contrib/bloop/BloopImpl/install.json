@@ -1,0 +1,14 @@
+{
+    "value": [
+        [
+            "playground",
+            "ref:d17e66b9:/home/cyh/ysyx-workbench/npc/.bloop/playground.json"
+        ],
+        [
+            "playground.test",
+            "ref:c63a7959:/home/cyh/ysyx-workbench/npc/.bloop/playground.test.json"
+        ]
+    ],
+    "valueHash": 549351862,
+    "inputsHash": 279232421
+}

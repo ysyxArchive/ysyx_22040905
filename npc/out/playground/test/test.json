@@ -1,0 +1,15 @@
+{
+    "value": [
+        "Tests: 1, Passed: 1, Failed: 0",
+        [
+            {
+                "fullyQualifiedName": "Mul",
+                "selector": "Mul.mytest",
+                "duration": 2430,
+                "status": "Success"
+            }
+        ]
+    ],
+    "valueHash": -1975218838,
+    "inputsHash": 1545061111
+}

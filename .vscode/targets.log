@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Oct 24 19:54:45 2023
+# Make data base, printed on Tue Oct 24 21:10:29 2023
 
 # Variables
 
@@ -112,7 +112,7 @@ MAKEFILE_LIST := Makefile
 # makefile (from 'Makefile', line 12)
 TRACER_BRANCH = $(TRACER)
 # environment
-VSCODE_PID = 4212
+VSCODE_PID = 11362
 # environment
 SDKMAN_DIR = /home/cyh/.sdkman
 # environment
@@ -232,7 +232,7 @@ VCS_MX_HOME = /home/cyh/synopsys/vcs-mx/O-2018.09-SP2
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4212
+GIO_LAUNCHED_DESKTOP_FILE_PID = 11362
 # makefile (from 'Makefile', line 1)
 STUID = ysyx_22040905
 # environment
@@ -280,10 +280,10 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = en_US.UTF-8
 # variable set hash-table stats:
-# Load=133/1024=13%, Rehash=0, Collisions=6/163=4%
  
 make: *** No rule to make target 'all'.  Stop.
 
+# Load=133/1024=13%, Rehash=0, Collisions=6/163=4%
 
 # Pattern-specific Variable Values
 
@@ -291,9 +291,9 @@ make: *** No rule to make target 'all'.  Stop.
 
 # Directories
 
-# . (device 66309, inode 1704005): 22 files, no impossibilities.
+# . (device 66309, inode 1704005): 24 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -366,12 +366,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 302 B / avg = 9 B
-# current buf: size = 8162 B / used = 302 B / count = 31 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 316 B / avg = 9 B
+# current buf: size = 8162 B / used = 316 B / count = 33 / avg = 9 B
 
-# strcache performance: lookups = 42 / hit rate = 26%
+# strcache performance: lookups = 44 / hit rate = 25%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=0/42=0%
-# Finished Make data base on Tue Oct 24 19:54:45 2023
+# Load=33/8192=0%, Rehash=0, Collisions=0/44=0%
+# Finished Make data base on Tue Oct 24 21:10:29 2023
 
  

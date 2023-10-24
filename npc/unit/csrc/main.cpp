@@ -71,26 +71,106 @@ void init(int argc, char *argv[])
 #endif
 }
 
-int main(int argc, char *argv[])
-{
-	init(argc, argv);
-	for (int i = 0; i < 10; i++)
+#define MUL
+#ifdef MUL
+void check_mul(){
+	for (int i = 0; i < 200; i++)
 	{
 		unit->io_mul_valid = 1;
 		unit->io_flush = 0;
 		unit->io_mulw = random()%2;
 		unit->io_mul_signed= random()%4;
 		unit->io_multiplicand= random();
-		unit->io_multiplier=random();
+		unit->io_multiplier= random();
 		execute(1);
-		if(unit->io_multiplicand * unit->io_multiplier != ((uint64_t)unit->io_result_hi << 32 | unit->io_result_lo)){
-			if(unit->io_mulw) printf("32位乘法\t"); else printf("64位乘法\t");
+		unit->io_mul_valid = 0;
+		while(unit->io_out_valid == 0)execute(1);
+		//check
+		if(unit->io_multiplicand * unit->io_multiplier == unit->io_result_lo) continue;//printf("right\t");
+		else printf("wrong\t");
+		if(unit->io_mulw){
+			printf("32位乘法\t");
 			if(unit->io_mul_signed / 2) printf("signed   X "); else printf("unsigned X ");
 			if(unit->io_mul_signed % 2) printf("signed  "); else printf("unsigned");
-
+			printf("\t%lx * %lx = %lx right = %lx\n",unit->io_multiplicand,unit->io_multiplier,unit->io_result_lo,unit->io_multiplicand * unit->io_multiplier);
+		}
+		else{
+			printf("64位乘法\t");
+			if(unit->io_mul_signed / 2) printf("signed   X "); else printf("unsigned X ");
+			if(unit->io_mul_signed % 2) printf("signed  "); else printf("unsigned");
 			printf("\t%lx * %lx = %lx %lx right = %lx\n",unit->io_multiplicand,unit->io_multiplier,unit->io_result_hi,unit->io_result_lo,unit->io_multiplicand * unit->io_multiplier);
 		}
+		
 	}
 	printf("\n");
+	
+}
+#else
+void check_div(){
+	for(int i=0;i<1;i++){
+		unit->io_dividend = 0x8000000000000000;//random();
+		unit->io_divisor = 0xa;//random();
+		unit->io_div_valid = 1;
+		unit->io_divw = 0;//random()%2;
+		unit->io_div_signed = 0;//random()%2;
+		unit->io_flush = 0;
+		execute(1);
+		unit->io_div_valid = 0;
+		while(unit->io_out_valid == 0){execute(1);}
+		//check
+		if(unit->io_divw){
+			if(unit->io_div_signed){
+				if((int32_t)unit->io_dividend / (int32_t)unit->io_divisor == (int32_t)unit->io_quotient) continue;//printf("right\t");
+				if((int32_t)unit->io_dividend % (int32_t)unit->io_divisor == (int32_t)unit->io_remainder) continue;//printf("right\t"
+				else printf("wrong\t");
+			}
+			else{
+				if(unit->io_dividend / unit->io_divisor == unit->io_quotient) continue;//printf("right\t");
+				if(unit->io_dividend % unit->io_divisor == unit->io_remainder) continue;//printf("right\t");
+				else printf("wrong\t");
+			}
+		}
+		else{
+			if(unit->io_div_signed){
+				if((int64_t)unit->io_dividend / (int64_t)unit->io_divisor == (int64_t)unit->io_quotient) continue;//printf("right\t");
+				if((int64_t)unit->io_dividend % (int64_t)unit->io_divisor == (int64_t)unit->io_remainder) continue;//printf("right\t");
+				else printf("wrong\t");
+			}
+			else{
+				if(unit->io_dividend / unit->io_divisor == unit->io_quotient) continue;//printf("right\t");
+				if(unit->io_dividend % unit->io_divisor == unit->io_remainder) continue;//printf("right\t");
+				else printf("wrong\t");
+			}
+		}
+		if(unit->io_divw){
+			if(unit->io_div_signed){
+				printf("32位有符号除法\t");
+				printf("%lx / %lx = %lx ... %lx right = %lx ... %lx\n",unit->io_dividend,unit->io_divisor,unit->io_quotient,unit->io_remainder,unit->io_dividend / unit->io_divisor,unit->io_dividend % unit->io_divisor);
+			}
+			else{
+				printf("32位无符号除法\t");
+				printf("%lx / %lx = %lx ... %lx right = %lx ... %lx\n",unit->io_dividend,unit->io_divisor,unit->io_quotient,unit->io_remainder,unit->io_dividend / unit->io_divisor,unit->io_dividend % unit->io_divisor);
+			}
+		}
+		else{
+			if(unit->io_div_signed){
+				printf("64位有符号除法\t");
+				printf("%lx / %lx = %lx ... %lx right = %lx ... %lx\n",unit->io_dividend,unit->io_divisor,unit->io_quotient,unit->io_remainder,unit->io_dividend / unit->io_divisor,unit->io_dividend % unit->io_divisor);
+			}
+			else{
+				printf("64位无符号除法\t");
+				printf("%lx / %lx = %lx ... %lx right = %lx ... %lx\n",unit->io_dividend,unit->io_divisor,unit->io_quotient,unit->io_remainder,unit->io_dividend / unit->io_divisor,unit->io_dividend % unit->io_divisor);
+			}
+		}
+	}
+
+}
+#endif
+
+int main(int argc, char *argv[])
+{
+	init(argc, argv);
+	srand((unsigned)time(NULL));
+	check_mul();
 	sim_exit();
 }

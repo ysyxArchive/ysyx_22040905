@@ -7,6 +7,7 @@ typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long  uint64_t;
+typedef unsigned long long ull;
 
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 #define BITMASK(bits) ((1ull << (bits)) - 1)
@@ -61,8 +62,10 @@ uint32_t screen_size();
 void write_vmem(uint32_t addr, int len, uint64_t data); 
 uint64_t get_vgactl_addr(uint32_t raddr);
 void write_vgactl_addr(uint32_t addr,int len,uint64_t data);
-
+uint32_t get_kbd();
 uint64_t get_time();
+void init_time();
+
 #define io_read(reg) \
   ({ reg##_T __io_param; \
     ioe_read(reg, &__io_param); \
@@ -72,3 +75,10 @@ uint64_t get_time();
   ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \
     ioe_write(reg, &__io_param); })
 #endif
+
+#define MAP(c, f) c(f)
+#define concat_temp(x, y) x ## y
+#define concat(x, y) concat_temp(x, y)
+
+
+

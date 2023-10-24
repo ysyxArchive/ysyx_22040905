@@ -32,10 +32,13 @@ wave: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) wave IMG=$(IMAGE)
 
 verilog: image
-	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) b IMG=$(IMAGE)
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) verilog IMG=$(IMAGE)
 
 sim: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) sim IMG=$(IMAGE)
+
+gprof: image
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) gprof IMG=$(IMAGE)
 
 compile_run: verilog run
 

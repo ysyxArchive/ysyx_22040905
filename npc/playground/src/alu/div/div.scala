@@ -14,7 +14,13 @@ class div(xlen: Int) extends Module{
         val out_valid = Output(Bool())          //为高表示除法器输出了有效结果
         val quotient = Output(UInt(xlen.W))     //商
         val remainder = Output(UInt(xlen.W))     //余数
+        val div_num = Output(UInt(64.W))
     })
+  val div_num = RegInit(0.U(64.W))
+  when(io.div_valid===1.U){
+    div_num := div_num + 1.U
+  } 
+  io.div_num := div_num
 
   val dividend_abs = Mux(io.div_signed && io.dividend(xlen-1).asBool(), 
                          (~io.dividend).asUInt + 1.U, io.dividend)
@@ -34,8 +40,8 @@ class div(xlen: Int) extends Module{
 
   val sub =Wire(UInt((xlen+1).W)) 
 
-  val dividend_sign = io.dividend(xlen-1)
-  val divisor_sign = io.divisor(xlen-1)
+  val dividend_sign = io.dividend(xlen-1) & is_dividing_signed
+  val divisor_sign = io.divisor(xlen-1) & is_dividing_signed
   val quotient_sign = RegInit(false.B)
   val remainder_sign = RegInit(false.B)
   val out_valid = RegInit(false.B)
@@ -84,6 +90,9 @@ class div(xlen: Int) extends Module{
     out_valid := false.B
   }
 
+  //when(out_valid){
+  //  printf("dividend: %x, divisor: %x, quotient: %x, remainder: %x, divw: %x, div_signed: %x\n", io.dividend, io.divisor, io.quotient, io.remainder,io.divw,io.div_signed)
+  //}
   //printf("%d %x %x %x %x %x\n",shift_count,dividend,divisor,quotient,remainder,dividend(2*xlen-1, xlen))
 
   io.out_valid := out_valid

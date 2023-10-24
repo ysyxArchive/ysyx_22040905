@@ -16,6 +16,7 @@ class mul extends Module{
       val result_hi= Output(UInt(64.W))        //高 64 bits 结果
       val result_lo= Output(UInt(64.W))        //低 64 bits 结果
       val sel = Input(UInt(1.W))               //0为移位乘法器，1为华莱士树乘法器
+      val mul_num = Output(UInt(64.W))     
   })
   val base_mul = Module(new base_mul).io
   //val wallace_mul = Module(new Wallace).io
@@ -39,5 +40,9 @@ class mul extends Module{
   io.result_hi:=base_mul.result_hi//Mux(io.sel.asBool,wallace_mul.result_hi,base_mul.result_hi)
   io.result_lo:=base_mul.result_lo//Mux(io.sel.asBool,wallace_mul.result_lo,base_mul.result_lo)
 
-  
+  val mul_num = RegInit(0.U(64.W))
+  when(io.mul_valid===1.U){
+    mul_num := mul_num + 1.U
+  } 
+  io.mul_num := mul_num
 }

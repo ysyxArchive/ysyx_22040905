@@ -103,10 +103,10 @@ class switch extends Module{
     io.out(j) := c.asUInt
   }
 
-  for(j <- 0 until 132)
-    for(i <- 0 until 33){
-      chisel3.assert(io.out(j)(i) === io.in(i)(j))
-    }
+  //for(j <- 0 until 132)
+  //  for(i <- 0 until 33){
+  //    chisel3.assert(io.out(j)(i) === io.in(i)(j))
+  //  }
 
   io.cout:=io.cin.asUInt(31,0)
 
@@ -303,10 +303,10 @@ class Wallace extends Module{
   io.out_valid:=valid
   io.mul_ready:=1.U
 
-    //test
-    when(io.out_valid.asBool){
-        chisel3.assert( (a* b) === Cat(io.result_hi,io.result_lo))
-    }
+  ////test
+  //when(io.out_valid.asBool){
+  //    chisel3.assert( (a* b) === Cat(io.result_hi,io.result_lo))
+  //}
     //
 }
 

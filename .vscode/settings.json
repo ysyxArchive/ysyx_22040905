@@ -23,6 +23,19 @@
         "sdl.h": "c",
         "host.h": "c",
         "map.h": "c",
-        "alarm.h": "c"
+        "alarm.h": "c",
+        "time.h": "c",
+        "random": "c",
+        "utils.h": "c",
+        "functional": "c",
+        "regex": "c",
+        "difftest.h": "c",
+        "difftest-def.h": "c",
+        "common.h": "c",
+        "macro.h": "c",
+        "stop_token": "c",
+        "fstream": "c",
+        "ranges": "c",
+        "tuple": "c"
     }
 }

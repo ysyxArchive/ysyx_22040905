@@ -1,5 +1,5 @@
 ifdef CONFIG_ITRACE
 CXXSRC = src/utils/disasm.cc
-CXXFLAGS += $(shell llvm-config-13 --cxxflags) -fPIE
-LIBS += $(shell llvm-config-13 --libs)
+CXXFLAGS += $(shell llvm-config-12 --cxxflags) -fPIE
+LIBS += $(shell llvm-config-12 --libs)
 endif

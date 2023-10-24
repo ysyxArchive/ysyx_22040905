@@ -36,6 +36,7 @@ int SDL_PushEvent(SDL_Event *ev) {
 }
 
 static char buf1[30],buf2[30];
+
 int SDL_PollEvent(SDL_Event *ev) {
   NDL_PollEvent(buf1, 30);
   if(strcmp(buf1,buf2)==0)return 0;
@@ -45,7 +46,6 @@ int SDL_PollEvent(SDL_Event *ev) {
     ev->key.keysym.sym=findsdlk(buf1+3);
     if(ev->key.type==SDL_KEYDOWN){
       key_state[ev->key.keysym.sym]=1;
-      //printf("%s\n",keyname[ev->key.keysym.sym]);
     }
     else{
       key_state[ev->key.keysym.sym]=0;

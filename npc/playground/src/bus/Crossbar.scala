@@ -8,8 +8,10 @@ class Crossbar extends Module{
         val in2 = Flipped(new AXILite)
         val out1 = (new AXI4)
         val out2 = (new AXI4)
-        val hitrate=Output(UInt(128.W))
-        val flush=Input(UInt(1.W))
+        val hitrate_i = Output(UInt(64.W))
+        val hitrate_d = Output(UInt(64.W))
+        val flush_i=Input(UInt(1.W))
+        val flush_d=Input(UInt(1.W))
     })
     val DEVICE_BASE :UInt = "xa0000000".U 
     val CLINT_BEGIN = 0x20000000.U
@@ -22,15 +24,15 @@ class Crossbar extends Module{
     val icacheram=Module(new ICacheRAM).io
     val dcache=Module(new DCache).io
     val dcacheram=Module(new ICacheRAM).io
-    //val d_skip=Module(new AXILite2AXI4).io
-    //val i_skip=Module(new AXILite2AXI4).io
     val arbiter=Module(new CacheArbiter).io
     val arbiter1=Module(new DeviceArbiter).io
 
     val out1=Wire(new AXILite)
     val out2=Wire(new AXILite)
 
-    io.hitrate:=0.U//Cat(icache.hitrate,dcache.hitrate)
+    io.hitrate_i:=icache.hitrate
+    io.hitrate_d:=dcache.hitrate
+
 
     val clint=Wire(UInt(1.W))
     clint:=((out2.ar.bits.addr >= CLINT_BEGIN) && (out2.ar.bits.addr <= CLINT_END)) || ((out2.aw.bits.addr >= CLINT_BEGIN) && (out2.aw.bits.addr <= CLINT_END))
@@ -39,23 +41,15 @@ class Crossbar extends Module{
     out1<>icache.in
     icache.ram<>icacheram
     icache.id := 0.U
-    icache.flush:=io.flush
+    icache.flush:=io.flush_i
 
     //lsu to dcache
     io.in2<>out2 
     out2<>dcache.in
     dcache.ram<>dcacheram
     dcache.id := 1.U
-    dcache.flush:=io.flush
+    dcache.flush:=io.flush_d
     dcache.uncache :=(out2.ar.bits.addr >= DEVICE_BASE) || (out2.aw.bits.addr >= DEVICE_BASE) | clint
-
-
-    //i_skip.in <> out1
-    //i_skip.id := 0.U
-    //d_skip.in <> out2
-    //d_skip.id := 1.U
-    //arbiter.ifu <> i_skip.mem
-    //arbiter.lsu <> d_skip.mem
 
     //cache to arbiter
     arbiter.ifu<>icache.mem

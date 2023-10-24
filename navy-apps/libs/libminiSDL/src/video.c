@@ -1,3 +1,4 @@
+#define NDEBUG
 #include <NDL.h>
 #include <sdl-video.h>
 #include <assert.h>
@@ -5,33 +6,53 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <time.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
+  
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   int h,w,x1,y1,x2,y2;
-  if(srcrect==NULL){h=src->h;w=src->w;x1=0;y1=0;}
-  else {h=srcrect->h;w=srcrect->w;x1=srcrect->x;y1=srcrect->y;}
-  if(dstrect==NULL){x2=0;y2=0;}
-  else{x2=dstrect->x;y2=dstrect->y;}
-  /*h=200;w=320;x1=0;x2=0;y1=0;y2=0;
-  //printf("%d %d %d %d %d %d\n",h,w,x1,x2,y1,y2);
-  dstrect->x=x2;
-  dstrect->y=y2;
-  dstrect->w=w;
-  dstrect->h=h;*/
- 
-  if (src->format->BitsPerPixel == 32){
-    for(int i=0;i<h;i++)
-      for(int j=0;j<w;j++){
-        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
-      }
+  if(srcrect==NULL){
+    h=src->h;
+    w=src->w;
+    x1=0;
+    y1=0;
+  }
+  else {
+    h=srcrect->h;
+    w=srcrect->w;
+    x1=srcrect->x;
+    y1=srcrect->y;
+  }
+  if(dstrect==NULL){
+    x2=0;
+    y2=0;
   }
   else{
-    for(int i=0;i<h;i++)
+    x2=dstrect->x;
+    y2=dstrect->y;
+  }
+  //h=200;w=320;x1=0;x2=0;y1=0;y2=0;
+  int i1=y1*(dst->w);
+  int i2=y2*(dst->w);
+  if (src->format->BitsPerPixel == 32){
+    for(int i=0;i<h;i++){
+      for(int j=0;j< w;j++){
+        ((uint32_t *)dst->pixels)[i2+(j+x2)]=((uint32_t *)src->pixels)[i1+(j+x1)];
+      }
+      i1+=dst->w;
+      i2+=dst->w;
+    }
+  }
+  else{
+    for(int i=0;i<h;i++){
       for(int j=0;j<w;j++){
-        (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
-     }
+        (dst->pixels)[i2+(j+x2)]=(src->pixels)[i1+(j+x1)];
+      }
+      i1+=dst->w;
+      i2+=dst->w;
+    }
   }
 }
 
@@ -50,14 +71,19 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 uint32_t pixels8[400*300];
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&&w==0&&h==0){w=s->w;h=s->h;}
+  //printf("%d %d\n",w,h);
+  int k=y*(s->w);
   if(s->format->BitsPerPixel==8){
-    for(int i=0;i<h;i++)
+    for(int i=0;i<h;i++){
       for(int j=0;j<w;j++){
-      uint32_t r=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].r;
-      uint32_t g=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].g;
-      uint32_t b=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].b;
-      uint32_t a=(s->format->palette->colors)[s->pixels[(i+y)*(s->w)+j+x]].a;
+      //printf("%d %d %d %d %d %d\n",x,y,w,h,j,i);
+      uint32_t r=(s->format->palette->colors)[s->pixels[k+j+x]].r;
+      uint32_t g=(s->format->palette->colors)[s->pixels[k+j+x]].g;
+      uint32_t b=(s->format->palette->colors)[s->pixels[k+j+x]].b;
+      uint32_t a=(s->format->palette->colors)[s->pixels[k+j+x]].a;
       *(pixels8+(i+y)*w+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
+      }
+      k+=s->w;
     }
     NDL_DrawRect(pixels8,x,y,w,h);
   }
@@ -145,29 +171,73 @@ SDL_Surface* SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags) {
       DEFAULT_RMASK, DEFAULT_GMASK, DEFAULT_BMASK, DEFAULT_AMASK);
 }
 
+
 void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(src && dst);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   assert(dst->format->BitsPerPixel == 8);
 
-  int x = (srcrect == NULL ? 0 : srcrect->x);
-  int y = (srcrect == NULL ? 0 : srcrect->y);
-  int w = (srcrect == NULL ? src->w : srcrect->w);
-  int h = (srcrect == NULL ? src->h : srcrect->h);
+  int x1 = (srcrect == NULL ? 0 : srcrect->x);
+  int y1 = (srcrect == NULL ? 0 : srcrect->y);
+  int w1 = (srcrect == NULL ? src->w : srcrect->w);
+  int h1 = (srcrect == NULL ? src->h : srcrect->h);
+  
+  int x2 = (dstrect == NULL ? 0 : dstrect->x);
+  int y2 = (dstrect == NULL ? 0 : dstrect->y);
+  int w2 = (dstrect == NULL ? dst->w : dstrect->w);
+  int h2 = (dstrect == NULL ? dst->h : dstrect->h);
+
 
   assert(dstrect);
-  if(w == dstrect->w && h == dstrect->h) {
+
+  if(w1 == w2 && h1 == h2) {
     /* The source rectangle and the destination rectangle
      * are of the same size. If that is the case, there
      * is no need to stretch, just copy. */
     SDL_Rect rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = w;
-    rect.h = h;
+    rect.x = x1;
+    rect.y = y1;
+    rect.w = w1;
+    rect.h = h1;
     SDL_BlitSurface(src, &rect, dst, dstrect);
   }
-  else {
+  else if(w1 < w2 && h1 < h2){   
+    assert(0);
+  ////w,h缩放倍数
+  //  int w = w2 / w1;
+  //  int h = h2 / h1;
+
+  ////缩小
+  //  if (src->format->BitsPerPixel == 32){
+  //    for(int i=0;i<h1;i+=w)
+  //      for(int j=0;j<w1;j+=h){
+  //        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=((uint32_t *)src->pixels)[(i+y1)*(src->w)+(j+x1)];
+  //      SDL_SoftStretch}
+  //  }
+  //  else{
+  //    for(int i=0;i<h1;i++)
+  //      for(int j=0;j<w1;j++){
+  //        (dst->pixels)[(i+y2)*(dst->w)/w+(j+x2)/h]=(src->pixels)[(i+y1)*(src->w)+(j+x1)];
+  //     }
+  //  }
+
+  //  //拉伸
+  //  if(src->format->BitsPerPixel == 32){
+  //    for(int i=0;i<h2;i++)
+  //      for(int j=0;j<w2;j++){
+  //        ((uint32_t *)dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=((uint32_t *)src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
+  //      }
+  //  }
+  //  else{
+  //    for(int i=0;i<h2;i++){
+  //      for(int j=0;j<w2;j++){
+  //        (dst->pixels)[(i+y2)*(dst->w)+(j+x2)]=(src->pixels)[((int)(i/h)+y1)*(src->w)+(int)(j/w)+x1];
+  //      }
+  //     }
+  //  }
+  }
+  else{
+    printf("%d %d %d %d to %d %d %d %d\n",w1,h1,x1,y1,w2,h2,x2,y2);
     assert(0);
   }
 }
@@ -190,6 +260,7 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, int firstcolor
     }
     SDL_UpdateRect(s, 0, 0, 0, 0);
   }  
+  
 }
 
 static void ConvertPixelsARGB_ABGR(void *dst, void *src, int len) {

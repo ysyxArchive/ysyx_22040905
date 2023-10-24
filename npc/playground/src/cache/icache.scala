@@ -10,11 +10,11 @@ class ICache extends Module {
     val mem = (new AXI4)
     val ram = Flipped(new ICacheRAM_Bundle)
     val flush = Input(UInt(1.W))
-    //val hitrate = Output(UInt(64.W))
+    val hitrate = Output(UInt(64.W))
     //val uncache = Input(UInt(1.W))
   })
   //config
-  val cacheCapacity: Int = 4*1024 //4KB
+  val cacheCapacity: Int = 4*1024/64 //4KB
   val cacheAssociativity: Int = 2 //二路
   val cacheLineSize: Int  = 16    //16B
   val DEVICE_BASE :UInt = "xa0000000".U 
@@ -124,12 +124,20 @@ class ICache extends Module {
                               io.mem.r.bits.data,
                               rdata >> offset(offset_width + 1, 0)),
                             0.U))
-  io.in.ar.ready := (state === s_idle) || (state === s_lookup)
+  io.in.ar.ready := (state === s_idle) | ((state === s_lookup) && (~miss))
   io.in.r.valid := (((state === s_lookup) && (~miss)) || (io.mem.r.fire && io.mem.r.bits.last.asBool))
   io.in.r.bits.resp := 0.U
   io.in.b.bits.resp := 0.U
   io.in.b.valid := 0.U
   io.in.aw.ready := 0.U
   io.in.w.ready := 0.U
+
+  val hit_num=RegInit(0.U(32.W))
+  val inst_num=RegInit(0.U(32.W))
+
+  hit_num := Mux((state === s_lookup) && (~miss),hit_num + 1.U,hit_num)
+  inst_num := Mux((io.in.ar.fire| io.in.aw.fire),inst_num + 1.U,inst_num)
+
+  io.hitrate := Cat(inst_num, hit_num);
 }
 

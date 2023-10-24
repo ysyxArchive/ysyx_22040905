@@ -7,13 +7,13 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 
-#define ZEROPAD	1		  /* pad with zero 填补0*/
-#define SIGN	  2		  /* unsigned/signed long */
-#define PLUS	  4		  /* show plus 显示+*/
-#define SPACE	  8		  /* space if plus 加上空格*/
-#define LEFT	  16		/* left justified 左对齐*/
-#define SPECIAL	32		/* 0x /0*/
-#define LARGE	  64		/* 用 'ABCDEF'/'abcdef' */
+#define ZEROPAD		1<<0		  /* 填补0 */
+#define SIGN	  	1<<1		  /* unsigned/signed long */
+#define PLUS	  	1<<2		  /* 显示+ */
+#define SPACE	  	1<<3		  /* 加上空格 */
+#define LEFT	  	1<<4		/* 左对齐 */
+#define SPECIAL		1<<5		/* 0x /0 */
+#define LARGE	  	1<<6		/* 用 'ABCDEF'/'abcdef' */
 #define SPRINT_BUF_SIZE 32768
 static char sprint_buf[SPRINT_BUF_SIZE];
 
@@ -44,12 +44,12 @@ static char * number(char * str, unsigned long long num, int base, int size, int
 
 	if (type & SPECIAL) 
     {
-                if (base == 16)
-                        size -= 2;//0x
-                else if (base == 8)
-                        size--;//0
-				else if (base == 2)
-						size -=2;//0b
+        if (base == 16)
+            size -= 2;//0x
+        else if (base == 8)
+            size--;//0
+		else if (base == 2)
+			size -=2;//0b
     }	
 	
 	i = 0;

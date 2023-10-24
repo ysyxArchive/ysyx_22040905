@@ -3,25 +3,39 @@
 #include <assert.h>
 #include <verilated.h>
 #include "../build/obj_dir/Vtop.h"
-#include <verilated_vcd_c.h>
 #include <svdpi.h>
 #include "../build/obj_dir/Vtop__Dpi.h"
 #include <verilated_dpi.h>
 #include "all.h"
 #include <time.h>
-// #include<nvboard.h>
 
+#ifdef HAS_WAVE
+#include <verilated_vcd_c.h>
 VerilatedContext *contextp = NULL;
 VerilatedVcdC *tfp = NULL;
-typedef unsigned long long ull;
+#endif
+
+// #include<nvboard.h>
+#ifdef HAS_TRACE
+  void dump_ftrace();
+#endif
+
 Vtop *top = NULL;
 // void nvboard_bind_all_pins(Vtop* top);
 int state = NPC_QUIT;
 uint64_t pc = 0;
 int gdb = 0;
 
-double inst_cnt = 0;
-void dump_ftrace();
+#ifdef HAS_PERF
+//计时
+clock_t start,finish;
+double totaltime;
+
+uint64_t cyc_num = 0;
+uint64_t inst_num = 0;
+
+#endif
+
 void dump_csr();
 void cpp_break()
 {
@@ -29,8 +43,10 @@ void cpp_break()
 }
 void sim_init()
 {
+#ifdef HAS_WAVE
   contextp = new VerilatedContext;
   tfp = new VerilatedVcdC;
+#endif
   top = new Vtop;
 #ifdef HAS_WAVE
   contextp->traceEverOn(true);
@@ -41,7 +57,9 @@ void sim_init()
 
 static void step_and_dump_wave()
 {
-  inst_cnt++;
+#ifdef HAS_PERF
+  cyc_num++;
+#endif
 
   top->clock = 0;
   top->eval();
@@ -61,7 +79,9 @@ static void step_and_dump_wave()
 void sim_exit()
 {
   // step_and_dump_wave();
+#ifdef HAS_WAVE
   tfp->close();
+#endif
 }
 
 void reset()
@@ -99,6 +119,10 @@ void exec_once()
     t=1;
   }
 #endif
+#ifdef HAS_PERF
+  if(top->io_valid) inst_num++;
+#endif
+
 
 #ifdef HAS_TRACE
   dump_ftrace();
@@ -110,7 +134,7 @@ void execute(uint64_t n)
   while (n--)
   {
     if (state != NPC_RUNNING){
-      n = (n > 100) ? 100 : n;
+      n = 0;//(n > 100) ? 100 : n;
     }
     exec_once();
   }
@@ -118,13 +142,16 @@ void execute(uint64_t n)
 
 void exec()
 {
+  start=clock(); 
   // printf("\n\n\n\n");
   execute(-1);
+  finish=clock();
 }
 void init(int argc, char *argv[])
 {
   state = NPC_RUNNING;
   sim_init();
+  init_time();
   // nvboard_bind_all_pins(&dut);
   // nvboard_init();
   pmem_init(argv[1]);
@@ -134,8 +161,11 @@ void init(int argc, char *argv[])
   //init_wp_pool();
   top->io_mul_sel = 1;
   reset();
+#ifdef HAS_DIFFTEST
   init_difftest(argv[6], 4096,DIFFTEST_TO_REF);
+#endif
   init_device();
+
 }
 //print gpr
 uint64_t *cpu_gpr = NULL;
@@ -168,7 +198,7 @@ void dump_csr() {
     printf("%s = 0x%lx\n",csr_name[i], cpu_csr[i]);
   }
 }
-//itrace
+#ifdef HAS_TRACE
 uint64_t *cpu_itrace = NULL;
 extern "C" void set_itrace_ptr(const svOpenArrayHandle r) {
   cpu_itrace = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());//pc->dncp inst valid
@@ -194,33 +224,47 @@ void dump_ftrace(){
     else ftrace_add(pc,cpu_itrace[0],1);
   }
 }
+#else
+extern "C" void set_itrace_ptr(const svOpenArrayHandle r){}
+
+#endif
+
 int main(int argc, char *argv[])
 {
   //for(int i=0;i<argc;i++){printf("%s\n",argv[i]);}
   init(argc,argv);
 
-  //开始计时
-  clock_t start,finish;
-  double totaltime;
-  start=clock(); 
+
 
   if(strcmp(argv[2],"-g")==0) {gdb=1;sdb_mainloop();}
   else exec();
 
+#ifdef HAS_PERF
+  //计时
+  totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
+  printf("\033[1;32mtotal time: %f s\ntotol instructions: %ld \nFreq:%f Hz\nInst:%f inst/s\nIPC:%f\n",totaltime,inst_num,cyc_num/totaltime,inst_num/totaltime,inst_num/(double)cyc_num);
+
+  printf("ICache:%f%% \nDCache:%f%% \n",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32)*100.0,(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32)*100.0);
+  
+  printf("Branch_inst:%ld\n",top->io_B_num);
+  printf("Prediction error:%ld\n",top->io_B_Error);
+  printf("Branch prediction rate:%f%% \n",(top->io_B_num-top->io_B_Error)*100.0/top->io_B_num);
+  printf("Block instruction num:%ld\n",top->io_block_num);
+  printf("mul:%ld\ndiv:%ld\n",top->io_mul_num,top->io_div_num);
+
+  printf("\033[0m");
+#endif
+  sim_exit();
+  //nvboard_quit();
+
   if(state==NPC_QUIT&&cpu_gpr[10]==0){
     printf("npc: \033[1;32mHIT GOOD TRAP\033[0m at pc = 0x%016lx\n",pc);
+    return 0;
   }
   else {
     printf("npc: \033[1;31mHIT BAD TRAP\033[0m at pc = 0x%016lx\n",pc);
     return -1;
   }
 
-  //结束计时
-  finish=clock();
-  totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
-  printf("\033[1;32mtotal time: %f s\nThe number of clock cycles that run in one second is %f\n\033[0m",totaltime,inst_cnt/totaltime);
-  //printf("hit: ICache:%f DCache:%f ",(double)BITS(top->io_hitrate_i,31,0)/BITS(top->io_hitrate_i,63,32),(double)BITS(top->io_hitrate_d,31,0)/BITS(top->io_hitrate_d,63,32));
-  //printf("in cycle:%lld\n",BITS(top->io_hitrate_i,63,32)+BITS(top->io_hitrate_d,63,32));
-  sim_exit();
-  //nvboard_quit();
+
 }

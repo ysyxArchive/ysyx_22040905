@@ -11,6 +11,8 @@ class WBU extends Module{
         val valid=Output(UInt(1.W))
         val isJump=Output(UInt(1.W))
         val sb=Flipped((new SB_WB))
+        val bypass_idx = Output(UInt(5.W))
+        val bypass_data = Output(UInt(64.W))
     })
     val WB_reg_pc=dontTouch(RegEnable(io.in.bits.pc,io.in.fire))
     val WB_reg_inst=RegEnable(io.in.bits.inst,io.in.fire)
@@ -52,5 +54,10 @@ class WBU extends Module{
     io.valid:=WB_reg_valid
 
     io.sb.clearidx:=Mux(state === s_wait_ready,WB_reg_clearidx,0.U)    
+
+
+    //bypass
+    io.bypass_idx := Mux(WB_reg_gpr_en_w.asBool,WB_reg_gpr_idx_w,0.U)
+    io.bypass_data := WB_reg_gpr_val_w
 }
 

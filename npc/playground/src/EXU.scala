@@ -22,52 +22,40 @@ class EXU extends Module{
         val lm=(new AXILite)
         val mul_sel=Input(UInt(1.W))
         val flush = Input(UInt(1.W))
+        val bypass_idx = Input(UInt(5.W))
+        val bypass_data = Input(UInt(64.W))
+        val p_error=Output(UInt(1.W)) //为高表示预测错误
+        val mul_num = Output(UInt(64.W))
+        val div_num = Output(UInt(64.W))
     })
+
+
         //flush for two cycles
         val EXE_reg_flush=RegInit(0.U(1.W))
         EXE_reg_flush:=io.flush
         val flush = Wire(UInt(1.W))
         flush := EXE_reg_flush | io.flush
 
-        val EXE_reg_pc=dontTouch(Reg(UInt(32.W)))
-        val EXE_reg_inst=dontTouch(Reg(UInt(32.W)))
-        val EXE_reg_rs1=Reg(UInt(5.W))
-        val EXE_reg_rs2=Reg(UInt(5.W))
-        val EXE_reg_rd=Reg(UInt(5.W))
-        val EXE_reg_imm=Reg(UInt(64.W))
-        val EXE_reg_op=Reg(UInt(80.W))
-        val EXE_reg_typ=Reg(UInt(6.W))
-        val EXE_reg_valid=Reg(UInt(1.W))
-        val EXE_reg_isJump=Reg(UInt(1.W))
-        val EXE_reg_clearidx=Reg(UInt(5.W))
+        //bypass
+        val gpr_val_r1 = Mux((io.bypass_idx === io.gpr.idx_r1) && (io.bypass_idx =/= 0.U),io.bypass_data,io.gpr.val_r1)
+        val gpr_val_r2 = Mux((io.bypass_idx === io.gpr.idx_r2) && (io.bypass_idx =/= 0.U),io.bypass_data,io.gpr.val_r2)
+
+        val EXE_reg_pc=dontTouch(RegEnable(io.in.bits.pc,0.U(32.W),io.in.fire))
+        val EXE_reg_inst=dontTouch(RegEnable(io.in.bits.inst,0.U(32.W),io.in.fire))
+        val EXE_reg_rs1=RegEnable(io.in.bits.rs1,0.U(5.W),io.in.fire)
+        val EXE_reg_rs2=RegEnable(io.in.bits.rs2,0.U(5.W),io.in.fire)
+        val EXE_reg_rd=RegEnable(io.in.bits.rd,0.U(5.W),io.in.fire)
+        val EXE_reg_imm=RegEnable(io.in.bits.imm,0.U(64.W),io.in.fire)
+        val EXE_reg_op=RegEnable(io.in.bits.op,0.U(80.W),io.in.fire)
+        val EXE_reg_typ=RegEnable(io.in.bits.typ,0.U(6.W),io.in.fire)
+        val EXE_reg_isJump=RegEnable(io.in.bits.isJump,0.U(1.W),io.in.fire)
+        val EXE_reg_clearidx=RegEnable(io.in.bits.clearidx,0.U(5.W),io.in.fire)
+        val EXE_reg_valid=RegInit(1.U(1.W))
 
 
-        when(flush.asBool|reset.asBool){
-            EXE_reg_pc:=0.U
-            EXE_reg_inst:=0.U
-            EXE_reg_rs1:=0.U
-            EXE_reg_rs2:=0.U
-            EXE_reg_rd:=0.U
-            EXE_reg_imm:=0.U
-            EXE_reg_op:=0.U
-            EXE_reg_typ:=0.U
-            EXE_reg_valid:=0.U
-            EXE_reg_isJump:=0.U
-            EXE_reg_clearidx:=0.U
-        }.elsewhen(io.in.fire){
-            EXE_reg_pc:=io.in.bits.pc
-            EXE_reg_inst:=io.in.bits.inst
-            EXE_reg_rs1:=io.in.bits.rs1
-            EXE_reg_rs2:=io.in.bits.rs2
-            EXE_reg_rd:=io.in.bits.rd
-            EXE_reg_imm:=io.in.bits.imm
-            EXE_reg_op:=io.in.bits.op
-            EXE_reg_typ:=io.in.bits.typ
-            EXE_reg_valid:=1.U
-            EXE_reg_isJump:=io.in.bits.isJump
-            EXE_reg_clearidx:=io.in.bits.clearidx
-        }
 
+        //分支预测错误
+        io.p_error:=io.out.fire & (io.out.bits.pc_dnpc =/= io.in.bits.pc) & (EXE_reg_pc =/= 0.U) & (~EXE_reg_isJump)
 
         io.out.bits.isJump:=EXE_reg_isJump
         io.out.bits.clearidx:=EXE_reg_clearidx
@@ -92,11 +80,11 @@ class EXU extends Module{
         val src1=Wire(UInt(64.W))
         val src2=Wire(UInt(64.W))
         val dest=Wire(UInt(64.W))
-        src1:=Mux((EXE_reg_typ(0)|EXE_reg_typ(2)|EXE_reg_typ(4)|EXE_reg_typ(5)),io.gpr.val_r1,
+        src1:=Mux((EXE_reg_typ(0)|EXE_reg_typ(2)|EXE_reg_typ(4)|EXE_reg_typ(5)),gpr_val_r1,
             Mux((EXE_reg_typ(1)|EXE_reg_typ(3)),EXE_reg_imm,
             0.U))
       
-        src2:=Mux((EXE_reg_typ(2)|EXE_reg_typ(4)|EXE_reg_typ(5)),io.gpr.val_r2,
+        src2:=Mux((EXE_reg_typ(2)|EXE_reg_typ(4)|EXE_reg_typ(5)),gpr_val_r2,
             Mux(EXE_reg_typ(0),EXE_reg_imm,
             0.U))
   
@@ -135,17 +123,17 @@ class EXU extends Module{
         alu_result:=Mux(io.out.fire,alu.io.result,alu_res)
 
         io.in.ready:= io.out.ready & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout)
-        io.out.valid:=(state === s_wait_next) & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout) & (~flush.asBool)
+        io.out.valid:=(state === s_wait_next) & (lsu_finish|lsu.io.ls.out.fire) & (alu_finish|alu.io.validout) & (~flush.asBool) & EXE_reg_valid
 
         //lsu
         lsu.io.flush:=flush
         lsu.io.en_r:=op_r
         lsu.io.en_w:=op_w
         lsu.io.ls.out.ready:=io.out.ready
-        lsu.io.ls.in.valid:=(state === s_wait_next) &(~lsu_finish)
+        lsu.io.ls.in.valid:=(state === s_wait_next) &(~lsu_finish) & EXE_reg_valid
         lsu.io.ls.in.bits.raddr:=Mux(EXE_reg_op(38)|EXE_reg_op(39)|EXE_reg_op(40)|EXE_reg_op(41)|EXE_reg_op(46)|EXE_reg_op(47)|EXE_reg_op(48),alu.io.result,0.U)
         lsu.io.ls.in.bits.waddr:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),alu.io.result,0.U)
-        lsu.io.ls.in.bits.wdata:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),io.gpr.val_r2,0.U)
+        lsu.io.ls.in.bits.wdata:=Mux(EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45),gpr_val_r2,0.U)
         lsu.io.ls.in.bits.wmask:=Mux(EXE_reg_op(42),Cat(Fill(7,0.U),Fill(1,1.U)),
                                Mux(EXE_reg_op(43),Cat(Fill(6,0.U),Fill(2,1.U)),
                                Mux(EXE_reg_op(44),Cat(Fill(4,0.U),Fill(4,1.U)),
@@ -178,7 +166,7 @@ class EXU extends Module{
         //alu
 
         alu.io.mul_sel:=io.mul_sel
-        alu.io.validin:=(state === s_wait_next) & (op_mul | op_div) &(~alu_finish)&alu_valid
+        alu.io.validin:=(state === s_wait_next) & (op_mul | op_div) &(~alu_finish)&alu_valid&EXE_reg_valid
         alu.io.flush:=flush
         alu.io.src1:=   Mux(EXE_reg_op(13)|EXE_reg_op(21)|EXE_reg_op(23)|EXE_reg_op(56)|EXE_reg_op(58)|EXE_reg_op(60)|EXE_reg_op(62),Cat(Fill(32,0.U),src1(31,0)),
                         Mux(EXE_reg_op(17)|EXE_reg_op(19),Cat(Fill(32,src1(31)),src1(31,0)),
@@ -192,24 +180,25 @@ class EXU extends Module{
                         Mux(EXE_reg_op(64),io.csr.val_r,
                         src2))))))
         alu.io.op  :=   Mux(EXE_reg_op(0)|EXE_reg_op(1)|EXE_reg_op(2)|EXE_reg_op(3)|EXE_reg_op(24)|EXE_reg_op(25)|EXE_reg_op(36)|EXE_reg_op(37)|EXE_reg_op(38)|EXE_reg_op(39)|EXE_reg_op(40)|EXE_reg_op(41)|EXE_reg_op(42)|EXE_reg_op(43)|EXE_reg_op(44)|EXE_reg_op(45)|EXE_reg_op(46)|EXE_reg_op(47)|EXE_reg_op(48),1.U, //add
-                        Mux(EXE_reg_op(4)|EXE_reg_op(5),2.U,//sub
-                        Mux(EXE_reg_op(6)|EXE_reg_op(7),4.U,//and
-                        Mux(EXE_reg_op(8)|EXE_reg_op(9)|EXE_reg_op(64),8.U,//or
-                        Mux(EXE_reg_op(10)|EXE_reg_op(11),16.U,//xor
-                        Mux(EXE_reg_op(12)|EXE_reg_op(13)|EXE_reg_op(14)|EXE_reg_op(15),32.U,//sll
-                        Mux(EXE_reg_op(20)|EXE_reg_op(21)|EXE_reg_op(22)|EXE_reg_op(23),64.U,//srl
-                        Mux(EXE_reg_op(16)|EXE_reg_op(17)|EXE_reg_op(18)|EXE_reg_op(19),128.U,//sra
-                        Mux(EXE_reg_op(26)|EXE_reg_op(28)|EXE_reg_op(32)|EXE_reg_op(34),256.U,//slt
-                        Mux(EXE_reg_op(27)|EXE_reg_op(29)|EXE_reg_op(33)|EXE_reg_op(35),512.U,//sltu
-                        Mux(EXE_reg_op(30)|EXE_reg_op(31),2048.U,  //eql
-                        Mux(EXE_reg_op(50)|EXE_reg_op(51)|EXE_reg_op(53),4096.U,  //u*u
-                        Mux(EXE_reg_op(52),8192.U,            //s*s
-                        Mux(EXE_reg_op(54),16384.U,           //s*u
-                        Mux(EXE_reg_op(55)|EXE_reg_op(56),32768.U,             //s/s
-                        Mux(EXE_reg_op(57)|EXE_reg_op(58),65536.U,             //u/u
-                        Mux(EXE_reg_op(59)|EXE_reg_op(60),131072.U,            //s%s
-                        Mux(EXE_reg_op(61)|EXE_reg_op(62),262144.U,            //u%u
+                        Mux(EXE_reg_op(4)|EXE_reg_op(5),(1<<1).U,//sub
+                        Mux(EXE_reg_op(6)|EXE_reg_op(7),(1<<2).U,//and
+                        Mux(EXE_reg_op(8)|EXE_reg_op(9)|EXE_reg_op(64),(1<<3).U,//or
+                        Mux(EXE_reg_op(10)|EXE_reg_op(11),(1<<4).U,//xor
+                        Mux(EXE_reg_op(12)|EXE_reg_op(13)|EXE_reg_op(14)|EXE_reg_op(15),(1<<5).U,//sll
+                        Mux(EXE_reg_op(20)|EXE_reg_op(21)|EXE_reg_op(22)|EXE_reg_op(23),(1<<6).U,//srl
+                        Mux(EXE_reg_op(16)|EXE_reg_op(17)|EXE_reg_op(18)|EXE_reg_op(19),(1<<7).U,//sra
+                        Mux(EXE_reg_op(26)|EXE_reg_op(28)|EXE_reg_op(32)|EXE_reg_op(34),(1<<8).U,//slt
+                        Mux(EXE_reg_op(27)|EXE_reg_op(29)|EXE_reg_op(33)|EXE_reg_op(35),(1<<9).U,//sltu
+                        Mux(EXE_reg_op(30)|EXE_reg_op(31),(1<<11).U,  //eql
+                        Mux(EXE_reg_op(50)|EXE_reg_op(51)|EXE_reg_op(53),(1<<12).U,  //u*u
+                        Mux(EXE_reg_op(52),(1<<13).U,            //s*s
+                        Mux(EXE_reg_op(54),(1<<14).U,           //s*u
+                        Mux(EXE_reg_op(55)|EXE_reg_op(56),(1<<15).U,             //s/s
+                        Mux(EXE_reg_op(57)|EXE_reg_op(58),(1<<16).U,             //u/u
+                        Mux(EXE_reg_op(59)|EXE_reg_op(60),(1<<17).U,            //s%s
+                        Mux(EXE_reg_op(61)|EXE_reg_op(62),(1<<18).U,            //u%u
                         0.U))))))))))))))))))
+                        
   
         //next pc
         val next_pc_src1=Wire(UInt(64.W))
@@ -226,6 +215,8 @@ class EXU extends Module{
                       Mux(EXE_reg_op(37),src2,
                       4.U))))))))
         next_pc_sum:=next_pc_src1+next_pc_src2
+
+
   
         //to wbu
         io.out.bits.gpr.en_w:=Mux(flush.asBool,0.U,Mux((EXE_reg_typ(0)|EXE_reg_typ(1)|EXE_reg_typ(3)|EXE_reg_typ(5)),1.U,0.U))
@@ -261,6 +252,12 @@ class EXU extends Module{
         io.out.bits.pc_dnpc:=Mux(EXE_reg_op(65)|EXE_reg_op(66),io.csr.val_r,
                              Mux(EXE_reg_op(37),next_pc_sum&(~(1.U(64.W))),
                              next_pc_sum))
+        
         io.out.bits.inst:=EXE_reg_inst
         io.out.bits.pc:=EXE_reg_pc
+
+
+        io.mul_num:=alu.io.mul_num
+        io.div_num:=alu.io.div_num
+
 }

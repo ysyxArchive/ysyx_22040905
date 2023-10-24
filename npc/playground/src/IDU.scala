@@ -22,26 +22,28 @@ class IDU extends Module{
       val sb=Flipped((new SB_ID)) 
       val flush=Input(UInt(1.W))
    })
-   //val ID_reg_inst=RegEnable(io.in.bits.inst,0.U,io.in.fire)
-   //val ID_reg_pc=RegEnable(io.in.bits.pc,0.U,io.in.fire)
-   //val ID_reg_valid=RegEnable(1.U,1.U,true.B)
-   //val ID_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
-   val ID_reg_inst=Reg(UInt(32.W))
-   val ID_reg_pc=Reg(UInt(32.W))
-   val ID_reg_valid=Reg(UInt(1.W))
-   val ID_reg_isJump=Reg(UInt(1.W))
+   val ID_reg_inst=RegEnable(io.in.bits.inst,0.U,io.in.fire)
+   val ID_reg_pc=RegEnable(io.in.bits.pc,0.U,io.in.fire)
+   val ID_reg_valid=RegEnable(1.U,1.U,true.B)
+   val ID_reg_isJump=RegEnable(io.in.bits.isJump,0.U,io.in.fire)
+   //val ID_reg_inst=Reg(UInt(32.W))
+   //val ID_reg_pc=Reg(UInt(32.W))
+   //val ID_reg_valid=Reg(UInt(1.W))
+   //val ID_reg_isJump=Reg(UInt(1.W))
 
-   when(io.flush.asBool|reset.asBool){
-      ID_reg_inst:=0.U
-      ID_reg_pc:=0.U
-      ID_reg_valid:=0.U
-      ID_reg_isJump:=0.U
-   }.elsewhen(io.in.fire){
-      ID_reg_inst:=io.in.bits.inst
-      ID_reg_pc:=io.in.bits.pc
-      ID_reg_valid:=1.U
-      ID_reg_isJump:=io.in.bits.isJump
-   }
+   //when(io.flush.asBool|reset.asBool){
+   //   ID_reg_inst:=0.U
+   //   ID_reg_pc:=0.U
+   //   ID_reg_valid:=0.U
+   //   ID_reg_isJump:=0.U
+   //}.elsewhen(io.in.fire){
+   //   ID_reg_inst:=io.in.bits.inst
+   //   ID_reg_pc:=io.in.bits.pc
+   //   ID_reg_valid:=1.U
+   //   ID_reg_isJump:=io.in.bits.isJump
+   //}
+   
+
 
    val RAW=Wire(UInt(1.W))
    io.out.bits.isJump:=Mux(~RAW.asBool,ID_reg_isJump,0.U)
@@ -57,7 +59,7 @@ class IDU extends Module{
    ))
    val nop=0x0000013.U 
    io.in.ready:= (~RAW) & io.out.ready
-   io.out.valid:=(state === s_wait_ready) & io.in.valid
+   io.out.valid:=(state === s_wait_ready) & io.in.valid & (~io.flush.asBool)
    io.out.bits.pc:=Mux(~RAW.asBool,ID_reg_pc,0.U)
    io.out.bits.inst:=Mux(~RAW.asBool,ID_reg_inst,nop)
 
@@ -177,7 +179,5 @@ class IDU extends Module{
    io.sb.lookidx2:=Mux(typ(2)|typ(4)|typ(5),ID_reg_inst(24,20),0.U)                     //rs2
    io.sb.setidx:=Mux((typ(0)|typ(1)|typ(3)|typ(5))&(io.out.fire&io.in.fire)&(!RAW),ID_reg_inst(11,7),0.U) //rd
    io.out.bits.clearidx:=Mux(~RAW.asBool,io.sb.setidx,0.U)
-   RAW:=io.sb.isBusy
-
-    
+   RAW:=0.U//io.sb.isBusy 
 }

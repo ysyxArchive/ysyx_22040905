@@ -35,7 +35,7 @@ static void init_keymap() {
   MAP(_KEYS, SDL_KEYMAP)
 }
 
-#define KEY_QUEUE_LEN 1024
+#define KEY_QUEUE_LEN 4096
 static int key_queue[KEY_QUEUE_LEN] = {};
 static int key_f = 0, key_r = 0;
 

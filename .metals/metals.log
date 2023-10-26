@@ -6271,3 +6271,19 @@ After retry no existing semanticdb version found for scala version 2.13.8
 2023.10.24 21:10:39 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
 2023.10.24 21:10:39 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
 2023.10.24 21:10:39 INFO  time: indexed workspace in 3.63s
+2023.10.25 10:20:49 INFO  Shutting down server
+2023.10.25 10:20:49 INFO  shutting down Metals
+2023.10.25 10:20:49 INFO  Shut down connection with build server.
+2023.10.25 10:20:49 INFO  Exiting server
+2023.10.26 19:58:22 INFO  Started: Metals version 1.1.0 in folders '/home/cyh/ysyx-workbench' for client Visual Studio Code 1.79.2.
+2023.10.26 19:58:23 INFO  Attempting to connect to the build server...
+2023.10.26 19:58:23 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.26 19:58:23 INFO  skipping build import with status 'Installed'
+2023.10.26 19:58:26 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.26 19:58:32 INFO  time: Connected to build server in 9.12s
+2023.10.26 19:58:32 INFO  Connected to Build server: Bloop v1.5.11
+2023.10.26 19:58:32 INFO  time: Imported build in 0.12s
+2023.10.26 19:58:36 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
+2023.10.26 19:58:36 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
+2023.10.26 19:58:36 WARN  Could not find java sources in /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip, /usr/lib/jvm/src.zip, /usr/lib/jvm/lib/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/src.zip, /usr/lib/jvm/java-18-openjdk-amd64/lib/src.zip. Java symbols will not be available.
+2023.10.26 19:58:36 INFO  time: indexed workspace in 3.45s

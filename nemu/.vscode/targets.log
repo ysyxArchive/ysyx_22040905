@@ -1,0 +1,2171 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sun Jul 31 14:10:46 2022
+
+# Variables
+
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.o := include/config/itrace/cond.h include/config/itrace.h include/config/difftest.h include/config/watchpoint.h    /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/decode.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h  include/config/isa/riscv32.h include/config/isa/riscv64.h src/cpu/../monitor/sdb/sdb.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 27)
+CONFIG_DIFFTEST_REF_PATH = "tools/spike-diff"
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.o := unused
+# environment
+GDK_BACKEND = x11
+# makefile (from '/home/cyh/ysyx-workbench/nemu/tools/difftest.mk', line 2)
+DIFF_REF_PATH = $(NEMU_HOME)/$(call remove_quote,$(CONFIG_DIFFTEST_REF_PATH))
+# environment
+LC_ALL = C
+# environment
+GNOME_SHELL_SESSION_MODE = ubuntu
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 52)
+define call_fixdep
+	@$(FIXDEP) $(1) $(2) unused > $(1).tmp
+	@mv $(1).tmp $(1)
+endef
+# environment
+SSH_AGENT_LAUNCHER = gnome-keyring
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf.cmd', line 1)
+deps_config := src/device/Kconfig src/memory/Kconfig /home/cyh/ysyx-workbench/nemu/Kconfig
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.o := /usr/lib/llvm-13/include/llvm/MC/MCAsmInfo.h /usr/lib/llvm-13/include/llvm/ADT/StringRef.h /usr/lib/llvm-13/include/llvm/ADT/STLExtras.h /usr/lib/llvm-13/include/llvm/ADT/Optional.h /usr/lib/llvm-13/include/llvm/ADT/Hashing.h /usr/lib/llvm-13/include/llvm/Support/DataTypes.h /usr/lib/llvm-13/include/llvm-c/DataTypes.h /usr/lib/llvm-13/include/llvm/Support/ErrorHandling.h /usr/lib/llvm-13/include/llvm/Support/Compiler.h /usr/lib/llvm-13/include/llvm/Config/llvm-config.h /usr/lib/llvm-13/include/llvm/Support/SwapByteOrder.h /usr/lib/llvm-13/include/llvm/Support/type_traits.h /usr/lib/llvm-13/include/llvm/ADT/None.h /usr/lib/llvm-13/include/llvm/ADT/STLForwardCompat.h /usr/lib/llvm-13/include/llvm/ADT/iterator.h /usr/lib/llvm-13/include/llvm/ADT/iterator_range.h /usr/lib/llvm-13/include/llvm/Config/abi-breaking.h /usr/lib/llvm-13/include/llvm/MC/MCDirectives.h /usr/lib/llvm-13/include/llvm/MC/MCTargetOptions.h /usr/lib/llvm-13/include/llvm/ADT/ArrayRef.h /usr/lib/llvm-13/include/llvm/ADT/SmallVector.h /usr/lib/llvm-13/include/llvm/Support/MemAlloc.h /usr/lib/llvm-13/include/llvm/MC/MCContext.h /usr/lib/llvm-13/include/llvm/ADT/DenseMap.h /usr/lib/llvm-13/include/llvm/ADT/DenseMapInfo.h /usr/lib/llvm-13/include/llvm/ADT/EpochTracker.h /usr/lib/llvm-13/include/llvm/Support/AlignOf.h /usr/lib/llvm-13/include/llvm/Support/MathExtras.h /usr/lib/llvm-13/include/llvm/Support/ReverseIteration.h /usr/lib/llvm-13/include/llvm/Support/PointerLikeTypeTraits.h /usr/lib/llvm-13/include/llvm/ADT/SetVector.h /usr/lib/llvm-13/include/llvm/ADT/DenseSet.h /usr/lib/llvm-13/include/llvm/ADT/SmallString.h /usr/lib/llvm-13/include/llvm/ADT/StringMap.h /usr/lib/llvm-13/include/llvm/ADT/StringMapEntry.h /usr/lib/llvm-13/include/llvm/Support/AllocatorBase.h /usr/lib/llvm-13/include/llvm/ADT/Twine.h /usr/lib/llvm-13/include/llvm/BinaryFormat/Dwarf.h /usr/lib/llvm-13/include/llvm/Support/Format.h /usr/lib/llvm-13/include/llvm/Support/FormatVariadicDetails.h /usr/lib/llvm-13/include/llvm/Support/raw_ostream.h /usr/lib/llvm-13/include/llvm/ADT/Triple.h /usr/lib/llvm-13/include/llvm/BinaryFormat/Dwarf.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELF.h /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/x86_64.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/i386.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/PowerPC.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/PowerPC64.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AArch64.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/ARM.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/ARC.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AVR.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Mips.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Hexagon.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Lanai.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/RISCV.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/SystemZ.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Sparc.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AMDGPU.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/BPF.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/M68k.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/MSP430.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/VE.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/CSKY.def /usr/lib/llvm-13/include/llvm/BinaryFormat/DynamicTags.def /usr/lib/llvm-13/include/llvm/BinaryFormat/XCOFF.h /usr/lib/llvm-13/include/llvm/MC/MCAsmMacro.h /usr/lib/llvm-13/include/llvm/ADT/APInt.h /usr/lib/llvm-13/include/llvm/Support/Debug.h /usr/lib/llvm-13/include/llvm/Support/SMLoc.h /usr/lib/llvm-13/include/llvm/MC/MCDwarf.h /usr/lib/llvm-13/include/llvm/ADT/MapVector.h /usr/lib/llvm-13/include/llvm/MC/MCSection.h /usr/lib/llvm-13/include/llvm/ADT/ilist.h /usr/lib/llvm-13/include/llvm/ADT/simple_ilist.h /usr/lib/llvm-13/include/llvm/ADT/ilist_base.h /usr/lib/llvm-13/include/llvm/ADT/ilist_node_base.h /usr/lib/llvm-13/include/llvm/ADT/PointerIntPair.h /usr/lib/llvm-13/include/llvm/ADT/ilist_iterator.h /usr/lib/llvm-13/include/llvm/ADT/ilist_node.h /usr/lib/llvm-13/include/llvm/ADT/ilist_node_options.h /usr/lib/llvm-13/include/llvm/MC/MCFragment.h /usr/lib/llvm-13/include/llvm/MC/MCFixup.h /usr/lib/llvm-13/include/llvm/MC/MCInst.h /usr/lib/llvm-13/include/llvm/ADT/bit.h /usr/lib/llvm-13/include/llvm/Support/Alignment.h /usr/lib/llvm-13/include/llvm/Support/Casting.h /usr/lib/llvm-13/include/llvm/MC/SectionKind.h /usr/lib/llvm-13/include/llvm/Support/Error.h /usr/lib/llvm-13/include/llvm-c/Error.h /usr/lib/llvm-13/include/llvm-c/ExternC.h /usr/lib/llvm-13/include/llvm/ADT/StringExtras.h /usr/lib/llvm-13/include/llvm/ADT/APSInt.h /usr/lib/llvm-13/include/llvm/Support/ErrorOr.h /usr/lib/llvm-13/include/llvm/Support/MD5.h /usr/lib/llvm-13/include/llvm/Support/Endian.h /usr/lib/llvm-13/include/llvm/MC/MCPseudoProbe.h /usr/lib/llvm-13/include/llvm/MC/MCSubtargetInfo.h /usr/lib/llvm-13/include/llvm/MC/MCInstrItineraries.h /usr/lib/llvm-13/include/llvm/MC/MCSchedule.h /usr/lib/llvm-13/include/llvm/MC/SubtargetFeature.h /usr/lib/llvm-13/include/llvm/Support/Allocator.h /usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCDisassembler.h /usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCSymbolizer.h /usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCRelocationInfo.h /usr/lib/llvm-13/include/llvm/MC/MCInstPrinter.h /usr/lib/llvm-13/include/llvm/Support/TargetRegistry.h /usr/lib/llvm-13/include/llvm-c/DisassemblerTypes.h /usr/lib/llvm-13/include/llvm/MC/MCObjectFileInfo.h /usr/lib/llvm-13/include/llvm/MC/MCSymbol.h /usr/lib/llvm-13/include/llvm/MC/MCExpr.h /usr/lib/llvm-13/include/llvm/Support/CodeGen.h /usr/lib/llvm-13/include/llvm/Support/VersionTuple.h /usr/lib/llvm-13/include/llvm/Support/FormattedStream.h /usr/lib/llvm-13/include/llvm/Support/TargetSelect.h /usr/lib/llvm-13/include/llvm/Config/Targets.def /usr/lib/llvm-13/include/llvm/Config/AsmPrinters.def /usr/lib/llvm-13/include/llvm/Config/AsmParsers.def /usr/lib/llvm-13/include/llvm/Config/Disassemblers.def 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 12)
+CONFIG_MSIZE = 0x8000000
+# makefile (from 'Makefile', line 14)
+ENGINE = $(call remove_quote,$(CONFIG_ENGINE))
+# environment
+SNAP_INSTANCE_KEY = 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# environment
+GJS_DEBUG_OUTPUT = stderr
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.o := unused
+# environment
+NEMU_HOME = /home/cyh/ysyx-workbench/nemu
+# environment
+LC_NAME = en_US.UTF-8
+# environment
+LC_NUMERIC = en_US.UTF-8
+# environment
+VSCODE_CWD = /home/cyh
+# makefile (from 'src/filelist.mk', line 7)
+LIBS = $(shell llvm-config-13 --libs) $(if $(CONFIG_TARGET_NATIVE_ELF),-lreadline -ldl -pie,)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.o := src/isa/riscv64/init.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 30)
+CONFIG_CC_GCC = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 22)
+define git_commit
+	-@flock $(LOCK_DIR) $(MAKE) .git_commit MSG='$(1)'
+	-@sync
+endef
+# environment
+LC_ADDRESS = en_US.UTF-8
+# default
+MAKE_COMMAND := make
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.o := src/utils/timer.c
+# environment
+QT_ACCESSIBILITY = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+SNAP_INSTANCE_NAME = code
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 2)
+STUNAME = 程雨航
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 14)
+OBJ_DIR = $(BUILD_DIR)/obj-$(NAME)$(SO)
+# environment
+GDK_PIXBUF_MODULEDIR = /snap/code/102/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 9)
+Q := @
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 15)
+BINARY = $(BUILD_DIR)/$(NAME)$(SO)
+# default
+.VARIABLES := 
+# environment
+PWD = /home/cyh/ysyx-workbench/nemu
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.o := unused
+# environment
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.o := src/isa/riscv64/logo.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 2)
+COLOR_END := [0m
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 11)
+WORK_INDEX = $(YSYX_HOME)/.git/index.$(WORK_BRANCH)
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/cyh/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.o := src/utils/state.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h src/isa/riscv64/difftest/../local-include/reg.h include/config/rt/check.h 
+# environment
+LANG = C
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.o := src/nemu-main.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.o := src/isa/riscv64/inst.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 15)
+CONFIG_ITRACE = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.o := src/isa/riscv64/difftest/dut.c
+# environment
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.TGCBQ1
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile (from 'src/filelist.mk', line 4)
+DIRS-BLACKLIST- = src/monitor/sdb
+# makefile
+MAKEFLAGS = pqrR
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.o := src/device/io/mmio.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.o := 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.o := src/utils/disasm.cc
+# makefile
+CURDIR := /home/cyh/ysyx-workbench/nemu
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 11)
+FIXDEP_PATH := /home/cyh/ysyx-workbench/nemu/tools/fixdep
+# makefile (from 'Makefile', line 24)
+SRCS-y = src/nemu-main.c $(shell find $(DIRS-y) -name "*.c")
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.o := unused
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# makefile (from 'Makefile', line 25)
+SRCS = $(filter-out $(SRCS-BLACKLIST-y),$(SRCS-y))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 9)
+CONFIG_PC_RESET_OFFSET = 0
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.o := src/device/io/port-io.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 7)
+GITFLAGS = -q --author='$(TRACER) <tracer@ysyx.org>' --no-verify --allow-empty
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 13)
+INC_PATH := /home/cyh/ysyx-workbench/nemu/include /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include /home/cyh/ysyx-workbench/nemu/src/engine/interpreter
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# environment
+WAYLAND_DISPLAY = wayland-0
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 17)
+MCONF := /home/cyh/ysyx-workbench/nemu/tools/kconfig/build/mconf
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.o := src/monitor/sdb/sdb.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.o := include/config/trace.h include/config/trace/start.h include/config/trace/end.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/tools/difftest.mk', line 1)
+MAKEFILE_LIST := Makefile /home/cyh/ysyx-workbench/nemu/include/config/auto.conf /home/cyh/ysyx-workbench/nemu/include/config/auto.conf.cmd src/utils/filelist.mk src/isa/filelist.mk src/engine/filelist.mk src/filelist.mk src/device/filelist.mk /home/cyh/ysyx-workbench/nemu/scripts/config.mk /home/cyh/ysyx-workbench/nemu/scripts/native.mk /home/cyh/ysyx-workbench/nemu/../Makefile /home/cyh/ysyx-workbench/nemu/scripts/build.mk /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.d /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.d /home/cyh/ysyx-workbench/nemu/tools/difftest.mk
+# makefile (from 'src/filelist.mk', line 6)
+SHARE = $(if $(CONFIG_TARGET_SHARE),1,0)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.o := unused
+# environment
+SNAP_REEXEC = 
+# automatic
+@F = $(notdir $@)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 12)
+TRACER_BRANCH = $(TRACER)
+# environment
+VSCODE_PID = 3937
+# environment
+SDKMAN_DIR = /home/cyh/.sdkman
+# environment
+XDG_SESSION_TYPE = wayland
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.o :=  include/config/pmem/garray.h include/config/msize.h include/config/mbase.h include/config/mem/random.h  /home/cyh/ysyx-workbench/nemu/include/memory/host.h include/config/isa64.h include/config/rt/check.h /home/cyh/ysyx-workbench/nemu/include/common.h  /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h /home/cyh/ysyx-workbench/nemu/include/device/mmio.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h 
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 14)
+silent := -s
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 24)
+INCLUDES = $(addprefix -I, $(INC_PATH))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.o := src/memory/vaddr.c
+# environment
+SESSION_MANAGER = local/cyh-RedmiBook-Pro-14S:@/tmp/.ICE-unix/1178,unix/cyh-RedmiBook-Pro-14S:/tmp/.ICE-unix/1178
+# automatic
+*F = $(notdir $*)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 8)
+CONFIG_WATCHPOINT = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 17)
+CONFIG_TRACE_END = 10000
+# environment
+NVBOARD_HOME = /home/cyh/ysyx-workbench/nvboard
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# makefile (from 'Makefile', line 33)
+CFLAGS_TRACE = -DITRACE_COND=$(if $(CONFIG_ITRACE_COND),$(call remove_quote,$(CONFIG_ITRACE_COND)),true)
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 14)
+LOCK_DIR = $(YSYX_HOME)/.git/
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.o :=  /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h src/monitor/sdb/sdb.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h 
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.o := unused
+# makefile (from 'Makefile', line 13)
+GUEST_ISA = $(call remove_quote,$(CONFIG_ISA))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+ 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 24)
+CONFIG_ISA64 = y
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 10)
+CONFIG_DIFFTEST_REF_SPIKE = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 28)
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o) $(CXXSRC:%.cc=$(OBJ_DIR)/%.o)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.o := unused
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=fcitx
+# environment
+NPC_HOME = /home/cyh/ysyx-workbench/npc
+# environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 0
+# 'override' directive (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 13)
+ARGS = --log=$(BUILD_DIR)/nemu-log.txt $(ARGS_DIFF)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 5)
+CONFIG_ISA_riscv64 = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 16)
+CONFIG_DIFFTEST = y
+# environment
+MAKELEVEL := 0
+# environment
+IM_CONFIG_CHECK_ENV = 1
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+SNAP_COOKIE = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
+# environment
+PATH = /usr/lib/ccache:/opt/scala/scala-2.12.15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.o :=  /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h 
+# default
+MAKEFILES := 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.o := include/config/timer/gettimeofday.h   /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 18)
+FIXDEP := /home/cyh/ysyx-workbench/nemu/tools/fixdep/build/fixdep
+# environment
+LANGUAGE = en
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h src/isa/riscv64/local-include/reg.h include/config/rt/check.h 
+# environment
+LC_MONETARY = en_US.UTF-8
+# automatic
+^F = $(notdir $^)
+# environment
+SNAP_USER_COMMON = /home/cyh/snap/code/common
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.o := src/cpu/difftest/ref.c
+# environment
+LC_TIME = en_US.UTF-8
+# environment
+SNAP = /snap/code/102
+# makefile (from 'src/device/filelist.mk', line 1)
+DIRS-y = src/isa/$(GUEST_ISA) src/engine/$(ENGINE) src/cpu src/monitor src/utils src/memory src/device/io
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 6)
+CONFIG_DIFFTEST_REF_NAME = "spike"
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.o := src/utils/rand.c
+# makefile (from 'src/device/filelist.mk', line 9)
+SRCS- = src/am-bin.S src/device/device.c src/device/alarm.c src/device/intr.c src/device/serial.c src/device/timer.c src/device/keyboard.c src/device/vga.c src/device/audio.c src/device/disk.c src/device/sdcard.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 13)
+rm-distclean = include/generated include/config .config .config.old
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 9)
+YSYX_HOME = $(NEMU_HOME)/..
+# environment
+INVOCATION_ID = 7fffc2df3a8842e6b1a4624207e2e8df
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 10)
+KCONFIG_PATH := /home/cyh/ysyx-workbench/nemu/tools/kconfig
+# makefile (from '/home/cyh/ysyx-workbench/nemu/tools/difftest.mk', line 4)
+MKFLAGS = GUEST_ISA=$(GUEST_ISA) SHARE=1 ENGINE=interpreter
+# environment
+SNAP_REVISION = 102
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 10)
+WORK_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
+# environment
+SNAP_REAL_HOME = /home/cyh
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 21)
+CONFIG_ENGINE_INTERPRETER = y
+# environment
+USERNAME = cyh
+# environment
+GNOME_SETUP_DISPLAY = :1
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.o := /home/cyh/ysyx-workbench/nemu/include/device/map.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h 
+# environment
+LC_TELEPHONE = en_US.UTF-8
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# automatic
+?F = $(notdir $?)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/tools/difftest.mk', line 3)
+DIFF_REF_SO = $(DIFF_REF_PATH)/build/$(GUEST_ISA)-$(call remove_quote,$(CONFIG_DIFFTEST_REF_NAME))-so
+# makefile (from 'Makefile', line 15)
+NAME = $(GUEST_ISA)-nemu-$(ENGINE)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 10)
+WORK_DIR = $(shell pwd)
+# environment
+GTK_IM_MODULE = fcitx
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.o := src/isa/riscv64/system/intr.c
+# environment
+XDG_CURRENT_DESKTOP = Unity
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 19)
+CONFIG_MBASE = 0x80000000
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 16)
+IMG = 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.o := unused
+# environment
+LS_COLORS = 
+# automatic
++F = $(notdir $+)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.o := unused
+# environment
+DESKTOP_SESSION = ubuntu
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 6)
+TRACER = tracer-ysyx2204
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 13)
+CONFIG_CC_O2 = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.o := unused
+# 'override' directive
+GNUMAKEFLAGS := 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.o := src/monitor/sdb/sdb.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 1)
+COLOR_RED := [1;31m
+# environment
+CLUTTER_IM_MODULE = fcitx
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.o := include/config/difftest.h include/config/cc/asan.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h 
+# environment
+LOGNAME = cyh
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 25)
+CONFIG_ITRACE_COND = "true"
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 20)
+CONFIG_TIMER_GETTIMEOFDAY = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.o := src/isa/riscv64/system/mmu.c
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /var/lib/snapd/desktop/applications/code_code.desktop
+# environment
+SNAP_ARCH = amd64
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 31)
+CONFIG_TRACE = y
+# makefile (from 'Makefile', line 18)
+FILELIST_MK = $(shell find ./src -name "filelist.mk")
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 1)
+.DEFAULT_GOAL = app
+# environment
+SYSTEMD_EXEC_PID = 1202
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 28)
+CONFIG_CC_DEBUG = y
+# environment
+DISPLAY = :0
+# environment
+USER = cyh
+# environment
+GTK_MODULES = gail:atk-bridge
+# default
+MAKE_VERSION := 4.3
+# makefile (from 'Makefile', line 22)
+DIRS-BLACKLIST-y = $(DIRS-BLACKLIST)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.o := unused
+# 'override' directive
+.SHELLSTATUS := 0
+# environment
+DISABLE_WAYLAND = 1
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 12)
+Kconfig := /home/cyh/ysyx-workbench/nemu/Kconfig
+# environment
+SNAP_DATA = /var/snap/code/102
+# makefile (from '/home/cyh/ysyx-workbench/nemu/tools/difftest.mk', line 5)
+ARGS_DIFF = --diff=$(DIFF_REF_SO)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.o := src/isa/riscv64/reg.c
+# environment
+SNAP_CONTEXT = NKaZOQqnzOtIaz6pHmCzYYBQV0yRCfljYiXrSqVNjobbftha6c6q
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 17)
+git_soft_checkout = 	git checkout --detach -q && git reset --soft $(1) -q && git checkout $(1) -q
+# makefile (from 'Makefile', line 10)
+remove_quote = $(patsubst "%",%,$(1))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 26)
+LDFLAGS := -O2 -O2  -Og -ggdb3 -fsanitize=address
+# environment
+MANAGERPID = 1049
+# environment
+LC_MEASUREMENT = en_US.UTF-8
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3891
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.o := src/engine/interpreter/hostcall.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 17)
+NEMU_EXEC := /home/cyh/ysyx-workbench/nemu/build/riscv64-nemu-interpreter --log=/home/cyh/ysyx-workbench/nemu/build/nemu-log.txt --diff=/home/cyh/ysyx-workbench/nemu/tools/spike-diff/build/riscv64-spike-so 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 1)
+STUID = ysyx_22040905
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.o :=  /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.o := src/engine/interpreter/init.c
+# environment
+_ = /snap/code/102/usr/share/code/code
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 16)
+CONF := /home/cyh/ysyx-workbench/nemu/tools/kconfig/build/conf
+# environment
+LC_PAPER = en_US.UTF-8
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.o := include/config/trace.h   include/config/itrace.h   include/config/isa/riscv32.h include/config/isa/riscv64.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.o := unused
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 25)
+CFLAGS := -O2 -MMD -Wall -Werror -I/home/cyh/ysyx-workbench/nemu/include -I/home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include -I/home/cyh/ysyx-workbench/nemu/src/engine/interpreter -O2  -Og -ggdb3 -fsanitize=address -DITRACE_COND=true -D__GUEST_ISA__=riscv64
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/host.h include/config/rt/check.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/device/map.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.o := src/utils/log.c
+# environment
+GDK_PIXBUF_MODULE_FILE = /home/cyh/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 14)
+CONFIG_MODE_SYSTEM = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.o :=  /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.o := unused
+# makefile (from 'src/utils/filelist.mk', line 2)
+CXXSRC = src/utils/disasm.cc
+# environment
+ 
+JOURNAL_STREAM = 8:37841
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.o := /home/cyh/ysyx-workbench/nemu/include/device/map.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.o := src/monitor/sdb/watchpoint.c
+# makefile (from 'Makefile', line 23)
+SRCS-BLACKLIST-y = $(SRCS-BLACKLIST) $(shell find $(DIRS-BLACKLIST-y) -name "*.c")
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 11)
+BUILD_DIR = $(WORK_DIR)/build
+# environment
+HOME = /home/cyh
+# environment
+QT_IM_MODULE = fcitx
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 23)
+CONFIG_RT_CHECK = y
+# makefile (from 'src/device/filelist.mk', line 11)
+SRCS-BLACKLIST- = src/device/alarm.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 29)
+clean-tools = $(dir $(shell find ./tools -maxdepth 2 -mindepth 2 -name "Makefile"))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 26)
+CONFIG_CC = "gcc"
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 18)
+CONFIG_CC_ASAN = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.o := unused
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-917a263f-1.69.2-main.sock
+# environment
+SNAP_NAME = code
+# environment
+GSETTINGS_SCHEMA_DIR = /snap/code/102/usr/share/glib-2.0/schemas
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.o := src/device/io/map.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.o := src/monitor/sdb/expr.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.o := /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h 
+# environment
+IM_CONFIG_PHASE = 1
+# environment
+PAPERSIZE = letter
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.o := src/monitor/monitor.c
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# environment
+SNAP_VERSION = 3b889b09
+# environment
+AM_HOME = /home/cyh/ysyx-workbench/abstract-machine
+# default
+SUFFIXES := 
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 23)
+LD := g++
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.o := /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h 
+# makefile (from 'Makefile', line 32)
+CFLAGS_BUILD = $(call remove_quote,$(CONFIG_CC_OPT)) $(if $(CONFIG_CC_LTO),-flto,) $(if $(CONFIG_CC_DEBUG),-Og -ggdb3,) $(if $(CONFIG_CC_ASAN),-fsanitize=address,)
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.o := /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/cpu/ifetch.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h   include/config/isa/riscv32.h include/config/isa/riscv64.h 
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+SNAP_COMMON = /var/snap/code/common
+# makefile (from 'src/utils/filelist.mk', line 3)
+CXXFLAGS = $(shell llvm-config-13 --cxxflags) -fPIE
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 11)
+CONFIG_TARGET_NATIVE_ELF = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 21)
+CXX := g++
+# makefile (from 'Makefile', line 28)
+CC = $(call remove_quote,$(CONFIG_CC))
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.d', line 1)
+cmd_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.o := unused
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 33)
+CONFIG_PMEM_GARRAY = y
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 7)
+CONFIG_ENGINE = "interpreter"
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.d', line 5)
+deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.o := src/isa/riscv64/local-include/reg.h include/config/rt/check.h /home/cyh/ysyx-workbench/nemu/include/common.h  include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/cpu/ifetch.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/cpu/decode.h include/config/itrace.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h 
+# environment
+SNAP_USER_DATA = /home/cyh/snap/code/102
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 22)
+CONFIG_CC_OPT = "-O2"
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.o := src/cpu/difftest/dut.c
+# environment
+XDG_MENU_PREFIX = gnome-
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.o := src/memory/paddr.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.d', line 3)
+source_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.o := src/cpu/cpu-exec.c
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 29)
+CONFIG_TRACE_START = 0
+# makefile (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf', line 32)
+CONFIG_ISA = "riscv64"
+# environment
+GDMSESSION = ubuntu
+# environment
+LC_IDENTIFICATION = en_US.UTF-8
+# environment
+SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
+# variable set hash-table stats:
+# Load=309/1024=30%, Rehash=0, Collisions=106/951=11%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 66311, inode 1704033): 18 files, no impossibilities.
+
+# 18 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+%defconfig: /home/cyh/ysyx-workbench/nemu/tools/kconfig/build/conf /home/cyh/ysyx-workbench/nemu/tools/fixdep/build/fixdep
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 37):
+	$(Q)$< $(silent) --defconfig=configs/$@ $(Kconfig)
+	$(Q)$< $(silent) --syncconfig $(Kconfig)
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/%.o: %.c
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 32):
+	@echo + CC $<
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c -o $@ $<
+	$(call call_fixdep, $(@:.o=.d), $@)
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/%.o: %.cc
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 38):
+	@echo + CXX $<
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CFLAGS) $(CXXFLAGS) -c -o $@ $<
+	$(call call_fixdep, $(@:.o=.d), $@)
+
+# 3 implicit rules, 0 (0.0%) terminal.
+# Files
+
+_default:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 42):
+	@echo "Please run 'make' under subprojects."
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 20:28:04.161130935
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.o: /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCSchedule.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/SwapByteOrder.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/ErrorOr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+distclean: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 48):
+	-@rm -rf $(rm-distclean)
+
+/usr/lib/llvm-13/include/llvm/Support/Allocator.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCFragment.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Config/Disassemblers.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/include/config/auto.conf.cmd:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 11:39:38.53314769
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCSymbol.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/cpu/../monitor/sdb/sdb.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/tools/kconfig/build/mconf:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 24):
+	$(Q)$(MAKE) $(silent) -C $(KCONFIG_PATH) NAME=mconf
+
+/usr/lib/llvm-13/include/llvm/Support/type_traits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCInstrItineraries.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Error.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+app: /home/cyh/ysyx-workbench/nemu/build/riscv64-nemu-interpreter
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/DenseMapInfo.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/ErrorHandling.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+ 
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.963881948
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/Support/PointerLikeTypeTraits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.663765503
+#  File has been updated.
+#  Successfully updated.
+
+include/config/trace.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/Twine.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Endian.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCDwarf.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/Triple.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.33202331
+#  File has been updated.
+#  Successfully updated.
+
+include/config/difftest.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.o: /home/cyh/ysyx-workbench/nemu/include/device/map.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/memory/paddr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/PointerIntPair.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean-all: clean distclean clean-tools
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.099546586
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCSymbolizer.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.o: include/config/timer/gettimeofday.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/tools/difftest.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.327770017
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/Config/AsmPrinters.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/trace/end.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/itrace.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Format.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Hexagon.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/XCOFF.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCInstPrinter.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.o: include/config/trace.h include/config/trace/start.h include/config/trace/end.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/AlignOf.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/TargetSelect.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.319763265
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCAsmInfo.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/Dwarf.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.444066276
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/ArrayRef.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/msize.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+run-env: /home/cyh/ysyx-workbench/nemu/build/riscv64-nemu-interpreter /home/cyh/ysyx-workbench/nemu/tools/spike-diff/build/riscv64-spike-so
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/host.h include/config/rt/check.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/device/map.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/SmallString.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.60812919
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/include/memory/host.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/isa/riscv32.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Casting.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/PowerPC64.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/tools/kconfig/build/conf:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 21):
+	$(Q)$(MAKE) $(silent) -C $(KCONFIG_PATH) NAME=conf
+
+/usr/lib/llvm-13/include/llvm/Config/AsmParsers.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.572115379
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/Kconfig:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf.cmd', line 10):
+	
+
+/home/cyh/ysyx-workbench/nemu/include/cpu/ifetch.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/mbase.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.o: /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+ 
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELF.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/MathExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 57):
+	-rm -rf $(BUILD_DIR)
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Config/Targets.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/memory/Kconfig:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf.cmd', line 10):
+	
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.560110776
+#  File has been updated.
+#  Successfully updated.
+
+.git_commit:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 28):
+	-@cd $(YSYX_HOME) && while (test -e .git/index.lock); do sleep 0.1; done;               `# wait for other git instances`
+	-@cd $(YSYX_HOME) && git branch $(TRACER_BRANCH) -q 2>/dev/null || true                 `# create tracer branch if not existent`
+	-@cd $(YSYX_HOME) && cp -a .git/index $(WORK_INDEX)                                     `# backup git index`
+	-@cd $(YSYX_HOME) && $(call git_soft_checkout, $(TRACER_BRANCH))                        `# switch to tracer branch`
+	-@cd $(YSYX_HOME) && git add . -A --ignore-errors                                       `# add files to commit`
+	-@cd $(YSYX_HOME) && (echo "> $(MSG)" && echo $(STUID) $(STUNAME) && uname -a && uptime `# generate commit msg`) \
+	                | git commit -F - $(GITFLAGS)                                           `# commit changes in tracer branch`
+	-@cd $(YSYX_HOME) && $(call git_soft_checkout, $(WORK_BRANCH))                          `# switch to work branch`
+	-@cd $(YSYX_HOME) && mv $(WORK_INDEX) .git/index                                        `# restore git index`
+
+/home/cyh/ysyx-workbench/nemu/include/common.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/Optional.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/ilist.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.031908223
+#  File has been updated.
+#  Successfully updated.
+
+src/isa/riscv64/difftest/../local-include/reg.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/ReverseIteration.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/timer/gettimeofday.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/STLForwardCompat.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCExpr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCInst.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+defconfig:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/SmallVector.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Compiler.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/riscv64-nemu-interpreter: /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/nemu-main.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/log.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/mmio.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/map.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.o /home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.o compile_git
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/build.mk', line 53):
+	@echo + LD $@
+	@$(LD) -o $@ $(OBJS) $(LDFLAGS) $(ARCHIVES) $(LIBS)
+
+/usr/lib/llvm-13/include/llvm/MC/MCTargetOptions.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.887852449
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/StringMap.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/rand.o: /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/Hashing.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/STLExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/cc/asan.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/dut.o: include/config/difftest.h include/config/cc/asan.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/isa.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCSubtargetInfo.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/AllocatorBase.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/timer.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.500087759
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.119941982
+#  File has been updated.
+#  Successfully updated.
+
+menuconfig: /home/cyh/ysyx-workbench/nemu/tools/kconfig/build/mconf /home/cyh/ysyx-workbench/nemu/tools/kconfig/build/conf /home/cyh/ysyx-workbench/nemu/tools/fixdep/build/fixdep
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 30):
+	$(Q)$(MCONF) $(Kconfig)
+	$(Q)$(CONF) $(silent) --syncconfig $(Kconfig)
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/MSP430.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCSection.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.576116914
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/x86_64.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AMDGPU.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/BPF.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.o: include/config/pmem/garray.h include/config/msize.h include/config/mbase.h include/config/mem/random.h /home/cyh/ysyx-workbench/nemu/include/memory/host.h include/config/isa64.h include/config/rt/check.h /home/cyh/ysyx-workbench/nemu/include/common.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h /home/cyh/ysyx-workbench/nemu/include/device/mmio.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+ 
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-31 00:12:47.906386588
+#  File has been updated.
+#  Successfully updated.
+
+include/config/target/native/elf.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.731791897
+#  File has been updated.
+#  Successfully updated.
+
+.clean_index:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/../Makefile', line 39):
+	rm -f $(WORK_INDEX)
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.o: include/config/trace.h include/config/itrace.h include/config/isa/riscv32.h include/config/isa/riscv64.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/watchpoint.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCPseudoProbe.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCAsmMacro.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/ilist_base.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/iterator_range.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.388044793
+#  File has been updated.
+#  Successfully updated.
+
+tools/spike-diff/:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 31):
+	-@$(MAKE) -s -C $@ clean
+
+/usr/lib/llvm-13/include/llvm/MC/MCObjectFileInfo.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 22:52:39.605417946
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/engine/filelist.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.323766641
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/ilist_iterator.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/device/filelist.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.323766641
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/tools/fixdep/build/fixdep:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 27):
+	$(Q)$(MAKE) $(silent) -C $(FIXDEP_PATH)
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/paddr.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.552107707
+#  File has been updated.
+#  Successfully updated.
+
+include/config/rt/check.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Debug.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+tools/fixdep/:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 31):
+	-@$(MAKE) -s -C $@ clean
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/logo.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCDisassembler.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/difftest/dut.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h src/isa/riscv64/difftest/../local-include/reg.h include/config/rt/check.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/state.o: /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+run: run-env
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 22):
+	$(call git_commit, "run NEMU")
+	$(NEMU_EXEC)
+
+/usr/lib/llvm-13/include/llvm/ADT/ilist_node_options.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/debug.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/difftest-def.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+help:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 44):
+	@echo  '  menuconfig	  - Update current config utilising a menu based program'
+	@echo  '  savedefconfig   - Save current config as configs/defconfig (minimal config)'
+
+/usr/lib/llvm-13/include/llvm/ADT/SetVector.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm-c/Error.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/iterator.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/mem/random.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/pc/reset/offset.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/DenseSet.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCRelocationInfo.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+tools/gen-expr/:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 31):
+	-@$(MAKE) -s -C $@ clean
+
+# Not a target:
+src/filelist.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.323766641
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/i386.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/am-bin.S:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/scripts/build.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.319763265
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/StringRef.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Config/abi-breaking.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/SubtargetFeature.h:
+#  Implicit rule search has not been done.
+ 
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm-c/DataTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/VE.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/itrace/cond.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm-c/DisassemblerTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/DataTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/include/config/auto.conf:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 11:39:38.53314769
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/utils/disasm.o: /usr/lib/llvm-13/include/llvm/MC/MCAsmInfo.h /usr/lib/llvm-13/include/llvm/ADT/StringRef.h /usr/lib/llvm-13/include/llvm/ADT/STLExtras.h /usr/lib/llvm-13/include/llvm/ADT/Optional.h /usr/lib/llvm-13/include/llvm/ADT/Hashing.h /usr/lib/llvm-13/include/llvm/Support/DataTypes.h /usr/lib/llvm-13/include/llvm-c/DataTypes.h /usr/lib/llvm-13/include/llvm/Support/ErrorHandling.h /usr/lib/llvm-13/include/llvm/Support/Compiler.h /usr/lib/llvm-13/include/llvm/Config/llvm-config.h /usr/lib/llvm-13/include/llvm/Support/SwapByteOrder.h /usr/lib/llvm-13/include/llvm/Support/type_traits.h /usr/lib/llvm-13/include/llvm/ADT/None.h /usr/lib/llvm-13/include/llvm/ADT/STLForwardCompat.h /usr/lib/llvm-13/include/llvm/ADT/iterator.h /usr/lib/llvm-13/include/llvm/ADT/iterator_range.h /usr/lib/llvm-13/include/llvm/Config/abi-breaking.h /usr/lib/llvm-13/include/llvm/MC/MCDirectives.h /usr/lib/llvm-13/include/llvm/MC/MCTargetOptions.h /usr/lib/llvm-13/include/llvm/ADT/ArrayRef.h /usr/lib/llvm-13/include/llvm/ADT/SmallVector.h /usr/lib/llvm-13/include/llvm/Support/MemAlloc.h /usr/lib/llvm-13/include/llvm/MC/MCContext.h /usr/lib/llvm-13/include/llvm/ADT/DenseMap.h /usr/lib/llvm-13/include/llvm/ADT/DenseMapInfo.h /usr/lib/llvm-13/include/llvm/ADT/EpochTracker.h /usr/lib/llvm-13/include/llvm/Support/AlignOf.h /usr/lib/llvm-13/include/llvm/Support/MathExtras.h /usr/lib/llvm-13/include/llvm/Support/ReverseIteration.h /usr/lib/llvm-13/include/llvm/Support/PointerLikeTypeTraits.h /usr/lib/llvm-13/include/llvm/ADT/SetVector.h /usr/lib/llvm-13/include/llvm/ADT/DenseSet.h /usr/lib/llvm-13/include/llvm/ADT/SmallString.h /usr/lib/llvm-13/include/llvm/ADT/StringMap.h /usr/lib/llvm-13/include/llvm/ADT/StringMapEntry.h /usr/lib/llvm-13/include/llvm/Support/AllocatorBase.h /usr/lib/llvm-13/include/llvm/ADT/Twine.h /usr/lib/llvm-13/include/llvm/BinaryFormat/Dwarf.h /usr/lib/llvm-13/include/llvm/Support/Format.h /usr/lib/llvm-13/include/llvm/Support/FormatVariadicDetails.h /usr/lib/llvm-13/include/llvm/Support/raw_ostream.h /usr/lib/llvm-13/include/llvm/ADT/Triple.h /usr/lib/llvm-13/include/llvm/BinaryFormat/Dwarf.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELF.h /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/x86_64.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/i386.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/PowerPC.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/PowerPC64.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AArch64.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/ARM.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/ARC.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AVR.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Mips.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Hexagon.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Lanai.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/RISCV.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/SystemZ.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Sparc.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AMDGPU.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/BPF.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/M68k.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/MSP430.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/VE.def /usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/CSKY.def /usr/lib/llvm-13/include/llvm/BinaryFormat/DynamicTags.def /usr/lib/llvm-13/include/llvm/BinaryFormat/XCOFF.h /usr/lib/llvm-13/include/llvm/MC/MCAsmMacro.h /usr/lib/llvm-13/include/llvm/ADT/APInt.h /usr/lib/llvm-13/include/llvm/Support/Debug.h /usr/lib/llvm-13/include/llvm/Support/SMLoc.h /usr/lib/llvm-13/include/llvm/MC/MCDwarf.h /usr/lib/llvm-13/include/llvm/ADT/MapVector.h /usr/lib/llvm-13/include/llvm/MC/MCSection.h /usr/lib/llvm-13/include/llvm/ADT/ilist.h /usr/lib/llvm-13/include/llvm/ADT/simple_ilist.h /usr/lib/llvm-13/include/llvm/ADT/ilist_base.h /usr/lib/llvm-13/include/llvm/ADT/ilist_node_base.h /usr/lib/llvm-13/include/llvm/ADT/PointerIntPair.h /usr/lib/llvm-13/include/llvm/ADT/ilist_iterator.h /usr/lib/llvm-13/include/llvm/ADT/ilist_node.h /usr/lib/llvm-13/include/llvm/ADT/ilist_node_options.h /usr/lib/llvm-13/include/llvm/MC/MCFragment.h /usr/lib/llvm-13/include/llvm/MC/MCFixup.h /usr/lib/llvm-13/include/llvm/MC/MCInst.h /usr/lib/llvm-13/include/llvm/ADT/bit.h /usr/lib/llvm-13/include/llvm/Support/Alignment.h /usr/lib/llvm-13/include/llvm/Support/Casting.h /usr/lib/llvm-13/include/llvm/MC/SectionKind.h /usr/lib/llvm-13/include/llvm/Support/Error.h /usr/lib/llvm-13/include/llvm-c/Error.h /usr/lib/llvm-13/include/llvm-c/ExternC.h /usr/lib/llvm-13/include/llvm/ADT/StringExtras.h /usr/lib/llvm-13/include/llvm/ADT/APSInt.h /usr/lib/llvm-13/include/llvm/Support/ErrorOr.h /usr/lib/llvm-13/include/llvm/Support/MD5.h /usr/lib/llvm-13/include/llvm/Support/Endian.h /usr/lib/llvm-13/include/llvm/MC/MCPseudoProbe.h /usr/lib/llvm-13/include/llvm/MC/MCSubtargetInfo.h /usr/lib/llvm-13/include/llvm/MC/MCInstrItineraries.h /usr/lib/llvm-13/include/llvm/MC/MCSchedule.h /usr/lib/llvm-13/include/llvm/MC/SubtargetFeature.h /usr/lib/llvm-13/include/llvm/Support/Allocator.h /usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCDisassembler.h /usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCSymbolizer.h /usr/lib/llvm-13/include/llvm/MC/MCDisassembler/MCRelocationInfo.h /usr/lib/llvm-13/include/llvm/MC/MCInstPrinter.h /usr/lib/llvm-13/include/llvm/Support/TargetRegistry.h /usr/lib/llvm-13/include/llvm-c/DisassemblerTypes.h /usr/lib/llvm-13/include/llvm/MC/MCObjectFileInfo.h /usr/lib/llvm-13/include/llvm/MC/MCSymbol.h /usr/lib/llvm-13/include/llvm/MC/MCExpr.h /usr/lib/llvm-13/include/llvm/Support/CodeGen.h /usr/lib/llvm-13/include/llvm/Support/VersionTuple.h /usr/lib/llvm-13/include/llvm/Support/FormattedStream.h /usr/lib/llvm-13/include/llvm/Support/TargetSelect.h /usr/lib/llvm-13/include/llvm/Config/Targets.def /usr/lib/llvm-13/include/llvm/Config/AsmPrinters.def /usr/lib/llvm-13/include/llvm/Config/AsmParsers.def /usr/lib/llvm-13/include/llvm/Config/Disassemblers.def
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/auto.conf: src/device/Kconfig src/memory/Kconfig /home/cyh/ysyx-workbench/nemu/Kconfig
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/MapVector.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Lanai.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/MemAlloc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean-tools: tools/kconfig/ tools/gen-expr/ tools/qemu-diff/ tools/kvm-diff/ tools/spike-diff/ tools/fixdep/
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/ARM.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/PowerPC.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/EpochTracker.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm-c/ExternC.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.207975741
+#  File has been updated.
+#  Successfully updated.
+
+tools/qemu-diff/:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 31):
+	-@$(MAKE) -s -C $@ clean
+
+/usr/lib/llvm-13/include/llvm/ADT/simple_ilist.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/mmu.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.831830712
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/init.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.879849343
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/Support/VersionTuple.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/CodeGen.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/trace/start.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/device/io/port-io.o: /home/cyh/ysyx-workbench/nemu/include/device/map.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+tools/kconfig/:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 31):
+	-@$(MAKE) -s -C $@ clean
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/watchpoint.o: src/monitor/sdb/sdb.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/DynamicTags.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/raw_ostream.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/StringExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/StringMapEntry.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Config/llvm-config.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/init.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/paddr.h include/config/pc/reset/offset.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/expr.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/CSKY.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AVR.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/pmem/garray.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/ilist_node.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.155568322
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/difftest/ref.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.955878843
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Sparc.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/Dwarf.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/device/mmio.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/scripts/native.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.319763265
+#  File has been updated.
+#  Successfully updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/None.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/system/intr.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:40.783812081
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/include/cpu/decode.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/monitor/sdb/sdb.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+ 
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/monitor.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.280003362
+#  File has been updated.
+#  Successfully updated.
+
+savedefconfig: /home/cyh/ysyx-workbench/nemu/tools/kconfig/build/conf
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/config.mk', line 34):
+	$(Q)$< $(silent) --$@=configs/defconfig $(Kconfig)
+
+/usr/lib/llvm-13/include/llvm/ADT/APSInt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/FormatVariadicDetails.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/FormattedStream.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/utils/filelist.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 02:08:35.631594241
+#  File has been updated.
+#  Successfully updated.
+
+tools/kvm-diff/:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 31):
+	-@$(MAKE) -s -C $@ clean
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/inst.o: src/isa/riscv64/local-include/reg.h include/config/rt/check.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/cpu/ifetch.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/cpu/decode.h include/config/itrace.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/RISCV.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/isa/filelist.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.323766641
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/cpu/cpu-exec.o: include/config/itrace/cond.h include/config/itrace.h include/config/difftest.h include/config/watchpoint.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/decode.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h src/cpu/../monitor/sdb/sdb.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCDirectives.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/monitor/sdb/sdb.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/cpu/cpu.h src/monitor/sdb/sdb.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/SectionKind.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/Mips.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/isa/riscv64/reg.o: /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h src/isa/riscv64/local-include/reg.h include/config/rt/check.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/SMLoc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/isa64.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/bit.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/../Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-12 23:31:06.972509897
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/memory/vaddr.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-30 18:43:41.548106172
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/tools/spike-diff/build/riscv64-spike-so:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/tools/difftest.mk', line 9):
+	$(MAKE) -s -C $(DIFF_REF_PATH) $(MKFLAGS)
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/M68k.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/ilist_node_base.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+compile_git:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 7):
+	$(call git_commit, "compile NEMU")
+
+src/device/Kconfig:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/include/config/auto.conf.cmd', line 10):
+	
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/ARC.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: src/am-bin.S menuconfig savedefconfig defconfig help distclean .git_commit .clean_index _default app clean /home/cyh/ysyx-workbench/nemu/tools/spike-diff/build/riscv64-spike-so run gdb run-env clean-tools clean-all tools/kconfig/ tools/gen-expr/ tools/qemu-diff/ tools/kvm-diff/ tools/spike-diff/ tools/fixdep/
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/device/map.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/TargetRegistry.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/DenseMap.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/MD5.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/include/macro.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCContext.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+include/config/isa/riscv64.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter/src/engine/interpreter/hostcall.o: /home/cyh/ysyx-workbench/nemu/include/utils.h include/config/target/native/elf.h /home/cyh/ysyx-workbench/nemu/include/common.h include/config/mbase.h include/config/msize.h include/config/isa64.h /home/cyh/ysyx-workbench/nemu/include/macro.h /home/cyh/ysyx-workbench/nemu/include/debug.h /home/cyh/ysyx-workbench/nemu/include/cpu/ifetch.h /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h /home/cyh/ysyx-workbench/nemu/include/isa.h /home/cyh/ysyx-workbench/nemu/src/isa/riscv64/include/isa-def.h /home/cyh/ysyx-workbench/nemu/include/cpu/difftest.h include/config/difftest.h /home/cyh/ysyx-workbench/nemu/include/difftest-def.h include/config/isa/riscv32.h include/config/isa/riscv64.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/MC/MCFixup.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+/home/cyh/ysyx-workbench/nemu/scripts/config.mk:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-15 17:49:37.319763265
+#  File has been updated.
+#  Successfully updated.
+
+/home/cyh/ysyx-workbench/nemu/include/utils.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/SystemZ.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+gdb: run-env
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from '/home/cyh/ysyx-workbench/nemu/scripts/native.mk', line 26):
+	$(call git_commit, "gdb NEMU")
+	gdb -s $(BINARY) --args $(NEMU_EXEC)
+
+src/isa/riscv64/local-include/reg.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/ADT/APInt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/Support/Alignment.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-13/include/llvm/BinaryFormat/ELFRelocs/AArch64.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=261/1024=25%, Rehash=0, Collisions=96/1296=7%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 2 (1) / strings = 284 / storage = 14062 B / avg = 49 B
+# current buf: size = 8162 B / used = 5934 B / count = 124 / avg = 47 B
+# other used: total = 8128 B / count = 160 / avg = 50 B
+# other free: total = 34 B / max = 34 B / min = 34 B / avg = 34 B
+ 
+
+# strcache performance: lookups = 1665 / hit rate = 82%
+# hash-table stats:
+# Load=284/8192=3%, Rehash=0, Collisions=3/1665=0%
+# Finished Make data base on Sun Jul 31 14:10:46 2022
+
+ 

@@ -27,6 +27,8 @@ deps_/home/cyh/ysyx-workbench/nemu/build/obj-riscv64-nemu-interpreter-so/src/cpu
     $(wildcard include/config/isa/mips32.h) \
     $(wildcard include/config/isa/riscv32.h) \
     $(wildcard include/config/isa/riscv64.h) \
+  /home/cyh/ysyx-workbench/nemu/include/cpu/ifetch.h \
+  /home/cyh/ysyx-workbench/nemu/include/memory/vaddr.h \
   src/cpu/../monitor/sdb/sdb.h \
   src/cpu/../isa/riscv64/local-include/reg.h \
     $(wildcard include/config/rt/check.h) \

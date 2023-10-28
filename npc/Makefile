@@ -1,4 +1,4 @@
-PWD= /home/cyh/ysyx-workbench/npc
+PWD= $(NPC_HOME)
 
 VSRC_DIR=$(PWD)/vsrc
 test:

@@ -35,21 +35,18 @@ int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
 
-static char buf1[30],buf2[30];
+static char buf1,buf2;
+#define KEYDOWN_MASK 0x8000
+
 
 int SDL_PollEvent(SDL_Event *ev) {
-  NDL_PollEvent(buf1, 1);
-  if(strcmp(buf1,buf2)==0)return 0;
+  NDL_PollEvent(&buf1, 1);
+  if(buf1==buf2)return 0;
   else{
-    strcpy(buf2,buf1);
-    ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
-    ev->key.keysym.sym=findsdlk(buf1+3);
-    if(ev->key.type==SDL_KEYDOWN){
-      key_state[ev->key.keysym.sym]=1;
-    }
-    else{
-      key_state[ev->key.keysym.sym]=0;
-    }
+    buf2=buf1;
+    ev->key.type= (buf1 & KEYDOWN_MASK ? SDL_KEYDOWN : SDL_KEYUP);
+    ev->key.keysym.sym= buf1 & ~KEYDOWN_MASK;
+    key_state[ev->key.keysym.sym]=(ev->key.type==SDL_KEYDOWN);
     return 1;//ev->key.type==SDL_KEYDOWN;
   }
   return 0;

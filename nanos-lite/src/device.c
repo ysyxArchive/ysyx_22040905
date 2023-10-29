@@ -34,7 +34,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   //sprintf(buff,"k%c %s\n",kbd.keydown?'d':'u',keyname[kbd.keycode]);
   //int lenn=strlen(buff);
   //assert(lenn<=len);
-  *(char *)(buf+offset)=kbd.keycode | (kbd.keydown ? KEYDOWN_MASK : 0);
+  *(uint32_t *)(buf+offset)=kbd.keycode | (kbd.keydown ? KEYDOWN_MASK : 0);
   return len;
 }
 AM_GPU_CONFIG_T cfg;

@@ -1,0 +1,12 @@
+{
+    "value": [
+        "-Xsource:2.13.0",
+        "-language:reflectiveCalls",
+        "-deprecation",
+        "-feature",
+        "-Xcheckinit",
+        "-P:chiselplugin:genBundleElements"
+    ],
+    "valueHash": -1337011890,
+    "inputsHash": 1854510429
+}

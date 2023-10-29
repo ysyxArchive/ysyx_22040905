@@ -378,10 +378,10 @@ PAL_BattleMain(
       //
       // Wait for the time of one frame. Accept input here.
       //
-      PAL_DelayUntil(dwTime);
+      //PAL_DelayUntil(dwTime);
 
       uint32_t now = SDL_GetTicks();
-      UpdateFPS(now);
+      //UpdateFPS(now);
 
       //
       // Set the time of the next frame.

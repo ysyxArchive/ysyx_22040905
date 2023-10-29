@@ -6345,3 +6345,44 @@ After retry no existing semanticdb version found for scala version 2.13.8
 2023.10.28 16:29:50 INFO  Shutting down server
 2023.10.28 16:29:50 INFO  shutting down Metals
 2023.10.28 16:29:50 INFO  Exiting server
+2023.10.29 14:40:00 INFO  Started: Metals version 1.1.0 in folders '/home/cyh/ysyx-workbench' for client Visual Studio Code 1.79.2.
+2023.10.29 14:40:00 INFO  Attempting to connect to the build server...
+2023.10.29 14:40:00 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.29 14:40:00 INFO  skipping build import with status 'Installed'
+2023.10.29 14:40:03 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.29 14:40:23 ERROR Timeout waiting for 'build/initialize' response
+2023.10.29 14:40:23 WARN  Retrying connection to the build server Bloop
+2023.10.29 14:40:23 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.29 14:40:23 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.29 14:40:43 ERROR Timeout waiting for 'build/initialize' response
+2023.10.29 14:40:43 WARN  Retrying connection to the build server Bloop
+2023.10.29 14:40:43 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.29 14:40:43 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.29 14:41:03 ERROR Timeout waiting for 'build/initialize' response
+2023.10.29 14:41:03 WARN  Retrying connection to the build server Bloop
+2023.10.29 14:41:03 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.29 14:41:03 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.29 14:41:23 ERROR Timeout waiting for 'build/initialize' response
+2023.10.29 14:41:23 WARN  Retrying connection to the build server Bloop
+2023.10.29 14:41:23 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.29 14:41:23 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.29 14:41:43 ERROR Timeout waiting for 'build/initialize' response
+2023.10.29 14:41:43 WARN  Retrying connection to the build server Bloop
+2023.10.29 14:41:43 INFO  Bloop uses /usr/lib/jvm/java-18-openjdk-amd64/ defined at /home/cyh/.bloop/bloop.json
+2023.10.29 14:41:43 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/cyh/ysyx-workbench/.metals/bsp.trace.json or /home/cyh/.cache/metals/bsp.trace.json
+2023.10.29 14:42:03 ERROR Timeout waiting for 'build/initialize' response
+2023.10.29 14:42:03 ERROR Failed to connect with build server, no functionality will work.
+java.util.concurrent.TimeoutException
+	at java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1960)
+	at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2095)
+	at scala.meta.internal.metals.BuildServerConnection$.initialize(BuildServerConnection.scala:586)
+	at scala.meta.internal.metals.BuildServerConnection$.$anonfun$fromSockets$1(BuildServerConnection.scala:481)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.lang.Thread.run(Thread.java:833)
+
+2023.10.29 14:44:36 WARN  Stopped configuration of Scala SemanticDB in 2.13.8 projects: Error downloading org.scalameta:semanticdb-scalac_2.13.8:4.8.12
+  not found: /home/cyh/.ivy2/local/org.scalameta/semanticdb-scalac_2.13.8/4.8.12/ivys/ivy.xml
+  download error: Caught java.net.ConnectException (Connection timed out) while downloading https://repo1.maven.org/maven2/org/scalameta/semanticdb-scalac_2.13.8/4.8.12/semanticdb-scalac_2.13.8-4.8.12.pom
+After retry no existing semanticdb version found for scala version 2.13.8

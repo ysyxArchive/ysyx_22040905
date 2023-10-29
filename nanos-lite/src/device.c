@@ -57,11 +57,13 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   }
   //printf("%d %d\n",offset,len);
   //printf("%d\n\n",cfg.width);
+  int off=offset>>2;
+  lenn=((offset+len) >> 2) -1;
   ctl.pixels=pixels;
-  ctl.y=(offset>>2)/cfg.width;
-  ctl.x=(offset>>2)%cfg.width;
-  ctl.h=(((offset+len) >> 2) -1)/cfg.width-ctl.y+1;
-  ctl.w=(((offset+len) >> 2) -1)%cfg.width-ctl.x+1;
+  ctl.y=off/cfg.width;
+  ctl.x=off%cfg.width;
+  ctl.h=lenn/cfg.width-ctl.y+1;
+  ctl.w=lenn%cfg.width-ctl.x+1;
   //printf("%d %d %d %d\n",ctl.x,ctl.y,ctl.w,ctl.h);
   //if(!(ctl.y<300&&ctl.x<400&&(ctl.h+ctl.y)<=300&&(ctl.w+ctl.x)<=400)){
   //  printf("x:%d y:%d w:%d h:%d\n",ctl.x,ctl.y,ctl.w,ctl.h);

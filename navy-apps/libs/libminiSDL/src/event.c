@@ -38,7 +38,7 @@ int SDL_PushEvent(SDL_Event *ev) {
 static char buf1[30],buf2[30];
 
 int SDL_PollEvent(SDL_Event *ev) {
-  NDL_PollEvent(buf1, 30);
+  NDL_PollEvent(buf1, 1);
   if(strcmp(buf1,buf2)==0)return 0;
   else{
     strcpy(buf2,buf1);

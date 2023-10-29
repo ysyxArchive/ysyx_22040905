@@ -35,6 +35,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   //int lenn=strlen(buff);
   //assert(lenn<=len);
   *(uint32_t *)(buf+offset)=kbd.keycode | (kbd.keydown ? KEYDOWN_MASK : 0);
+  printf("%d\n",*(uint32_t *)(buf+offset));
   return len;
 }
 AM_GPU_CONFIG_T cfg;

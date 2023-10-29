@@ -35,12 +35,12 @@ int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
 
-static char buf1,buf2;
+static int buf1,buf2;
 #define KEYDOWN_MASK 0x8000
 
 
 int SDL_PollEvent(SDL_Event *ev) {
-  NDL_PollEvent(&buf1, 4);
+  NDL_PollEvent((char *)(&buf1), 4);
   if(buf1==buf2)return 0;
   else{
     buf2=buf1;

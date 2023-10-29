@@ -22,34 +22,32 @@ static const char *code[]={
 
 static uint8_t key_state[83];
 
-int findsdlk(char* buf){
-  for(int i=0;i<83;i++)
-  if(strcmp(buf,code[i])==0){
-    return i;
-  }
-  //assert(0);
-  return 0;
-}
+//int findsdlk(char* buf){
+//  for(int i=0;i<83;i++)
+//  if(strcmp(buf,code[i])==0){
+//    return i;
+//  }
+//  //assert(0);
+//  return 0;
+//}
 int SDL_PushEvent(SDL_Event *ev) {
   assert(0);
   return 0;
 }
 
-static char buf1[30],buf2[30];
+static int buf1,buf2;
+#define KEYDOWN_MASK 0x8000
+
 
 int SDL_PollEvent(SDL_Event *ev) {
-  NDL_PollEvent(buf1, 30);
-  if(strcmp(buf1,buf2)==0)return 0;
+  NDL_PollEvent((char *)(&buf1), 4);
+  if(buf1==buf2)return 0;
   else{
-    strcpy(buf2,buf1);
-    ev->key.type=((buf1[1]=='d')?SDL_KEYDOWN:SDL_KEYUP);
-    ev->key.keysym.sym=findsdlk(buf1+3);
-    if(ev->key.type==SDL_KEYDOWN){
-      key_state[ev->key.keysym.sym]=1;
-    }
-    else{
-      key_state[ev->key.keysym.sym]=0;
-    }
+    buf2=buf1;
+    ev->key.type= ((buf1 & KEYDOWN_MASK) ? SDL_KEYDOWN : SDL_KEYUP);
+    ev->key.keysym.sym= buf1 & ~KEYDOWN_MASK;
+    //printf("%d %d\n",ev->key.type,ev->key.keysym.sym);
+    key_state[ev->key.keysym.sym]=(ev->key.type==SDL_KEYDOWN);
     return 1;//ev->key.type==SDL_KEYDOWN;
   }
   return 0;

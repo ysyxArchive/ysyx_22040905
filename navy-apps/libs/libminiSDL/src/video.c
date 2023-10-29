@@ -63,7 +63,8 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
     SDL_UpdateRect(dst,0,0,dst->w,dst->h);
   }
   else{
-    for(int i=0;i<(dstrect->h)*(dstrect->w);i++) ((uint32_t *)dst->pixels)[i]=color;
+    for(int i=0;i<(dstrect->h)*(dstrect->w);i++)
+      ((uint32_t *)dst->pixels)[i]=color;
     SDL_UpdateRect(dst,dstrect->x,dstrect->y,dstrect->w,dstrect->h);
   }
 
@@ -73,6 +74,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&&w==0&&h==0){w=s->w;h=s->h;}
   //printf("%d %d\n",w,h);
   int k=y*(s->w);
+  int l=y*w;
   if(s->format->BitsPerPixel==8){
     for(int i=0;i<h;i++){
       for(int j=0;j<w;j++){
@@ -81,9 +83,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       uint32_t g=(s->format->palette->colors)[s->pixels[k+j+x]].g;
       uint32_t b=(s->format->palette->colors)[s->pixels[k+j+x]].b;
       uint32_t a=(s->format->palette->colors)[s->pixels[k+j+x]].a;
-      *(pixels8+(i+y)*w+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
+      *(pixels8+l+x+j)=(a<<24)|(r<<16)|(g<<8)|b;
       }
       k+=s->w;
+      l+=w;
     }
     NDL_DrawRect(pixels8,x,y,w,h);
   }
@@ -127,11 +130,11 @@ SDL_Surface* SDL_CreateRGBSurface(uint32_t flags, int width, int height, int dep
   }
 
   s->format->BitsPerPixel = depth;
-  s->format->BytesPerPixel = depth / 8;
+  s->format->BytesPerPixel = depth >> 3;
 
   s->w = width;
   s->h = height;
-  s->pitch = width * depth / 8;
+  s->pitch = width * depth >> 3;
   assert(s->pitch == width * s->format->BytesPerPixel);
 
   if (!(flags & SDL_PREALLOC)) {

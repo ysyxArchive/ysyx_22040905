@@ -47,13 +47,13 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   strcpy((char *)buf,buff);
   return lenn;
 }
-uint32_t pixels[400*300];
+uint8_t pixels[400*300*4];
 AM_GPU_FBDRAW_T ctl;
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //printf("%d\n",offset);
-  int lenn=len << 2;
-  for(int i=0;i<lenn;i++){
-      pixels[i]=*((uint32_t *)buf+i);
+  //int lenn=len << 2;
+  for(int i=0;i<len;i++){
+      pixels[i]=*((uint8_t *)buf+i);
   }
   //printf("%d %d\n",offset,len);
   //printf("%d\n\n",cfg.width);

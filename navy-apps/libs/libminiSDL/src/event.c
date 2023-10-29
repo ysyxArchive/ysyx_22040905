@@ -40,7 +40,8 @@ static char buf1,buf2;
 
 
 int SDL_PollEvent(SDL_Event *ev) {
-  NDL_PollEvent(&buf1, 1);
+  NDL_PollEvent(&buf1, 4);
+  printf("%d\n",buf1);
   if(buf1==buf2)return 0;
   else{
     buf2=buf1;

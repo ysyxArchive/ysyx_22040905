@@ -37,22 +37,17 @@ VM_MODPREFIX = Vtop
 VM_USER_CFLAGS = \
 	-I/usr/lib/llvm-12/include \
 	-std=c++14 \
-	-L/home/cyh/ysyx-workbench/nemu/build/riscv64-nemu-interpreter-so \
 	-fPIC \
-	-fsanitize=address \
 	-fno-exceptions \
 	-D_GNU_SOURCE \
 	-D__STDC_CONSTANT_MACROS \
 	-D__STDC_LIMIT_MACROS \
-	-fPIE \
 	-O3 \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
 	-lLLVM-12 \
 	-L/home/cyh/ysyx-workbench/nemu/build/riscv64-nemu-interpreter-so \
-	-fPIC \
-	-fsanitize=address \
 	-lSDL2 \
 	-lSDL2_image \
 	-lreadline \

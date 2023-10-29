@@ -22,14 +22,14 @@ static const char *code[]={
 
 static uint8_t key_state[83];
 
-int findsdlk(char* buf){
-  for(int i=0;i<83;i++)
-  if(strcmp(buf,code[i])==0){
-    return i;
-  }
-  //assert(0);
-  return 0;
-}
+//int findsdlk(char* buf){
+//  for(int i=0;i<83;i++)
+//  if(strcmp(buf,code[i])==0){
+//    return i;
+//  }
+//  //assert(0);
+//  return 0;
+//}
 int SDL_PushEvent(SDL_Event *ev) {
   assert(0);
   return 0;
@@ -48,6 +48,7 @@ int SDL_PollEvent(SDL_Event *ev) {
     ev->key.keysym.sym= buf1 & ~KEYDOWN_MASK;
     //printf("%d %d\n",ev->key.type,ev->key.keysym.sym);
     key_state[ev->key.keysym.sym]=(ev->key.type==SDL_KEYDOWN);
+    printf("%s",code[ev->key.keysym.sym]);
     return 1;//ev->key.type==SDL_KEYDOWN;
   }
   return 0;

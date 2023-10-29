@@ -41,12 +41,12 @@ static char buf1,buf2;
 
 int SDL_PollEvent(SDL_Event *ev) {
   NDL_PollEvent(&buf1, 4);
-  printf("%d\n",buf1);
   if(buf1==buf2)return 0;
   else{
     buf2=buf1;
     ev->key.type= (buf1 & KEYDOWN_MASK ? SDL_KEYDOWN : SDL_KEYUP);
     ev->key.keysym.sym= buf1 & ~KEYDOWN_MASK;
+    printf("%d %d\n",ev->key.type,ev->key.keysym.sym);
     key_state[ev->key.keysym.sym]=(ev->key.type==SDL_KEYDOWN);
     return 1;//ev->key.type==SDL_KEYDOWN;
   }

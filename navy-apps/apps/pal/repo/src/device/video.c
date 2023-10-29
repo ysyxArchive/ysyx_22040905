@@ -195,7 +195,7 @@ VIDEO_UpdateScreen(
    if (!bScaleScreen)
    {
       screenRealHeight -= offset;
-      screenRealY = offset / 2;
+      screenRealY = offset >> 2;
    }
 
    if (lpRect != NULL)

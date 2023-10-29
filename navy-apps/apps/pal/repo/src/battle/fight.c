@@ -457,7 +457,7 @@ PAL_GetTimeChargingSpeed(
    //
    if (gpGlobals->fAutoBattle)
    {
-      wDexterity *= 3;
+      wDexterity = (wDexterity << 1) + wDexterity;
    }
 
    return FLOATmuli(g_Battle.flTimeChargingUnit, wDexterity);
@@ -1147,7 +1147,7 @@ PAL_BattleStartFrame(
          g_Battle.BattleResult = kBattleResultLost;
          return;
       }
-   }
+   } 
 
 #ifndef PAL_CLASSIC
    //

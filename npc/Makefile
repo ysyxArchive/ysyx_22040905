@@ -2,28 +2,28 @@ PWD= $(NPC_HOME)
 
 VSRC_DIR=$(PWD)/vsrc
 test:
-	mill -i __.test
+	./mill -i __.test
 
 verilog:
 	$(call git_commit, "generate verilog")
 	mkdir -p $(VSRC_DIR)
-	mill -i __.test.runMain Elaborate -td $(VSRC_DIR)
+	./mill -i __.test.runMain Elaborate -td $(VSRC_DIR)
 	python3 $(PWD)/split_module.py
 
 help:
-	mill -i __.test.runMain Elaborate --help
+	./mill -i __.test.runMain Elaborate --help
 
 compile:
-	mill -i __.compile
+	./mill -i __.compile
 
 bsp:
-	mill -i mill.bsp.BSP/install
+	./mill -i mill.bsp.BSP/install
 
 reformat:
-	mill -i __.reformat
+	./mill -i __.reformat
 
 checkformat:
-	mill -i __.checkFormat
+	./mill -i __.checkFormat
 
 clean:
 	-rm -rf $(VSRC_DIR)
@@ -65,8 +65,8 @@ run: $(BIN)
 	$^
 
 REF=$(NEMU_HOME)/build/riscv64-nemu-interpreter-so
-CFLAGS  += -I/usr/lib/llvm-12/include -std=c++14  -L$(REF) -fPIC -fsanitize=address -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -fPIE -O3 
-LDFLAGS += $(shell llvm-config-12 --libs) -L$(REF) -fPIC -fsanitize=address -lSDL2 -lSDL2_image -lreadline
+CFLAGS  += -I/usr/lib/llvm-12/include -std=c++14  -fPIC  -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS  -O3 
+LDFLAGS += $(shell llvm-config-12 --libs) -L$(REF)  -lSDL2 -lSDL2_image -lreadline
 VERILATOR_FLAG = --cc --exe --build  -O3 --x-assign fast --x-initial fast --noassert ##--trace --prof-cfuncs    
 
 sim: $(VSRCS) $(CSRCSS)

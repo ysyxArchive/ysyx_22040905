@@ -20,6 +20,8 @@ static char sprint_buf[SPRINT_BUF_SIZE];
 
 static char *number(char *str, unsigned long long num, int base)
 {
+	char tmp[66];
+	int i=0;
 	const char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 	if (num == 0)
@@ -27,9 +29,13 @@ static char *number(char *str, unsigned long long num, int base)
 	else
 		while (num != 0)
 		{
-			*str++ = digits[num % base];
+			tmp[i++] = digits[num % base];
 			num /= base;
+			assert(i < 66);
 		}
+	
+	while(i--)
+		*str++ = tmp[i];
 
 	return str;
 }

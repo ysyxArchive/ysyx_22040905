@@ -18,7 +18,7 @@ int main() {
 
 	printf("%d + %d = %c%c\n", 2, 10, b[0],b[1]);
 
-	printf("%d=0x%x=0b%o=%b\n",16,0x10,0100,0b10000);
+	printf("%d=0x%x=0%o=0b%b\n",16,0x10,0100,0b10000);
 
 	printf("%d%%\n",888);
 	return 0;

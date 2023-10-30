@@ -90,6 +90,9 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 		case '%':
 			*str++ = '%';
 			continue;
+		case 'p':
+			str = number(str,(unsigned long) va_arg(ap, void *), 16);
+			continue;
 		case 'o':
 			base = 8;
 			break;

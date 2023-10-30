@@ -3,7 +3,7 @@
 int main() {
 	printf("%s", "Hello world!\n");
 
-	printf("Hello world!\n");
+	//printf("Hello world!\n");
 
 	printf("%d + %d = %d\n", 1, 1, 2);
 
@@ -18,7 +18,7 @@ int main() {
 
 	printf("%d + %d = %c%c\n", 2, 10, b[0],b[1]);
 
-	printf("%x + %o = %b\n",0xf,15,30);
+	printf("%d=0x%x=0b%o=%b\n",16,0x10,0100,0b10000);
 
 	printf("%d%%\n",888);
 	return 0;

@@ -76,7 +76,10 @@ int vsprintf(char *out, const char *fmt, va_list ap)
 			s = va_arg(ap, char *);
 			if (!s)
 				s = NULL;
-			strcpy(str, s);
+
+			int len = strlen(s);
+			while(len--)
+				*str++ = *s++;
 			continue;
 		case '%':
 			*str++ = '%';

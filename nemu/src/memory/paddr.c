@@ -52,7 +52,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 #ifdef CONFIG_MTRACE
   FILE *fp;
-  fp=fopen("/home/cyh/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");
+  fp=fopen("./build/nemu-mtrace.txt","a");
   assert(fp);
   fprintf(fp,"pc=0x%08lx:\tpaddr_read\taddress=%08x\tlen=%d\n",cpu.pc,addr,len);
   fclose(fp); 
@@ -74,7 +74,7 @@ void paddr_write(paddr_t addr, int len, word_t data) {
 
 #ifdef CONFIG_MTRACE
   FILE *fp;
-  fp=fopen("/home/cyh/ysyx-workbench/nemu/build/nemu-mtrace.txt","a");
+  fp=fopen("./build/nemu-mtrace.txt","a");
   assert(fp);
   fprintf(fp,"pc=0x%08lx:\tpaddr_write\taddress=%08x\tlen=%d\tdata=%lx\n",cpu.pc,addr,len,data);
   fclose(fp); 

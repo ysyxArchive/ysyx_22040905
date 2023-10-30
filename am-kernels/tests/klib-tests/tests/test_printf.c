@@ -11,7 +11,7 @@ int main() {
 
 	printf("%d + %d = %s\n", 2, 10, "12");
 	
-	printf("%02d + %.4ld = %lld\n", 2, 10, 12);
+	printf("%d + %ld = %lld\n", 2, 10, 12);
 
 	char b[10]="12";
 	printf("%d + %d = %s\n", 2, 10, b);

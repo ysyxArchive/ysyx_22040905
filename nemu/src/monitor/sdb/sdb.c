@@ -156,7 +156,7 @@ void sdb_mainloop() {
     return;
   }
   /*test code
-  FILE* fp=fopen("/home/cyh/ysyx-workbench/nemu/tools/gen-expr/input","r");
+  FILE* fp=fopen("./tools/gen-expr/input","r");
   assert(fp!=NULL);
   int a=0;
   int i=0;

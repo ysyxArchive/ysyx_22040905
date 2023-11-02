@@ -69,12 +69,13 @@ CFLAGS  += -I/usr/lib/llvm-12/include -std=c++14  -fPIC  -fno-exceptions -D_GNU_
 LDFLAGS += $(shell llvm-config-12 --libs) -L$(REF)  -lSDL2 -lSDL2_image -lreadline
 VERILATOR_FLAG = --cc --exe --build  -O3 --x-assign fast --x-initial fast --noassert ##--trace --prof-cfuncs    
 
-sim: $(VSRCS) $(CSRCSS)
+sim: verilog $(VSRCS) $(CSRCSS)
 	$(call git_commit, "sim RTL")  # DO NOT REMOVE THIS LINE!!!
+	mkdir -p $(BUILD_DIR)
 	rm -rf $(BUILD_DIR)/*
 	touch $(BUILD_DIR)/itrace.txt $(BUILD_DIR)/ftrace.txt $(BUILD_DIR)/mtrace.txt
 	verilator  $(VERILATOR_FLAG) \
- 	--top-module $(TOPNAME) $^ \
+ 	--top-module $(TOPNAME)  $(VSRCS) $(CSRCSS) \
 	--Mdir $(OBJ_DIR) \
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 

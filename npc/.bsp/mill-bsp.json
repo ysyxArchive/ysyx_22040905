@@ -1,1 +1,0 @@
-{"name":"mill-bsp","argv":["/home/cyh/.cache/mill/download/0.10.2","--bsp","--disable-ticker","--color","false","--jobs","1"],"millVersion":"0.10.2","bspVersion":"2.0.0","languages":["scala","java"]}

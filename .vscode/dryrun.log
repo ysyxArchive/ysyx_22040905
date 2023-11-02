@@ -1,5 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/cyh/ysyx-workbench'
-echo "Please run 'make' under subprojects."
-make: Leaving directory '/home/cyh/ysyx-workbench'
- 

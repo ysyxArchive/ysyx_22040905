@@ -26,8 +26,8 @@
 #include "global.h"
 #include "uibattle.h"
 
-#define       BATTLE_FPS               25//1
-#define       BATTLE_FRAME_TIME        (1000 / BATTLE_FPS)//2000
+#define       BATTLE_FPS               1//25
+#define       BATTLE_FRAME_TIME        2000//(1000 / BATTLE_FPS)
 
 typedef enum tagBATTLERESULT
 {
